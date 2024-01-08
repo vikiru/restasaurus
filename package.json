@@ -8,7 +8,7 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"lint": "eslint ./**/** --fix-dry-run",
+		"lint": "eslint ./**/*.js --fix-dry-run",
 		"prettier": "prettier --write ."
 	},
 	"keywords": [],
