@@ -4,15 +4,17 @@
 		"prettier",
 		"eslint:recommended",
 		"plugin:import/recommended",
+		"plugin:prettier/recommended",
 		"plugin:node/recommended"
 	],
-	"plugins": ["prettier", "promise"],
+	"plugins": ["prettier", "promise", "node"],
 	"env": {
 		"node": true,
 		"es6": true
 	},
 	"parserOptions": {
-		"ecmaVersion": 2021
+		"ecmaVersion": 11,
+		"sourceType": "module"
 	},
 	"rules": {
 		"arrow-spacing": ["warn", { "before": true, "after": true }],
@@ -60,6 +62,10 @@
 		"space-infix-ops": "error",
 		"space-unary-ops": "error",
 		"spaced-comment": "error",
-		"yoda": "error"
+		"yoda": "error",
+		"node/no-unsupported-features/es-syntax": [
+			"error",
+			{ "ignores": ["modules"] }
+		]
 	}
 }
