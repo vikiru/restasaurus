@@ -4,6 +4,7 @@ const { Schema, model } = mongoose;
 
 const sourceSchema = new Schema({
 	source: {
+		source: String,
 		pageTitle: String,
 		author: String,
 		publisher: String,

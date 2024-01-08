@@ -5,13 +5,14 @@ const { Schema, model } = mongoose;
 
 const infoSchema = new Schema({
 	name: String,
-	summary: String,
+	temporalRange: String,
 	domain: String,
 	phylum: String,
 	clades: [String],
 	family: String,
 	genus: String,
-	timePeriod: String,
+	summary: String,
+	diet: String,
 	source: Source,
 });
 
