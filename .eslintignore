@@ -1,6 +1,8 @@
 node_modules/
+README.md
+LICENSE
 .github/
 package-lock.json
 package.json
-.eslintrc
+.eslintrc.json
 .prettierrc
