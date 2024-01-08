@@ -8,7 +8,7 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"lint": "eslint ./**/*.js --fix-dry-run",
+		"lint": "eslint ./app/**/*.{js} --fix-dry-run",
 		"prettier": "prettier --write ."
 	},
 	"keywords": [],
@@ -35,5 +35,5 @@
 		"nodemon": "^3.0.2",
 		"prettier": "^3.1.1"
 	},
-	"ignorePatterns": ["./node_modules/**", ".github/**"]
+	"ignorePatterns": ["./node_modules/**", "./.github/**"]
 }
