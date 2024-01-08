@@ -9,10 +9,15 @@ const infoSchema = new Schema({
 	domain: String,
 	phylum: String,
 	clades: [String],
+	subOrder: String,
 	family: String,
+	subFamily: String,
+	tribe: String,
 	genus: String,
-	summary: String,
+	species: String,
+	description: String,
 	diet: String,
+	locomotionType: String,
 	source: Source,
 });
 
