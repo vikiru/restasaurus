@@ -1,0 +1,29 @@
+name: Lint Files
+run-name: Lint files using ESLint
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  statuses: write
+  actions: write
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Lint files
+        run: npm run lint
