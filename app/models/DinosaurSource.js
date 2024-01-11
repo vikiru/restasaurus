@@ -18,5 +18,5 @@ const sourceSchema = new Schema({
 	},
 });
 
-const Source = model("Source", sourceSchema);
-export default Source;
+const DinosaurSource = model("DinosaurSource", sourceSchema);
+export default DinosaurSource;
