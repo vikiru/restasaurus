@@ -10,7 +10,7 @@ const DinosaurImageSchema = new Schema(
 		license: String,
 		licenseURL: String,
 		dateCreated: String,
-		dateAccesed: String,
+		dateAccessed: String,
 	},
 	{ retainKeyOrder: true },
 );
