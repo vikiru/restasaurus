@@ -1,5 +1,4 @@
-import mongoose from "mongoose";
-
+const mongoose = require("mongoose");
 const { Schema, SchemaTypes, model } = mongoose;
 
 const DinosaurInfoSchema = new Schema({

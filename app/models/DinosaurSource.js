@@ -1,19 +1,18 @@
-import mongoose from "mongoose";
-
+const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
 
 const DinosaurSourceSchema = new Schema({
 	source: {
-		source: String,
 		pageTitle: String,
 		author: String,
-		publisher: String,
-		lastRevision: String,
-		dateAccessed: String,
 		wikipediaURL: String,
-		revisionHistoryURL: String,
 		license: String,
 		licenseURL: String,
+		lastRevision: String,
+		dateAccessed: String,
+		revisionHistoryURL: String,
+		source: String,
+		publisher: String,
 		citation: String,
 	},
 });
