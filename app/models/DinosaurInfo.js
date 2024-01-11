@@ -1,4 +1,4 @@
-import Source from "./Source.js";
+import DinosaurSource from "./DinosaurSource.js";
 import mongoose from "mongoose";
 
 const { Schema, model } = mongoose;
@@ -7,6 +7,7 @@ const infoSchema = new Schema({
 	name: String,
 	temporalRange: String,
 	domain: String,
+	kingdom: String,
 	phylum: String,
 	clades: [String],
 	subOrder: String,
@@ -18,8 +19,11 @@ const infoSchema = new Schema({
 	description: String,
 	diet: String,
 	locomotionType: String,
-	source: Source,
+	source: DinosaurSource,
 });
 
 const Info = model("Info", infoSchema);
-export default Info;
+module.exports = {
+	infoModel: Info,
+	infoSchema: infoSchema,
+};

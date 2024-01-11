@@ -111,8 +111,8 @@ async function retrieveInformation(dinosaurName, data) {
 	const imageResult = await fetchData(imageQueryURL);
 
 	data.description = pageData.extract.split("\n")[0];
-	data.diet = findDiet(data, pageData);
-	data.locomotionType = findLocomotionType(data, pageData);
+	data.diet = findDiet(pageData);
+	data.locomotionType = findLocomotionType(pageData);
 
 	data = handleSourceInformation(data, dinosaurName, pageData, licenseInfo);
 	data = handleImageData(data, imageResult);
@@ -137,10 +137,17 @@ function handleImageData(data, result) {
 	data.image.title = imageTitle.substring(0, extension);
 	data = handleAuthor(data, metaData.Artist.value);
 	data.image.imageURL = imageInfo.descriptionurl;
-	data.image.license = metaData.UsageTerms.value;
-	data.image.licenseURL = metaData.LicenseUrl.value;
+
+	if (metaData.LicenseShortName.value !== "Public domain") {
+		data.image.license = metaData.UsageTerms.value;
+		data.image.licenseURL = metaData.LicenseUrl.value;
+	} else {
+		data.image.license = metaData.LicenseShortName.value;
+		data.image.licenseURL = "https://creativecommons.org/public-domain/";
+	}
+
 	data.image.dateCreated = new Date(
-		`${metaData.DateTimeOriginal.value}`,
+		`${metaData.DateTime.value}`,
 	).toISOString();
 	data.image.dateAccessed = new Date().toISOString();
 	return data;
@@ -153,7 +160,7 @@ function handleImageData(data, result) {
  * @returns
  */
 function handleAuthor(data, authorInfo) {
-	if (authorInfo.startsWith("<a") || authorInfo.contains("href=")) {
+	if (authorInfo.startsWith("<a") || authorInfo.includes("href=")) {
 		const authorAnchor = parser.parse(authorInfo);
 		const anchorHTML = authorAnchor.innerHTML;
 		data.image.author = authorAnchor.structuredText;
@@ -195,14 +202,15 @@ function handleSourceInformation(data, dinosaurName, pageData, licenseInfo) {
  * @param {*} pageData
  * @returns
  */
-function findDiet(data, pageData) {
+function findDiet(pageData) {
+	let diet = "";
 	const extract = pageData.extract;
 	const dietRegex = new RegExp("([^\\s][\\w]*vor[\\w]*[^\\s])", "gmi");
 	const matches = dietRegex.exec(extract);
 	if (matches && matches.length > 0) {
-		data.diet = String(matches[0]);
+		diet = String(matches[0]);
 	}
-	return data;
+	return diet;
 }
 
 /**
@@ -211,17 +219,18 @@ function findDiet(data, pageData) {
  * @param {*} pageData
  * @returns
  */
-function findLocomotionType(data, pageData) {
+function findLocomotionType(pageData) {
+	let locomotionType = "";
 	const extract = pageData.extract;
 	const locomotionRegex = new RegExp(
-		"([^\\s]*pedal|flying|ped[^\\s]*)",
+		"(bipedal|biped|flying|quadrupedal|quadruped)",
 		"gmi",
 	);
 	const matches = locomotionRegex.exec(extract);
 	if (matches && matches.length > 0) {
-		data.locomotionType = String(matches[0]);
+		locomotionType = String(matches[0]);
 	}
-	return data;
+	return locomotionType;
 }
 
 /**

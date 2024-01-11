@@ -1,11 +1,11 @@
 import Image from "./DinosaurImage.js";
-import Info from "./DinosaurInfo.js";
+import { infoSchema } from "./DinosaurInfo.js";
 import mongoose from "mongoose";
 
 const { Schema, model } = mongoose;
 
 const dinosaurSchema = new Schema({
-	info: Info,
+	info: infoSchema,
 	image: Image,
 });
 
