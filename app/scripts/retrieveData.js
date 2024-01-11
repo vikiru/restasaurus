@@ -30,3 +30,7 @@ async function retrieveAllDinoData() {
 }
 
 retrieveAllDinoData();
+
+module.exports = {
+	retrieveAllDinoData: retrieveAllDinoData,
+};
