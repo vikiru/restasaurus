@@ -208,7 +208,7 @@ function findDiet(pageData) {
 	const dietRegex = new RegExp("([^\\s][\\w]*vor[\\w]*[^\\s])", "gmi");
 	const matches = dietRegex.exec(extract);
 	if (matches && matches.length > 0) {
-		diet = String(matches[0]);
+		diet = String(matches[0]).replace("orous", "ore");
 	}
 	return diet;
 }
@@ -228,7 +228,7 @@ function findLocomotionType(pageData) {
 	);
 	const matches = locomotionRegex.exec(extract);
 	if (matches && matches.length > 0) {
-		locomotionType = String(matches[0]);
+		locomotionType = String(matches[0]).replace("pedal", "ped");
 	}
 	return locomotionType;
 }
