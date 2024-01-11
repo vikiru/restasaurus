@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const { Schema, model } = mongoose;
 
-const sourceSchema = new Schema({
+const DinosaurSourceSchema = new Schema({
 	source: {
 		source: String,
 		pageTitle: String,
@@ -18,5 +18,9 @@ const sourceSchema = new Schema({
 	},
 });
 
-const DinosaurSource = model("DinosaurSource", sourceSchema);
-export default DinosaurSource;
+const DinosaurSource = model("DinosaurSource", DinosaurSourceSchema);
+
+module.exports = {
+	DinosaurSourceSchema: DinosaurSourceSchema,
+	DinosaurSource: DinosaurSource,
+};

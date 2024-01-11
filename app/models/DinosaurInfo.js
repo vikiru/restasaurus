@@ -1,9 +1,8 @@
-import DinosaurSource from "./DinosaurSource.js";
 import mongoose from "mongoose";
 
-const { Schema, model } = mongoose;
+const { Schema, SchemaTypes, model } = mongoose;
 
-const infoSchema = new Schema({
+const DinosaurInfoSchema = new Schema({
 	name: String,
 	temporalRange: String,
 	domain: String,
@@ -19,11 +18,16 @@ const infoSchema = new Schema({
 	description: String,
 	diet: String,
 	locomotionType: String,
-	source: DinosaurSource,
+	source: {
+		type: SchemaTypes.ObjectId,
+		ref: "DinosaurSource",
+		required: true,
+	},
 });
 
-const Info = model("Info", infoSchema);
+const DinosaurInfo = model("DinosaurInfo", DinosaurInfoSchema);
+
 module.exports = {
-	infoModel: Info,
-	infoSchema: infoSchema,
+	DinosaurInfoSchema: DinosaurInfoSchema,
+	DinosaurInfo: DinosaurInfo,
 };

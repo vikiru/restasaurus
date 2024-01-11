@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const { Schema, model } = mongoose;
 
-const imageSchema = new Schema({
+const DinosaurImageSchema = new Schema({
 	title: String,
 	author: String,
 	authorURL: String,
@@ -13,5 +13,9 @@ const imageSchema = new Schema({
 	dateAccesed: String,
 });
 
-const Image = model("Image", imageSchema);
-export default Image;
+const DinosaurImage = model("DinosaurImage", DinosaurImageSchema);
+
+module.exports = {
+	DinosaurImageSchema: DinosaurImageSchema,
+	DinosaurImage: DinosaurImage,
+};
