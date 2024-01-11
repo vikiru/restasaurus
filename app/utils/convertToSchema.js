@@ -1,6 +1,5 @@
 const { Dinosaur } = require("../models/Dinosaur");
 const { DinosaurInfo } = require("../models/DinosaurInfo");
-const { DinosaurSource } = require("../models/DinosaurSource");
 const { DinosaurImage } = require("../models/DinosaurImage");
 
 async function convertToSchema(mongooseData) {
@@ -12,12 +11,17 @@ async function convertToSchema(mongooseData) {
 		info: dinoInfo,
 		image: dinoImage,
 	});
-	return dinosaur;
+
+	const data = {
+		dinosaur: dinosaur,
+		dinoInfo: dinoInfo,
+		dinoImage: dinoImage,
+	};
+	return data;
 }
 
 function returnDinoInfo(mongooseData) {
 	const mongooseSource = mongooseData.source;
-	const dinoSource = returnDinoSource(mongooseSource);
 	const dinoInfo = new DinosaurInfo({
 		name: mongooseData.name,
 		temporalRange: mongooseData.temporalRange,
@@ -34,26 +38,9 @@ function returnDinoInfo(mongooseData) {
 		description: mongooseData.description,
 		diet: mongooseData.diet,
 		locomotionType: mongooseData.locomotionType,
-		source: dinoSource,
+		source: mongooseSource,
 	});
 	return dinoInfo;
-}
-
-function returnDinoSource(mongooseSource) {
-	const dinoSource = new DinosaurSource({
-		pageTitle: mongooseSource.pageTitle,
-		author: mongooseSource.author,
-		wikipediaURL: mongooseSource.wikipediaURL,
-		license: mongooseSource.license,
-		licenseURL: mongooseSource.licenseURL,
-		lastRevision: mongooseSource.lastRevision,
-		dateAccessed: mongooseSource.dateAccessed,
-		revisionHistoryURL: mongooseSource.revisionHistoryURL,
-		source: mongooseSource.source,
-		publisher: mongooseSource.publisher,
-		citation: mongooseSource.citation,
-	});
-	return dinoSource;
 }
 
 function returnDinoImage(mongooseImage) {
@@ -74,5 +61,4 @@ module.exports = {
 	convertToSchema: convertToSchema,
 	returnDinoInfo: returnDinoInfo,
 	returnDinoImage: returnDinoImage,
-	returnDinoSource: returnDinoSource,
 };
