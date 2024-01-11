@@ -1,4 +1,5 @@
 const { Dinosaur } = require("../models/Dinosaur");
+const { DinosaurImage } = require("../models/DinosaurImage");
 const { DinosaurInfo } = require("../models/DinosaurInfo");
 
 const apiEndpoints = {
@@ -29,6 +30,31 @@ async function retrieveAllDinosaurs(req, res) {
 		console.error(error);
 		res.status(404).json({
 			error: " Sorry, there was an error retrieving all of the dinosaurs",
+		});
+	}
+}
+
+async function retrieveAllImages(req, res) {
+	try {
+		const dinosaurImages = await DinosaurImage.find();
+		res.status(200).json(dinosaurImages);
+	} catch (error) {
+		console.error(error);
+		res.status(404).json({
+			error: " Sorry, there was an error retrieving all of the dinosaur images",
+		});
+	}
+}
+
+async function retrieveImageById(req, res) {
+	try {
+		const id = req.params.id;
+		const dinosaur = await Dinosaur.findOne({ id: id });
+		res.status(200).json({ image: dinosaur.image });
+	} catch (error) {
+		console.error(error);
+		res.status(404).json({
+			error: "Sorry, there doesnt seem to be a dinosaur matching that id.",
 		});
 	}
 }
@@ -125,6 +151,8 @@ async function retrieveByLocomotion(req, res) {
 module.exports = {
 	returnHome: returnHome,
 	retrieveAllDinosaurs: retrieveAllDinosaurs,
+	retrieveAllImages: retrieveAllImages,
+	retrieveImageById: retrieveImageById,
 	retrieveById: retrieveById,
 	retrieveByName: retrieveByName,
 	retrieveByDiet: retrieveByDiet,
