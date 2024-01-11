@@ -12,6 +12,7 @@ const DinosaurImageSchema = new Schema(
 		dateCreated: String,
 		dateAccesed: String,
 	},
+	{ retainKeyOrder: true },
 );
 
 const DinosaurImage = model("DinosaurImage", DinosaurImageSchema);
