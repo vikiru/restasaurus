@@ -43,7 +43,7 @@
 		"object-curly-spacing": ["off"],
 		"prefer-const": "error",
 		"prettier/prettier": [
-			"warn",
+			"off",
 			{
 				"endOfLine": "auto"
 			}
