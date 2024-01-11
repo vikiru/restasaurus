@@ -1,7 +1,7 @@
 const fs = require("fs");
 function writeData(dinosaurData) {
 	fs.writeFile(
-		"app/scripts/dinosaurJson.json",
+		"app/scripts/dinosaurData.json",
 		JSON.stringify(dinosaurData, null, 2),
 		err => {
 			if (err) {
