@@ -27,6 +27,9 @@ async function retrieveAllDinosaurs(req, res) {
 		res.status(200).json(dinosaurs);
 	} catch (error) {
 		console.error(error);
+		res.status(404).json({
+			error: " Sorry, there was an error retrieving all of the dinosaurs",
+		});
 	}
 }
 
@@ -39,7 +42,7 @@ async function retrieveById(req, res) {
 	} catch (error) {
 		console.error(error);
 		res.status(404).json({
-			error: "Sorry, there does not seem to be a dinosaur matching that id.",
+			error: "Sorry, there doesnt seem to be a dinosaur matching that id.",
 		});
 	}
 }
@@ -90,11 +93,41 @@ async function retrieveByDiet(req, res) {
 		});
 	}
 }
+
+async function retrieveByLocomotion(req, res) {
+	try {
+		const locomotion = req.params.locomotion;
+		const dinosaurInfos = await DinosaurInfo.find({
+			locomotionType: locomotion,
+		});
+		const dinosaurs = [];
+		if (dinosaurInfos) {
+			for (const dinosaurInfo of dinosaurInfos) {
+				const dinosaur = await Dinosaur.findOne({
+					info: dinosaurInfo._id,
+				});
+				dinosaurs.push(dinosaur);
+			}
+			return res.status(200).json(dinosaurs);
+		} else {
+			return res.status(404).json({
+				error: "Sorry, there doesnt seem to be any dinosaurs matching that locomotion type.",
+			});
+		}
+	} catch (error) {
+		console.error(error);
+		res.status(404).json({
+			error: "Sorry, there doesnt seem to be any dinosaurs matching that locomotion type.",
+		});
+	}
+}
+
 module.exports = {
 	returnHome: returnHome,
 	retrieveAllDinosaurs: retrieveAllDinosaurs,
 	retrieveById: retrieveById,
 	retrieveByName: retrieveByName,
 	retrieveByDiet: retrieveByDiet,
+	retrieveByLocomotion: retrieveByLocomotion,
 	apiEndpoints: apiEndpoints,
 };
