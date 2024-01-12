@@ -1,21 +1,21 @@
 const express = require("express");
 const {
 	retrieveAllDinosaurs,
+	retrieveAllImages,
 	returnHome,
 	retrieveById,
 	retrieveByName,
 	retrieveByDiet,
 	retrieveByLocomotion,
-	retrieveAllImages,
 	retrieveImageById,
 } = require("../controllers/controller");
 const router = express.Router();
 
 router.get("/", returnHome);
 router.get("/dinosaurs", retrieveAllDinosaurs);
-router.get("/dinosaurs/images", retrieveAllImages);
-router.get("/dinosaurs/images/:id", retrieveImageById);
-router.get("/dinosaurs/id/:id", retrieveById);
+router.get("/dinosaurs/:id", retrieveById);
+router.get("/images", retrieveAllImages);
+router.get("/images/:id", retrieveImageById);
 router.get("/dinosaurs/name/:name", retrieveByName);
 router.get("/dinosaurs/diet/:diet", retrieveByDiet);
 router.get("/dinosaurs/locomotion/:locomotion", retrieveByLocomotion);

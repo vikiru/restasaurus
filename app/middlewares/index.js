@@ -10,14 +10,14 @@ const rateLimit = require("express-rate-limit");
 cors({ methods: ["GET"] });
 
 const limiter = rateLimit({
-	/* 5 requests every hour */
+	/* 20 requests every hour */
 	windowMs: 60 * 60 * 1000,
-	limit: 5,
+	limit: 20,
 	standardHeaders: "draft-7",
 	legacyHeaders: false,
 	handler: function (req, res) {
 		return res.status(429).json({
-			error: "Please wait, you have exceeded your rate limit of 100 requests per 15 minutes.",
+			error: "Please wait, you have exceeded your rate limit of 20 requests per hour.",
 		});
 	},
 });
