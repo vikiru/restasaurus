@@ -27,6 +27,7 @@
 		"mongodb": "^6.3.0",
 		"mongoose": "^8.0.3",
 		"mongoose-autopopulate": "^1.1.0",
+		"mongoose-hidden": "^1.9.1",
 		"mongoose-sequence": "^6.0.0",
 		"morgan": "^1.10.0",
 		"node-html-parser": "^6.1.12",

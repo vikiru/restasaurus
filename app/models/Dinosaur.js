@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const mongooseHidden = require("mongoose-hidden")();
 const AutoIncrement = require("mongoose-sequence")(mongoose);
 const { DinosaurInfo } = require("./DinosaurInfo");
 const { DinosaurImage } = require("./DinosaurImage");
@@ -6,6 +7,7 @@ const { Schema, SchemaTypes, model } = mongoose;
 
 const DinosaurSchema = new Schema(
 	{
+		id: Number,
 		info: {
 			type: SchemaTypes.ObjectId,
 			ref: DinosaurInfo,
@@ -25,6 +27,7 @@ const DinosaurSchema = new Schema(
 
 DinosaurSchema.plugin(AutoIncrement, { inc_field: "id" });
 DinosaurSchema.plugin(require("mongoose-autopopulate"));
+DinosaurSchema.plugin(mongooseHidden);
 
 const Dinosaur = model("Dinosaur", DinosaurSchema);
 

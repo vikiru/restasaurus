@@ -12,9 +12,9 @@ class MongooseData {
 		this.tribe = "";
 		this.genus = "";
 		this.species = "";
-		this.description = "";
 		this.diet = "";
 		this.locomotionType = "";
+		this.description = "";
 		this.source = {
 			pageTitle: "",
 			author: "Wikipedia contributors",
@@ -22,6 +22,7 @@ class MongooseData {
 			license: "",
 			licenseURL: "",
 			lastRevision: "",
+			permalink: "",
 			dateAccessed: "",
 			revisionHistoryURL: "",
 			source: "Wikipedia",
@@ -30,6 +31,7 @@ class MongooseData {
 		};
 		this.image = {
 			title: "",
+			description: "",
 			author: "",
 			authorURL: "",
 			imageURL: "",

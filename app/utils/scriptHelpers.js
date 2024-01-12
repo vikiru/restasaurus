@@ -135,6 +135,7 @@ function handleImageData(data, result) {
 	const extension = imageTitle.lastIndexOf(".");
 
 	data.image.title = imageTitle.substring(0, extension);
+	data.image.description = parser.parse(metaData.ImageDescription.value).structuredText;
 	data = handleAuthor(data, metaData.Artist.value);
 	data.image.imageURL = imageInfo.descriptionurl;
 
@@ -192,6 +193,7 @@ function handleSourceInformation(data, dinosaurName, pageData, licenseInfo) {
 	data.source.revisionHistoryURL = `https://en.wikipedia.org/w/index.php?title=${dinosaurName}&action=history`;
 	data.source.license = licenseInfo.text;
 	data.source.licenseURL = licenseInfo.url;
+	data.source.permalink = `https://en.wikipedia.org/w/index.php?title=${dinosaurName}&oldid=${pageData.revisions[0].revid}`;
 	data.source.citation = createCitation(data.source);
 	return data;
 }

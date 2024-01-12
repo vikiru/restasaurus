@@ -24,7 +24,7 @@ function returnDinoInfo(mongooseData) {
 	const mongooseSource = mongooseData.source;
 	const dinoInfo = new DinosaurInfo({
 		name: mongooseData.name,
-		temporalRange: mongooseData.temporalRange,
+		temporalRange: mongooseData.temporalrange,
 		domain: mongooseData.domain,
 		kingdom: mongooseData.kingdom,
 		phylum: mongooseData.phylum,
@@ -46,6 +46,7 @@ function returnDinoInfo(mongooseData) {
 function returnDinoImage(mongooseImage) {
 	const dinoImage = new DinosaurImage({
 		title: mongooseImage.title,
+		description: mongooseImage.description,
 		author: mongooseImage.author,
 		authorURL: mongooseImage.authorURL,
 		imageURL: mongooseImage.imageURL,

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const mongooseHidden = require("mongoose-hidden")();
 const { Schema, model } = mongoose;
 
 const DinosaurInfoSchema = new Schema(
@@ -15,9 +16,9 @@ const DinosaurInfoSchema = new Schema(
 		tribe: String,
 		genus: String,
 		species: String,
-		description: String,
 		diet: String,
 		locomotionType: String,
+		description: String,
 		source: {
 			pageTitle: String,
 			author: String,
@@ -25,6 +26,7 @@ const DinosaurInfoSchema = new Schema(
 			license: String,
 			licenseURL: String,
 			lastRevision: String,
+			permalink: String,
 			dateAccessed: String,
 			revisionHistoryURL: String,
 			source: String,
@@ -34,6 +36,8 @@ const DinosaurInfoSchema = new Schema(
 	},
 	{ retainKeyOrder: true },
 );
+
+DinosaurInfoSchema.plugin(mongooseHidden);
 
 const DinosaurInfo = model("DinosaurInfo", DinosaurInfoSchema);
 
