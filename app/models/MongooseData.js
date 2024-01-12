@@ -6,7 +6,8 @@ class MongooseData {
 		this.kingdom = "";
 		this.phylum = "";
 		this.clade = [];
-		this.suborder = "";
+		this.classInfo = [];
+		this.orderInfo = [];
 		this.family = "";
 		this.subfamily = "";
 		this.tribe = "";

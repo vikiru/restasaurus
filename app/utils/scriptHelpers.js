@@ -5,7 +5,20 @@ const keywords = [
 	"Kingdom:",
 	"Phylum:",
 	"Clade:",
+	"Superclass:",
+	"Class:",
+	"Subclass:",
+	"Infraclass:",
+	"Subterclass:",
+	"Parvclass:",
+	"Magnorder:",
+	"Superorder:",
+	"Grandorder:",
+	"Mirorder:",
+	"Order:",
 	"Suborder:",
+	"Infraorder:",
+	"Parvorder:",
 	"Family:",
 	"Subfamily:",
 	"Genus:",
@@ -17,6 +30,7 @@ const keywords = [
 /**
  * Given a dinosaur name, return the content within the infobox section within a Wikipedia article.
  * @param {*} dinosaurName
+ * @returns
  */
 async function retrieveHTMLContent(dinosaurName, data) {
 	const request = await fetchData(
@@ -32,63 +46,58 @@ async function retrieveHTMLContent(dinosaurName, data) {
  * After passing in parsed HTML data, retrieve all of the data within the Wikipedia Infobox section according to the specified
  * keywords.
  * @param {*} html
+ * @returns
  */
-
-// TODO: Refactor this, can just use rowText + keywords similar to how type species was obtained.
 function retrieveBoxData(html, data) {
-	const title = data.name;
 	const infoBox = html.querySelector("table");
-	const rows = infoBox.querySelectorAll("tr");
-	let prevText = "";
-	for (const row of rows) {
-		const headerData = row.querySelector("th");
-		const rowText = row.structuredText.trim();
-		if (headerData !== null) {
-			const headerText = headerData.structuredText;
-			const allHeaders = headerText.split("\n");
-			if (allHeaders.includes(title)) {
-				const temporalRange = allHeaders[1].replace(
-					"Temporal range: ",
-					"",
-				);
-				data.temporalrange = temporalRange;
+	const tableBody = infoBox.querySelector("tbody");
+	const rows = tableBody.querySelectorAll("tr");
+	const firstRowData = rows[0].structuredText.split("\n");
+	data.temporalrange = handleTemporalRange(firstRowData);
+	const filteredRows = rows.filter(row => rows.indexOf(row) > 3);
+
+	for (const row of filteredRows) {
+		const rowData = row.querySelectorAll("td");
+		if (rowData.length > 1) {
+			let keyword = rowData[0].structuredText.trim();
+			const keywordRegex = new RegExp("order|class", "gmi");
+			if (!keywordRegex.test(keyword)) {
+				keyword = rowData[0].structuredText.toLowerCase();
 			}
-		}
-		const tableData = row.querySelectorAll("td");
-		for (let j = 0; j < tableData.length; j++) {
-			const header = tableData[j];
-			const text = header.structuredText;
-			if (keywords.includes(text)) {
-				const keyword = text.toLowerCase().replace(":", "");
-				if (j + 1 < tableData.length) {
-					const nextSibling = tableData[j + 1];
-					const returnText = nextSibling.structuredText.replace(
-						"†",
-						"",
-					);
-					if (keyword === "clade") {
-						data[keyword].push(returnText);
-					} else if (keyword === "genus") {
-						data[keyword] = returnText.split("\n")[0];
-					} else {
-						data[keyword] = returnText;
-					}
-				}
+			keyword = keyword.replace(":", "");
+			const value = rowData[1].structuredText.trim().replace("†", "");
+			if (keyword.includes("order") || keyword === "Order") {
+				data["orderInfo"].push({ type: keyword, value: value });
+			} else if (keyword.includes("class") || keyword === "Class") {
+				data["classInfo"].push({ type: keyword, value: value });
+			} else if (keyword === "clade") {
+				data["clade"].push(value);
+			} else if (keyword === "genus") {
+				data[keyword] = value.split("\n")[0];
+			} else {
+				data[keyword] = value;
 			}
-		}
-		if (rowText === "Type species") {
-			prevText = rowText;
-		}
-		if (
-			prevText === "Type species" &&
-			prevText !== "" &&
-			prevText !== rowText
-		) {
-			data.species = rowText.replace("†", "").split("\n")[0];
-			prevText = "";
 		}
 	}
 	return data;
+}
+
+/**
+ * Returns the temporal range value for a given Dinosaur.
+ * @param {*} rowData
+ * @returns
+ */
+function handleTemporalRange(rowData) {
+	let temporalRange = "";
+	for (const data of rowData) {
+		const text = data.trim();
+		if (text.includes("Temporal range")) {
+			temporalRange = text.replace("Temporal range: ", "").trim();
+		} else if (text.includes("Ma") && !text.includes("Temporal range")) {
+			temporalRange += `, ${text}`;
+		}
+	}
+	return temporalRange;
 }
 
 /**
@@ -135,7 +144,9 @@ function handleImageData(data, result) {
 	const extension = imageTitle.lastIndexOf(".");
 
 	data.image.title = imageTitle.substring(0, extension);
-	data.image.description = parser.parse(metaData.ImageDescription.value).structuredText;
+	data.image.description = parser.parse(
+		metaData.ImageDescription.value,
+	).structuredText;
 	data = handleAuthor(data, metaData.Artist.value);
 	data.image.imageURL = imageInfo.descriptionurl;
 

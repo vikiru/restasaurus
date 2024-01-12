@@ -3,7 +3,6 @@ const {
 	retrieveInformation,
 	retrieveHTMLContent,
 } = require("../utils/scriptHelpers");
-
 const { writeData } = require("../utils/writeData");
 
 async function retrieveAllDinoData() {
@@ -18,6 +17,7 @@ async function retrieveAllDinoData() {
 		"Chasmosaurus",
 		"Pararhabdodon",
 		"Oviraptor",
+		"Gigantopithecus",
 	];
 	const data = [];
 	for (const name of names) {

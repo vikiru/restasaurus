@@ -9,7 +9,18 @@ const DinosaurInfoSchema = new Schema(
 		kingdom: String,
 		phylum: String,
 		clades: [String],
-		subOrder: String,
+		classInfo: [
+			{
+				type: String,
+				value: String,
+			},
+		],
+		orderInfo: [
+			{
+				type: String,
+				value: String,
+			},
+		],
 		family: String,
 		subFamily: String,
 		tribe: String,
