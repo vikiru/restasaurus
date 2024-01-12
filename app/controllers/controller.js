@@ -1,10 +1,11 @@
 const { Dinosaur } = require("../models/Dinosaur");
-const { DinosaurImage } = require("../models/DinosaurImage");
 const { DinosaurInfo } = require("../models/DinosaurInfo");
 
 const apiEndpoints = {
 	getAllDinos: "/api/v1/dinosaurs",
-	getDinoById: "/api/v1/dinosaurs/id/:id",
+	getDinoById: "/api/v1/dinosaurs/:id",
+	getAllImages: "/api/v1/images",
+	getImageById: "/api/v1/images/:id",
 	getDinoByName: "/api/v1/dinosaurs/name/:name",
 	getDinoByQuery: "/api/v1/dinosaurs/search",
 	getDinosByDiet: "/api/v1/dinosaurs/diet/:diet",
@@ -36,8 +37,8 @@ async function retrieveAllDinosaurs(req, res) {
 
 async function retrieveAllImages(req, res) {
 	try {
-		const dinosaurImages = await DinosaurImage.find();
-		res.status(200).json(dinosaurImages);
+		const dinosaurImages = await Dinosaur.find({}, { info: 0, images: 1 });
+		res.status(200).json({ images: dinosaurImages });
 	} catch (error) {
 		console.error(error);
 		res.status(404).json({
@@ -49,8 +50,11 @@ async function retrieveAllImages(req, res) {
 async function retrieveImageById(req, res) {
 	try {
 		const id = req.params.id;
-		const dinosaur = await Dinosaur.findOne({ id: id });
-		res.status(200).json({ image: dinosaur.image });
+		const dinosaurImage = await Dinosaur.findOne(
+			{ id: id },
+			{ info: 0, images: 1 },
+		);
+		res.status(200).json(dinosaurImage);
 	} catch (error) {
 		console.error(error);
 		res.status(404).json({
@@ -63,7 +67,6 @@ async function retrieveById(req, res) {
 	try {
 		const id = req.params.id;
 		const dinosaur = await Dinosaur.findOne({ id: id });
-		console.log(dinosaur);
 		res.status(200).json(dinosaur);
 	} catch (error) {
 		console.error(error);
@@ -76,16 +79,8 @@ async function retrieveById(req, res) {
 async function retrieveByName(req, res) {
 	try {
 		const name = req.params.name;
-		const dinosaurInfo = await DinosaurInfo.findOne({ name: name });
-		let dinosaur = {};
-		if (dinosaurInfo) {
-			dinosaur = await Dinosaur.findOne({ info: dinosaurInfo._id });
-			res.status(200).json(dinosaur);
-		} else {
-			res.status(404).json({
-				error: "Sorry, there doesnt seem to be a dinosaur matching that name.",
-			});
-		}
+		const dinosaur = await Dinosaur.findOne({ name: name });
+		res.status(200).json(dinosaur);
 	} catch (error) {
 		console.error(error);
 		res.status(404).json({

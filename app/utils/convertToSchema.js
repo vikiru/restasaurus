@@ -8,6 +8,7 @@ async function convertToSchema(mongooseData) {
 	const dinoInfo = returnDinoInfo(mongooseData);
 
 	const dinosaur = new Dinosaur({
+		name: mongooseData.name,
 		info: dinoInfo,
 		image: dinoImage,
 	});
@@ -23,7 +24,6 @@ async function convertToSchema(mongooseData) {
 function returnDinoInfo(mongooseData) {
 	const mongooseSource = mongooseData.source;
 	const dinoInfo = new DinosaurInfo({
-		name: mongooseData.name,
 		temporalRange: mongooseData.temporalrange,
 		domain: mongooseData.domain,
 		kingdom: mongooseData.kingdom,

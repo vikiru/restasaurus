@@ -8,6 +8,7 @@ const { Schema, SchemaTypes, model } = mongoose;
 const DinosaurSchema = new Schema(
 	{
 		id: Number,
+		name: String,
 		info: {
 			type: SchemaTypes.ObjectId,
 			ref: DinosaurInfo,

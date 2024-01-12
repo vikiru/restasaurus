@@ -28,3 +28,6 @@ module.exports = {
 	app: app,
 	mongoConnection: mongoConnection,
 };
+
+//TODO: Cleanup routes and route logic, split reading from db logic to services -> Seperate branch
+//TODO: Cleanup data retrieval (some missing fields such as classes, orders), and optimize infobox retrieval

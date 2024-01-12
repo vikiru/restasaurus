@@ -4,7 +4,6 @@ const { Schema, model } = mongoose;
 
 const DinosaurInfoSchema = new Schema(
 	{
-		name: String,
 		temporalRange: String,
 		domain: String,
 		kingdom: String,
@@ -27,8 +26,8 @@ const DinosaurInfoSchema = new Schema(
 			licenseURL: String,
 			lastRevision: String,
 			permalink: String,
-			dateAccessed: String,
 			revisionHistoryURL: String,
+			dateAccessed: String,
 			source: String,
 			publisher: String,
 			citation: String,
