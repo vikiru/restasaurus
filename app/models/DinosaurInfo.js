@@ -1,49 +1,26 @@
 const mongoose = require("mongoose");
+const { ClassificationInfo } = require("./ClassificationInfo");
+const { DinosaurSource } = require("./DinosaurSource");
 const mongooseHidden = require("mongoose-hidden")();
-const { Schema, model } = mongoose;
+const { Schema, SchemaTypes, model } = mongoose;
 
 const DinosaurInfoSchema = new Schema(
 	{
 		temporalRange: String,
-		domain: String,
-		kingdom: String,
-		phylum: String,
-		clades: [String],
-		classInfo: [
-			{
-				classType: String,
-				value: String,
-				_id: false,
-			},
-		],
-		orderInfo: [
-			{
-				orderType: String,
-				value: String,
-				_id: false,
-			},
-		],
-		family: String,
-		subFamily: String,
-		tribe: String,
-		genus: String,
-		species: String,
+		classificationInfo: {
+			type: SchemaTypes.ObjectId,
+			ref: ClassificationInfo,
+			required: true,
+			autopopulate: true,
+		},
 		diet: String,
 		locomotionType: String,
 		description: String,
 		source: {
-			pageTitle: String,
-			author: String,
-			wikipediaURL: String,
-			license: String,
-			licenseURL: String,
-			permalink: String,
-			revisionHistoryURL: String,
-			lastRevision: String,
-			dateAccessed: String,
-			source: String,
-			publisher: String,
-			citation: String,
+			type: SchemaTypes.ObjectId,
+			ref: DinosaurSource,
+			required: true,
+			autopopulate: true,
 		},
 	},
 	{ retainKeyOrder: true },
@@ -56,7 +33,7 @@ DinosaurInfoSchema.plugin(mongooseHidden, {
 	},
 });
 
-DinosaurInfoSchema.index({ id: 1, diet: 1, locomotionType: 1, clade: 1 });
+DinosaurInfoSchema.index({ diet: 1, locomotionType: 1 });
 const DinosaurInfo = model("DinosaurInfo", DinosaurInfoSchema);
 
 module.exports = {
