@@ -92,25 +92,27 @@ async function retrieveByName(req, res) {
 async function retrieveByDiet(req, res) {
 	try {
 		const diet = req.params.diet;
-		const dinosaurInfos = await DinosaurInfo.find({ diet: diet });
-		const dinosaurs = [];
-		if (dinosaurInfos) {
-			for (const dinosaurInfo of dinosaurInfos) {
-				const dinosaur = await Dinosaur.findOne({
-					info: dinosaurInfo._id,
-				});
-				dinosaurs.push(dinosaur);
-			}
-			return res.status(200).json(dinosaurs);
+		const dinosaurs = await Dinosaur.find().populate({
+			path: "info",
+			match: { diet: diet },
+		});
+
+		// Filter out any null values if the diet didn't match
+		const filteredDinosaurs = dinosaurs.filter(
+			dinosaur => dinosaur.info !== null,
+		);
+
+		if (filteredDinosaurs.length > 0) {
+			return res.status(200).json(filteredDinosaurs);
 		} else {
 			return res.status(404).json({
-				error: "Sorry, there doesnt seem to be any dinosaurs matching that diet.",
+				error: "Sorry, there doesn't seem to be any dinosaurs matching that diet.",
 			});
 		}
 	} catch (error) {
 		console.error(error);
 		res.status(404).json({
-			error: "Sorry, there doesnt seem to be any dinosaurs matching that diet.",
+			error: "Sorry, there doesn't seem to be any dinosaurs matching that diet.",
 		});
 	}
 }

@@ -32,6 +32,7 @@ DinosaurSchema.plugin(mongooseHidden, {
 	hidden: { _id: true, __v: true, createdAt: true, updatedAt: true },
 });
 
+DinosaurSchema.index({ id: 1, name: 1, info: 1, image: 1 });
 const Dinosaur = model("Dinosaur", DinosaurSchema);
 
 module.exports = {

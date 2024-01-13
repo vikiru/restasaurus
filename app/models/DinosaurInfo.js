@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const mongooseHidden = require("mongoose-hidden")();
-const { Schema, SchemaTypes, model } = mongoose;
+const { Schema, model } = mongoose;
 
 const DinosaurInfoSchema = new Schema(
 	{
@@ -56,6 +56,7 @@ DinosaurInfoSchema.plugin(mongooseHidden, {
 	},
 });
 
+DinosaurInfoSchema.index({ id: 1, diet: 1, locomotionType: 1, clade: 1 });
 const DinosaurInfo = model("DinosaurInfo", DinosaurInfoSchema);
 
 module.exports = {

@@ -1,7 +1,7 @@
 const fs = require("fs");
 const parser = require("node-html-parser");
 const { fetchData } = require("../utils/fetchData");
-const dinoNames = require("./allDinoNames.json").names;
+const allDinoNames = require("./allDinoNames.json").names;
 
 function constructUrls(dinoNames) {
 	const baseUrl = "https://en.wikipedia.org/w/api.php?";
@@ -65,7 +65,7 @@ function writeToFile(names, filename) {
 }
 
 async function mainHandler() {
-	const urls = constructUrls(dinoNames);
+	const urls = constructUrls(allDinoNames);
 	const dataObjs = await handleUrls(urls);
 	const names = await processData(dataObjs);
 	console.log(names.length);
@@ -100,3 +100,10 @@ async function retrieveAllDinoNames() {
 }
 
 mainHandler();
+
+module.exports = {
+	constructUrls: constructUrls,
+	processData: processData,
+	mainHandler: mainHandler,
+	retrieveAllDinoNames: retrieveAllDinoNames,
+};
