@@ -7,8 +7,6 @@ const mongoose = require("mongoose");
 const favicon = require("serve-favicon");
 const rateLimit = require("express-rate-limit");
 
-cors({ methods: ["GET"] });
-
 const limiter = rateLimit({
 	/* 20 requests every hour */
 	windowMs: 60 * 60 * 1000,

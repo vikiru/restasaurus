@@ -11,12 +11,12 @@ const mongoConnection = mongoDB.connect();
 /* Setup middlewares */
 app.use(middlewares.bodyParser.json());
 app.use(middlewares.bodyParser.urlencoded({ extended: true }));
-app.use(middlewares.cors());
+app.use(middlewares.cors({ methods: ["GET"] }));
 app.use(middlewares.compression());
 app.use(middlewares.morgan("dev"));
 app.use(middlewares.helmet());
 
-app.listen(config.port, async () =>
+app.listen(config.port, () =>
 	console.log(
 		`restasaurus started on port: http://localhost:${config.port}/api/v1`,
 	),
