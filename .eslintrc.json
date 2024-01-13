@@ -18,6 +18,7 @@
 	},
 	"rules": {
 		"arrow-spacing": ["warn", { "before": true, "after": true }],
+		"node/no-missing-require": "off",
 		"node/no-unpublished-require": "off",
 		"comma-dangle": ["error", "always-multiline"],
 		"comma-spacing": "error",
