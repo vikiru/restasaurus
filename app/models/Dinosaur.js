@@ -28,7 +28,9 @@ const DinosaurSchema = new Schema(
 
 DinosaurSchema.plugin(AutoIncrement, { inc_field: "id" });
 DinosaurSchema.plugin(require("mongoose-autopopulate"));
-DinosaurSchema.plugin(mongooseHidden);
+DinosaurSchema.plugin(mongooseHidden, {
+	hidden: { _id: true, __v: true, createdAt: true, updatedAt: true },
+});
 
 const Dinosaur = model("Dinosaur", DinosaurSchema);
 

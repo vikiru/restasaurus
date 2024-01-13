@@ -17,7 +17,7 @@ async function returnHome(req, res) {
 	res.status(200).json({
 		apiVersion: "v1",
 		apiEndpoints: apiEndpoints,
-		rateLimit: "5 requests per hour",
+		rateLimit: "20 requests per hour",
 		disclaimer:
 			"The information within the API is taken directly from Wikipedia, as is and may have been modified since the last time it was retrieved. All images and text belong to their respective authors and attribution is provided accordingly for both.",
 	});
@@ -63,7 +63,7 @@ async function retrieveImageById(req, res) {
 	}
 }
 
-async function retrieveById(req, res) {
+async function retrieveDinoById(req, res) {
 	try {
 		const id = req.params.id;
 		const dinosaur = await Dinosaur.findOne({ id: id });
@@ -146,9 +146,9 @@ async function retrieveByLocomotion(req, res) {
 module.exports = {
 	returnHome: returnHome,
 	retrieveAllDinosaurs: retrieveAllDinosaurs,
+	retrieveDinoById: retrieveDinoById,
 	retrieveAllImages: retrieveAllImages,
 	retrieveImageById: retrieveImageById,
-	retrieveById: retrieveById,
 	retrieveByName: retrieveByName,
 	retrieveByDiet: retrieveByDiet,
 	retrieveByLocomotion: retrieveByLocomotion,

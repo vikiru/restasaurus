@@ -3,7 +3,7 @@ const {
 	retrieveAllDinosaurs,
 	retrieveAllImages,
 	returnHome,
-	retrieveById,
+	retrieveDinoById,
 	retrieveByName,
 	retrieveByDiet,
 	retrieveByLocomotion,
@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.get("/", returnHome);
 router.get("/dinosaurs", retrieveAllDinosaurs);
-router.get("/dinosaurs/:id", retrieveById);
+router.get("/dinosaurs/:id", retrieveDinoById);
 router.get("/images", retrieveAllImages);
 router.get("/images/:id", retrieveImageById);
 router.get("/dinosaurs/name/:name", retrieveByName);
