@@ -5,23 +5,36 @@
 	"private": true,
 	"author": "Visakan Kirubakaran",
 	"license": "MIT",
-	"main": "index.js",
+	"main": "./app/app.js",
 	"scripts": {
+		"start": "node .",
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"lint": "eslint ./app/**/*.js --fix-dry-run",
-		"prettier": "prettier --write ."
+		"prettier": "prettier --write .",
+		"retrieveData": "node ./app/scripts/retrieveData.js",
+		"postData": "node ./app/scripts/postData.js"
 	},
 	"keywords": [],
 	"dependencies": {
+		"@mongodb-js/zstd": "^1.2.0",
 		"body-parser": "^1.20.2",
+		"compression": "^1.7.4",
+		"cors": "^2.8.5",
 		"dotenv": "^16.3.1",
 		"express": "^4.18.2",
-		"express-rate-limiter": "^1.3.1",
+		"express-rate-limit": "^7.1.5",
+		"express-validator": "^7.0.1",
 		"helmet": "^7.1.0",
-		"ioredis": "^5.3.2",
 		"mongodb": "^6.3.0",
 		"mongoose": "^8.0.3",
-		"morgan": "^1.10.0"
+		"mongoose-autopopulate": "^1.1.0",
+		"mongoose-hidden": "^1.9.1",
+		"mongoose-sequence": "^6.0.0",
+		"morgan": "^1.10.0",
+		"node-html-parser": "^6.1.12",
+		"redis": "^4.6.12",
+		"serve-favicon": "^2.5.0",
+		"snappy": "^7.2.2"
 	},
 	"devDependencies": {
 		"chai": "^5.0.0",
@@ -33,7 +46,11 @@
 		"eslint-plugin-promise": "^6.1.1",
 		"mocha": "^10.2.0",
 		"nodemon": "^3.0.2",
-		"prettier": "^3.1.1"
+		"prettier": "^3.1.1",
+		"winston": "^3.11.0"
 	},
-	"ignorePatterns": ["./node_modules/**", "./.github/**"]
+	"ignorePatterns": [
+		"./node_modules/**",
+		"./.github/**"
+	]
 }

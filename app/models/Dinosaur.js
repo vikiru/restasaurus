@@ -1,13 +1,41 @@
-import Image from "./DinosaurImage.js";
-import Info from "./DinosaurInfo.js";
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
+const mongooseHidden = require("mongoose-hidden")();
+const AutoIncrement = require("mongoose-sequence")(mongoose);
+const { DinosaurInfo } = require("./DinosaurInfo");
+const { DinosaurImage } = require("./DinosaurImage");
+const { Schema, SchemaTypes, model } = mongoose;
 
-const { Schema, model } = mongoose;
+const DinosaurSchema = new Schema(
+	{
+		id: Number,
+		name: String,
+		info: {
+			type: SchemaTypes.ObjectId,
+			ref: DinosaurInfo,
+			required: true,
+			autopopulate: true,
+		},
+		image: {
+			type: SchemaTypes.ObjectId,
+			ref: DinosaurImage,
+			required: true,
+			autopopulate: true,
+		},
+	},
+	{ timestamps: true },
+	{ retainKeyOrder: true },
+);
 
-const dinosaurSchema = new Schema({
-	info: Info,
-	image: Image,
+DinosaurSchema.plugin(AutoIncrement, { inc_field: "id" });
+DinosaurSchema.plugin(require("mongoose-autopopulate"));
+DinosaurSchema.plugin(mongooseHidden, {
+	hidden: { _id: true, __v: true, createdAt: true, updatedAt: true },
 });
 
-const Dinosaur = model("Dinosaur", dinosaurSchema);
-export default Dinosaur;
+DinosaurSchema.index({ id: 1, name: 1, info: 1, image: 1 });
+const Dinosaur = model("Dinosaur", DinosaurSchema);
+
+module.exports = {
+	DinosaurSchema: DinosaurSchema,
+	Dinosaur: Dinosaur,
+};
