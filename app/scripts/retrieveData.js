@@ -4,7 +4,7 @@ const {
 	retrieveHTMLContent,
 } = require("../utils/scriptHelpers");
 const { writeData } = require("../utils/writeData");
-const dinosaurNames = require("../scripts/dinosaurNames.json");
+const dinosaurNames = require("../scripts/filteredNames.json");
 
 async function retrieveAllDinoData() {
 	const names = dinosaurNames.names;
