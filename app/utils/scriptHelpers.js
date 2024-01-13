@@ -142,38 +142,44 @@ async function retrieveInformation(dinosaurName, data) {
 function handleImageData(data, result) {
 	const mainData =
 		result.query.pages[`${Object.keys(result.query.pages)[0]}`];
-	const imageInfo = mainData.imageinfo[0];
-	const metaData = imageInfo.extmetadata;
 
-	const imageTitle = mainData.title.replace("File:", "");
-	const extension = imageTitle.lastIndexOf(".");
+	if ("imageinfo" in mainData) {
+		const imageInfo = mainData.imageinfo[0];
+		const metaData = imageInfo.extmetadata;
 
-	data.image.title = imageTitle.substring(0, extension);
+		const imageTitle = mainData.title.replace("File:", "");
+		const extension = imageTitle.lastIndexOf(".");
+		data.image.title = imageTitle.substring(0, extension);
 
-	if ("ImageDescription" in metaData) {
-		data.image.description = parser.parse(
-			metaData.ImageDescription.value,
-		).structuredText;
+		if ("ImageDescription" in metaData) {
+			data.image.description = parser.parse(
+				metaData.ImageDescription.value,
+			).structuredText;
+		}
+
+		if ("Artist" in metaData) {
+			data = handleAuthor(data, metaData.Artist.value);
+		}
+		data.image.imageURL = imageInfo.descriptionurl;
+
+		if (
+			metaData.LicenseShortName.value !== "Public domain" &&
+			"UsageTerms" &&
+			"LicenseUrl" in metaData
+		) {
+			data.image.license = metaData.UsageTerms.value;
+			data.image.licenseURL = metaData.LicenseUrl.value;
+		} else {
+			data.image.license = metaData.LicenseShortName.value;
+			data.image.licenseURL =
+				"https://creativecommons.org/public-domain/";
+		}
+
+		data.image.dateCreated = new Date(
+			`${metaData.DateTime.value}`,
+		).toISOString();
+		data.image.dateAccessed = new Date().toISOString();
 	}
-
-	if ("Artist" in metaData) {
-		data = handleAuthor(data, metaData.Artist.value);
-	}
-
-	data.image.imageURL = imageInfo.descriptionurl;
-
-	if (metaData.LicenseShortName.value !== "Public domain") {
-		data.image.license = metaData.UsageTerms.value;
-		data.image.licenseURL = metaData.LicenseUrl.value;
-	} else {
-		data.image.license = metaData.LicenseShortName.value;
-		data.image.licenseURL = "https://creativecommons.org/public-domain/";
-	}
-
-	data.image.dateCreated = new Date(
-		`${metaData.DateTime.value}`,
-	).toISOString();
-	data.image.dateAccessed = new Date().toISOString();
 	return data;
 }
 
@@ -188,7 +194,7 @@ function handleAuthor(data, authorInfo) {
 		const authorAnchor = parser.parse(authorInfo);
 		const anchorHTML = authorAnchor.innerHTML;
 		data.image.author = authorAnchor.structuredText;
-		const hrefRegex = new RegExp('href="[/]*([w]*[^"]*)', "gmi");
+		const hrefRegex = new RegExp('href="[/]*([\\w]*[^"]*)', "gmi");
 		const match = hrefRegex.exec(anchorHTML);
 		if (match.length == 2) {
 			data.image.authorURL = `https://${match[1]}`;
@@ -236,7 +242,7 @@ function findDiet(pageData) {
 	if ("extract" in pageData) {
 		const matches = pageData.extract.match(dietRegex);
 		if (matches && matches.length > 0) {
-			diet = matches[1].replace("orous", "ore");
+			diet = matches[0].replace("orous", "ore");
 		}
 	} else {
 		const pageText = pageData.structuredText.split("\n");
@@ -248,7 +254,7 @@ function findDiet(pageData) {
 		for (const text of filteredText) {
 			const match = dietRegex.exec(text);
 			if (match) {
-				const dietType = match[1].toLowerCase().replace("orous", "ore");
+				const dietType = match[0].toLowerCase().replace("orous", "ore");
 				dietCount[dietType] = (dietCount[dietType] || 0) + 1;
 			}
 		}
@@ -263,7 +269,7 @@ function findDiet(pageData) {
 			)[0];
 			diet = maxCountKey;
 		}
-		diet = diet.replace("mega", "").trim();
+		diet = diet.replace("mega", "").replace("vores", "vore").trim();
 		return diet;
 	}
 }
