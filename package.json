@@ -32,7 +32,8 @@
 		"morgan": "^1.10.0",
 		"node-html-parser": "^6.1.12",
 		"redis": "^4.6.12",
-		"serve-favicon": "^2.5.0"
+		"serve-favicon": "^2.5.0",
+		"snappy": "^7.2.2"
 	},
 	"devDependencies": {
 		"chai": "^5.0.0",
