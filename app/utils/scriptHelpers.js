@@ -231,41 +231,41 @@ function handleSourceInformation(data, dinosaurName, pageData, licenseInfo) {
 //TODO: Refactor this into 2 functions
 function findDiet(pageData) {
 	let diet = "";
-	let extract = "";
-	if ("extract" in pageData) {
-		extract = pageData.extract;
-	}
-	const dietRegex = new RegExp("\\b\\w*(ivore|ivorous)s?\\b", "gmi");
-	const matches = dietRegex.exec(extract);
-	if (matches && matches.length > 0) {
-		diet = String(matches[0]).replace("orous", "ore");
-	}
+	const dietRegex = new RegExp("(\\b\\w*(ivore|ivorous))s?\\b", "gmi");
 
-	if (!("extract" in pageData)) {
+	if ("extract" in pageData) {
+		const matches = pageData.extract.match(dietRegex);
+		if (matches && matches.length > 0) {
+			diet = matches[1].replace("orous", "ore");
+		}
+	} else {
 		const pageText = pageData.structuredText.split("\n");
 		const dietCount = {};
-		pageText.forEach(text => text.trim());
-		const filteredText = pageText.filter(text => dietRegex.test(text));
+		const filteredText = pageText
+			.map(text => text.trim())
+			.filter(text => dietRegex.test(text));
+
 		for (const text of filteredText) {
 			const match = dietRegex.exec(text);
 			if (match) {
-				const dietType = match[0].toLowerCase().replace("orous", "ore");
-				if (dietCount[dietType]) {
-					dietCount[dietType] += 1;
-				} else {
-					dietCount[dietType] = 1;
-				}
+				const dietType = match[1].toLowerCase().replace("orous", "ore");
+				dietCount[dietType] = (dietCount[dietType] || 0) + 1;
 			}
 		}
-		if (dietCount.length > 0) {
-			const entries = Object.entries(dietCount);
-			const maxCountKey = entries.reduce((maxEntry, currentEntry) => {
-				return currentEntry[1] > maxEntry[1] ? currentEntry : maxEntry;
-			})[0];
+
+		if (Object.keys(dietCount).length > 0) {
+			const maxCountKey = Object.entries(dietCount).reduce(
+				(maxEntry, currentEntry) => {
+					return currentEntry[1] > maxEntry[1]
+						? currentEntry
+						: maxEntry;
+				},
+			)[0];
 			diet = maxCountKey;
 		}
+		diet = diet.replace("mega", "").trim();
+		return diet;
 	}
-	return diet;
 }
 
 /**
@@ -288,29 +288,24 @@ function findLocomotionType(pageData) {
 	return locomotionType;
 }
 
+function formatDate(dateString) {
+	return new Date(dateString).toLocaleDateString("en-GB", {
+		day: "numeric",
+		month: "short",
+		year: "numeric",
+	});
+}
+
 /**
  * Given the source data of a Wikipedia article, return an MLA citation String.
  * @param {*} sourceData
  * @returns MLA citation
  */
 function createCitation(sourceData) {
-	const formattedRevision = new Date(
-		sourceData.lastRevision,
-	).toLocaleDateString("en-GB", {
-		day: "numeric",
-		month: "short",
-		year: "numeric",
-	});
+	const formattedRevision = formatDate(sourceData.lastRevision);
+	const formattedAccessed = formatDate(sourceData.dateAccessed);
 
-	const formattedAccessed = new Date(
-		sourceData.dateAccessed,
-	).toLocaleDateString("en-GB", {
-		day: "numeric",
-		month: "short",
-		year: "numeric",
-	});
-
-	const citation = `${sourceData.author}. "${sourceData.pageTitle}" ${sourceData.publisher}. ${sourceData.publisher},  ${formattedRevision}. Web. ${formattedAccessed}.`;
+	const citation = `${sourceData.author}. "${sourceData.pageTitle}." ${sourceData.publisher}. ${sourceData.publisher}, ${formattedRevision}. Web. ${formattedAccessed}.`;
 	return citation;
 }
 
