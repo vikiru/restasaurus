@@ -11,13 +11,13 @@ const DinosaurInfoSchema = new Schema(
 		clades: [String],
 		classInfo: [
 			{
-				type: String,
+				classType: String,
 				value: String,
 			},
 		],
 		orderInfo: [
 			{
-				type: String,
+				orderType: String,
 				value: String,
 			},
 		],

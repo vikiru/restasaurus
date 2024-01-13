@@ -39,6 +39,8 @@ async function retrieveHTMLContent(dinosaurName, data) {
 	const htmlText = request.parse.text;
 	const parsedHTML = parser.parse(htmlText);
 	data = retrieveBoxData(parsedHTML, data);
+	data.diet = findDiet(parsedHTML);
+
 	return data;
 }
 
@@ -64,15 +66,17 @@ function retrieveBoxData(html, data) {
 			if (!keywordRegex.test(keyword)) {
 				keyword = rowData[0].structuredText.toLowerCase();
 			}
-			keyword = keyword.replace(":", "");
-			const value = rowData[1].structuredText.trim().replace("†", "");
+			keyword = String(keyword.replace(":", ""));
+			const value = String(
+				rowData[1].structuredText.trim().replace("†", ""),
+			);
 			if (keyword.includes("order") || keyword === "Order") {
-				data["orderInfo"].push({ type: keyword, value: value });
+				data["orderInfo"].push({ orderType: keyword, value: value });
 			} else if (keyword.includes("class") || keyword === "Class") {
-				data["classInfo"].push({ type: keyword, value: value });
+				data["classInfo"].push({ classType: keyword, value: value });
 			} else if (keyword === "clade") {
 				data["clade"].push(value);
-			} else if (keyword === "genus") {
+			} else if (value.includes("\n")) {
 				data[keyword] = value.split("\n")[0];
 			} else {
 				data[keyword] = value;
@@ -114,17 +118,18 @@ async function retrieveInformation(dinosaurName, data) {
 	const pageData =
 		result.query.pages[`${Object.keys(result.query.pages)[0]}`];
 	const licenseInfo = result.query.rightsinfo;
-	const imageName = pageData.pageimage;
-
-	const imageQueryURL = `https://en.wikipedia.org/w/api.php?action=query&prop=imageinfo&iiprop=extmetadata|url&titles=File:${imageName}&format=json`;
-	const imageResult = await fetchData(imageQueryURL);
 
 	data.description = pageData.extract.split("\n")[0];
 	data.diet = findDiet(pageData);
 	data.locomotionType = findLocomotionType(pageData);
-
 	data = handleSourceInformation(data, dinosaurName, pageData, licenseInfo);
-	data = handleImageData(data, imageResult);
+
+	if ("pageimage" in pageData) {
+		const imageName = pageData.pageimage;
+		const imageQueryURL = `https://en.wikipedia.org/w/api.php?action=query&prop=imageinfo&iiprop=extmetadata|url&titles=File:${imageName}&format=json`;
+		const imageResult = await fetchData(imageQueryURL);
+		data = handleImageData(data, imageResult);
+	}
 	return data;
 }
 
@@ -144,10 +149,17 @@ function handleImageData(data, result) {
 	const extension = imageTitle.lastIndexOf(".");
 
 	data.image.title = imageTitle.substring(0, extension);
-	data.image.description = parser.parse(
-		metaData.ImageDescription.value,
-	).structuredText;
-	data = handleAuthor(data, metaData.Artist.value);
+
+	if ("ImageDescription" in metaData) {
+		data.image.description = parser.parse(
+			metaData.ImageDescription.value,
+		).structuredText;
+	}
+
+	if ("Artist" in metaData) {
+		data = handleAuthor(data, metaData.Artist.value);
+	}
+
 	data.image.imageURL = imageInfo.descriptionurl;
 
 	if (metaData.LicenseShortName.value !== "Public domain") {
@@ -215,13 +227,43 @@ function handleSourceInformation(data, dinosaurName, pageData, licenseInfo) {
  * @param {*} pageData
  * @returns
  */
+
+//TODO: Refactor this into 2 functions
 function findDiet(pageData) {
 	let diet = "";
-	const extract = pageData.extract;
-	const dietRegex = new RegExp("([^\\s][\\w]*vor[\\w]*[^\\s])", "gmi");
+	let extract = "";
+	if ("extract" in pageData) {
+		extract = pageData.extract;
+	}
+	const dietRegex = new RegExp("\\b\\w*(ivore|ivorous)s?\\b", "gmi");
 	const matches = dietRegex.exec(extract);
 	if (matches && matches.length > 0) {
 		diet = String(matches[0]).replace("orous", "ore");
+	}
+
+	if (!("extract" in pageData)) {
+		const pageText = pageData.structuredText.split("\n");
+		const dietCount = {};
+		pageText.forEach(text => text.trim());
+		const filteredText = pageText.filter(text => dietRegex.test(text));
+		for (const text of filteredText) {
+			const match = dietRegex.exec(text);
+			if (match) {
+				const dietType = match[0].toLowerCase().replace("orous", "ore");
+				if (dietCount[dietType]) {
+					dietCount[dietType] += 1;
+				} else {
+					dietCount[dietType] = 1;
+				}
+			}
+		}
+		if (dietCount.length > 0) {
+			const entries = Object.entries(dietCount);
+			const maxCountKey = entries.reduce((maxEntry, currentEntry) => {
+				return currentEntry[1] > maxEntry[1] ? currentEntry : maxEntry;
+			})[0];
+			diet = maxCountKey;
+		}
 	}
 	return diet;
 }
@@ -277,7 +319,7 @@ module.exports = {
 	retrieveBoxData: retrieveBoxData,
 	keywords: keywords,
 	retrieveInformation: retrieveInformation,
-	findDietary: findDiet,
+	findDiet: findDiet,
 	findLocomotionType: findLocomotionType,
 	handleAuthor: handleAuthor,
 	handleImageData: handleImageData,
