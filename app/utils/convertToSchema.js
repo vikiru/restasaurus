@@ -4,7 +4,22 @@ const { DinosaurImage } = require("../models/DinosaurImage");
 const { DinosaurSource } = require("../models/DinosaurSource");
 
 async function convertToSchema(mongooseData) {
-	const keys = {
+	const keys = getClassificationAndDinosaurKeys();
+	const dinosaur = createDinosaurObject(mongooseData, keys);
+	const dinoSource = new DinosaurSource(mongooseData.source);
+	const classification = new ClassificationInfo(dinosaur.classificationInfo);
+	const dinoImage = new DinosaurImage(mongooseData.image);
+	const dino = createDinosaurInstance(
+		mongooseData,
+		classification,
+		dinoSource,
+		dinoImage,
+	);
+	return createDataObject(dino, classification, dinoImage, dinoSource);
+}
+
+function getClassificationAndDinosaurKeys() {
+	return {
 		classificationInfo: [
 			"domain",
 			"kingdom",
@@ -15,7 +30,7 @@ async function convertToSchema(mongooseData) {
 			"familyInfo",
 			"tribeInfo",
 			"genusInfo",
-			"species",
+			"speciesInfo",
 		],
 		dinosaur: [
 			"name",
@@ -25,7 +40,9 @@ async function convertToSchema(mongooseData) {
 			"descriptions",
 		],
 	};
+}
 
+function createDinosaurObject(mongooseData, keys) {
 	const dinosaur = {};
 	for (const key in keys) {
 		if (key in mongooseData) {
@@ -34,11 +51,16 @@ async function convertToSchema(mongooseData) {
 			dinosaur[key] = createSubObject(mongooseData, keys[key]);
 		}
 	}
+	return dinosaur;
+}
 
-	const dinoSource = new DinosaurSource(mongooseData.source);
-	const classification = new ClassificationInfo(dinosaur.classificationInfo);
-	const dinoImage = new DinosaurImage(mongooseData.image);
-	const dino = new Dinosaur({
+function createDinosaurInstance(
+	mongooseData,
+	classification,
+	dinoSource,
+	dinoImage,
+) {
+	return new Dinosaur({
 		name: mongooseData.name,
 		temporalRange: mongooseData.temporalrange.replace(",,", ","),
 		diet: mongooseData.diet,
@@ -48,15 +70,15 @@ async function convertToSchema(mongooseData) {
 		source: dinoSource,
 		image: dinoImage,
 	});
+}
 
-	const data = {
+function createDataObject(dino, classification, dinoImage, dinoSource) {
+	return {
 		dinosaur: dino,
 		classificationInfo: classification,
 		image: dinoImage,
 		source: dinoSource,
 	};
-
-	return data;
 }
 
 function createSubObject(obj, keys) {
@@ -71,5 +93,9 @@ function createSubObject(obj, keys) {
 
 module.exports = {
 	convertToSchema: convertToSchema,
+	getClassificationAndDinosaurKeys: getClassificationAndDinosaurKeys,
+	createDinosaurObject: createDinosaurObject,
+	createDinosaurInstance: createDinosaurInstance,
+	createDataObject: createDataObject,
 	createSubObject: createSubObject,
 };
