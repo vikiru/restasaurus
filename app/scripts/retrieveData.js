@@ -1,10 +1,8 @@
 const { MongooseData } = require("../models/MongooseData");
-const {
-	retrieveInformation,
-	retrieveHTMLContent,
-} = require("../utils/scriptHelpers");
 const { writeData } = require("../utils/writeData");
 const dinosaurNames = require("../scripts/filteredNames.json");
+const { retrieveInformation } = require("../utils/retrieveInformation");
+const { retrieveHTMLContent } = require("../utils/retrieveHTMLContent");
 
 async function retrieveAllDinoData() {
 	const names = dinosaurNames.names;
@@ -19,8 +17,10 @@ async function retrieveAllDinoData() {
 		mongooseData = await retrieveInformation(name, mongooseData);
 		mongooseData = await retrieveHTMLContent(name, mongooseData);
 		data.push(mongooseData);
+
 		console.log(`Finished data retrieval for ${name}\n`);
 	}
+
 	await writeData(data, "dinosaurData.json");
 }
 

@@ -12,7 +12,7 @@ class MongooseData {
 			familyInfo: [],
 			tribeInfo: [],
 			genusInfo: [],
-			species: "",
+			speciesInfo: [],
 		};
 		this.diet = "";
 		this.locomotionType = "";

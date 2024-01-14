@@ -25,7 +25,7 @@ const ClassificationInfoSchema = new Schema(
 		familyInfo: [{ familyType: String, value: String, _id: false }],
 		tribeInfo: [{ tribeType: String, value: String, _id: false }],
 		genusInfo: [{ genusType: String, value: String, _id: false }],
-		species: String,
+		speciesInfo: [{ speciesType: String, value: String, _id: false }],
 	},
 	{ retainKeyOrder: true },
 );

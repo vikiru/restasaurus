@@ -50,7 +50,7 @@ DinosaurSchema.statics.findById = function (id) {
 };
 
 DinosaurSchema.statics.findByName = function (name) {
-	return this.findOne({ "info.name": name }).populate(
+	return this.findOne({ name: name }).populate(
 		"classificationInfo image source",
 	);
 };
@@ -68,7 +68,7 @@ DinosaurSchema.statics.findImageById = function (id) {
 };
 
 DinosaurSchema.statics.findByDiet = function (diet) {
-	return this.find({ "info.diet": diet }).populate(
+	return this.find({ diet: diet }).populate(
 		"classificationInfo image source",
 	);
 };

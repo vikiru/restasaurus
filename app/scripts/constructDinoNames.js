@@ -97,18 +97,18 @@ async function retrieveAllDinoNames() {
 		"https://en.wikipedia.org/w/api.php?action=parse&page=List_of_dinosaur_genera&prop=text&formatversion=2&format=json",
 	);
 	const htmlText = parser.parse(data.parse.text);
-	const names = extractDinoNames(htmlText);
-	writeData({ names: names }, "allDinoNames.json");
+	const names = extractDinoNames(htmlText).sort();
+	await writeData({ names: names }, "allDinoNames.json");
 	return names;
 }
 
 async function returnFilteredNames() {
 	const allDinoNames = await retrieveAllDinoNames();
-	console.log("Starting filtering process for dino names");
 	const urls = constructUrls(allDinoNames);
 	const dataObjs = await handleUrls(urls);
-	const names = processData(dataObjs);
-	writeData({ names: names }, "filteredNames.json");
+	console.log("\nStarting filtering process for dino names");
+	const names = processData(dataObjs).sort();
+	await writeData({ names: names }, "filteredNames.json");
 }
 
 returnFilteredNames();
