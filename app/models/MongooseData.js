@@ -2,17 +2,18 @@ class MongooseData {
 	constructor(name) {
 		this.name = name;
 		this.temporalrange = "";
-		this.domain = "";
-		this.kingdom = "";
-		this.phylum = "";
-		this.clade = [];
-		this.classInfo = [];
-		this.orderInfo = [];
-		this.family = "";
-		this.subfamily = "";
-		this.tribe = "";
-		this.genus = "";
-		this.species = "";
+		this.classificationInfo = {
+			domain: "",
+			kingdom: "",
+			phylum: "",
+			clade: [],
+			classInfo: [],
+			orderInfo: [],
+			familyInfo: [],
+			tribeInfo: [],
+			genusInfo: [],
+			species: "",
+		};
 		this.diet = "";
 		this.locomotionType = "";
 		this.description = "";

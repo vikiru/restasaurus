@@ -4,12 +4,13 @@ const { pushDinosaurToDB } = require("../services/index");
 const mongoDB = require("../data/mongoData");
 
 async function postAllDinosaurs() {
-	mongoDB.connect();
-	for (const dinosaur of dinosaurData) {
+	await mongoDB.connect();
+	const dinosaurPromises = dinosaurData.map(async dinosaur => {
 		const dinosaurSchema = await convertToSchema(dinosaur);
-		await pushDinosaurToDB(dinosaurSchema);
-	}
-	mongoDB.disconnect();
+		return pushDinosaurToDB(dinosaurSchema);
+	});
+	await Promise.all(dinosaurPromises);
+	await mongoDB.disconnect();
 }
 
 postAllDinosaurs();

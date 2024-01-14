@@ -1,66 +1,71 @@
+const { ClassificationInfo } = require("../models/ClassificationInfo");
 const { Dinosaur } = require("../models/Dinosaur");
-const { DinosaurInfo } = require("../models/DinosaurInfo");
 const { DinosaurImage } = require("../models/DinosaurImage");
+const { DinosaurSource } = require("../models/DinosaurSource");
 
 async function convertToSchema(mongooseData) {
-	const mongooseImage = mongooseData.image;
-	const dinoImage = returnDinoImage(mongooseImage);
-	const dinoInfo = returnDinoInfo(mongooseData);
+	const keys = {
+		classificationInfo: [
+			"domain",
+			"kingdom",
+			"phylum",
+			"clade",
+			"classInfo",
+			"orderInfo",
+			"familyInfo",
+			"tribeInfo",
+			"genusInfo",
+			"species",
+		],
+		dinosaur: [
+			"name",
+			"temporalrange",
+			"diet",
+			"locomotionType",
+			"descriptions",
+		],
+	};
 
-	const dinosaur = new Dinosaur({
+	const dinosaur = {};
+	for (const key in keys) {
+		dinosaur[key] = createSubObject(mongooseData, keys[key]);
+	}
+
+	const dinoSource = new DinosaurSource(mongooseData.source);
+	const classification = new ClassificationInfo(dinosaur.classificationInfo);
+	const dinoImage = new DinosaurImage(mongooseData.image);
+	const dino = new Dinosaur({
 		name: mongooseData.name,
-		info: dinoInfo,
+		temporalRange: mongooseData.temporalrange.replace(",,", ","),
+		diet: mongooseData.diet,
+		locomotionType: mongooseData.locomotionType,
+		description: mongooseData.description,
+		classificationInfo: classification,
+		source: dinoSource,
 		image: dinoImage,
 	});
 
 	const data = {
-		dinosaur: dinosaur,
-		dinoInfo: dinoInfo,
-		dinoImage: dinoImage,
+		dinosaur: dino,
+		classificationInfo: classification,
+		image: dinoImage,
+		source: dinoSource,
 	};
+
 	return data;
 }
 
-function returnDinoInfo(mongooseData) {
-	const mongooseSource = mongooseData.source;
-	const dinoInfo = new DinosaurInfo({
-		temporalRange: mongooseData.temporalrange,
-		domain: mongooseData.domain,
-		kingdom: mongooseData.kingdom,
-		phylum: mongooseData.phylum,
-		clades: mongooseData.clade,
-		classInfo: mongooseData.classInfo,
-		orderInfo: mongooseData.orderInfo,
-		family: mongooseData.family,
-		subFamily: mongooseData.subfamily,
-		tribe: mongooseData.tribe,
-		genus: mongooseData.genus,
-		species: mongooseData.species,
-		description: mongooseData.description,
-		diet: mongooseData.diet,
-		locomotionType: mongooseData.locomotionType,
-		source: mongooseSource,
+function createSubObject(obj, keys) {
+	const subObject = {};
+	keys.forEach(key => {
+		if (Object.prototype.hasOwnProperty.call(obj, key)) {
+			subObject[key] = obj[key];
+		}
 	});
-	return dinoInfo;
-}
-
-function returnDinoImage(mongooseImage) {
-	const dinoImage = new DinosaurImage({
-		title: mongooseImage.title,
-		description: mongooseImage.description,
-		author: mongooseImage.author,
-		authorURL: mongooseImage.authorURL,
-		imageURL: mongooseImage.imageURL,
-		license: mongooseImage.license,
-		licenseURL: mongooseImage.licenseURL,
-		dateCreated: mongooseImage.dateCreated,
-		dateAccessed: mongooseImage.dateAccessed,
-	});
-	return dinoImage;
+	return subObject;
 }
 
 module.exports = {
 	convertToSchema: convertToSchema,
-	returnDinoInfo: returnDinoInfo,
-	returnDinoImage: returnDinoImage,
+	createSubObject: createSubObject,
 };

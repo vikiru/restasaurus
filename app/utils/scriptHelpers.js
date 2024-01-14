@@ -44,6 +44,45 @@ async function retrieveHTMLContent(dinosaurName, data) {
 	return data;
 }
 
+function assignClassificationInfo(data, keyword, value) {
+	const actions = {
+		order: () =>
+			data.classificationInfo.orderInfo.push({
+				orderType: keyword,
+				value,
+			}),
+		class: () =>
+			data.classificationInfo.classInfo.push({
+				classType: keyword,
+				value,
+			}),
+		family: () =>
+			data.classificationInfo.familyInfo.push({
+				familyType: keyword,
+				value,
+			}),
+		tribe: () =>
+			data.classificationInfo.tribeInfo.push({
+				tribeType: keyword,
+				value,
+			}),
+		genus: () =>
+			data.classificationInfo.genusInfo.push({
+				genusType: keyword,
+				value,
+			}),
+		clade: () => data.classificationInfo.clade.push(value),
+	};
+	const action = actions[keyword.toLowerCase()];
+	if (action) {
+		action();
+	} else if (value.includes("\n")) {
+		data[`classificationInfo`][keyword] = value.split("\n")[0];
+	} else {
+		data[`classificationInfo`][keyword] = value;
+	}
+}
+
 /**
  * After passing in parsed HTML data, retrieve all of the data within the Wikipedia Infobox section according to the specified
  * keywords.
@@ -56,7 +95,7 @@ function retrieveBoxData(html, data) {
 	const rows = tableBody.querySelectorAll("tr");
 	const firstRowData = rows[0].structuredText.split("\n");
 	data.temporalrange = handleTemporalRange(firstRowData);
-	const filteredRows = rows.filter(row => rows.indexOf(row) > 3);
+	const filteredRows = rows.filter((_, index) => index > 3);
 
 	for (const row of filteredRows) {
 		const rowData = row.querySelectorAll("td");
@@ -70,17 +109,7 @@ function retrieveBoxData(html, data) {
 			const value = String(
 				rowData[1].structuredText.trim().replace("†", ""),
 			);
-			if (keyword.includes("order") || keyword === "Order") {
-				data["orderInfo"].push({ orderType: keyword, value: value });
-			} else if (keyword.includes("class") || keyword === "Class") {
-				data["classInfo"].push({ classType: keyword, value: value });
-			} else if (keyword === "clade") {
-				data["clade"].push(value);
-			} else if (value.includes("\n")) {
-				data[keyword] = value.split("\n")[0];
-			} else {
-				data[keyword] = value;
-			}
+			assignClassificationInfo(data, keyword, value);
 		}
 	}
 	return data;
@@ -92,16 +121,15 @@ function retrieveBoxData(html, data) {
  * @returns
  */
 function handleTemporalRange(rowData) {
-	let temporalRange = "";
-	for (const data of rowData) {
+	return rowData.reduce((temporalRange, data) => {
 		const text = data.trim();
 		if (text.includes("Temporal range")) {
-			temporalRange = text.replace("Temporal range: ", "").trim();
+			return text.replace("Temporal range: ", "").trim();
 		} else if (text.includes("Ma") && !text.includes("Temporal range")) {
-			temporalRange += `, ${text}`;
+			return `${temporalRange}, ${text}`;
 		}
-	}
-	return temporalRange;
+		return temporalRange;
+	}, "");
 }
 
 /**
@@ -115,16 +143,24 @@ async function retrieveInformation(dinosaurName, data) {
 	const queryURL = `https://en.wikipedia.org/w/api.php?action=query&meta=siteinfo&siprop=rightsinfo&prop=revisions|pageimages|info|extracts&exintro=&explaintext=&inprop=url&titles=${dinosaurName}&format=json`;
 	const result = await fetchData(queryURL);
 
-	const pageData =
-		result.query.pages[`${Object.keys(result.query.pages)[0]}`];
-	const licenseInfo = result.query.rightsinfo;
+	const pageDataKey = Object.keys(result.query.pages)[0];
+	const pageData = result.query.pages[pageDataKey];
+	const { rightsinfo: licenseInfo } = result.query;
 
-	data.description = pageData.extract.split("\n")[0];
+	if (pageData.extract) {
+		data.description = pageData.extract.split("\n")[0];
+	}
+
 	data.diet = findDiet(pageData);
 	data.locomotionType = findLocomotionType(pageData);
-	data = handleSourceInformation(data, dinosaurName, pageData, licenseInfo);
+	data.source = handleSourceInformation(
+		data,
+		dinosaurName,
+		pageData,
+		licenseInfo,
+	);
 
-	if ("pageimage" in pageData) {
+	if (pageData.pageimage) {
 		const imageName = pageData.pageimage;
 		const imageQueryURL = `https://en.wikipedia.org/w/api.php?action=query&prop=imageinfo&iiprop=extmetadata|url&titles=File:${imageName}&format=json`;
 		const imageResult = await fetchData(imageQueryURL);
@@ -140,32 +176,36 @@ async function retrieveInformation(dinosaurName, data) {
  * @returns
  */
 function handleImageData(data, result) {
-	const mainData =
-		result.query.pages[`${Object.keys(result.query.pages)[0]}`];
+	const mainData = result.query.pages[Object.keys(result.query.pages)[0]];
 
-	if ("imageinfo" in mainData) {
-		const imageInfo = mainData.imageinfo[0];
-		const metaData = imageInfo.extmetadata;
+	if (mainData.imageinfo) {
+		const {
+			imageinfo: [imageInfo],
+			title,
+		} = mainData;
+		const { extmetadata: metaData } = imageInfo;
 
-		const imageTitle = mainData.title.replace("File:", "");
+		const imageTitle = title.replace("File:", "");
 		const extension = imageTitle.lastIndexOf(".");
 		data.image.title = imageTitle.substring(0, extension);
 
-		if ("ImageDescription" in metaData) {
+		if (metaData.ImageDescription) {
 			data.image.description = parser.parse(
 				metaData.ImageDescription.value,
 			).structuredText;
 		}
 
-		if ("Artist" in metaData) {
+		if (metaData.Artist) {
 			data = handleAuthor(data, metaData.Artist.value);
 		}
+
 		data.image.imageURL = imageInfo.descriptionurl;
 
 		if (
+			metaData.LicenseShortName &&
 			metaData.LicenseShortName.value !== "Public domain" &&
-			"UsageTerms" &&
-			"LicenseUrl" in metaData
+			metaData.UsageTerms &&
+			metaData.LicenseUrl
 		) {
 			data.image.license = metaData.UsageTerms.value;
 			data.image.licenseURL = metaData.LicenseUrl.value;
@@ -175,9 +215,12 @@ function handleImageData(data, result) {
 				"https://creativecommons.org/public-domain/";
 		}
 
-		data.image.dateCreated = new Date(
-			`${metaData.DateTime.value}`,
-		).toISOString();
+		if (metaData.DateTime) {
+			data.image.dateCreated = new Date(
+				metaData.DateTime.value,
+			).toISOString();
+		}
+
 		data.image.dateAccessed = new Date().toISOString();
 	}
 	return data;
@@ -192,11 +235,11 @@ function handleImageData(data, result) {
 function handleAuthor(data, authorInfo) {
 	if (authorInfo.startsWith("<a") || authorInfo.includes("href=")) {
 		const authorAnchor = parser.parse(authorInfo);
-		const anchorHTML = authorAnchor.innerHTML;
-		data.image.author = authorAnchor.structuredText;
+		const { innerHTML, structuredText } = authorAnchor;
+		data.image.author = structuredText;
 		const hrefRegex = new RegExp('href="[/]*([\\w]*[^"]*)', "gmi");
-		const match = hrefRegex.exec(anchorHTML);
-		if (match.length == 2) {
+		const match = hrefRegex.exec(innerHTML);
+		if (match && match[1]) {
 			data.image.authorURL = `https://${match[1]}`;
 		}
 	} else {
@@ -215,16 +258,51 @@ function handleAuthor(data, authorInfo) {
  * @returns
  */
 function handleSourceInformation(data, dinosaurName, pageData, licenseInfo) {
-	data.source.pageTitle = dinosaurName;
-	data.source.wikipediaURL = pageData.fullurl;
-	data.source.lastRevision = pageData.revisions[0].timestamp;
-	data.source.dateAccessed = new Date().toISOString();
-	data.source.revisionHistoryURL = `https://en.wikipedia.org/w/index.php?title=${dinosaurName}&action=history`;
-	data.source.license = licenseInfo.text;
-	data.source.licenseURL = licenseInfo.url;
-	data.source.permalink = `https://en.wikipedia.org/w/index.php?title=${dinosaurName}&oldid=${pageData.revisions[0].revid}`;
-	data.source.citation = createCitation(data.source);
-	return data;
+	const source = {};
+
+	if (dinosaurName) {
+		source.pageTitle = dinosaurName;
+	}
+
+	if (pageData.fullurl) {
+		source.wikipediaURL = pageData.fullurl;
+	}
+
+	if (
+		pageData.revisions &&
+		pageData.revisions[0] &&
+		pageData.revisions[0].timestamp
+	) {
+		source.lastRevision = pageData.revisions[0].timestamp;
+	}
+
+	source.dateAccessed = new Date().toISOString();
+
+	if (dinosaurName) {
+		source.revisionHistoryURL = `https://en.wikipedia.org/w/index.php?title=${dinosaurName}&action=history`;
+	}
+
+	if (licenseInfo.text) {
+		source.license = licenseInfo.text;
+	}
+
+	if (licenseInfo.url) {
+		source.licenseURL = licenseInfo.url;
+	}
+
+	if (
+		dinosaurName &&
+		pageData.revisions &&
+		pageData.revisions[0] &&
+		pageData.revisions[0].revid
+	) {
+		source.permalink = `https://en.wikipedia.org/w/index.php?title=${dinosaurName}&oldid=${pageData.revisions[0].revid}`;
+	}
+
+	if (data.source) {
+		source.citation = createCitation(data.source);
+	}
+	return source;
 }
 
 /**
@@ -233,8 +311,6 @@ function handleSourceInformation(data, dinosaurName, pageData, licenseInfo) {
  * @param {*} pageData
  * @returns
  */
-
-//TODO: Refactor this into 2 functions
 function findDiet(pageData) {
 	let diet = "";
 	const dietRegex = new RegExp("(\\b\\w*(ivore|ivorous))s?\\b", "gmi");
@@ -281,17 +357,10 @@ function findDiet(pageData) {
  * @returns
  */
 function findLocomotionType(pageData) {
-	let locomotionType = "";
-	const extract = pageData.extract;
-	const locomotionRegex = new RegExp(
-		"(bipedal|biped|flying|quadrupedal|quadruped)",
-		"gmi",
-	);
-	const matches = locomotionRegex.exec(extract);
-	if (matches && matches.length > 0) {
-		locomotionType = String(matches[0]).replace("pedal", "ped");
-	}
-	return locomotionType;
+	const locomotionRegex =
+		/(bipedal|biped|quadrupedal|quadruped|glide|gliding|flying|swim|swimming)/gim;
+	const matches = pageData.extract.match(locomotionRegex);
+	return matches && matches[0] ? matches[0].replace("pedal", "ped") : "";
 }
 
 function formatDate(dateString) {
