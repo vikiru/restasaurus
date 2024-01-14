@@ -7,7 +7,6 @@ const ClassificationInfoSchema = new Schema(
 		domain: String,
 		kingdom: String,
 		phylum: String,
-		clade: [String],
 		classInfo: [
 			{
 				classType: String,
@@ -15,6 +14,7 @@ const ClassificationInfoSchema = new Schema(
 				_id: false,
 			},
 		],
+		clade: [String],
 		orderInfo: [
 			{
 				orderType: String,
@@ -35,6 +35,41 @@ ClassificationInfoSchema.plugin(mongooseHidden, {
 		_id: true,
 		__v: true,
 	},
+});
+
+ClassificationInfoSchema.pre("save", function (next) {
+	const sortInfo = (infoArray, sortOrder) => {
+		infoArray.sort((a, b) => {
+			return sortOrder.indexOf(a.type) - sortOrder.indexOf(b.type);
+		});
+	};
+
+	const classSorter = [
+		"Superclass",
+		"Class",
+		"Subclass",
+		"Infraclass",
+		"Subterclass",
+		"Parvclass",
+	];
+	sortInfo(this.classInfo, classSorter);
+
+	const orderSorter = [
+		"Magnorder",
+		"Superorder",
+		"Grandorder",
+		"Mirorder",
+		"Order",
+		"Suborder",
+		"Infraorder",
+		"Parvorder",
+	];
+	sortInfo(this.orderInfo, orderSorter);
+
+	const familySorter = ["Family", "Subfamily"];
+	sortInfo(this.familyInfo, familySorter);
+
+	next();
 });
 
 const ClassificationInfo = model(
