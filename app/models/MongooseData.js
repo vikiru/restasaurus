@@ -27,8 +27,8 @@ class MongooseData {
 			revisionHistoryURL: "",
 			lastRevision: "",
 			dateAccessed: "",
-			source: "Wikipedia",
-			publisher: "Wikipedia, The Free Encyclopedia",
+			source: "Wikipedia, The Free Encyclopedia",
+			publisher: "Wikimedia Foundation",
 			citation: "",
 		};
 		this.image = {

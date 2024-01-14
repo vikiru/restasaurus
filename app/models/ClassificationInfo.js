@@ -7,7 +7,7 @@ const ClassificationInfoSchema = new Schema(
 		domain: String,
 		kingdom: String,
 		phylum: String,
-		clades: [String],
+		clade: [String],
 		classInfo: [
 			{
 				classType: String,
@@ -22,9 +22,9 @@ const ClassificationInfoSchema = new Schema(
 				_id: false,
 			},
 		],
-		familyInfo: [{ familyType: String, value: String }],
-		tribeInfo: [{ tribeType: String, value: String }],
-		genusInfo: [{ genusType: String, value: String }],
+		familyInfo: [{ familyType: String, value: String, _id: false }],
+		tribeInfo: [{ tribeType: String, value: String, _id: false }],
+		genusInfo: [{ genusType: String, value: String, _id: false }],
 		species: String,
 	},
 	{ retainKeyOrder: true },
@@ -36,7 +36,6 @@ ClassificationInfoSchema.plugin(mongooseHidden, {
 		__v: true,
 	},
 });
-ClassificationInfoSchema.index({ clades: 1 });
 
 const ClassificationInfo = model(
 	"ClassificationInfo",

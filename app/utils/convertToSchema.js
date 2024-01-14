@@ -28,7 +28,11 @@ async function convertToSchema(mongooseData) {
 
 	const dinosaur = {};
 	for (const key in keys) {
-		dinosaur[key] = createSubObject(mongooseData, keys[key]);
+		if (key in mongooseData) {
+			dinosaur[key] = createSubObject(mongooseData[key], keys[key]);
+		} else {
+			dinosaur[key] = createSubObject(mongooseData, keys[key]);
+		}
 	}
 
 	const dinoSource = new DinosaurSource(mongooseData.source);

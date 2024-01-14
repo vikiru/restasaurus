@@ -41,8 +41,6 @@ DinosaurSchema.plugin(mongooseHidden, {
 	hidden: { _id: true, __v: true, createdAt: true, updatedAt: true },
 });
 
-DinosaurSchema.index({ id: 1, name: 1 });
-
 DinosaurSchema.statics.findAllDinosaurs = function () {
 	return this.find().populate("classificationInfo image source");
 };

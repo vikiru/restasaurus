@@ -16,5 +16,5 @@ async function postAllDinosaurs() {
 postAllDinosaurs();
 
 module.exports = {
-	postAllDinosaurs: postAllDinosaurs,
+	postAllDinosaurs,
 };

@@ -11,7 +11,7 @@
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"lint": "eslint ./app/**/*.js --fix-dry-run",
 		"prettier": "prettier --write .",
-		"retrieveData": "node ./app/scripts/retrieveData.js",
+		"retrieveData": "node ./app/scripts/constructDinoNames.js && node ./app/scripts/retrieveData.js",
 		"postData": "node ./app/scripts/postData.js"
 	},
 	"keywords": [],

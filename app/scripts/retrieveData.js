@@ -18,7 +18,6 @@ async function retrieveAllDinoData() {
 		);
 		mongooseData = await retrieveInformation(name, mongooseData);
 		mongooseData = await retrieveHTMLContent(name, mongooseData);
-		console.log(mongooseData);
 		data.push(mongooseData);
 		console.log(`Finished data retrieval for ${name}\n`);
 	}

@@ -1,7 +1,9 @@
 const fs = require("fs");
+const path = require("path");
 
 async function writeData(dinosaurData, filename) {
-	fs.writeFile(filename, JSON.stringify(dinosaurData, null, 2), err => {
+	const filePath = path.resolve(__dirname, `../scripts/${filename}`);
+	fs.writeFile(filePath, JSON.stringify(dinosaurData, null, 2), err => {
 		if (err) {
 			console.error(err);
 		} else {

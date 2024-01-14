@@ -25,6 +25,7 @@ const keywords = [
 	"Temporal range:",
 	"Tribe:",
 	"Type species",
+	"Species",
 ];
 
 /**
@@ -40,7 +41,6 @@ async function retrieveHTMLContent(dinosaurName, data) {
 	const parsedHTML = parser.parse(htmlText);
 	data = retrieveBoxData(parsedHTML, data);
 	data.diet = findDiet(parsedHTML);
-
 	return data;
 }
 
@@ -73,11 +73,18 @@ function assignClassificationInfo(data, keyword, value) {
 			}),
 		clade: () => data.classificationInfo.clade.push(value),
 	};
-	const action = actions[keyword.toLowerCase()];
+	const keywordRegex = new RegExp(
+		"clade|class|domain|family|genus|kingdom|order|tribe",
+		"gmi",
+	);
+	const match = keyword.match(keywordRegex);
+	let text = keyword.toLowerCase();
+	if (match) {
+		text = match[0].toLowerCase();
+	}
+	const action = actions[text];
 	if (action) {
 		action();
-	} else if (value.includes("\n")) {
-		data[`classificationInfo`][keyword] = value.split("\n")[0];
 	} else {
 		data[`classificationInfo`][keyword] = value;
 	}
@@ -90,29 +97,56 @@ function assignClassificationInfo(data, keyword, value) {
  * @returns
  */
 function retrieveBoxData(html, data) {
-	const infoBox = html.querySelector("table");
+	const infoBox = html
+		.getElementsByTagName("table")
+		.find(table => table.attributes.class === "infobox biota");
 	const tableBody = infoBox.querySelector("tbody");
 	const rows = tableBody.querySelectorAll("tr");
 	const firstRowData = rows[0].structuredText.split("\n");
+	data.name = firstRowData[0].trim();
 	data.temporalrange = handleTemporalRange(firstRowData);
-	const filteredRows = rows.filter((_, index) => index > 3);
-
-	for (const row of filteredRows) {
+	let genusIndex = 0;
+	for (const row of rows) {
 		const rowData = row.querySelectorAll("td");
 		if (rowData.length > 1) {
 			let keyword = rowData[0].structuredText.trim();
-			const keywordRegex = new RegExp("order|class", "gmi");
+			const keywordRegex = new RegExp(
+				"class|order|family|tribe|genus",
+				"gmi",
+			);
 			if (!keywordRegex.test(keyword)) {
 				keyword = rowData[0].structuredText.toLowerCase();
 			}
-			keyword = String(keyword.replace(":", ""));
-			const value = String(
-				rowData[1].structuredText.trim().replace("†", ""),
-			);
+			keyword = keyword.replace(":", "");
+			let value = rowData[1].structuredText.trim().replace("†", "");
+
+			if (value.includes("\n")) {
+				value = value.split("\n")[0];
+			}
+
+			if (keyword === "Genus") {
+				genusIndex = rows.indexOf(row);
+				const rowName = rows[genusIndex + 1].structuredText
+					.toLowerCase()
+					.trim();
+				if (rowName === "type species" || rowName === "species") {
+					data.classificationInfo.species = handleSpecies(
+						rows[genusIndex + 2],
+					);
+				}
+			}
 			assignClassificationInfo(data, keyword, value);
 		}
 	}
 	return data;
+}
+
+function handleSpecies(rowData) {
+	const innerHTML = rowData.innerHTML;
+	const parsedHTML = parser.parse(innerHTML);
+	const data = parsedHTML.querySelector("td");
+	const iTag = data.querySelector("i");
+	return iTag.structuredText.trim();
 }
 
 /**
@@ -258,14 +292,10 @@ function handleAuthor(data, authorInfo) {
  * @returns
  */
 function handleSourceInformation(data, dinosaurName, pageData, licenseInfo) {
-	const source = {};
-
-	if (dinosaurName) {
-		source.pageTitle = dinosaurName;
-	}
+	data.source.pageTitle = dinosaurName;
 
 	if (pageData.fullurl) {
-		source.wikipediaURL = pageData.fullurl;
+		data.source.wikipediaURL = pageData.fullurl;
 	}
 
 	if (
@@ -273,21 +303,17 @@ function handleSourceInformation(data, dinosaurName, pageData, licenseInfo) {
 		pageData.revisions[0] &&
 		pageData.revisions[0].timestamp
 	) {
-		source.lastRevision = pageData.revisions[0].timestamp;
+		data.source.lastRevision = pageData.revisions[0].timestamp;
 	}
-
-	source.dateAccessed = new Date().toISOString();
-
-	if (dinosaurName) {
-		source.revisionHistoryURL = `https://en.wikipedia.org/w/index.php?title=${dinosaurName}&action=history`;
-	}
+	data.source.revisionHistoryURL = `https://en.wikipedia.org/w/index.php?title=${dinosaurName}&action=history`;
+	data.source.dateAccessed = new Date().toISOString();
 
 	if (licenseInfo.text) {
-		source.license = licenseInfo.text;
+		data.source.license = licenseInfo.text;
 	}
 
 	if (licenseInfo.url) {
-		source.licenseURL = licenseInfo.url;
+		data.source.licenseURL = licenseInfo.url;
 	}
 
 	if (
@@ -296,13 +322,11 @@ function handleSourceInformation(data, dinosaurName, pageData, licenseInfo) {
 		pageData.revisions[0] &&
 		pageData.revisions[0].revid
 	) {
-		source.permalink = `https://en.wikipedia.org/w/index.php?title=${dinosaurName}&oldid=${pageData.revisions[0].revid}`;
+		data.source.permalink = `https://en.wikipedia.org/w/index.php?title=${dinosaurName}&oldid=${pageData.revisions[0].revid}`;
 	}
 
-	if (data.source) {
-		source.citation = createCitation(data.source);
-	}
-	return source;
+	data.source.citation = createCitation(data.source);
+	return data.source;
 }
 
 /**
@@ -380,7 +404,7 @@ function createCitation(sourceData) {
 	const formattedRevision = formatDate(sourceData.lastRevision);
 	const formattedAccessed = formatDate(sourceData.dateAccessed);
 
-	const citation = `${sourceData.author}. "${sourceData.pageTitle}." ${sourceData.publisher}. ${sourceData.publisher}, ${formattedRevision}. Web. ${formattedAccessed}.`;
+	const citation = `${sourceData.author}. "${sourceData.pageTitle}." ${sourceData.source}. ${sourceData.publisher}, ${formattedRevision}. Web. ${formattedAccessed}.`;
 	return citation;
 }
 

@@ -1,8 +1,6 @@
-const fs = require("fs");
 const parser = require("node-html-parser");
 const { writeData } = require("../utils/writeData");
 const { fetchData } = require("../utils/fetchData");
-const allDinoNames = require("./allDinoNames.json").names;
 
 function constructUrls(dinoNames) {
 	const baseUrl = "https://en.wikipedia.org/w/api.php?";
@@ -45,13 +43,13 @@ function extractDataFromPages(pages) {
 }
 
 function processData(allData) {
-	const names = [];
+	const names = new Set();
 	for (const data of allData) {
 		if (isMatched(data.extract)) {
-			names.push(data.title);
+			names.add(data.title);
 		}
 	}
-	return names;
+	return Array.from(names);
 }
 
 function isMatched(extract) {
@@ -77,7 +75,7 @@ function extractDinoNames(htmlText) {
 			}
 		}
 	}
-	return names;
+	return Array.from(names);
 }
 
 function extractNameFromItem(item) {
@@ -94,26 +92,30 @@ function extractNameFromItem(item) {
 }
 
 async function retrieveAllDinoNames() {
+	console.log("Retrieving all dino names");
 	const data = await fetchData(
 		"https://en.wikipedia.org/w/api.php?action=parse&page=List_of_dinosaur_genera&prop=text&formatversion=2&format=json",
 	);
 	const htmlText = parser.parse(data.parse.text);
 	const names = extractDinoNames(htmlText);
-	writeData(Array.from(names), "allDinoNames.json");
+	writeData({ names: names }, "allDinoNames.json");
+	return names;
 }
 
 async function returnFilteredNames() {
+	const allDinoNames = await retrieveAllDinoNames();
+	console.log("Starting filtering process for dino names");
 	const urls = constructUrls(allDinoNames);
 	const dataObjs = await handleUrls(urls);
 	const names = processData(dataObjs);
-	writeData(names, "filteredNames.json");
+	writeData({ names: names }, "filteredNames.json");
 }
 
 returnFilteredNames();
 
 module.exports = {
-	constructUrls: constructUrls,
-	processData: processData,
-	mainHandler: returnFilteredNames,
-	retrieveAllDinoNames: retrieveAllDinoNames,
+	constructUrls,
+	processData,
+	returnFilteredNames,
+	retrieveAllDinoNames,
 };
