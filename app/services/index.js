@@ -30,6 +30,7 @@ async function retrieveAllDinosaurs(page) {
 		prevPage: prevPage,
 		currentPage: page,
 		nextPage: nextPage,
+		count: dinosaurs.length,
 		data: dinosaurs,
 	};
 }
@@ -43,6 +44,7 @@ async function retrieveAllImages(page) {
 		prevPage: prevPage,
 		currentPage: page,
 		nextPage: nextPage,
+		count: dinosaurImages.length,
 		data: dinosaurImages,
 	};
 }

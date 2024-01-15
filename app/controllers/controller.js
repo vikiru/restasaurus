@@ -3,15 +3,16 @@ const { logger } = require("../config/logger");
 
 const apiEndpoints = {
 	home: "/api/v1",
+	getAllNames: "/api/v1/names",
 	getAllDinos: "/api/v1/dinosaurs",
 	getDinoById: "/api/v1/dinosaurs/:id",
-	getAllImages: "/api/v1/images",
-	getImageById: "/api/v1/images/:id",
 	getDinoByName: "/api/v1/dinosaurs/name/:name",
-	getDinoByQuery: "/api/v1/dinosaurs/search",
 	getDinosByDiet: "/api/v1/dinosaurs/diet/:diet",
 	getDinosByLocomotion: "/api/v1/dinosaurs/locomotion/:locomotion",
 	getRandomDinos: "/api/v1/dinosaurs/random/:count",
+	getAllImages: "/api/v1/images",
+	getImageById: "/api/v1/images/:id",
+	getRandomImages: "/api/v1/images/random/:count",
 };
 
 async function returnHome(req, res) {
@@ -66,7 +67,7 @@ async function retrieveAllNames(req, res) {
 	try {
 		const names = await dinosaurService.retrieveAllNames();
 		if (names.length > 0) {
-			res.status(200).json({ count: names.length, names: names });
+			res.status(200).json({ count: names.length, data: names });
 		} else {
 			res.status(404).json({
 				error: "Sorry, there was an error retrieving all dinosaur names",
@@ -147,7 +148,7 @@ async function retrieveDinoByLocomotion(req, res) {
 		if (dinosaurs.length > 0) {
 			return res
 				.status(200)
-				.json({ count: dinosaurs.length, dinosaurdata: dinosaurs });
+				.json({ count: dinosaurs.length, data: dinosaurs });
 		} else {
 			return res.status(404).json({
 				error: "Sorry, there doesn't seem to be any dinosaurs matching that locomotion type.",
@@ -185,7 +186,7 @@ async function retrieveRandomDinosaurs(req, res) {
 	const size = count <= 10 ? count : 10;
 	try {
 		const dinosaurs = await dinosaurService.returnRandomDinosaurs(size);
-		res.status(200).json(dinosaurs);
+		res.status(200).json({ data: dinosaurs });
 	} catch (error) {
 		logger.error(error);
 		res.status(500).json({
@@ -199,7 +200,7 @@ async function retrieveRandomImages(req, res) {
 	const size = count <= 10 ? count : 10;
 	try {
 		const dinosaurImages = await dinosaurService.returnRandomImages(size);
-		res.status(200).json(dinosaurImages);
+		res.status(200).json({ data: dinosaurImages });
 	} catch (error) {
 		logger.error(error);
 		res.status(500).json({
