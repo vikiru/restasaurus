@@ -21,11 +21,9 @@ const DinosaurSourceSchema = new Schema(
 );
 
 DinosaurSourceSchema.plugin(mongooseHidden, {
-	hidden: {
-		_id: true,
-		__v: true,
-	},
+	hidden: { _id: true, __v: true, createdAt: true, updatedAt: true },
 });
+
 const DinosaurSource = model("DinosaurSource", DinosaurSourceSchema);
 
 module.exports = {

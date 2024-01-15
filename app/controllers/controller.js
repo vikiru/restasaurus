@@ -180,6 +180,20 @@ async function retrieveImageById(req, res) {
 	}
 }
 
+async function retrieveRandomDinosaurs(req, res) {
+	const count = parseInt(req.params.count) || 1;
+	const size = count <= 10 ? count : 10;
+	try {
+		const dinosaurs = await dinosaurService.returnRandomDinosaurs(size);
+		res.status(200).json(dinosaurs);
+	} catch (error) {
+		logger.error(error);
+		res.status(500).json({
+			error: "Sorry, an unexpected error occurred while trying to retrieve a random number of dinosaurs.",
+		});
+	}
+}
+
 module.exports = {
 	returnHome: returnHome,
 	retrieveAllDinosaurs: retrieveAllDinosaurs,
@@ -190,5 +204,6 @@ module.exports = {
 	retrieveDinoByDiet: retrieveDinoByDiet,
 	retrieveDinoByLocomotion: retrieveDinoByLocomotion,
 	retrieveImageById: retrieveImageById,
+	retrieveRandomDinosaurs: retrieveRandomDinosaurs,
 	apiEndpoints: apiEndpoints,
 };

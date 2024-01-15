@@ -77,6 +77,11 @@ async function retrieveImageById(id) {
 	return image;
 }
 
+async function returnRandomDinosaurs(count) {
+	const dinosaurs = await Dinosaur.returnRandomDinosaurs(count);
+	return dinosaurs;
+}
+
 module.exports = {
 	pushDinosaurToDB: pushDinosaurToDB,
 	retrieveAllDinosaurs: retrieveAllDinosaurs,
@@ -87,4 +92,5 @@ module.exports = {
 	retrieveDinosaursByDiet: retrieveDinosaursByDiet,
 	retrieveDinosaursByLocomotion: retrieveDinosaursByLocomotion,
 	retrieveImageById: retrieveImageById,
+	returnRandomDinosaurs: returnRandomDinosaurs,
 };

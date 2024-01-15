@@ -87,6 +87,66 @@ DinosaurSchema.statics.findByLocomotion = function (locomotionType) {
 	);
 };
 
+DinosaurSchema.statics.returnRandomDinosaurs = function (count) {
+	return this.aggregate([
+		{
+			$sample: { size: count },
+		},
+		{
+			$lookup: {
+				from: "classificationinfos",
+				let: { classificationInfoId: "$classificationInfo" },
+				pipeline: [
+					{
+						$match: {
+							$expr: { $eq: ["$_id", "$$classificationInfoId"] },
+						},
+					},
+					{ $project: { _id: 0, __v: 0 } },
+				],
+				as: "classificationInfo",
+			},
+		},
+		{
+			$lookup: {
+				from: "dinosaursources",
+				let: { sourceId: "$source" },
+				pipeline: [
+					{ $match: { $expr: { $eq: ["$_id", "$$sourceId"] } } },
+					{ $project: { _id: 0, __v: 0 } },
+				],
+				as: "source",
+			},
+		},
+		{
+			$lookup: {
+				from: "dinosaurimages",
+				let: { imageId: "$image" },
+				pipeline: [
+					{ $match: { $expr: { $eq: ["$_id", "$$imageId"] } } },
+					{ $project: { _id: 0, __v: 0 } },
+				],
+				as: "image",
+			},
+		},
+		{
+			$unwind: "$classificationInfo",
+		},
+		{
+			$unwind: "$source",
+		},
+		{
+			$unwind: "$image",
+		},
+		{
+			$project: {
+				_id: 0,
+				__v: 0,
+			},
+		},
+	]);
+};
+
 const Dinosaur = model("Dinosaur", DinosaurSchema);
 
 module.exports = {

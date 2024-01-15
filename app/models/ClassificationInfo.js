@@ -40,6 +40,8 @@ ClassificationInfoSchema.plugin(mongooseHidden, {
 	hidden: {
 		_id: true,
 		__v: true,
+		createdAt: true,
+		updatedAt: true,
 	},
 });
 
