@@ -147,6 +147,34 @@ DinosaurSchema.statics.returnRandomDinosaurs = function (count) {
 	]);
 };
 
+DinosaurSchema.statics.returnRandomImages = function (count) {
+	return this.aggregate([
+		{
+			$sample: { size: count },
+		},
+		{
+			$lookup: {
+				from: "dinosaurimages",
+				let: { imageId: "$image" },
+				pipeline: [
+					{ $match: { $expr: { $eq: ["$_id", "$$imageId"] } } },
+					{ $project: { _id: 0, __v: 0 } },
+				],
+				as: "image",
+			},
+		},
+		{
+			$unwind: "$image",
+		},
+		{
+			$project: {
+				image: 1,
+				_id: 0,
+			},
+		},
+	]);
+};
+
 const Dinosaur = model("Dinosaur", DinosaurSchema);
 
 module.exports = {
