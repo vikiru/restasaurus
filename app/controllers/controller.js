@@ -50,7 +50,7 @@ async function retrieveAllDinosaurs(req, res) {
 async function retrieveAllImages(req, res) {
 	try {
 		const page = parseInt(req.query.page || 1);
-		const dinosaurImages = await Dinosaur.findAllImages();
+		const dinosaurImages = await Dinosaur.findAllImages(page);
 		const prevPage =
 			page - 1 > 0 ? `/api/v1/images?page=${page - 1}` : "";
 		const nextPage =
