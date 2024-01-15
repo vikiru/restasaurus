@@ -1,4 +1,10 @@
 const mongoose = require("mongoose");
+const {
+	sortInfo,
+	getClassSorter,
+	getOrderSorter,
+	getFamilySorter,
+} = require("../utils/classificationInfoSorter");
 const mongooseHidden = require("mongoose-hidden")();
 const { Schema, model } = mongoose;
 
@@ -38,37 +44,9 @@ ClassificationInfoSchema.plugin(mongooseHidden, {
 });
 
 ClassificationInfoSchema.pre("save", function (next) {
-	const sortInfo = (infoArray, sortOrder) => {
-		infoArray.sort((a, b) => {
-			return sortOrder.indexOf(a.type) - sortOrder.indexOf(b.type);
-		});
-	};
-
-	const classSorter = [
-		"Superclass",
-		"Class",
-		"Subclass",
-		"Infraclass",
-		"Subterclass",
-		"Parvclass",
-	];
-	sortInfo(this.classInfo, classSorter);
-
-	const orderSorter = [
-		"Magnorder",
-		"Superorder",
-		"Grandorder",
-		"Mirorder",
-		"Order",
-		"Suborder",
-		"Infraorder",
-		"Parvorder",
-	];
-	sortInfo(this.orderInfo, orderSorter);
-
-	const familySorter = ["Family", "Subfamily"];
-	sortInfo(this.familyInfo, familySorter);
-
+	this.classInfo = sortInfo(this.classInfo, getClassSorter());
+	this.orderInfo = sortInfo(this.orderInfo, getOrderSorter());
+	this.familyInfo = sortInfo(this.familyInfo, getFamilySorter());
 	next();
 });
 
