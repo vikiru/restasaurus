@@ -81,6 +81,7 @@ const loggingTransports = {
 
 const infoLogger = winston.createLogger({
 	level: "info",
+	levels: loggingLevels,
 	transports: loggingTransports.info,
 });
 
