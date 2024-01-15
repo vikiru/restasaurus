@@ -137,12 +137,12 @@ function retrieveBoxData(html, data) {
 }
 
 module.exports = {
-	assignClassificationInfo,
-	retrieveBoxData,
-	getInfoBox,
-	getRows,
-	handleFirstRow,
-	handleOtherRows,
-	handleHeaderData,
-	handleTemporalRange,
+	assignClassificationInfo: assignClassificationInfo,
+	retrieveBoxData: retrieveBoxData,
+	getInfoBox: getInfoBox,
+	getRows: getRows,
+	handleFirstRow: handleFirstRow,
+	handleOtherRows: handleOtherRows,
+	handleHeaderData: handleHeaderData,
+	handleTemporalRange: handleTemporalRange,
 };

@@ -75,9 +75,9 @@ const keywordRegex = new RegExp(
 );
 
 module.exports = {
-	cladeDefaults,
-	familyDefaults,
-	orderDefaults,
-	keywords,
-	keywordRegex,
+	cladeDefaults: cladeDefaults,
+	familyDefaults: familyDefaults,
+	orderDefaults: orderDefaults,
+	keywords: keywords,
+	keywordRegex: keywordRegex,
 };

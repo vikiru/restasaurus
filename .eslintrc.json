@@ -9,8 +9,9 @@
 	],
 	"plugins": ["prettier", "promise", "node"],
 	"env": {
-		"node": true,
-		"es6": true
+		"commonjs": true,
+		"es6": true,
+		"node": true
 	},
 	"parserOptions": {
 		"ecmaVersion": 11,

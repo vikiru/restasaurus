@@ -13,5 +13,5 @@ async function writeData(dinosaurData, filename) {
 }
 
 module.exports = {
-	writeData,
+	writeData: writeData,
 };
