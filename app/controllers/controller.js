@@ -49,8 +49,18 @@ async function retrieveAllDinosaurs(req, res) {
 
 async function retrieveAllImages(req, res) {
 	try {
+		const page = parseInt(req.query.page || 1);
 		const dinosaurImages = await Dinosaur.findAllImages();
-		res.status(200).json({ images: dinosaurImages });
+		const prevPage =
+			page - 1 > 0 ? `/api/v1/images?page=${page - 1}` : "";
+		const nextPage =
+			page + 1 < MAX_PAGE ? `/api/v1/images?page=${page + 1}` : "";
+		res.status(200).json({
+			prevPage: prevPage,
+			currentPage: page,
+			nextPage: nextPage,
+			data: dinosaurImages,
+		});
 	} catch (error) {
 		console.error(error);
 		res.status(404).json({

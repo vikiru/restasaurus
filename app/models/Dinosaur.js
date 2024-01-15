@@ -50,7 +50,7 @@ DinosaurSchema.statics.findAllDinosaurs = function (page) {
 };
 
 DinosaurSchema.statics.findById = function (id) {
-	return this.findOne({ id: id });
+	return this.findOne({ id: id }).populate("classificationInfo image source");
 };
 
 DinosaurSchema.statics.findByName = function (name) {
@@ -63,8 +63,12 @@ DinosaurSchema.statics.findAllNames = function () {
 	return this.find({}, "name");
 };
 
-DinosaurSchema.statics.findAllImages = function () {
-	return this.find().select("image").populate("image");
+DinosaurSchema.statics.findAllImages = function (page) {
+	const limit = 20;
+	return this.find({}, "image")
+		.skip((page - 1) * limit)
+		.limit(limit)
+		.populate("image");
 };
 
 DinosaurSchema.statics.findImageById = function (id) {
