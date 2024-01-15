@@ -1,3 +1,4 @@
+const { body, validationResult } = require("express-validator");
 const rateLimit = require("express-rate-limit");
 const { logger } = require("../config/logger");
 const { env } = require("../config/index");
@@ -35,6 +36,17 @@ const morganMiddleware = morgan("dev", {
 	skip: skip,
 });
 
+const validationMiddleware = [
+	body("*").trim().escape(),
+	(req, res, next) => {
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			return res.status(400).json({ errors: errors.array() });
+		}
+		next();
+	},
+];
+
 module.exports = {
 	bodyParser: bodyParser,
 	cors: cors,
@@ -44,4 +56,5 @@ module.exports = {
 	mongoose: mongoose,
 	favicon: favicon,
 	limiter: limiter,
+	validator: validationMiddleware,
 };
