@@ -7,10 +7,11 @@
 		"plugin:prettier/recommended",
 		"plugin:node/recommended"
 	],
-	"plugins": ["prettier", "promise", "node"],
+	"plugins": ["prettier", "promise", "node", "sort-exports"],
 	"env": {
-		"node": true,
-		"es6": true
+		"commonjs": true,
+		"es6": true,
+		"node": true
 	},
 	"parserOptions": {
 		"ecmaVersion": 11,
@@ -61,6 +62,7 @@
 		"node/no-unsupported-features/es-syntax": [
 			"error",
 			{ "ignores": ["modules"] }
-		]
+		],
+		"sort-exports/sort-exports": ["error", { "sortDir": "asc" }]
 	}
 }

@@ -1,66 +1,101 @@
-const { Dinosaur } = require("../models/Dinosaur");
-const { DinosaurInfo } = require("../models/DinosaurInfo");
+const { ClassificationInfo } = require("../models/ClassificationInfo");
+const { DinosaurSource } = require("../models/DinosaurSource");
 const { DinosaurImage } = require("../models/DinosaurImage");
+const { Dinosaur } = require("../models/Dinosaur");
 
 async function convertToSchema(mongooseData) {
-	const mongooseImage = mongooseData.image;
-	const dinoImage = returnDinoImage(mongooseImage);
-	const dinoInfo = returnDinoInfo(mongooseData);
-
-	const dinosaur = new Dinosaur({
-		name: mongooseData.name,
-		info: dinoInfo,
-		image: dinoImage,
-	});
-
-	const data = {
-		dinosaur: dinosaur,
-		dinoInfo: dinoInfo,
-		dinoImage: dinoImage,
-	};
-	return data;
+	const keys = getClassificationAndDinosaurKeys();
+	const dinosaur = createDinosaurObject(mongooseData, keys);
+	const dinoSource = new DinosaurSource(mongooseData.source);
+	const classification = new ClassificationInfo(dinosaur.classificationInfo);
+	const dinoImage = new DinosaurImage(mongooseData.image);
+	const dino = createDinosaurInstance(
+		mongooseData,
+		classification,
+		dinoSource,
+		dinoImage,
+	);
+	return createDataObject(dino, classification, dinoImage, dinoSource);
 }
 
-function returnDinoInfo(mongooseData) {
-	const mongooseSource = mongooseData.source;
-	const dinoInfo = new DinosaurInfo({
-		temporalRange: mongooseData.temporalrange,
-		domain: mongooseData.domain,
-		kingdom: mongooseData.kingdom,
-		phylum: mongooseData.phylum,
-		clades: mongooseData.clade,
-		classInfo: mongooseData.classInfo,
-		orderInfo: mongooseData.orderInfo,
-		family: mongooseData.family,
-		subFamily: mongooseData.subfamily,
-		tribe: mongooseData.tribe,
-		genus: mongooseData.genus,
-		species: mongooseData.species,
-		description: mongooseData.description,
+function getClassificationAndDinosaurKeys() {
+	return {
+		classificationInfo: [
+			"domain",
+			"kingdom",
+			"phylum",
+			"clade",
+			"classInfo",
+			"orderInfo",
+			"familyInfo",
+			"tribeInfo",
+			"genusInfo",
+			"speciesInfo",
+		],
+		dinosaur: [
+			"name",
+			"temporalrange",
+			"diet",
+			"locomotionType",
+			"descriptions",
+		],
+	};
+}
+
+function createDinosaurObject(mongooseData, keys) {
+	const dinosaur = {};
+	for (const key in keys) {
+		if (key in mongooseData) {
+			dinosaur[key] = createSubObject(mongooseData[key], keys[key]);
+		} else {
+			dinosaur[key] = createSubObject(mongooseData, keys[key]);
+		}
+	}
+	return dinosaur;
+}
+
+function createDinosaurInstance(
+	mongooseData,
+	classification,
+	dinoSource,
+	dinoImage,
+) {
+	return new Dinosaur({
+		name: mongooseData.name,
+		temporalRange: mongooseData.temporalrange.replace(",,", ","),
 		diet: mongooseData.diet,
 		locomotionType: mongooseData.locomotionType,
-		source: mongooseSource,
+		description: mongooseData.description,
+		classificationInfo: classification,
+		source: dinoSource,
+		image: dinoImage,
 	});
-	return dinoInfo;
 }
 
-function returnDinoImage(mongooseImage) {
-	const dinoImage = new DinosaurImage({
-		title: mongooseImage.title,
-		description: mongooseImage.description,
-		author: mongooseImage.author,
-		authorURL: mongooseImage.authorURL,
-		imageURL: mongooseImage.imageURL,
-		license: mongooseImage.license,
-		licenseURL: mongooseImage.licenseURL,
-		dateCreated: mongooseImage.dateCreated,
-		dateAccessed: mongooseImage.dateAccessed,
+function createDataObject(dino, classification, dinoImage, dinoSource) {
+	return {
+		dinosaur: dino,
+		classificationInfo: classification,
+		image: dinoImage,
+		source: dinoSource,
+	};
+}
+
+function createSubObject(obj, keys) {
+	const subObject = {};
+	keys.forEach(key => {
+		if (Object.prototype.hasOwnProperty.call(obj, key)) {
+			subObject[key] = obj[key];
+		}
 	});
-	return dinoImage;
+	return subObject;
 }
 
 module.exports = {
 	convertToSchema: convertToSchema,
-	returnDinoInfo: returnDinoInfo,
-	returnDinoImage: returnDinoImage,
+	getClassificationAndDinosaurKeys: getClassificationAndDinosaurKeys,
+	createDinosaurObject: createDinosaurObject,
+	createDinosaurInstance: createDinosaurInstance,
+	createDataObject: createDataObject,
+	createSubObject: createSubObject,
 };

@@ -1,7 +1,7 @@
-const { Dinosaur } = require("../models/Dinosaur");
-const { DinosaurInfo } = require("../models/DinosaurInfo");
+const dinosaurService = require("../services/index");
 
 const apiEndpoints = {
+	home: "/api/v1",
 	getAllDinos: "/api/v1/dinosaurs",
 	getDinoById: "/api/v1/dinosaurs/:id",
 	getAllImages: "/api/v1/images",
@@ -25,40 +25,56 @@ async function returnHome(req, res) {
 
 async function retrieveAllDinosaurs(req, res) {
 	try {
-		const dinosaurs = await Dinosaur.find();
-		res.status(200).json(dinosaurs);
+		const page = parseInt(req.query.page || 1);
+		const result = await dinosaurService.retrieveAllDinosaurs(page);
+		if (result.data.length > 0) {
+			res.status(200).json(result);
+		} else {
+			res.status(404).json(
+				"Sorry, there was an error retrieving all dinosaurs",
+			);
+		}
 	} catch (error) {
 		console.error(error);
-		res.status(404).json({
-			error: " Sorry, there was an error retrieving all of the dinosaurs",
+		res.status(500).json({
+			error: " Sorry, an unexpected error occurred while retrieving all dinosaurs",
 		});
 	}
 }
 
 async function retrieveAllImages(req, res) {
 	try {
-		const dinosaurImages = await Dinosaur.find({}, { info: 0, images: 1 });
-		res.status(200).json({ images: dinosaurImages });
+		const page = parseInt(req.query.page || 1);
+		const result = await dinosaurService.retrieveAllImages(page);
+		if (result.data.length > 0) {
+			res.status(200).json(result);
+		} else {
+			res.status(404).json(
+				"Sorry, there was an error retrieving all dinosaur images",
+			);
+		}
 	} catch (error) {
 		console.error(error);
-		res.status(404).json({
-			error: " Sorry, there was an error retrieving all of the dinosaur images",
+		res.status(500).json({
+			error: " Sorry, an unexpected error occurred while retrieving all dinosaur images",
 		});
 	}
 }
 
-async function retrieveImageById(req, res) {
+async function retrieveAllNames(req, res) {
 	try {
-		const id = req.params.id;
-		const dinosaurImage = await Dinosaur.findOne(
-			{ id: id },
-			{ info: 0, images: 1 },
-		);
-		res.status(200).json(dinosaurImage);
+		const names = await dinosaurService.retrieveAllNames();
+		if (names.length > 0) {
+			res.status(200).json({ count: names.length, names: names });
+		} else {
+			res.status(404).json({
+				error: "Sorry, there was an error retrieving all dinosaur names",
+			});
+		}
 	} catch (error) {
 		console.error(error);
 		res.status(404).json({
-			error: "Sorry, there doesnt seem to be a dinosaur matching that id.",
+			error: " Sorry, an unexpected error occurred while retrieving all dinosaur names",
 		});
 	}
 }
@@ -66,44 +82,49 @@ async function retrieveImageById(req, res) {
 async function retrieveDinoById(req, res) {
 	try {
 		const id = req.params.id;
-		const dinosaur = await Dinosaur.findOne({ id: id });
-		res.status(200).json(dinosaur);
+		const dinosaur = await dinosaurService.retrieveDinosaurById(id);
+		if (dinosaur) {
+			res.status(200).json(dinosaur);
+		} else {
+			res.status(404).json({
+				error: "Sorry, there doesnt seem to be a dinosaur matching that id.",
+			});
+		}
 	} catch (error) {
 		console.error(error);
-		res.status(404).json({
-			error: "Sorry, there doesnt seem to be a dinosaur matching that id.",
+		res.status(500).json({
+			error: "Sorry, an unexpected error occured while retrieving a dinosaur matching the specified id.",
 		});
 	}
 }
 
-async function retrieveByName(req, res) {
+async function retrieveDinoByName(req, res) {
 	try {
 		const name = req.params.name;
-		const dinosaur = await Dinosaur.findOne({ name: name });
-		res.status(200).json(dinosaur);
+		const dinosaur = await dinosaurService.retrieveDinosaurByName(name);
+		if (dinosaur) {
+			res.status(200).json(dinosaur);
+		} else {
+			res.status(404).json({
+				error: "Sorry, there doesnt seem to be a dinosaur matching that name.",
+			});
+		}
 	} catch (error) {
 		console.error(error);
-		res.status(404).json({
-			error: "Sorry, there doesnt seem to be a dinosaur matching that name.",
+		res.status(500).json({
+			error: "Sorry, an unexpected error occured trying to find a dinosaur matching that name.",
 		});
 	}
 }
 
-async function retrieveByDiet(req, res) {
+async function retrieveDinoByDiet(req, res) {
 	try {
 		const diet = req.params.diet;
-		const dinosaurs = await Dinosaur.find().populate({
-			path: "info",
-			match: { diet: diet },
-		});
-
-		// Filter out any null values if the diet didn't match
-		const filteredDinosaurs = dinosaurs.filter(
-			dinosaur => dinosaur.info !== null,
-		);
-
-		if (filteredDinosaurs.length > 0) {
-			return res.status(200).json(filteredDinosaurs);
+		const dinosaurs = await dinosaurService.retrieveDinosaurByDiet(diet);
+		if (dinosaurs.length > 0) {
+			return res
+				.status(200)
+				.json({ count: dinosaurs.length, data: dinosaurs });
 		} else {
 			return res.status(404).json({
 				error: "Sorry, there doesn't seem to be any dinosaurs matching that diet.",
@@ -111,36 +132,49 @@ async function retrieveByDiet(req, res) {
 		}
 	} catch (error) {
 		console.error(error);
-		res.status(404).json({
-			error: "Sorry, there doesn't seem to be any dinosaurs matching that diet.",
+		res.status(500).json({
+			error: "Sorry, an unexpected error occured while retrieving all dinosaurs matching that diet.",
 		});
 	}
 }
 
-async function retrieveByLocomotion(req, res) {
+async function retrieveDinoByLocomotion(req, res) {
 	try {
 		const locomotion = req.params.locomotion;
-		const dinosaurInfos = await DinosaurInfo.find({
-			locomotionType: locomotion,
-		});
-		const dinosaurs = [];
-		if (dinosaurInfos) {
-			for (const dinosaurInfo of dinosaurInfos) {
-				const dinosaur = await Dinosaur.findOne({
-					info: dinosaurInfo._id,
-				});
-				dinosaurs.push(dinosaur);
-			}
-			return res.status(200).json(dinosaurs);
+		const dinosaurs =
+			await dinosaurService.retrieveDinosaursByLocomotion(locomotion);
+		if (dinosaurs.length > 0) {
+			return res
+				.status(200)
+				.json({ count: dinosaurs.length, dinosaurdata: dinosaurs });
 		} else {
 			return res.status(404).json({
-				error: "Sorry, there doesnt seem to be any dinosaurs matching that locomotion type.",
+				error: "Sorry, there doesn't seem to be any dinosaurs matching that locomotion type.",
 			});
 		}
 	} catch (error) {
 		console.error(error);
-		res.status(404).json({
-			error: "Sorry, there doesnt seem to be any dinosaurs matching that locomotion type.",
+		res.status(500).json({
+			error: "Sorry, an unexpected error occured while retrieving all dinosaurs matching that diet.",
+		});
+	}
+}
+
+async function retrieveImageById(req, res) {
+	try {
+		const id = req.params.id;
+		const dinosaurImage = await dinosaurService.retrieveImageById(id);
+		if (dinosaurImage) {
+			res.status(200).json(dinosaurImage);
+		} else {
+			res.status(404).json({
+				error: "Sorry, there doesnt seem to be a dinosaur image matching that id.",
+			});
+		}
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({
+			error: "Sorry, an unexpected occurred while trying to recieve an image matching that id.",
 		});
 	}
 }
@@ -148,11 +182,12 @@ async function retrieveByLocomotion(req, res) {
 module.exports = {
 	returnHome: returnHome,
 	retrieveAllDinosaurs: retrieveAllDinosaurs,
-	retrieveDinoById: retrieveDinoById,
 	retrieveAllImages: retrieveAllImages,
+	retrieveAllNames: retrieveAllNames,
+	retrieveDinoById: retrieveDinoById,
+	retrieveDinoByName: retrieveDinoByName,
+	retrieveDinoByDiet: retrieveDinoByDiet,
+	retrieveDinoByLocomotion: retrieveDinoByLocomotion,
 	retrieveImageById: retrieveImageById,
-	retrieveByName: retrieveByName,
-	retrieveByDiet: retrieveByDiet,
-	retrieveByLocomotion: retrieveByLocomotion,
 	apiEndpoints: apiEndpoints,
 };

@@ -11,7 +11,7 @@
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"lint": "eslint ./app/**/*.js --fix-dry-run",
 		"prettier": "prettier --write .",
-		"retrieveData": "node ./app/scripts/retrieveData.js",
+		"retrieveData": "node ./app/scripts/constructDinoNames.js && node ./app/scripts/retrieveData.js",
 		"postData": "node ./app/scripts/postData.js"
 	},
 	"keywords": [],
@@ -44,9 +44,11 @@
 		"eslint-plugin-node": "^11.1.0",
 		"eslint-plugin-prettier": "^5.1.2",
 		"eslint-plugin-promise": "^6.1.1",
+		"eslint-plugin-sort-exports": "^0.8.0",
 		"mocha": "^10.2.0",
 		"nodemon": "^3.0.2",
 		"prettier": "^3.1.1",
+		"prettier-plugin-sort-imports": "^1.8.1",
 		"winston": "^3.11.0"
 	},
 	"ignorePatterns": [

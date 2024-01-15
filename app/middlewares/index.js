@@ -1,13 +1,11 @@
-const bodyParser = require("body-parser");
-const cors = require("cors");
+const rateLimit = require("express-rate-limit");
 const compression = require("compression");
+const bodyParser = require("body-parser");
+const favicon = require("serve-favicon");
+const mongoose = require("mongoose");
 const helmet = require("helmet");
 const morgan = require("morgan");
-const mongoose = require("mongoose");
-const favicon = require("serve-favicon");
-const rateLimit = require("express-rate-limit");
-
-cors({ methods: ["GET"] });
+const cors = require("cors");
 
 const limiter = rateLimit({
 	/* 20 requests every hour */

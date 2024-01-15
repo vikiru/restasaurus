@@ -2,17 +2,18 @@ class MongooseData {
 	constructor(name) {
 		this.name = name;
 		this.temporalrange = "";
-		this.domain = "";
-		this.kingdom = "";
-		this.phylum = "";
-		this.clade = [];
-		this.classInfo = [];
-		this.orderInfo = [];
-		this.family = "";
-		this.subfamily = "";
-		this.tribe = "";
-		this.genus = "";
-		this.species = "";
+		this.classificationInfo = {
+			domain: "",
+			kingdom: "",
+			phylum: "",
+			clade: [],
+			classInfo: [],
+			orderInfo: [],
+			familyInfo: [],
+			tribeInfo: [],
+			genusInfo: [],
+			speciesInfo: [],
+		};
 		this.diet = "";
 		this.locomotionType = "";
 		this.description = "";
@@ -26,8 +27,8 @@ class MongooseData {
 			revisionHistoryURL: "",
 			lastRevision: "",
 			dateAccessed: "",
-			source: "Wikipedia",
-			publisher: "Wikipedia, The Free Encyclopedia",
+			source: "Wikipedia, The Free Encyclopedia",
+			publisher: "Wikimedia Foundation",
 			citation: "",
 		};
 		this.image = {

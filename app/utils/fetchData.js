@@ -5,13 +5,17 @@
  */
 async function fetchData(url) {
 	try {
-		const result = await fetch(url).then(response => response.json());
-		return result;
+		const response = await fetch(url);
+		if (!response.ok) {
+			throw new Error(`HTTP error, status: ${response.status}`);
+		}
+		const data = await response.json();
+		return data;
 	} catch (error) {
-		console.error(error);
+		console.error(`Fetch failed: ${error.message}`);
 	}
 }
 
 module.exports = {
-	fetchData: fetchData,
+	fetchData,
 };
