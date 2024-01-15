@@ -3,6 +3,7 @@ const { DinosaurSource } = require("../models/DinosaurSource");
 const { DinosaurImage } = require("../models/DinosaurImage");
 const { Dinosaur } = require("../models/Dinosaur");
 const MAX_PAGE = 20;
+const { logger } = require("../config/logger");
 
 async function pushDinosaurToDB(data) {
 	try {

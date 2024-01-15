@@ -1,4 +1,5 @@
 const dinosaurService = require("../services/index");
+const { logger } = require("../config/logger");
 
 const apiEndpoints = {
 	home: "/api/v1",
@@ -35,7 +36,7 @@ async function retrieveAllDinosaurs(req, res) {
 			);
 		}
 	} catch (error) {
-		console.error(error);
+		logger.error(error);
 		res.status(500).json({
 			error: " Sorry, an unexpected error occurred while retrieving all dinosaurs",
 		});
@@ -49,14 +50,14 @@ async function retrieveAllImages(req, res) {
 		if (result.data.length > 0) {
 			res.status(200).json(result);
 		} else {
-			res.status(404).json(
-				"Sorry, there was an error retrieving all dinosaur images",
-			);
+			res.status(404).json({
+				error: "Sorry, there was an error retrieving all dinosaur images",
+			});
 		}
 	} catch (error) {
-		console.error(error);
+		logger.error(error);
 		res.status(500).json({
-			error: " Sorry, an unexpected error occurred while retrieving all dinosaur images",
+			error: "Sorry, an unexpected error occurred while retrieving all dinosaur images",
 		});
 	}
 }
@@ -72,7 +73,7 @@ async function retrieveAllNames(req, res) {
 			});
 		}
 	} catch (error) {
-		console.error(error);
+		logger.error(error);
 		res.status(404).json({
 			error: " Sorry, an unexpected error occurred while retrieving all dinosaur names",
 		});
@@ -91,7 +92,7 @@ async function retrieveDinoById(req, res) {
 			});
 		}
 	} catch (error) {
-		console.error(error);
+		logger.error(error);
 		res.status(500).json({
 			error: "Sorry, an unexpected error occured while retrieving a dinosaur matching the specified id.",
 		});
@@ -110,7 +111,7 @@ async function retrieveDinoByName(req, res) {
 			});
 		}
 	} catch (error) {
-		console.error(error);
+		logger.error(error);
 		res.status(500).json({
 			error: "Sorry, an unexpected error occured trying to find a dinosaur matching that name.",
 		});
@@ -131,7 +132,7 @@ async function retrieveDinoByDiet(req, res) {
 			});
 		}
 	} catch (error) {
-		console.error(error);
+		logger.error(error);
 		res.status(500).json({
 			error: "Sorry, an unexpected error occured while retrieving all dinosaurs matching that diet.",
 		});
@@ -153,7 +154,7 @@ async function retrieveDinoByLocomotion(req, res) {
 			});
 		}
 	} catch (error) {
-		console.error(error);
+		logger.error(error);
 		res.status(500).json({
 			error: "Sorry, an unexpected error occured while retrieving all dinosaurs matching that diet.",
 		});
@@ -172,7 +173,7 @@ async function retrieveImageById(req, res) {
 			});
 		}
 	} catch (error) {
-		console.error(error);
+		logger.error(error);
 		res.status(500).json({
 			error: "Sorry, an unexpected occurred while trying to recieve an image matching that id.",
 		});

@@ -1,3 +1,4 @@
+const { logger } = require("../config/logger");
 const { createClient } = require("redis");
 
 async function connect() {

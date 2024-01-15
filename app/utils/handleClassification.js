@@ -104,11 +104,13 @@ function handleHeaderData(headerData, rows, data) {
 	const keyword = headerData[0].structuredText.trim();
 	const index = rows.indexOf(rows) + 1;
 	const headerRowData = rows[index].querySelectorAll("td");
-	let value = headerRowData[0].structuredText.trim().replace("†", "");
-	if (value.includes("\n")) {
-		value = value.split("\n")[0];
+	if (headerRowData.length > 0) {
+		let value = headerRowData[0].structuredText.trim().replace("†", "");
+		if (value.includes("\n")) {
+			value = value.split("\n")[0];
+		}
+		assignClassificationInfo(data, keyword, value);
 	}
-	assignClassificationInfo(data, keyword, value);
 }
 
 /**

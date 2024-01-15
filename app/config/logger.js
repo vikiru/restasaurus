@@ -34,8 +34,19 @@ const loggingColours = {
 	debug: "white",
 };
 
+const errorStackFormat = winston.format(err => {
+	if (err instanceof Error) {
+		return Object.assign({}, err, {
+			stack: err.stack,
+			message: err.message,
+		});
+	}
+	return err;
+});
+
 const consoleFormat = winston.format.combine(
 	winston.format.colorize({ all: true }),
+	errorStackFormat(),
 	winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
 	winston.format.printf(
 		info => `${info.timestamp} ${info.level}: ${info.message}`,
@@ -44,6 +55,7 @@ const consoleFormat = winston.format.combine(
 
 const fileFormat = winston.format.combine(
 	winston.format.uncolorize(),
+	errorStackFormat(),
 	winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
 	winston.format.printf(
 		info => `${info.timestamp} ${info.level}: ${info.message}`,
@@ -116,7 +128,6 @@ if (env !== "production") {
 	winston.addColors(loggingColours);
 }
 
-logger.info("Successfully setup logging via Winston");
 module.exports = {
 	logger: logger,
 };

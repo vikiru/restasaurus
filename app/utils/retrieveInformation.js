@@ -1,9 +1,11 @@
 const { findDiet, findLocomotionType } = require("./handleFeature");
 const { handleSourceInformation } = require("./handleSource");
 const { handleImageData } = require("./handleImage");
+const { logger } = require("../config/logger");
 const { fetchData } = require("./fetchData");
 
 async function retrieveInformation(dinosaurName, data) {
+	logger.info(`Fetching Wikipedia data for ${dinosaurName}.`);
 	const result = await fetchData(getQueryURL(dinosaurName));
 	const pageData = getPageData(result);
 	const licenseInfo = getLicenseInfo(result);
@@ -22,6 +24,7 @@ async function retrieveInformation(dinosaurName, data) {
 	);
 
 	if (pageData.pageimage) {
+		logger.info(`Fetching Wikipedia image data for ${dinosaurName}.`);
 		const imageResult = await fetchData(
 			getImageQueryURL(pageData.pageimage),
 		);

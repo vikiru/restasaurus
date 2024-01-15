@@ -1,5 +1,6 @@
 const { fetchData } = require("../utils/fetchData");
 const { writeData } = require("../utils/writeData");
+const { logger } = require("../config/logger");
 const parser = require("node-html-parser");
 
 function constructUrls(dinoNames) {
@@ -21,11 +22,19 @@ function constructUrls(dinoNames) {
 
 async function handleUrls(urls) {
 	const dataObjs = [];
+	logger.info("Starting Wikipedia info fetching from constructed URLs.");
+	const startTime = process.hrtime();
 	for (const url of urls) {
 		const result = await fetchData(url);
 		const pages = result.query.pages;
 		dataObjs.push(...extractDataFromPages(pages));
 	}
+	const endTime = process.hrtime(startTime);
+	const timeInSeconds = endTime[0] + endTime[1] / 1e9;
+	const formattedSeconds = timeInSeconds.toFixed(2);
+	logger.info(
+		`Finished Wikipedia info fetching from constructed URLs. Total time taken: ${formattedSeconds} seconds.`,
+	);
 	return dataObjs;
 }
 
@@ -92,12 +101,21 @@ function extractNameFromItem(item) {
 }
 
 async function retrieveAllDinoNames() {
-	logger.info("Retrieving all dino names");
+	logger.info("Retrieving all dino names.");
+	const startTime = process.hrtime();
 	const data = await fetchData(
 		"https://en.wikipedia.org/w/api.php?action=parse&page=List_of_dinosaur_genera&prop=text&formatversion=2&format=json",
 	);
 	const htmlText = parser.parse(data.parse.text);
 	const names = extractDinoNames(htmlText).sort();
+
+	const endTime = process.hrtime(startTime);
+	const timeInSeconds = endTime[0] + endTime[1] / 1e9;
+	const formattedSeconds = timeInSeconds.toFixed(2);
+	logger.info(
+		`Finished retrieving all dinosaur names in ${formattedSeconds} seconds. ${names.length} names were retrieved.`,
+	);
+	logger.info(`Saving names to file.`);
 	await writeData({ names: names }, "allDinoNames.json");
 	return names;
 }
