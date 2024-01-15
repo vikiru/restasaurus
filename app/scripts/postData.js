@@ -1,5 +1,6 @@
 const { convertToSchema } = require("../utils/convertToSchema");
 const { pushDinosaurToDB } = require("../services/index");
+const { logger } = require("../config/logger");
 const dinosaurData = require("./dinosaurData");
 const mongoDB = require("../data/mongoData");
 

@@ -4,7 +4,7 @@ async function connect() {
 	try {
 		const redis = createClient();
 		await redis.connect();
-		console.log("Successfully connected to Redis");
+		logger.info("Successfully connected to Redis");
 		return redis;
 	} catch (error) {
 		console.error(error);

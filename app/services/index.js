@@ -14,7 +14,7 @@ async function pushDinosaurToDB(data) {
 			DinosaurSource.create(source),
 			DinosaurImage.create(image),
 		]);
-		console.log(`Successfully saved dinosaur, ${name} to database`);
+		logger.info(`Successfully saved dinosaur, ${name} to database`);
 	} catch (error) {
 		console.error(error);
 	}

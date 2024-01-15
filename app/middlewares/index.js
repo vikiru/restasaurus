@@ -1,10 +1,12 @@
 const rateLimit = require("express-rate-limit");
+const { logger } = require("../config/logger");
+const { env } = require("../config/index");
 const compression = require("compression");
 const bodyParser = require("body-parser");
 const favicon = require("serve-favicon");
 const mongoose = require("mongoose");
-const helmet = require("helmet");
 const morgan = require("morgan");
+const helmet = require("helmet");
 const cors = require("cors");
 
 const limiter = rateLimit({
@@ -20,12 +22,25 @@ const limiter = rateLimit({
 	},
 });
 
+const morganStream = {
+	write: message => logger.http(message),
+};
+
+const skip = () => {
+	return env !== "development";
+};
+
+const morganMiddleware = morgan("dev", {
+	stream: morganStream,
+	skip: skip,
+});
+
 module.exports = {
 	bodyParser: bodyParser,
 	cors: cors,
 	compression: compression,
 	helmet: helmet,
-	morgan: morgan,
+	morgan: morganMiddleware,
 	mongoose: mongoose,
 	favicon: favicon,
 	limiter: limiter,

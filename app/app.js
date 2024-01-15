@@ -1,3 +1,4 @@
+const { logger } = require("./config/logger");
 const express = require("express");
 const app = express();
 const middlewares = require("./middlewares/index");
@@ -13,11 +14,11 @@ app.use(middlewares.bodyParser.json());
 app.use(middlewares.bodyParser.urlencoded({ extended: true }));
 app.use(middlewares.cors({ methods: ["GET"] }));
 app.use(middlewares.compression());
-app.use(middlewares.morgan("dev"));
+app.use(middlewares.morgan);
 app.use(middlewares.helmet());
 
 app.listen(config.port, () =>
-	console.log(
+	logger.info(
 		`restasaurus started on port: http://localhost:${config.port}/api/v1`,
 	),
 );

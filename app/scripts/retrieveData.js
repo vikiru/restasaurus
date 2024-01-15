@@ -3,13 +3,14 @@ const { retrieveHTMLContent } = require("../utils/retrieveHTMLContent");
 const dinosaurNames = require("../scripts/filteredNames.json");
 const { MongooseData } = require("../models/MongooseData");
 const { writeData } = require("../utils/writeData");
+const { logger } = require("../config/logger");
 
 async function retrieveAllDinoData() {
 	const names = dinosaurNames.names;
 	const data = [];
 	for (const name of names) {
 		let mongooseData = new MongooseData(name);
-		console.log(
+		logger.info(
 			`Started data retrieval for ${name}, ${names.indexOf(name) + 1} / ${
 				names.length
 			}`,
@@ -18,7 +19,7 @@ async function retrieveAllDinoData() {
 		mongooseData = await retrieveHTMLContent(name, mongooseData);
 		data.push(mongooseData);
 
-		console.log(`Finished data retrieval for ${name}\n`);
+		logger.info(`Finished data retrieval for ${name}\n`);
 	}
 
 	await writeData(data, "dinosaurData.json");

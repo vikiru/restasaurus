@@ -92,7 +92,7 @@ function extractNameFromItem(item) {
 }
 
 async function retrieveAllDinoNames() {
-	console.log("Retrieving all dino names");
+	logger.info("Retrieving all dino names");
 	const data = await fetchData(
 		"https://en.wikipedia.org/w/api.php?action=parse&page=List_of_dinosaur_genera&prop=text&formatversion=2&format=json",
 	);
