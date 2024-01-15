@@ -1,10 +1,10 @@
-const mongoose = require("mongoose");
 const {
 	sortInfo,
 	getClassSorter,
 	getOrderSorter,
 	getFamilySorter,
 } = require("../utils/classificationInfoSorter");
+const mongoose = require("mongoose");
 const mongooseHidden = require("mongoose-hidden")();
 const { Schema, model } = mongoose;
 

@@ -1,8 +1,8 @@
 const express = require("express");
 const app = express();
-const config = require("./config/index");
-const mongoDB = require("./data/mongoData");
 const middlewares = require("./middlewares/index");
+const mongoDB = require("./data/mongoData");
+const config = require("./config/index");
 const routes = require("./routes/index");
 
 /* Connect to MongoDB database, log success and error messages (if any)*/

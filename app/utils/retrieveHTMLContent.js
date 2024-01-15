@@ -1,11 +1,11 @@
-const parser = require("node-html-parser");
-const { fetchData } = require("./fetchData");
-const { retrieveBoxData } = require("./handleClassification");
 const {
 	findDiet,
 	findLocomotionType,
 	findFeatureByClassification,
 } = require("./handleFeature");
+const { retrieveBoxData } = require("./handleClassification");
+const { fetchData } = require("./fetchData");
+const parser = require("node-html-parser");
 
 async function retrieveHTMLContent(dinosaurName, data) {
 	const parsedHTML = await fetchAndParseHTML(dinosaurName);

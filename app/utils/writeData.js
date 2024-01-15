@@ -1,5 +1,5 @@
-const fs = require("fs");
 const path = require("path");
+const fs = require("fs");
 
 async function writeData(dinosaurData, filename) {
 	const filePath = path.resolve(__dirname, `../scripts/${filename}`);

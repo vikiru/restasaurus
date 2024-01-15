@@ -1,8 +1,8 @@
-const { MongooseData } = require("../models/MongooseData");
-const { writeData } = require("../utils/writeData");
-const dinosaurNames = require("../scripts/filteredNames.json");
 const { retrieveInformation } = require("../utils/retrieveInformation");
 const { retrieveHTMLContent } = require("../utils/retrieveHTMLContent");
+const dinosaurNames = require("../scripts/filteredNames.json");
+const { MongooseData } = require("../models/MongooseData");
+const { writeData } = require("../utils/writeData");
 
 async function retrieveAllDinoData() {
 	const names = dinosaurNames.names;

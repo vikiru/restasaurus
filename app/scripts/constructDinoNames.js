@@ -1,10 +1,10 @@
-const { writeData } = require("../utils/writeData");
 const {
 	constructUrls,
 	handleUrls,
 	processData,
 	retrieveAllDinoNames,
 } = require("../utils/handleSetup");
+const { writeData } = require("../utils/writeData");
 
 async function constructDinoNames() {
 	const allDinoNames = await retrieveAllDinoNames();

@@ -3,8 +3,8 @@ const mongooseHidden = require("mongoose-hidden")();
 const AutoIncrement = require("mongoose-sequence")(mongoose);
 const { Schema, SchemaTypes, model } = mongoose;
 const { ClassificationInfo } = require("./ClassificationInfo");
-const { DinosaurImage } = require("./DinosaurImage");
 const { DinosaurSource } = require("./DinosaurSource");
+const { DinosaurImage } = require("./DinosaurImage");
 
 const DinosaurSchema = new Schema(
 	{

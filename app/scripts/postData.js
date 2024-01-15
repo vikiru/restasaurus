@@ -1,6 +1,6 @@
-const dinosaurData = require("./dinosaurData");
 const { convertToSchema } = require("../utils/convertToSchema");
 const { pushDinosaurToDB } = require("../services/index");
+const dinosaurData = require("./dinosaurData");
 const mongoDB = require("../data/mongoData");
 
 async function postAllDinosaurs() {

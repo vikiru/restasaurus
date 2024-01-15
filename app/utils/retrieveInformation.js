@@ -1,7 +1,7 @@
-const { handleImageData } = require("./handleImage");
-const { fetchData } = require("./fetchData");
 const { findDiet, findLocomotionType } = require("./handleFeature");
 const { handleSourceInformation } = require("./handleSource");
+const { handleImageData } = require("./handleImage");
+const { fetchData } = require("./fetchData");
 
 async function retrieveInformation(dinosaurName, data) {
 	const result = await fetchData(getQueryURL(dinosaurName));

@@ -1,4 +1,6 @@
-require("dotenv").config({ path: require('path').resolve(__dirname, '../../.env') });
+require("dotenv").config({
+	path: require("path").resolve(__dirname, "../../.env"),
+});
 
 const port = process.env.PORT || 3000;
 const mongoString = process.env.MONGODB_URI;

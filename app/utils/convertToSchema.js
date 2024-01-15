@@ -1,7 +1,7 @@
 const { ClassificationInfo } = require("../models/ClassificationInfo");
-const { Dinosaur } = require("../models/Dinosaur");
-const { DinosaurImage } = require("../models/DinosaurImage");
 const { DinosaurSource } = require("../models/DinosaurSource");
+const { DinosaurImage } = require("../models/DinosaurImage");
+const { Dinosaur } = require("../models/Dinosaur");
 
 async function convertToSchema(mongooseData) {
 	const keys = getClassificationAndDinosaurKeys();

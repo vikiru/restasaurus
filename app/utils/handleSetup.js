@@ -1,6 +1,6 @@
-const parser = require("node-html-parser");
 const { fetchData } = require("../utils/fetchData");
 const { writeData } = require("../utils/writeData");
+const parser = require("node-html-parser");
 
 function constructUrls(dinoNames) {
 	const baseUrl = "https://en.wikipedia.org/w/api.php?";
