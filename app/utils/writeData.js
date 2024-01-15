@@ -1,3 +1,4 @@
+const { logger } = require("../config/logger");
 const path = require("path");
 const fs = require("fs");
 
@@ -7,7 +8,7 @@ async function writeData(dinosaurData, filename) {
 		if (err) {
 			console.error(err);
 		} else {
-			console.log("Successfully saved data to file.");
+			logger.info("Successfully saved data to file.");
 		}
 	});
 }

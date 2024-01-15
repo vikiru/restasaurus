@@ -35,7 +35,11 @@ function handleImageData(data, result) {
 
 		data.image.title = getImageTitle(title);
 		data.image.description = getImageDescription(metaData);
-		data = handleAuthor(data, metaData.Artist.value);
+		if ("Artist" in metaData) {
+			data = handleAuthor(data, metaData.Artist.value);
+		} else if ("Credit" in metaData && !("Artist" in metaData)) {
+			data = handleAuthor(data, metaData.Credit.value);
+		}
 		data.image.imageURL = imageInfo.descriptionurl;
 		data.image.license = getLicense(metaData);
 		data.image.licenseURL = getLicenseURL(metaData);

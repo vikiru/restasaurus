@@ -1,3 +1,4 @@
+const { logger } = require("./config/logger");
 const express = require("express");
 const app = express();
 const middlewares = require("./middlewares/index");
@@ -9,16 +10,17 @@ const routes = require("./routes/index");
 const mongoConnection = mongoDB.connect();
 
 /* Setup middlewares */
+app.use(middlewares.helmet());
+app.use(middlewares.cors({ methods: ["GET"] }));
 app.use(middlewares.bodyParser.json());
 app.use(middlewares.bodyParser.urlencoded({ extended: true }));
-app.use(middlewares.cors({ methods: ["GET"] }));
+app.use(middlewares.validator);
 app.use(middlewares.compression());
-app.use(middlewares.morgan("dev"));
-app.use(middlewares.helmet());
+app.use(middlewares.morgan);
 
 app.listen(config.port, () =>
-	console.log(
-		`restasaurus started on port: http://localhost:${config.port}/api/v1`,
+	logger.info(
+		`restasaurus started on port: http://localhost:${config.port}/api/v1.`,
 	),
 );
 
