@@ -41,8 +41,12 @@ DinosaurSchema.plugin(mongooseHidden, {
 	hidden: { _id: true, __v: true, createdAt: true, updatedAt: true },
 });
 
-DinosaurSchema.statics.findAllDinosaurs = function () {
-	return this.find().populate("classificationInfo image source");
+DinosaurSchema.statics.findAllDinosaurs = function (page) {
+	const limit = 20;
+	return this.find()
+		.skip((page - 1) * limit)
+		.limit(limit)
+		.populate("classificationInfo image source");
 };
 
 DinosaurSchema.statics.findById = function (id) {
@@ -74,7 +78,7 @@ DinosaurSchema.statics.findByDiet = function (diet) {
 };
 
 DinosaurSchema.statics.findByLocomotion = function (locomotionType) {
-	return this.find({ "info.locomotionType": locomotionType }).populate(
+	return this.find({ locomotionType: locomotionType }).populate(
 		"classificationInfo image source",
 	);
 };

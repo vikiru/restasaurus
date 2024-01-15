@@ -1,6 +1,9 @@
 const { Dinosaur } = require("../models/Dinosaur");
 
+const MAX_PAGE = 20;
+
 const apiEndpoints = {
+	home: "/",
 	getAllDinos: "/api/v1/dinosaurs",
 	getDinoById: "/api/v1/dinosaurs/:id",
 	getAllImages: "/api/v1/images",
@@ -24,8 +27,18 @@ async function returnHome(req, res) {
 
 async function retrieveAllDinosaurs(req, res) {
 	try {
-		const dinosaurs = await Dinosaur.findAllDinosaurs();
-		res.status(200).json(dinosaurs);
+		const page = parseInt(req.query.page || 1);
+		const dinosaurs = await Dinosaur.findAllDinosaurs(page);
+		const prevPage =
+			page - 1 > 0 ? `/api/v1/dinosaurs?page=${page - 1}` : "";
+		const nextPage =
+			page + 1 < MAX_PAGE ? `/api/v1/dinosaurs?page=${page + 1}` : "";
+		res.status(200).json({
+			prevPage: prevPage,
+			currentPage: page,
+			nextPage: nextPage,
+			data: dinosaurs,
+		});
 	} catch (error) {
 		console.error(error);
 		res.status(404).json({
