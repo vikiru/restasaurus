@@ -13,6 +13,7 @@ const apiEndpoints = {
 	getAllImages: "/api/v1/images",
 	getImageById: "/api/v1/images/:id",
 	getRandomImages: "/api/v1/images/random/:count",
+	getDinosaurByQuery: "/api/v1/search",
 };
 
 async function returnHome(req, res) {
