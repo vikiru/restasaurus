@@ -201,7 +201,10 @@ async function retrieveRandomImages(req, res) {
 	const size = count <= 10 ? count : 10;
 	try {
 		const dinosaurImages = await dinosaurService.returnRandomImages(size);
-		res.status(200).json({ count: dinosaurImages.length, data: dinosaurImages });
+		res.status(200).json({
+			count: dinosaurImages.length,
+			data: dinosaurImages,
+		});
 	} catch (error) {
 		logger.error(error);
 		res.status(500).json({
