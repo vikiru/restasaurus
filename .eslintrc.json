@@ -21,13 +21,30 @@
     },
     "rules": {
         "no-console": "warn",
+        "func-names": "off",
+        "no-plusplus": "off",
+        "no-await-in-loop": "off",
+        "no-param-reassign":"off",
+        "no-restricted-syntax": "off",
+        "consistent-return": "off",
         "no-unused-vars": "warn",
+        "complexity": ["warn", { "max": 10 }],
+        "max-depth": ["warn", 4],
         "node/no-unpublished-require": "off",
         "node/no-missing-require": "off",
         "prettier/prettier": "off",
-        "complexity": ["warn", { "max": 10 }],
-        "max-depth": ["warn", 4],
-        "sort-exports/sort-exports": ["error", { "sortDir": "asc" }]
+        "security/detect-object-injection": "off",
+        "security/detect-non-literal-fs-filename": "off",
+        "import/order": [
+            "error",
+            {
+                "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+                "newlines-between": "always",
+                "alphabetize": {
+                    "order": "asc",
+                    "caseInsensitive": true
+                }
+            }]
     },
-    "plugins": ["prettier", "sort-exports"]
+    "plugins": ["prettier", "import", "sort-exports"]
 }
