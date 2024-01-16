@@ -41,6 +41,7 @@
 		"snappy": "^7.2.2"
 	},
 	"devDependencies": {
+		"@trivago/prettier-plugin-sort-imports": "^4.3.0",
 		"chai": "^5.0.0",
 		"chai-http": "^4.4.0",
 		"eslint": "^8.56.0",
@@ -56,7 +57,6 @@
 		"mocha": "^10.2.0",
 		"nodemon": "^3.0.2",
 		"prettier": "^3.2.2",
-		"prettier-plugin-sort-imports": "^1.8.1",
 		"winston": "^3.11.0"
 	},
 	"ignorePatterns": [
