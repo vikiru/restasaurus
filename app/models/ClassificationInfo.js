@@ -20,7 +20,7 @@ const ClassificationInfoSchema = new Schema(
 				_id: false,
 			},
 		],
-		clade: [String],
+		clade: { type: [String], index: true },
 		orderInfo: [
 			{
 				orderType: String,
@@ -40,6 +40,8 @@ ClassificationInfoSchema.plugin(mongooseHidden, {
 	hidden: {
 		_id: true,
 		__v: true,
+		createdAt: true,
+		updatedAt: true,
 	},
 });
 

@@ -17,7 +17,9 @@ const DinosaurImageSchema = new Schema(
 	{ retainKeyOrder: true },
 );
 
-DinosaurImageSchema.plugin(mongooseHidden);
+DinosaurImageSchema.plugin(mongooseHidden, {
+	hidden: { _id: true, __v: true, createdAt: true, updatedAt: true },
+});
 
 const DinosaurImage = model("DinosaurImage", DinosaurImageSchema);
 

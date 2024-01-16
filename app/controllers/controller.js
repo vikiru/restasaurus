@@ -3,15 +3,17 @@ const { logger } = require("../config/logger");
 
 const apiEndpoints = {
 	home: "/api/v1",
+	getAllNames: "/api/v1/names",
 	getAllDinos: "/api/v1/dinosaurs",
 	getDinoById: "/api/v1/dinosaurs/:id",
-	getAllImages: "/api/v1/images",
-	getImageById: "/api/v1/images/:id",
 	getDinoByName: "/api/v1/dinosaurs/name/:name",
-	getDinoByQuery: "/api/v1/dinosaurs/search",
 	getDinosByDiet: "/api/v1/dinosaurs/diet/:diet",
 	getDinosByLocomotion: "/api/v1/dinosaurs/locomotion/:locomotion",
 	getRandomDinos: "/api/v1/dinosaurs/random/:count",
+	getAllImages: "/api/v1/images",
+	getImageById: "/api/v1/images/:id",
+	getRandomImages: "/api/v1/images/random/:count",
+	getDinosaurByQuery: "/api/v1/search",
 };
 
 async function returnHome(req, res) {
@@ -66,7 +68,7 @@ async function retrieveAllNames(req, res) {
 	try {
 		const names = await dinosaurService.retrieveAllNames();
 		if (names.length > 0) {
-			res.status(200).json({ count: names.length, names: names });
+			res.status(200).json({ count: names.length, data: names });
 		} else {
 			res.status(404).json({
 				error: "Sorry, there was an error retrieving all dinosaur names",
@@ -147,7 +149,7 @@ async function retrieveDinoByLocomotion(req, res) {
 		if (dinosaurs.length > 0) {
 			return res
 				.status(200)
-				.json({ count: dinosaurs.length, dinosaurdata: dinosaurs });
+				.json({ count: dinosaurs.length, data: dinosaurs });
 		} else {
 			return res.status(404).json({
 				error: "Sorry, there doesn't seem to be any dinosaurs matching that locomotion type.",
@@ -180,7 +182,65 @@ async function retrieveImageById(req, res) {
 	}
 }
 
+async function retrieveRandomDinosaurs(req, res) {
+	const count = parseInt(req.params.count) || 1;
+	const size = count <= 10 ? count : 10;
+	try {
+		const dinosaurs = await dinosaurService.returnRandomDinosaurs(size);
+		res.status(200).json({ count: dinosaurs.length, data: dinosaurs });
+	} catch (error) {
+		logger.error(error);
+		res.status(500).json({
+			error: "Sorry, an unexpected error occurred while trying to retrieve a random number of dinosaurs.",
+		});
+	}
+}
+
+async function retrieveRandomImages(req, res) {
+	const count = parseInt(req.params.count) || 1;
+	const size = count <= 10 ? count : 10;
+	try {
+		const dinosaurImages = await dinosaurService.returnRandomImages(size);
+		res.status(200).json({ count: dinosaurImages.length, data: dinosaurImages });
+	} catch (error) {
+		logger.error(error);
+		res.status(500).json({
+			error: "Sorry, an unexpected error occurred while trying to retrieve a random number of dinosaur images.",
+		});
+	}
+}
+
+async function retrieveDinosaursByQuery(req, res) {
+	try {
+		let { clade } = req.query;
+		const { diet, locomotion } = req.query;
+		if (typeof clade === "string") {
+			clade = [clade];
+		}
+
+		const dinosaurs = await dinosaurService.returnDinosaursByQuery(
+			clade,
+			diet,
+			locomotion,
+		);
+
+		if (dinosaurs.length > 0) {
+			res.status(200).json({ count: dinosaurs.length, data: dinosaurs });
+		} else {
+			res.status(404).json({
+				error: "Sorry, there doesnt seem to be any dinosaurs matching that query.",
+			});
+		}
+	} catch (err) {
+		logger.error(err.message);
+		res.status(500).json({
+			error: "Sorry, an unexpected error occured while performing that query.",
+		});
+	}
+}
+
 module.exports = {
+	apiEndpoints: apiEndpoints,
 	returnHome: returnHome,
 	retrieveAllDinosaurs: retrieveAllDinosaurs,
 	retrieveAllImages: retrieveAllImages,
@@ -190,5 +250,7 @@ module.exports = {
 	retrieveDinoByDiet: retrieveDinoByDiet,
 	retrieveDinoByLocomotion: retrieveDinoByLocomotion,
 	retrieveImageById: retrieveImageById,
-	apiEndpoints: apiEndpoints,
+	retrieveRandomDinosaurs: retrieveRandomDinosaurs,
+	retrieveRandomImages: retrieveRandomImages,
+	retrieveDinosaursByQuery: retrieveDinosaursByQuery,
 };

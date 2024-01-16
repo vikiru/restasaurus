@@ -8,20 +8,28 @@ const {
 	retrieveDinoByDiet,
 	retrieveDinoByLocomotion,
 	retrieveImageById,
+	retrieveRandomDinosaurs,
+	retrieveRandomImages,
+	retrieveDinosaursByQuery,
 } = require("../controllers/controller");
 const express = require("express");
 const router = express.Router();
-const { logger } = require("../config/logger");
 
 router.get("/", returnHome);
+
+router.get("/names", retrieveAllNames);
+
 router.get("/dinosaurs", retrieveAllDinosaurs);
 router.get("/dinosaurs/:id", retrieveDinoById);
-router.get("/images", retrieveAllImages);
-router.get("/names", retrieveAllNames);
-router.get("/images/:id", retrieveImageById);
 router.get("/dinosaurs/name/:name", retrieveDinoByName);
 router.get("/dinosaurs/diet/:diet", retrieveDinoByDiet);
 router.get("/dinosaurs/locomotion/:locomotion", retrieveDinoByLocomotion);
-router.get("/dinosaurs/random/:count", () => logger.info("random count"));
+router.get("/dinosaurs/random/:count", retrieveRandomDinosaurs);
+
+router.get("/images", retrieveAllImages);
+router.get("/images/:id", retrieveImageById);
+router.get("/images/random/:count", retrieveRandomImages);
+
+router.get("/search", retrieveDinosaursByQuery);
 
 module.exports = router;

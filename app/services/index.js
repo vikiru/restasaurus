@@ -30,6 +30,7 @@ async function retrieveAllDinosaurs(page) {
 		prevPage: prevPage,
 		currentPage: page,
 		nextPage: nextPage,
+		count: dinosaurs.length,
 		data: dinosaurs,
 	};
 }
@@ -43,6 +44,7 @@ async function retrieveAllImages(page) {
 		prevPage: prevPage,
 		currentPage: page,
 		nextPage: nextPage,
+		count: dinosaurImages.length,
 		data: dinosaurImages,
 	};
 }
@@ -77,6 +79,36 @@ async function retrieveImageById(id) {
 	return image;
 }
 
+async function returnRandomDinosaurs(count) {
+	const dinosaurs = await Dinosaur.returnRandomDinosaurs(count);
+	return dinosaurs;
+}
+
+async function returnRandomImages(count) {
+	const dinosaurImages = await Dinosaur.returnRandomImages(count);
+	return dinosaurImages;
+}
+
+async function returnDinosaursByQuery(clade, diet, locomotion) {
+	const query = {
+		$match: {},
+	};
+
+	if (diet) {
+		query["$match"]["diet"] = diet;
+	}
+
+	if (locomotion) {
+		query["$match"]["locomotionType"] = locomotion;
+	}
+
+	if (clade) {
+		query["$match"]["classificationInfo.clade"] = { $in: clade };
+	}
+	const dinosaurs = await Dinosaur.returnDinosaursByQuery(query);
+	return dinosaurs;
+}
+
 module.exports = {
 	pushDinosaurToDB: pushDinosaurToDB,
 	retrieveAllDinosaurs: retrieveAllDinosaurs,
@@ -87,4 +119,7 @@ module.exports = {
 	retrieveDinosaursByDiet: retrieveDinosaursByDiet,
 	retrieveDinosaursByLocomotion: retrieveDinosaursByLocomotion,
 	retrieveImageById: retrieveImageById,
+	returnRandomDinosaurs: returnRandomDinosaurs,
+	returnRandomImages: returnRandomImages,
+	returnDinosaursByQuery: returnDinosaursByQuery,
 };
