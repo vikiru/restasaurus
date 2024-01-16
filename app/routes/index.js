@@ -10,6 +10,7 @@ const {
 	retrieveImageById,
 	retrieveRandomDinosaurs,
 	retrieveRandomImages,
+	retrieveDinosaursByQuery,
 } = require("../controllers/controller");
 const express = require("express");
 const router = express.Router();
@@ -28,5 +29,7 @@ router.get("/dinosaurs/random/:count", retrieveRandomDinosaurs);
 router.get("/images", retrieveAllImages);
 router.get("/images/:id", retrieveImageById);
 router.get("/images/random/:count", retrieveRandomImages);
+
+router.get("/search", retrieveDinosaursByQuery);
 
 module.exports = router;

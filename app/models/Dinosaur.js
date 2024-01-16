@@ -9,10 +9,10 @@ const { DinosaurImage } = require("./DinosaurImage");
 const DinosaurSchema = new Schema(
 	{
 		id: Number,
-		name: { type: String, unique: true },
+		name: { type: String, unique: true, index: true },
 		temporalRange: String,
-		diet: String,
-		locomotionType: String,
+		diet: { type: String, index: true },
+		locomotionType: { type: String, index: true },
 		description: String,
 		classificationInfo: {
 			type: SchemaTypes.ObjectId,
@@ -173,6 +173,77 @@ DinosaurSchema.statics.returnRandomImages = function (count) {
 			$project: {
 				image: 1,
 				_id: 0,
+			},
+		},
+	]);
+};
+
+DinosaurSchema.statics.returnDinosaursByQuery = function (query) {
+	return this.aggregate([
+		{
+			$lookup: {
+				from: "classificationinfos",
+				localField: "classificationInfo",
+				foreignField: "_id",
+				as: "classificationInfo",
+			},
+		},
+		{ $unwind: "$classificationInfo" },
+		query,
+		{
+			$lookup: {
+				from: "dinosaursources",
+				localField: "source",
+				foreignField: "_id",
+				as: "source",
+			},
+		},
+		{ $unwind: "$source" },
+		{
+			$lookup: {
+				from: "dinosaurimages",
+				localField: "image",
+				foreignField: "_id",
+				as: "image",
+			},
+		},
+		{ $unwind: "$image" },
+		{
+			$project: {
+				name: 1,
+				temporalRange: 1,
+				diet: 1,
+				locomotionType: 1,
+				description: 1,
+				classificationInfo: 1,
+				source: 1,
+				image: 1,
+			},
+		},
+		{
+			$project: {
+				_id: 0,
+				__v: 0,
+				createdAt: 0,
+				updatedAt: 0,
+				classificationInfo: {
+					_id: 0,
+					__v: 0,
+					createdAt: 0,
+					updatedAt: 0,
+				},
+				source: {
+					_id: 0,
+					__v: 0,
+					createdAt: 0,
+					updatedAt: 0,
+				},
+				image: {
+					_id: 0,
+					__v: 0,
+					createdAt: 0,
+					updatedAt: 0,
+				},
 			},
 		},
 	]);

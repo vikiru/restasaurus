@@ -89,6 +89,26 @@ async function returnRandomImages(count) {
 	return dinosaurImages;
 }
 
+async function returnDinosaursByQuery(clade, diet, locomotion) {
+	const query = {
+		$match: {},
+	};
+
+	if (diet) {
+		query["$match"]["diet"] = diet;
+	}
+
+	if (locomotion) {
+		query["$match"]["locomotionType"] = locomotion;
+	}
+
+	if (clade) {
+		query["$match"]["classificationInfo.clade"] = { $in: clade };
+	}
+	const dinosaurs = await Dinosaur.returnDinosaursByQuery(query);
+	return dinosaurs;
+}
+
 module.exports = {
 	pushDinosaurToDB: pushDinosaurToDB,
 	retrieveAllDinosaurs: retrieveAllDinosaurs,
@@ -101,4 +121,5 @@ module.exports = {
 	retrieveImageById: retrieveImageById,
 	returnRandomDinosaurs: returnRandomDinosaurs,
 	returnRandomImages: returnRandomImages,
+	returnDinosaursByQuery: returnDinosaursByQuery,
 };

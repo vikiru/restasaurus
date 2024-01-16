@@ -20,7 +20,7 @@ const ClassificationInfoSchema = new Schema(
 				_id: false,
 			},
 		],
-		clade: [String],
+		clade: { type: [String], index: true },
 		orderInfo: [
 			{
 				orderType: String,
