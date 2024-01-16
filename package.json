@@ -62,10 +62,12 @@
 		"eslint-plugin-promise": "^6.1.1",
 		"eslint-plugin-security": "^2.1.0",
 		"eslint-plugin-sort-exports": "^0.8.0",
+		"esm": "^3.2.25",
 		"mocha": "^10.2.0",
 		"nodemon": "^3.0.2",
 		"nyc": "^15.1.0",
-		"prettier": "^3.2.2"
+		"prettier": "^3.2.2",
+		"sinon": "^17.0.1"
 	},
 	"ignorePatterns": [
 		"./node_modules/**",
