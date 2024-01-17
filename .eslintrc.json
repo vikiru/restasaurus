@@ -26,6 +26,7 @@
         "no-restricted-syntax": "off",
         "no-underscore-dangle": "off",
         "no-unused-expressions": "off",
+        "global-require": "off",
         "import/no-extraneous-dependencies": "off",
         "consistent-return": "off",
         "no-unused-vars": "warn",
