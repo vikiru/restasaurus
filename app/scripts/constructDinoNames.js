@@ -24,9 +24,8 @@ async function constructDinoNames() {
 
     logger.info('Proceeding to save filtered names to file.');
     await writeData({ names }, 'filteredNames.json');
+    return { names };
 }
-
-constructDinoNames();
 
 module.exports = {
     constructDinoNames,

@@ -97,7 +97,7 @@ const logger = {
     },
 };
 
-if (env !== 'production') {
+if (env === 'development') {
     infoLogger.add(
         new winston.transports.Console({
             format: consoleFormat,

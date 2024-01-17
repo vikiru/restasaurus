@@ -37,6 +37,7 @@ async function retrieveAllDinoData() {
         `Finished data retrieval for all dinosaurs, completed in ${formattedSeconds} seconds. Saving data to file now.`,
     );
     await writeData(data, 'dinosaurData.json');
+    return data;
 }
 
 retrieveAllDinoData();
