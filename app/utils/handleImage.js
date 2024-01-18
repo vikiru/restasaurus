@@ -22,6 +22,7 @@ function handleAuthor(data, authorInfo) {
             } else {
                 text = match[1];
             }
+            data.image.authorURL = text;
         }
     } else {
         data.image.author = authorInfo;

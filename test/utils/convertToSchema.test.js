@@ -1,10 +1,11 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
-const { MongooseData } = require('../../app/models/MongooseData');
-const schemaConvert = require('../../app/utils/convertToSchema');
-const DinosaurSource = require('../../app/models/DinosaurSource');
+
 const ClassificationInfo = require('../../app/models/ClassificationInfo');
 const DinosaurImage = require('../../app/models/DinosaurImage');
+const DinosaurSource = require('../../app/models/DinosaurSource');
+const { MongooseData } = require('../../app/models/MongooseData');
+const schemaConvert = require('../../app/utils/convertToSchema');
 
 describe('convertToSchema', () => {
     let getClassificationAndDinosaurKeysStub;

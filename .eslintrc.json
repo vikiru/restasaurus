@@ -28,7 +28,6 @@
         "no-unused-expressions": "off",
         "global-require": "off",
         "prefer-destructuring": "off",
-        "import/no-extraneous-dependencies": "off",
         "consistent-return": "off",
         "no-unused-vars": "warn",
         "complexity": ["warn", { "max": 10 }],
@@ -40,8 +39,10 @@
         "prettier/prettier": "off",
         "security/detect-object-injection": "off",
         "security/detect-non-literal-fs-filename": "off",
+        "import/no-unresolved": "off",
+        "import/no-extraneous-dependencies": "off",
         "import/order": [
-            "off",
+            "error",
             {
                 "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
                 "newlines-between": "always",
