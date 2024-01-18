@@ -1,5 +1,6 @@
-const sinon = require('sinon');
 const { expect } = require('chai');
+const sinon = require('sinon');
+
 const { constructUrls } = require('../../app/utils/handleSetup');
 
 describe('fetchData', function () {

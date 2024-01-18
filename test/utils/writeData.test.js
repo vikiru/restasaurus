@@ -1,7 +1,9 @@
-const { expect } = require('chai');
 const fs = require('fs').promises;
-const { MongooseData } = require('../../app/models/MongooseData');
 const path = require('path');
+
+const { expect } = require('chai');
+
+const { MongooseData } = require('../../app/models/MongooseData');
 
 describe('writeData', function () {
     const dinoData = new MongooseData('Stegosaurus');
