@@ -52,7 +52,7 @@ function createSubObject(obj, keys) {
  */
 function createDinosaurObject(mongooseData, keys) {
     const dinosaur = {};
-    keys.forEach((key) => {
+    Object.keys(keys).forEach((key) => {
         if (key in mongooseData) {
             dinosaur[key] = createSubObject(mongooseData[key], keys[key]);
         } else {
