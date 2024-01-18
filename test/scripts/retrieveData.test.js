@@ -1,6 +1,5 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
-const sinonTest = require('sinon-test');
 const proxyquire = require('proxyquire');
 const logger = require('../../app/config/logger');
 

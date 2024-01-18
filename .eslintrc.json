@@ -27,6 +27,7 @@
         "no-underscore-dangle": "off",
         "no-unused-expressions": "off",
         "global-require": "off",
+        "prefer-destructuring": "off",
         "import/no-extraneous-dependencies": "off",
         "consistent-return": "off",
         "no-unused-vars": "warn",

@@ -10,7 +10,6 @@ describe('logger', function () {
 
     afterEach(() => {
         sandbox.restore();
-        delete process.env.NODE_ENV;
     });
 
     it('should call infoLogger.info', function () {

@@ -15,7 +15,13 @@ function handleAuthor(data, authorInfo) {
         const hrefRegex = /href="[/]*([\w]*[^"]*)/gim;
         const match = hrefRegex.exec(innerHTML);
         if (match && match[1]) {
-            data.image.authorURL = `https://${match[1]}`;
+            const url = match[1];
+            let text = '';
+            if (!url.includes('https://')) {
+                text = `https://${match[1]}`;
+            } else {
+                text = match[1];
+            }
         }
     } else {
         data.image.author = authorInfo;
