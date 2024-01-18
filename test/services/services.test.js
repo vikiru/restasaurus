@@ -48,7 +48,6 @@ describe('Services - Functionality Tests', function () {
     });
 
     describe('retrieveAllDinosaurs', function () {
-        const page = 1;
         let DinosaurStub;
         const mongooseData = new MongooseData('Stegosaurus');
         const fakeData = [mongooseData, mongooseData];
@@ -77,6 +76,229 @@ describe('Services - Functionality Tests', function () {
             expect(result.nextPage).to.equal('');
             expect(result.count).to.equal(fakeData.length);
             expect(result.data).to.deep.equal(fakeData);
+        });
+    });
+
+    describe('retrieveAllImages', async function () {
+        let DinosaurStub;
+        const fakeImage = { image: {} };
+        const fakeData = [fakeImage, fakeImage];
+
+        beforeEach(() => {
+            DinosaurStub = sinon.stub(Dinosaur, 'findAllImages').callsFake(() => fakeData);
+        });
+
+        afterEach(() => {
+            DinosaurStub.restore();
+        });
+
+        it('should retrieve all dinosaur images within database on first page', async function () {
+            const result = await services.retrieveAllImages(1);
+            expect(result.prevPage).to.equal('');
+            expect(result.currentPage).to.equal(1);
+            expect(result.nextPage).to.equal('/api/v1/images?page=2');
+            expect(result.count).to.equal(fakeData.length);
+            expect(result.data).to.deep.equal(fakeData);
+        });
+
+        it('should retrieve all dinosaur images within database on last page', async function () {
+            const result = await services.retrieveAllImages(20);
+            expect(result.prevPage).to.equal('/api/v1/images?page=19');
+            expect(result.currentPage).to.equal(20);
+            expect(result.nextPage).to.equal('');
+            expect(result.count).to.equal(fakeData.length);
+            expect(result.data).to.deep.equal(fakeData);
+        });
+    });
+
+    describe('retrieveDinosaurById', async function () {
+        let DinosaurStub;
+        const mongooseData = new MongooseData('Stegosaurus');
+
+        beforeEach(() => {
+            DinosaurStub = sinon.stub(Dinosaur, 'findById').callsFake(() => mongooseData);
+        });
+
+        afterEach(() => {
+            DinosaurStub.restore();
+        });
+
+        it('should retrieve dinosaur with id of 1', async function () {
+            const result = await services.retrieveDinosaurById(1);
+            expect(result).to.exist;
+            expect(result).to.be.an('object');
+            expect(result).to.deep.equal(mongooseData);
+        });
+    });
+
+    describe('retrieveAllNames', async function () {
+        let DinosaurStub;
+        const fakeData = [new MongooseData('Stegosaurus'), new MongooseData('T-Rex')];
+
+        beforeEach(() => {
+            DinosaurStub = sinon.stub(Dinosaur, 'findAllNames').callsFake(() => fakeData);
+        });
+
+        afterEach(() => {
+            DinosaurStub.restore();
+        });
+
+        it('should retrieve all names within database', async function () {
+            const result = await services.retrieveAllNames();
+            expect(result).to.be.an('array');
+            expect(result.length).to.be.equal(2);
+        });
+    });
+
+    describe('retrieveDinosaurByName', async function () {
+        let DinosaurStub;
+        const fakeData = new MongooseData('Stegosaurus');
+
+        beforeEach(() => {
+            DinosaurStub = sinon.stub(Dinosaur, 'findByName').callsFake(() => fakeData);
+        });
+
+        afterEach(() => {
+            DinosaurStub.restore();
+        });
+
+        it('should retrieve dinosaur by name', async function () {
+            const result = await services.retrieveDinosaurByName('Stegosaurus');
+            expect(result).to.exist;
+            expect(result).to.be.an('object');
+            expect(result).to.deep.equal(fakeData);
+        });
+    });
+
+    describe('retrieveDinosaursByDiet', async function () {
+        let DinosaurStub;
+        const fakeData = [new MongooseData('Stegosaurus')];
+
+        beforeEach(() => {
+            DinosaurStub = sinon.stub(Dinosaur, 'findByDiet').callsFake(() => fakeData);
+        });
+
+        afterEach(() => {
+            DinosaurStub.restore();
+        });
+
+        it('should retrieve dinosaur by name', async function () {
+            const result = await services.retrieveDinosaursByDiet('herbivore');
+            expect(result).to.exist;
+            expect(result).to.be.an('array');
+            expect(result.length).to.equal(1);
+            expect(result[0]).to.deep.equal(fakeData[0]);
+        });
+    });
+
+    describe('retrieveDinosaursByLocomotion', async function () {
+        let DinosaurStub;
+        const fakeData = [new MongooseData('Stegosaurus')];
+
+        beforeEach(() => {
+            DinosaurStub = sinon.stub(Dinosaur, 'findByLocomotion').callsFake(() => fakeData);
+        });
+
+        afterEach(() => {
+            DinosaurStub.restore();
+        });
+
+        it('should retrieve dinosaur by name', async function () {
+            const result = await services.retrieveDinosaursByLocomotion('quadruped');
+            expect(result).to.exist;
+            expect(result).to.be.an('array');
+            expect(result.length).to.equal(1);
+            expect(result[0]).to.deep.equal(fakeData[0]);
+        });
+    });
+
+    describe('retrieveImageById', async function () {
+        let DinosaurStub;
+        const fakeData = { image: {} };
+
+        beforeEach(() => {
+            DinosaurStub = sinon.stub(Dinosaur, 'findImageById').callsFake(() => fakeData);
+        });
+
+        afterEach(() => {
+            DinosaurStub.restore();
+        });
+
+        it('should retrieve image with id of 1', async function () {
+            const result = await services.retrieveImageById(1);
+            expect(result).to.exist;
+            expect(result).to.be.an('object');
+            expect(result).to.deep.equal(fakeData);
+        });
+    });
+
+    describe('returnRandomDinosaurs', async function () {
+        let DinosaurStub;
+        const fakeData = [new MongooseData('Stegosaurus')];
+
+        beforeEach(() => {
+            DinosaurStub = sinon.stub(Dinosaur, 'returnRandomDinosaurs').callsFake(() => fakeData);
+        });
+
+        afterEach(() => {
+            DinosaurStub.restore();
+        });
+
+        it('should return a random number of dinosaurs', async function () {
+            const result = await services.returnRandomDinosaurs(1);
+            expect(result.length).to.equal(1);
+            expect(result[0]).to.be.an('object');
+            expect(result[0]).to.deep.equal(fakeData[0]);
+        });
+    });
+
+    describe('returnRandomImages', async function () {
+        let DinosaurStub;
+        const fakeData = [{ image: {} }];
+
+        beforeEach(() => {
+            DinosaurStub = sinon.stub(Dinosaur, 'returnRandomImages').callsFake(() => fakeData);
+        });
+
+        afterEach(() => {
+            DinosaurStub.restore();
+        });
+
+        it('should return a random number of dinosaurs', async function () {
+            const result = await services.returnRandomImages(1);
+            expect(result.length).to.equal(1);
+            expect(result[0]).to.be.an('object');
+            expect(result[0]).to.deep.equal(fakeData[0]);
+        });
+    });
+
+    describe('returnDinosaursByQuery', async function () {
+        let DinosaurStub;
+        const fakeData = [new MongooseData('Stegosaurus')];
+
+        beforeEach(() => {
+            DinosaurStub = sinon.stub(Dinosaur, 'returnDinosaursByQuery');
+        });
+
+        afterEach(() => {
+            DinosaurStub.restore();
+        });
+
+        it('should return the matching dinosaur by query', async function () {
+            DinosaurStub.callsFake(() => fakeData);
+            const diet = 'herbivore';
+            const locomotionType = 'quadruped';
+            const clade = ['Ornithischia'];
+
+            const result = await services.returnDinosaursByQuery(clade, diet, locomotionType);
+            expect(result.length).to.equal(1);
+            expect(result[0]).to.be.an('object');
+            expect(result[0]).to.deep.equal(fakeData[0]);
+        });
+
+        it('should return undefined if no query parameters are provided', async function () {
+            const result = await services.returnDinosaursByQuery(undefined, undefined, undefined);
+            expect(result).to.equal(undefined);
         });
     });
 });
