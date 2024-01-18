@@ -4,8 +4,14 @@ const parser = require('node-html-parser');
 
 describe('handleSetup', function () {
     const pages = [
-        { title: 'Tyrannosaurus', extract: 'Tyrannosaurus is a genus of coelurosaurian theropod dinosaur.' },
-        { title: 'Stegosaurus', extract: 'Stegosaurus is a genus of herbivorous thyreophoran dinosaur.' },
+        {
+            title: 'Tyrannosaurus',
+            extract: 'Tyrannosaurus is a genus of coelurosaurian theropod dinosaur.',
+        },
+        {
+            title: 'Stegosaurus',
+            extract: 'Stegosaurus is a genus of herbivorous thyreophoran dinosaur.',
+        },
     ];
     const htmlText = `
     <div class="mw-content-ltr">

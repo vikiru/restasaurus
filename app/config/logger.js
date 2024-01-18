@@ -19,7 +19,9 @@ const requestStream = fs.createWriteStream(path.join(logDir, 'requests.log'), {
     flags: 'w',
 });
 
-const infoStream = fs.createWriteStream(path.join(logDir, 'all.log'), { flags: 'w' });
+const infoStream = fs.createWriteStream(path.join(logDir, 'all.log'), {
+    flags: 'w',
+});
 const loggingLevels = {
     error: 0,
     warn: 1,
