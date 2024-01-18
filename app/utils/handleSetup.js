@@ -8,8 +8,8 @@ const { writeData } = require('./writeData');
 /**
  * Constructs URLs for fetching dinosaur data.
  *
- * @param {Array<string>} dinoNames - The names of the dinosaurs.
- * @returns {Array<string>} The constructed URLs.
+ * @param {string[]} dinoNames - The names of the dinosaurs.
+ * @returns {string[]} The constructed URLs.
  */
 function constructUrls(dinoNames) {
     const baseUrl = 'https://en.wikipedia.org/w/api.php?';
@@ -30,7 +30,7 @@ function constructUrls(dinoNames) {
  * Extracts data from the fetched pages.
  *
  * @param {object} pages - The fetched pages.
- * @returns {Array<object>} The extracted data objects.
+ * @returns {object[]} The extracted data objects.
  */
 function extractDataFromPages(pages) {
     const dataObjs = [];
@@ -48,8 +48,8 @@ function extractDataFromPages(pages) {
 /**
  * Handles the fetching of data from the constructed URLs.
  *
- * @param {Array<string>} urls - The URLs to fetch data from.
- * @returns {Promise<Array<object>>} The fetched data objects.
+ * @param {string[]} urls - The URLs to fetch data from.
+ * @returns {Promise<object[]>} The fetched data objects.
  */
 async function handleUrls(urls) {
     const dataObjs = [];
@@ -85,8 +85,8 @@ function isMatched(extract) {
 /**
  * Processes the fetched data to find matching dinosaurs.
  *
- * @param {Array<object>} allData - The fetched data.
- * @returns {Array<string>} The names of the matching dinosaurs.
+ * @param {object[]} allData - The fetched data.
+ * @returns {string[]} The names of the matching dinosaurs.
  */
 function processData(allData) {
     const names = new Set();
@@ -102,7 +102,7 @@ function processData(allData) {
  * Extracts a dinosaur name from an HTML item.
  *
  * @param {object} item - The HTML item to extract a name from.
- * @returns {string|null} The extracted dinosaur name, or null if no name was found.
+ * @returns {string | null} The extracted dinosaur name, or null if no name was found.
  */
 function extractNameFromItem(item) {
     const iTag = item.querySelector('i');
@@ -121,7 +121,7 @@ function extractNameFromItem(item) {
  * Extracts dinosaur names from the HTML text.
  *
  * @param {object} htmlText - The HTML text to extract names from.
- * @returns {Array<string>} The extracted dinosaur names.
+ * @returns {string[]} The extracted dinosaur names.
  */
 function extractDinoNames(htmlText) {
     const names = new Set();
@@ -143,7 +143,7 @@ function extractDinoNames(htmlText) {
 /**
  * Retrieves all dinosaur names.
  *
- * @returns {Promise<Array<string>>} The retrieved dinosaur names.
+ * @returns {Promise<string[]>} The retrieved dinosaur names.
  */
 async function retrieveAllDinoNames() {
     logger.info('Retrieving all dino names.');

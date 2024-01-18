@@ -2,6 +2,7 @@ const { keywordRegex } = require('./helperConstants').default;
 
 /**
  * Assigns classification information to the data object based on the keyword and value.
+ *
  * @param {object} data - The data object to assign classification information to.
  * @param {string} keyword - The keyword to determine the type of classification information.
  * @param {string} value - The value of the classification information.

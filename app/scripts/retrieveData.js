@@ -7,8 +7,11 @@ const { writeData } = require('../utils/writeData');
 const dinosaurNames = require('./filteredNames.json');
 
 /**
- * Asynchronously retrieves data for all dinosaurs and writes it to a JSON file.
- * This function iterates over a list of dinosaur names, retrieves information for each dinosaur, and then writes the collected data to a JSON file. The function logs the start and end of data retrieval for each dinosaur, as well as the total time taken to retrieve data for all dinosaurs.
+ * Asynchronously retrieves data for all dinosaurs and writes it to a JSON file. This function iterates over a list of
+ * dinosaur names, retrieves information for each dinosaur, and then writes the collected data to a JSON file. The
+ * function logs the start and end of data retrieval for each dinosaur, as well as the total time taken to retrieve data
+ * for all dinosaurs.
+ *
  * @returns {Promise<void>} A Promise that resolves when the data has been written to the JSON file.
  */
 async function retrieveAllDinoData() {

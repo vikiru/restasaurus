@@ -6,9 +6,13 @@ const { convertToSchema } = require('../utils/convertToSchema');
 const dinosaurData = require('./dinosaurData.json');
 
 /**
- * Asynchronously saves all dinosaur data to a MongoDB database.
- * This function connects to a MongoDB database, logs the start of the data saving process, and then maps over an array of dinosaur data. For each dinosaur, it converts the dinosaur data to a schema and pushes it to the database. It waits for all dinosaurs to be pushed to the database before logging the end of the data saving process and disconnecting from the database.
- * @returns {Promise<void>} A Promise that resolves when all dinosaur data has been saved to the database and the database connection has been closed.
+ * Asynchronously saves all dinosaur data to a MongoDB database. This function connects to a MongoDB database, logs the
+ * start of the data saving process, and then maps over an array of dinosaur data. For each dinosaur, it converts the
+ * dinosaur data to a schema and pushes it to the database. It waits for all dinosaurs to be pushed to the database
+ * before logging the end of the data saving process and disconnecting from the database.
+ *
+ * @returns {Promise<void>} A Promise that resolves when all dinosaur data has been saved to the database and the
+ *   database connection has been closed.
  */
 async function postAllDinosaurs() {
     await mongoDB.connect();

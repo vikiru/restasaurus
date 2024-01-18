@@ -18,6 +18,7 @@ const apiEndpoints = {
 
 /**
  * Sends a response with the home page information of the API.
+ *
  * @async
  * @function
  * @param {object} req - Express request object.

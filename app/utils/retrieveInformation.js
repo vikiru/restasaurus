@@ -7,6 +7,7 @@ const { handleSourceInformation } = require('./handleSource');
 
 /**
  * Constructs a URL for querying Wikipedia's API for an image of a dinosaur.
+ *
  * @param {string} imageName - The name of the image to construct the query for.
  * @returns {string} The constructed URL.
  */
@@ -16,6 +17,7 @@ function getImageQueryURL(imageName) {
 
 /**
  * Constructs a URL for querying Wikipedia's API for information about a dinosaur.
+ *
  * @param {string} dinosaurName - The name of the dinosaur to construct the query for.
  * @returns {string} The constructed URL.
  */
@@ -25,6 +27,7 @@ function getQueryURL(dinosaurName) {
 
 /**
  * Extracts the page data from the result of a Wikipedia API query.
+ *
  * @param {object} result - The result of a Wikipedia API query.
  * @returns {object} The extracted page data.
  */
@@ -35,6 +38,7 @@ function getPageData(result) {
 
 /**
  * Extracts the license information from the result of a Wikipedia API query.
+ *
  * @param {object} result - The result of a Wikipedia API query.
  * @returns {object} The extracted license information.
  */
@@ -44,6 +48,7 @@ function getLicenseInfo(result) {
 
 /**
  * Extracts the description from the page data of a Wikipedia API query.
+ *
  * @param {object} pageData - The page data of a Wikipedia API query.
  * @returns {string} The extracted description.
  */
@@ -53,6 +58,7 @@ function getDescription(pageData) {
 
 /**
  * Asynchronously retrieves information about a dinosaur from Wikipedia.
+ *
  * @param {string} dinosaurName - The name of the dinosaur to retrieve information about.
  * @param {object} data - An object to store the retrieved information.
  * @returns {Promise<object>} The data object populated with the retrieved information.

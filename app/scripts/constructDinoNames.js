@@ -3,8 +3,12 @@ const { constructUrls, handleUrls, processData, retrieveAllDinoNames } = require
 const { writeData } = require('../utils/writeData');
 
 /**
- * Asynchronously retrieves all dinosaur names, constructs URLs for each name, handles the URLs to get data objects, processes the data objects to filter and sort the names, and then writes the filtered names to a JSON file.
- * This function logs the start of the filtering process, the completion of the filtering process with the number of names that passed the filter, the total time taken to retrieve and filter the names, and the start of the data writing process.
+ * Asynchronously retrieves all dinosaur names, constructs URLs for each name, handles the URLs to get data objects,
+ * processes the data objects to filter and sort the names, and then writes the filtered names to a JSON file. This
+ * function logs the start of the filtering process, the completion of the filtering process with the number of names
+ * that passed the filter, the total time taken to retrieve and filter the names, and the start of the data writing
+ * process.
+ *
  * @returns {Promise<void>} A Promise that resolves when the filtered names have been written to the JSON file.
  */
 async function constructDinoNames() {

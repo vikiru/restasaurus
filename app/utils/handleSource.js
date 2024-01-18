@@ -94,7 +94,8 @@ function createCitation(sourceData) {
 }
 
 /**
- * Processes the retrieved source data from the Wikipedia api and updates the source information of the MongooseData instance.
+ * Processes the retrieved source data from the Wikipedia api and updates the source information of the MongooseData
+ * instance.
  *
  * @param {object} data - The data object to handle.
  * @param {string} dinosaurName - The name of the dinosaur.

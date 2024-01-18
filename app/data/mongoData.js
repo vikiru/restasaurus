@@ -5,6 +5,7 @@ const { logger } = require('../config/logger');
 
 /**
  * Asynchronously connects to the MongoDB database.
+ *
  * @async
  * @function
  * @returns {Promise<mongoose.Connection>} A promise that resolves to the MongoDB connection object.
@@ -22,6 +23,7 @@ async function connect() {
 
 /**
  * Asynchronously disconnects from the MongoDB database.
+ *
  * @async
  * @function
  * @returns {Promise<void>} A promise that resolves when the disconnection is complete.

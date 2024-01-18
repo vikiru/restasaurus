@@ -5,6 +5,7 @@ const { logger } = require('../config/logger');
 
 /**
  * Asynchronously writes dinosaur data to a JSON file.
+ *
  * @async
  * @function
  * @param {object} dinosaurData - The dinosaur data to be written to the file.

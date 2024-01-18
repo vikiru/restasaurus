@@ -8,6 +8,7 @@ const MAX_PAGE = 20;
 
 /**
  * Asynchronously pushes dinosaur data to the database.
+ *
  * @async
  * @function
  * @param {object} data - The dinosaur data to be pushed to the database.
@@ -31,10 +32,12 @@ async function pushDinosaurToDB(data) {
 
 /**
  * Retrieves all dinosaurs from the database, paginated.
+ *
  * @async
  * @function
  * @param {number} page - The page number to retrieve.
- * @returns {Promise<object>} A promise that resolves to an object containing pagination information and the retrieved dinosaurs.
+ * @returns {Promise<object>} A promise that resolves to an object containing pagination information and the retrieved
+ *   dinosaurs.
  */
 async function retrieveAllDinosaurs(page) {
     const dinosaurs = await Dinosaur.findAllDinosaurs(page);
@@ -51,10 +54,12 @@ async function retrieveAllDinosaurs(page) {
 
 /**
  * Retrieves all dinosaur images from the database, paginated.
+ *
  * @async
  * @function
  * @param {number} page - The page number to retrieve.
- * @returns {Promise<object>} A promise that resolves to an object containing pagination information and the retrieved dinosaur images.
+ * @returns {Promise<object>} A promise that resolves to an object containing pagination information and the retrieved
+ *   dinosaur images.
  */
 async function retrieveAllImages(page) {
     const dinosaurImages = await Dinosaur.findAllImages(page);
@@ -71,6 +76,7 @@ async function retrieveAllImages(page) {
 
 /**
  * Retrieves all dinosaur names, sorted in alphabetical order.
+ *
  * @async
  * @function
  * @returns {Promise<string[]>} A promise that resolves to an array of dinosaur names.
@@ -82,6 +88,7 @@ async function retrieveAllNames() {
 
 /**
  * Retrieves a dinosaur by its ID.
+ *
  * @async
  * @function
  * @param {string} id - The ID of the dinosaur.
@@ -94,6 +101,7 @@ async function retrieveDinosaurById(id) {
 
 /**
  * Retrieves a dinosaur by its name.
+ *
  * @async
  * @function
  * @param {string} name - The name of the dinosaur.
@@ -106,6 +114,7 @@ async function retrieveDinosaurByName(name) {
 
 /**
  * Retrieves dinosaurs by their diet.
+ *
  * @async
  * @function
  * @param {string} diet - The diet of the dinosaurs.
@@ -118,6 +127,7 @@ async function retrieveDinosaursByDiet(diet) {
 
 /**
  * Retrieves dinosaurs by their locomotion.
+ *
  * @async
  * @function
  * @param {string} locomotion - The locomotion of the dinosaurs.
@@ -130,6 +140,7 @@ async function retrieveDinosaursByLocomotion(locomotion) {
 
 /**
  * Retrieves an image by its ID.
+ *
  * @async
  * @function
  * @param {string} id - The ID of the image.
@@ -142,6 +153,7 @@ async function retrieveImageById(id) {
 
 /**
  * Returns a specified number of random dinosaurs.
+ *
  * @async
  * @function
  * @param {number} count - The number of dinosaurs to return.
@@ -154,6 +166,7 @@ async function returnRandomDinosaurs(count) {
 
 /**
  * Returns a specified number of random dinosaur images.
+ *
  * @async
  * @function
  * @param {number} count - The number of dinosaur images to return.
@@ -166,10 +179,15 @@ async function returnRandomImages(count) {
 
 /**
  * Asynchronously retrieves dinosaurs from a database based on the provided query parameters.
- * @param {Array<string>} clade - An array of clade names. Dinosaurs belonging to any of these clades will be included in the results.
- * @param {string} diet - The diet of the dinosaurs to retrieve (e.g., 'herbivore', 'carnivore'). If this parameter is provided, only dinosaurs with the specified diet will be included in the results.
- * @param {string} locomotion - The type of locomotion of the dinosaurs to retrieve (e.g., 'biped', 'quadruped'). If this parameter is provided, only dinosaurs with the specified type of locomotion will be included in the results.
- * @returns {Promise<Array<object>>} A promise that resolves to an array of dinosaur objects that match the provided query parameters.
+ *
+ * @param {string[]} clade - An array of clade names. Dinosaurs belonging to any of these clades will be included in the
+ *   results.
+ * @param {string} diet - The diet of the dinosaurs to retrieve (e.g., 'herbivore', 'carnivore'). If this parameter is
+ *   provided, only dinosaurs with the specified diet will be included in the results.
+ * @param {string} locomotion - The type of locomotion of the dinosaurs to retrieve (e.g., 'biped', 'quadruped'). If
+ *   this parameter is provided, only dinosaurs with the specified type of locomotion will be included in the results.
+ * @returns {Promise<object[]>} A promise that resolves to an array of dinosaur objects that match the provided query
+ *   parameters.
  */
 async function returnDinosaursByQuery(clade, diet, locomotion) {
     const query = {

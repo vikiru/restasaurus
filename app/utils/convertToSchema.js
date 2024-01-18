@@ -5,6 +5,7 @@ const { DinosaurSource } = require('../models/DinosaurSource');
 
 /**
  * Gets the keys for the classification and dinosaur objects.
+ *
  * @function
  * @returns {object} An object containing arrays of keys for the classification and dinosaur objects.
  */
@@ -45,6 +46,7 @@ function createSubObject(obj, keys) {
 
 /**
  * Creates a dinosaur object from the MongooseData instance.
+ *
  * @function
  * @param {object} mongooseData - The mongoose data.
  * @param {object} keys - The keys for the dinosaur object.
@@ -63,7 +65,9 @@ function createDinosaurObject(mongooseData, keys) {
 }
 
 /**
- * Creates a Dinosaur instance using a combination of the defined Mongoose schemas and the data within the class, MongooseData.
+ * Creates a Dinosaur instance using a combination of the defined Mongoose schemas and the data within the class,
+ * MongooseData.
+ *
  * @function
  * @param {object} mongooseData - The mongoose data.
  * @param {object} classification - The classification information.
@@ -85,7 +89,9 @@ function createDinosaurInstance(mongooseData, classification, dinoSource, dinoIm
 }
 
 /**
- * Creates a data object which contains the Dinosaur, DinosaurImage, DinosaurSource and ClassificationInfo instances which will be saved to the MongoDB database.
+ * Creates a data object which contains the Dinosaur, DinosaurImage, DinosaurSource and ClassificationInfo instances
+ * which will be saved to the MongoDB database.
+ *
  * @function
  * @param {object} dino - The dinosaur object.
  * @param {object} classification - The classification information.
@@ -104,6 +110,7 @@ function createDataObject(dino, classification, dinoImage, dinoSource) {
 
 /**
  * Converts a Javascript class, MongooseData to defined Mongoose schema.
+ *
  * @async
  * @function
  * @param {object} mongooseData - The data to be converted.

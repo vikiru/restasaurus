@@ -18,6 +18,8 @@
         "ecmaVersion": 12
     },
     "rules": {
+        "max-len": ["error", { "code": 120, "ignoreComments": false }],
+        "comment-length/comment-length": ["error", { "length": 120 }],
         "no-console": "warn",
         "func-names": "off",
         "no-plusplus": "off",
@@ -53,5 +55,5 @@
             }
         ]
     },
-    "plugins": ["prettier", "import", "sort-exports"]
+    "plugins": ["prettier", "import", "sort-exports", "comment-length"]
 }
