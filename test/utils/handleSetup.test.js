@@ -33,7 +33,6 @@ describe('handleSetup', function () {
 
     beforeEach(() => {
         writeData = require('../../app/utils/writeData');
-        process.env.NODE_ENV = 'testing';
         fetchDataStub = sinon.stub(global, 'fetch');
         writeDataStub = sinon.stub(writeData, 'writeData').callsFake(() => {});
     });
