@@ -5,16 +5,21 @@ const winston = require('winston');
 
 const { env } = require('./index');
 
-const errorStream = fs.createWriteStream(path.join(__dirname, '../logs/errors.log'), {
+const logDir = path.join(__dirname, '../logs');
+
+if (!fs.existsSync(logDir)) {
+    fs.mkdirSync(logDir, { recursive: true });
+}
+
+const errorStream = fs.createWriteStream(path.join(logDir, 'errors.log'), {
     flags: 'w',
 });
 
-const requestStream = fs.createWriteStream(path.join(__dirname, '../logs/requests.log'), {
+const requestStream = fs.createWriteStream(path.join(logDir, 'requests.log'), {
     flags: 'w',
 });
 
-const infoStream = fs.createWriteStream(path.join(__dirname, '../logs/all.log'), { flags: 'w' });
-
+const infoStream = fs.createWriteStream(path.join(logDir, 'all.log'), { flags: 'w' });
 const loggingLevels = {
     error: 0,
     warn: 1,
