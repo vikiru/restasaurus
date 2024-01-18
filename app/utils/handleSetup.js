@@ -36,7 +36,7 @@ function extractDataFromPages(pages) {
     const dataObjs = [];
     Object.keys(pages).forEach((key) => {
         const page = pages[key];
-        if ('extract' in page) {
+        if ('extract' in page && 'title' in page) {
             const { title } = page;
             const { extract } = page;
             dataObjs.push({ title, extract });
@@ -151,6 +151,7 @@ async function retrieveAllDinoNames() {
     const data = await fetchData(
         'https://en.wikipedia.org/w/api.php?action=parse&page=List_of_dinosaur_genera&prop=text&formatversion=2&format=json',
     );
+
     const htmlText = parser.parse(data.parse.text);
     const names = extractDinoNames(htmlText).sort();
 

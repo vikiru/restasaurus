@@ -42,8 +42,8 @@ describe('constructDinoNames', () => {
 
     it('should call the necessary functions and return the expected names', async () => {
         const constructDinoNames = proxyquire('../../app/scripts/constructDinoNames', {
-            '../utils/writeData': writeData,
-            '../utils/fetchData': fetchData,
+            '../utils/writeData': writeDataStub,
+            '../utils/fetchData': fetchDataStub,
             '../utils/handleSetup': {
                 retrieveAllDinoNames: retrieveNamesStub,
                 handleUrls: handleStub,
