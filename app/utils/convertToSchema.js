@@ -114,14 +114,15 @@ function createDataObject(dino, classification, dinoImage, dinoSource) {
  * Sort the classification information of a given dinosaur by the specified order.
  *
  * @param classificationInfo - The classification information of a given dinosaur.
+ * @returns ClassificationInfo - The sorted classification information.
  */
 async function sortClasssificationInfo(classificationInfo) {
     const familyInfo = classificationInfo.familyInfo;
     const orderInfo = classificationInfo.orderInfo;
     const classInfo = classificationInfo.classInfo;
 
-    classificationInfo.family = sortInfo(familyInfo, getFamilySorter());
-    classificationInfo.order = sortInfo(orderInfo, getOrderSorter());
+    classificationInfo.familyInfo = sortInfo(familyInfo, getFamilySorter());
+    classificationInfo.orderInfo = sortInfo(orderInfo, getOrderSorter());
     classificationInfo.classInfo = sortInfo(classInfo, getClassSorter());
     return classificationInfo;
 }
