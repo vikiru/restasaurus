@@ -122,7 +122,7 @@ describe('DinosaurSchema', function () {
 
         beforeEach(function () {
             aggregateStub = sinon.stub(mongoose.Model, 'aggregate');
-            aggregateStub.returns(Promise.resolve(fakeDino));
+            aggregateStub.returns(Promise.resolve([fakeDino]));
         });
 
         afterEach(function () {
@@ -132,7 +132,8 @@ describe('DinosaurSchema', function () {
         it('should return random dinosaurs by count', async function () {
             const dinosaurs = await Dinosaur.returnRandomDinosaurs(1);
             expect(aggregateStub.called).to.be.true;
-            expect(dinosaurs).to.deep.equal(fakeDino);
+            expect(dinosaurs.length).to.equal(1);
+            expect(dinosaurs[0]).to.deep.equal(fakeDino);
         });
     });
 
@@ -141,7 +142,7 @@ describe('DinosaurSchema', function () {
 
         beforeEach(function () {
             aggregateStub = sinon.stub(mongoose.Model, 'aggregate');
-            aggregateStub.returns(Promise.resolve(fakeDino));
+            aggregateStub.returns(Promise.resolve([fakeDino]));
         });
 
         afterEach(function () {
@@ -158,7 +159,8 @@ describe('DinosaurSchema', function () {
             };
             const dinosaurs = await Dinosaur.returnDinosaursByQuery(query);
             expect(aggregateStub.called).to.be.true;
-            expect(dinosaurs).to.deep.equal(fakeDino);
+            expect(dinosaurs.length).to.equal(1);
+            expect(dinosaurs[0]).to.deep.equal(fakeDino);
         });
     });
 
