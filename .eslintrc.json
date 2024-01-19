@@ -33,6 +33,7 @@
         "no-unused-vars": "warn",
         "complexity": ["warn", { "max": 10 }],
         "max-depth": ["warn", 4],
+        "mocha/no-setup-in-describe": "off",
         "node/no-unpublished-require": "off",
         "node/no-missing-require": "off",
         "node/no-unsupported-features/es-syntax": ["error", { "ignores": ["modules"] }],

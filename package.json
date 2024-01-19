@@ -8,7 +8,7 @@
 	"main": "./app/app.js",
 	"scripts": {
 		"start": "node .",
-		"dev": "nodemon ./app/**/*.js",
+		"dev": "cross-env NODE_ENV=development nodemon ./app/**/*.js",
 		"test": "cross-env NODE_ENV=testing nyc --reporter=html --reporter=text mocha test/test.js && open-cli ./coverage/index.html",
 		"lint": "eslint ./app/**/*.js --fix-dry-run",
 		"prettier": "prettier --write .",

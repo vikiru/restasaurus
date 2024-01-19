@@ -66,7 +66,7 @@ function assignClassificationInfo(data, keyword, value) {
  * Retrieves the information box from the HTML.
  *
  * @param {string} html - The HTML string.
- * @returns {Object} The information box element.
+ * @returns {object} The information box element.
  */
 function getInfoBox(html) {
     return html
@@ -78,7 +78,7 @@ function getInfoBox(html) {
 /**
  * Retrieves all row elements from the information box.
  *
- * @param {Object} infoBox - The information box element.
+ * @param {object} infoBox - The information box element.
  * @returns {Array} An array of row elements.
  */
 function getRows(infoBox) {
@@ -108,7 +108,7 @@ function handleTemporalRange(rowData) {
  * Handles a row of data.
  *
  * @param {Array} rowData - An array of data elements from a row.
- * @param {Object} data - The data object to populate.
+ * @param {object} data - The data object to populate.
  */
 function handleRowData(rowData, data) {
     let keyword = rowData[0].structuredText.trim();
@@ -128,7 +128,7 @@ function handleRowData(rowData, data) {
  *
  * @param {Array} headerData - An array of header elements from a row.
  * @param {Array} rows - An array of row elements.
- * @param {Object} data - The data object to populate.
+ * @param {object} data - The data object to populate.
  */
 function handleHeaderData(headerData, rows, data) {
     const keyword = headerData[0].structuredText.trim();
@@ -146,8 +146,8 @@ function handleHeaderData(headerData, rows, data) {
 /**
  * Handles the first row of data.
  *
- * @param {Object} firstRow - The first row element.
- * @param {Object} data - The data object to populate.
+ * @param {object} firstRow - The first row element.
+ * @param {object} data - The data object to populate.
  */
 function handleFirstRow(firstRow, data) {
     const firstRowData = firstRow.structuredText.split('\n');
@@ -159,7 +159,7 @@ function handleFirstRow(firstRow, data) {
  * Handles all other rows of data.
  *
  * @param {Array} rows - An array of row elements.
- * @param {Object} data - The data object to populate.
+ * @param {object} data - The data object to populate.
  */
 function handleOtherRows(rows, data) {
     rows.forEach((row) => {
@@ -177,8 +177,8 @@ function handleOtherRows(rows, data) {
  * Retrieves the data from the information box section of a Wikipedia article.
  *
  * @param {string} html - The HTML string.
- * @param {Object} data - The data object to populate.
- * @returns {Object} The populated data object.
+ * @param {object} data - The data object to populate.
+ * @returns {object} The populated data object.
  */
 function retrieveBoxData(html, data) {
     const infoBox = getInfoBox(html);

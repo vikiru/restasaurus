@@ -113,7 +113,7 @@ function createDataObject(dino, classification, dinoImage, dinoSource) {
 /**
  * Sort the classification information of a given dinosaur by the specified order.
  *
- * @param classificationInfo
+ * @param classificationInfo - The classification information of a given dinosaur.
  */
 async function sortClasssificationInfo(classificationInfo) {
     const familyInfo = classificationInfo.familyInfo;

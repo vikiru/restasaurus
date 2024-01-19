@@ -7,7 +7,7 @@ const DinosaurSource = require('../../app/models/DinosaurSource');
 const { MongooseData } = require('../../app/models/MongooseData');
 const schemaConvert = require('../../app/utils/convertToSchema');
 
-describe('convertToSchema', () => {
+describe('convertToSchema', function () {
     let getClassificationAndDinosaurKeysStub;
     let createDinosaurObjectStub;
     let DinosaurSourceStub;
@@ -16,7 +16,7 @@ describe('convertToSchema', () => {
     let createDinosaurInstanceStub;
     let createDataObjectStub;
 
-    beforeEach(() => {
+    beforeEach(function () {
         getClassificationAndDinosaurKeysStub = sinon.stub(schemaConvert, 'getClassificationAndDinosaurKeys');
         createDinosaurObjectStub = sinon.stub(schemaConvert, 'createDinosaurObject');
         DinosaurSourceStub = sinon.stub(DinosaurSource, 'DinosaurSource');
@@ -26,7 +26,7 @@ describe('convertToSchema', () => {
         createDataObjectStub = sinon.stub(schemaConvert, 'createDataObject');
     });
 
-    afterEach(() => {
+    afterEach(function () {
         getClassificationAndDinosaurKeysStub.restore();
         createDinosaurObjectStub.restore();
         DinosaurSourceStub.restore();
@@ -36,7 +36,7 @@ describe('convertToSchema', () => {
         createDataObjectStub.restore();
     });
 
-    it('should convert data to defined schema', async () => {
+    it('should convert data to defined schema', async function () {
         const mongooseData = new MongooseData('Tyrannosaurus');
         const expectedSchema = {};
 

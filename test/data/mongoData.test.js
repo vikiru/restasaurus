@@ -1,13 +1,13 @@
-const sinon = require('sinon');
 const { expect } = require('chai');
 const mongoose = require('mongoose');
+const sinon = require('sinon');
 
 describe('connect', function () {
     let connectStub;
     let infoLogSpy;
     let errorLogSpy;
 
-    beforeEach(() => {
+    beforeEach(function () {
         process.env.NODE_ENV = 'testing';
         const { logger } = require('../../app/config/logger');
         connectStub = sinon.stub(mongoose, 'connect');
@@ -15,7 +15,7 @@ describe('connect', function () {
         errorLogSpy = sinon.spy(logger, 'error');
     });
 
-    afterEach(() => {
+    afterEach(function () {
         sinon.restore();
     });
 
@@ -47,7 +47,7 @@ describe('disconnect', function () {
     let infoLogSpy;
     let errorLogSpy;
 
-    beforeEach(() => {
+    beforeEach(function () {
         process.env.NODE_ENV = 'testing';
         const { logger } = require('../../app/config/logger');
         disconnectStub = sinon.stub(mongoose, 'disconnect');
@@ -55,7 +55,7 @@ describe('disconnect', function () {
         errorLogSpy = sinon.spy(logger, 'error');
     });
 
-    afterEach(() => {
+    afterEach(function () {
         sinon.restore();
     });
 
