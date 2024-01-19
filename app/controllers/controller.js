@@ -38,8 +38,8 @@ async function returnHome(req, res) {
 /**
  * Retrieves all dinosaurs.
  *
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
+ * @param {object} req - The request object.
+ * @param {object} res - The response object.
  */
 async function retrieveAllDinosaurs(req, res) {
     try {
@@ -48,7 +48,7 @@ async function retrieveAllDinosaurs(req, res) {
         if (result.data.length > 0) {
             res.status(200).json(result);
         } else {
-            res.status(404).json('Sorry, there was an error retrieving all dinosaurs');
+            res.status(404).json({ error: 'Sorry, there was an error retrieving all dinosaurs' });
         }
     } catch (error) {
         logger.error(error);
@@ -61,8 +61,8 @@ async function retrieveAllDinosaurs(req, res) {
 /**
  * Retrieves all dinosaur images.
  *
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
+ * @param {object} req - The request object.
+ * @param {object} res - The response object.
  */
 async function retrieveAllImages(req, res) {
     try {
@@ -86,8 +86,8 @@ async function retrieveAllImages(req, res) {
 /**
  * Retrieves all dinosaur names.
  *
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
+ * @param {object} req - The request object.
+ * @param {object} res - The response object.
  */
 async function retrieveAllNames(req, res) {
     try {
@@ -101,7 +101,7 @@ async function retrieveAllNames(req, res) {
         }
     } catch (error) {
         logger.error(error);
-        res.status(404).json({
+        res.status(500).json({
             error: ' Sorry, an unexpected error occurred while retrieving all dinosaur names',
         });
     }
@@ -110,8 +110,8 @@ async function retrieveAllNames(req, res) {
 /**
  * Retrieves a dinosaur by ID.
  *
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
+ * @param {object} req - The request object.
+ * @param {object} res - The response object.
  */
 async function retrieveDinoById(req, res) {
     try {
@@ -135,8 +135,8 @@ async function retrieveDinoById(req, res) {
 /**
  * Retrieves a dinosaur by name.
  *
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
+ * @param {object} req - The request object.
+ * @param {object} res - The response object.
  */
 async function retrieveDinoByName(req, res) {
     try {
@@ -160,13 +160,13 @@ async function retrieveDinoByName(req, res) {
 /**
  * Retrieves dinosaurs by diet.
  *
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
+ * @param {object} req - The request object.
+ * @param {object} res - The response object.
  */
 async function retrieveDinoByDiet(req, res) {
     try {
         const { diet } = req.params;
-        const dinosaurs = await dinosaurService.retrieveDinosaurByDiet(diet);
+        const dinosaurs = await dinosaurService.retrieveDinosaursByDiet(diet);
         if (dinosaurs.length > 0) {
             res.status(200).json({ count: dinosaurs.length, data: dinosaurs });
         } else {
@@ -185,8 +185,8 @@ async function retrieveDinoByDiet(req, res) {
 /**
  * Retrieves dinosaurs by locomotion type.
  *
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
+ * @param {object} req - The request object.
+ * @param {object} res - The response object.
  */
 async function retrieveDinoByLocomotion(req, res) {
     try {
@@ -210,8 +210,8 @@ async function retrieveDinoByLocomotion(req, res) {
 /**
  * Retrieves a dinosaur image by ID.
  *
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
+ * @param {object} req - The request object.
+ * @param {object} res - The response object.
  */
 async function retrieveImageById(req, res) {
     try {
@@ -235,8 +235,8 @@ async function retrieveImageById(req, res) {
 /**
  * Retrieves a random number of dinosaurs.
  *
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
+ * @param {object} req - The request object.
+ * @param {object} res - The response object.
  */
 async function retrieveRandomDinosaurs(req, res) {
     const count = parseInt(req.params.count, 10) || 1;
@@ -255,8 +255,8 @@ async function retrieveRandomDinosaurs(req, res) {
 /**
  * Retrieves a random number of dinosaur images.
  *
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
+ * @param {object} req - The request object.
+ * @param {object} res - The response object.
  */
 async function retrieveRandomImages(req, res) {
     const count = parseInt(req.params.count, 10) || 1;
@@ -278,8 +278,8 @@ async function retrieveRandomImages(req, res) {
 /**
  * Retrieves dinosaurs by a query. Available query parameters include clade, diet, locomotion.
  *
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
+ * @param {object} req - The request object.
+ * @param {object} res - The response object.
  */
 async function retrieveDinosaursByQuery(req, res) {
     try {
