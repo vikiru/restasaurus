@@ -3,6 +3,8 @@ const { Dinosaur } = require('../models/Dinosaur');
 const { DinosaurImage } = require('../models/DinosaurImage');
 const { DinosaurSource } = require('../models/DinosaurSource');
 
+const { sortInfo, getFamilySorter, getOrderSorter, getClassSorter } = require('./classificationInfoSorter');
+
 /**
  * Gets the keys for the classification and dinosaur objects.
  *
@@ -32,7 +34,7 @@ function getClassificationAndDinosaurKeys() {
  *
  * @param {object} obj - The original object.
  * @param {Array} keys - The keys to include in the sub-object.
- * @returns {Object} The sub-object containing only the specified keys.
+ * @returns {object} The sub-object containing only the specified keys.
  */
 function createSubObject(obj, keys) {
     const subObject = {};
@@ -109,6 +111,22 @@ function createDataObject(dino, classification, dinoImage, dinoSource) {
 }
 
 /**
+ * Sort the classification information of a given dinosaur by the specified order.
+ *
+ * @param classificationInfo
+ */
+async function sortClasssificationInfo(classificationInfo) {
+    const familyInfo = classificationInfo.familyInfo;
+    const orderInfo = classificationInfo.orderInfo;
+    const classInfo = classificationInfo.classInfo;
+
+    classificationInfo.family = sortInfo(familyInfo, getFamilySorter());
+    classificationInfo.order = sortInfo(orderInfo, getOrderSorter());
+    classificationInfo.classInfo = sortInfo(classInfo, getClassSorter());
+    return classificationInfo;
+}
+
+/**
  * Converts a Javascript class, MongooseData to defined Mongoose schema.
  *
  * @async
@@ -118,8 +136,12 @@ function createDataObject(dino, classification, dinoImage, dinoSource) {
  */
 async function convertToSchema(mongooseData) {
     const keys = getClassificationAndDinosaurKeys();
+
+    mongooseData.classificationInfo = sortClasssificationInfo(mongooseData.classificationInfo);
+
     const dinosaur = createDinosaurObject(mongooseData, keys);
     const dinoSource = new DinosaurSource(mongooseData.source);
+
     const classification = new ClassificationInfo(dinosaur.classificationInfo);
     const dinoImage = new DinosaurImage(mongooseData.image);
     const dino = createDinosaurInstance(mongooseData, classification, dinoSource, dinoImage);
@@ -133,4 +155,5 @@ module.exports = {
     createDinosaurInstance,
     createDataObject,
     createSubObject,
+    sortClasssificationInfo,
 };

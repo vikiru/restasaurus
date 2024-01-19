@@ -42,13 +42,6 @@ ClassificationInfoSchema.plugin(mongooseHidden, {
     },
 });
 
-ClassificationInfoSchema.pre('save', function (next) {
-    this.classInfo = sortInfo(this.classInfo, getClassSorter());
-    this.orderInfo = sortInfo(this.orderInfo, getOrderSorter());
-    this.familyInfo = sortInfo(this.familyInfo, getFamilySorter());
-    next();
-});
-
 const ClassificationInfo = model('ClassificationInfo', ClassificationInfoSchema);
 
 module.exports = {
