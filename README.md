@@ -43,16 +43,16 @@
 
 ## 📖 Table of Contents
 
--   [📖 Table of Contents](#-table-of-contents)
--   [📍 API Endpoints](#-api-endpoints)
--   [🛠️ Tech Stack](#️-tech-stack)
--   [📝 Prerequisites](#-prerequisites)
--   [⚡ Setup Instructions](#-setup-instructions)
--   [🚀 Run](#-run)
--   [🔍 Testing](#-testing)
--   [📜 Available Scripts](#-available-scripts)
--   [✨ Acknowledgements](#-acknowledgements)
--   [©️ License](#️-license)
+- [📖 Table of Contents](#-table-of-contents)
+- [📍 API Endpoints](#-api-endpoints)
+- [🛠️ Tech Stack](#️-tech-stack)
+- [📝 Prerequisites](#-prerequisites)
+- [⚡ Setup Instructions](#-setup-instructions)
+- [🚀 Run](#-run)
+- [🔍 Testing](#-testing)
+- [📜 Available Scripts](#-available-scripts)
+- [✨ Acknowledgements](#-acknowledgements)
+- [©️ License](#️-license)
 
 ## 📍 API Endpoints
 
@@ -221,7 +221,7 @@ npm test
 npm run lint
 ```
 
-5. Fix all ESLint issues then format the files according to Prettier config, with [Prettier](https://prettier.io/).
+1. Fix all ESLint issues then format the files with [Prettier](https://prettier.io/).
 
 ```bash
 npm run prettier
