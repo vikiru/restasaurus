@@ -56,20 +56,23 @@
 
 ## 📍 API Endpoints
 
-| API Endpoint         | URL                           | Parameters                    |
-| -------------------- | ----------------------------- | ----------------------------- |
-| home                 | /api/v1                       | `none`                        |
-| getAllNames          | /api/v1/names                 | `none`                        |
-| getAllDinos          | /api/v1/dinosaurs             | `none`                        |
-| getDinoById          | /api/v1/dinosaurs/            | `id`                          |
-| getDinoByName        | /api/v1/dinosaurs/name/       | `name`                        |
-| getDinosByDiet       | /api/v1/dinosaurs/diet/       | `diet`                        |
-| getDinosByLocomotion | /api/v1/dinosaurs/locomotion/ | `locomotion`                  |
-| getRandomDinos       | /api/v1/dinosaurs/random/     | `count`                       |
-| getDinosaurByQuery   | /api/v1/search                | `clade`, `diet`, `locomotion` |
-| getAllImages         | /api/v1/images                | `none`                        |
-| getImageById         | /api/v1/images/               | `id`                          |
-| getRandomImages      | /api/v1/images/random/        | `count`                       |
+| API Endpoint         | URL                           | Parameters                    | Description                                                                |
+| -------------------- | ----------------------------- | ----------------------------- | -------------------------------------------------------------------------- |
+| home                 | /api/v1                       | `none`                        | Returns the home endpoint of the API                                       |
+| getAllNames          | /api/v1/names                 | `none`                        | Returns all dinosaur names that exist within the API                       |
+| getAllDinos          | /api/v1/dinosaurs             | `page`                        | Returns all dinosaurs within the API, 20 dinosaurs per page.               |
+| getDinoById          | /api/v1/dinosaurs/            | `id`                          | Returns a dinosaur matching a specific id, returns an error if not found.  |
+| getDinoByName        | /api/v1/dinosaurs/name/       | `name`                        | Returns a dinosaur matching a specific name, returns an error if not found |
+| getDinosByDiet       | /api/v1/dinosaurs/diet/       | `diet`                        | Returns all dinosaurs matching a specific diet                             |
+| getDinosByLocomotion | /api/v1/dinosaurs/locomotion/ | `locomotion`                  | Returns all dinosaurs matching a specific locomotion type                  |
+| getRandomDinos       | /api/v1/dinosaurs/random/     | `count`                       | Returns a random number of dinosaurs. Minimum of 1 and maximum of 10.      |
+| getDinosaurByQuery   | /api/v1/search                | `clade`, `diet`, `locomotion` | Returns all dinosaurs matching a specific query                            |
+| getAllImages         | /api/v1/images                | `page`                        | Returns all dinosaur images within the API, 20 images per page.            |
+| getImageById         | /api/v1/images/               | `id`                          | Returns an image matching a specific id, returns an error if not found     |
+| getRandomImages      | /api/v1/images/random/        | `count`                       | Returns a random number of images. Minmum of 1 and a maximum of 10         |
+
+> [!NOTE]
+> The API is currently configured to support only GET requests.
 
 ## 🛠️ Tech Stack
 
