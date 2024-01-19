@@ -1,98 +1,117 @@
-const {
-	cladeDefaults,
-	orderDefaults,
-	familyDefaults,
-} = require("./helperConstants");
+const { cladeDefaults, orderDefaults, familyDefaults } = require('./helperConstants').default;
 
+/**
+ * Finds a specific feature in the page data. The feature that is being searched for is the diet and locomotionType.
+ *
+ * @param {object} pageData - The page data to search.
+ * @param {RegExp} featureRegex - The regular expression to match the feature.
+ * @param {Array} replacements - The array of original and replacement pairs.
+ * @returns {string} The found feature.
+ */
 function findFeature(pageData, featureRegex, replacements) {
-	let feature = "";
-	if ("extract" in pageData) {
-		const matches = pageData.extract.match(featureRegex);
-		if (matches && matches.length > 0) {
-			feature = matches[0];
-			for (const [original, replacement] of replacements) {
-				feature = feature.replace(original, replacement);
-			}
-		}
-	} else {
-		const pageText = pageData.structuredText.split("\n");
-		const featureCount = {};
-		const filteredText = pageText
-			.map(text => text.trim())
-			.filter(text => featureRegex.test(text));
-		for (const text of filteredText) {
-			const match = featureRegex.exec(text);
-			if (match) {
-				let featureType = match[0].toLowerCase();
-				for (const [original, replacement] of replacements) {
-					featureType = featureType.replace(original, replacement);
-				}
-				featureCount[featureType] =
-					(featureCount[featureType] || 0) + 1;
-			}
-		}
+    let feature = '';
+    if ('extract' in pageData) {
+        const matches = pageData.extract.match(featureRegex);
+        if (matches && matches.length > 0) {
+            [feature] = matches;
+            replacements.forEach(([original, replacement]) => {
+                feature = feature.replace(original, replacement);
+            });
+        }
+    } else {
+        const pageText = pageData.structuredText.split('\n');
+        const featureCount = {};
+        const filteredText = pageText.map((text) => text.trim()).filter((text) => featureRegex.test(text));
+        filteredText.forEach((text) => {
+            const match = featureRegex.exec(text);
+            if (match) {
+                let featureType = match[0].toLowerCase();
+                replacements.forEach(([original, replacement]) => {
+                    featureType = featureType.replace(original, replacement);
+                });
+                featureCount[featureType] = (featureCount[featureType] || 0) + 1;
+            }
+        });
 
-		if (Object.keys(featureCount).length > 0) {
-			const maxCountKey = Object.entries(featureCount).reduce(
-				(maxEntry, currentEntry) => {
-					return currentEntry[1] > maxEntry[1]
-						? currentEntry
-						: maxEntry;
-				},
-			)[0];
-			feature = maxCountKey;
-		}
-	}
-	return feature;
+        if (Object.keys(featureCount).length > 0) {
+            const maxCountKey = Object.entries(featureCount).reduce((maxEntry, currentEntry) => {
+                return currentEntry[1] > maxEntry[1] ? currentEntry : maxEntry;
+            })[0];
+            feature = maxCountKey;
+        }
+    }
+    return feature;
 }
 
+/**
+ * Finds the diet of a dinosaur from the page data.
+ *
+ * @param {object} pageData - The page data to search.
+ * @returns {string} The found diet.
+ */
 function findDiet(pageData) {
-	const dietRegex = new RegExp("(\\b\\w*(ivore|ivorous))s?\\b", "gmi");
-	const replacements = [
-		["orous", "ore"],
-		["mega", ""],
-		["vores", "vore"],
-	];
-	return findFeature(pageData, dietRegex, replacements);
+    const dietRegex = /(\b\w*(ivore|ivorous))s?\b/gim;
+    const replacements = [
+        ['orous', 'ore'],
+        ['mega', ''],
+        ['vores', 'vore'],
+    ];
+    return findFeature(pageData, dietRegex, replacements);
 }
 
+/**
+ * Finds the locomotion type of a dinosaur from the page data.
+ *
+ * @param {object} pageData - The page data to search.
+ * @returns {string} The found locomotion type.
+ */
 function findLocomotionType(pageData) {
-	const locomotionRegex =
-		/(bipedal|biped|quadrupedal|quadruped|glide|gliding|flying|swim|swimming)/gim;
-	const replacements = [
-		["pedal", "ped"],
-		["swim", "swimming"],
-		["glide", "gliding"],
-	];
-	return findFeature(pageData, locomotionRegex, replacements);
+    const locomotionRegex = /(bipedal|biped|quadrupedal|quadruped|glide|gliding|flying|swim|swimming)/gim;
+    const replacements = [
+        ['pedal', 'ped'],
+        ['swim', 'swimming'],
+        ['glide', 'gliding'],
+    ];
+    return findFeature(pageData, locomotionRegex, replacements);
 }
 
-function findFeatureByClassification(data) {
-	const classificationInfo = data.classificationInfo;
-	const families = classificationInfo.familyInfo;
-	const orders = classificationInfo.orderInfo;
-	const clades = classificationInfo.clade;
-
-	searchClassification(clades, cladeDefaults, data);
-	searchClassification(families, familyDefaults, data);
-	searchClassification(orders, orderDefaults, data);
-}
-
+/**
+ * Searches the classificationInfo of a dinosaur and updates the data object with its diet and locomotionType.
+ *
+ * @param {Array} items - The items to search.
+ * @param {object} defaults - The default values.
+ * @param {object} data - The data object to be updated.
+ */
 function searchClassification(items, defaults, data) {
-	for (const item of items) {
-		const value = item.value || item;
-		if (value in defaults) {
-			data.diet = data.diet || defaults[value].diet;
-			data.locomotionType =
-				data.locomotionType || defaults[value].locomotionType;
-		}
-	}
+    items.forEach((item) => {
+        const value = item.value || item;
+        if (value in defaults) {
+            data.diet = data.diet || defaults[value].diet;
+            data.locomotionType = data.locomotionType || defaults[value].locomotionType;
+        }
+    });
+}
+
+/**
+ * Finds a feature by classification from the data object.
+ *
+ * @param {object} data - The data object to search.
+ */
+function findFeatureByClassification(data) {
+    const { classificationInfo } = data;
+    const families = classificationInfo.familyInfo;
+    const orders = classificationInfo.orderInfo;
+    const clades = classificationInfo.clade;
+
+    searchClassification(clades, cladeDefaults, data);
+    searchClassification(families, familyDefaults, data);
+    searchClassification(orders, orderDefaults, data);
 }
 
 module.exports = {
-	findFeature: findFeature,
-	findDiet: findDiet,
-	findLocomotionType: findLocomotionType,
-	findFeatureByClassification: findFeatureByClassification,
-	searchClassification: searchClassification,
+    findFeature,
+    findDiet,
+    findLocomotionType,
+    findFeatureByClassification,
+    searchClassification,
 };
