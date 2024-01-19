@@ -31,7 +31,7 @@
 
 **RESTasaurus** is a RESTful API, leveraging Express, MongoDB, and Mongoose to deliver comprehensive data on over 400 dinosaurs!
 
-> [!IMPORTANT] Disclaimer
+> [!IMPORTANT]
 > The information within the API is taken directly from Wikipedia, as is and may have been modified since the last time it was retrieved. All images and text belong to their respective authors and attribution is provided accordingly for both.
 >
 > Please consider checking out the [models](./app/models/) directory to get an idea of the information being provided by the API. The models to take note of are:
