@@ -1,1 +1,3 @@
-describe('Model - Functionality Tests', function () {});
+describe('Model - Functionality Tests', function () {
+    require('./Dinosaur.test');
+});

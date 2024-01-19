@@ -18,7 +18,7 @@ describe('Services - Functionality Tests', function () {
         let pushSpy;
         const mongooseData = new MongooseData('Stegosaurus');
 
-        beforeEach(() => {
+        beforeEach(function () {
             DinosaurStub = sinon.stub(Dinosaur, 'create');
             ClassificationInfoStub = sinon.stub(ClassificationInfo, 'create').callsFake(() => {});
             DinosaurSourceStub = sinon.stub(DinosaurSource, 'create').callsFake(() => {});
@@ -26,7 +26,7 @@ describe('Services - Functionality Tests', function () {
             pushSpy = sinon.spy(services, 'pushDinosaurToDB');
         });
 
-        afterEach(() => {
+        afterEach(function () {
             DinosaurStub.restore();
             ClassificationInfoStub.restore();
             DinosaurSourceStub.restore();
@@ -52,11 +52,11 @@ describe('Services - Functionality Tests', function () {
         const mongooseData = new MongooseData('Stegosaurus');
         const fakeData = [mongooseData, mongooseData];
 
-        beforeEach(() => {
+        beforeEach(function () {
             DinosaurStub = sinon.stub(Dinosaur, 'findAllDinosaurs').callsFake(() => fakeData);
         });
 
-        afterEach(() => {
+        afterEach(function () {
             DinosaurStub.restore();
         });
 
@@ -79,16 +79,16 @@ describe('Services - Functionality Tests', function () {
         });
     });
 
-    describe('retrieveAllImages', async function () {
+    describe('retrieveAllImages', function () {
         let DinosaurStub;
         const fakeImage = { image: {} };
         const fakeData = [fakeImage, fakeImage];
 
-        beforeEach(() => {
+        beforeEach(function () {
             DinosaurStub = sinon.stub(Dinosaur, 'findAllImages').callsFake(() => fakeData);
         });
 
-        afterEach(() => {
+        afterEach(function () {
             DinosaurStub.restore();
         });
 
@@ -111,15 +111,15 @@ describe('Services - Functionality Tests', function () {
         });
     });
 
-    describe('retrieveDinosaurById', async function () {
+    describe('retrieveDinosaurById', function () {
         let DinosaurStub;
         const mongooseData = new MongooseData('Stegosaurus');
 
-        beforeEach(() => {
+        beforeEach(function () {
             DinosaurStub = sinon.stub(Dinosaur, 'findById').callsFake(() => mongooseData);
         });
 
-        afterEach(() => {
+        afterEach(function () {
             DinosaurStub.restore();
         });
 
@@ -131,15 +131,15 @@ describe('Services - Functionality Tests', function () {
         });
     });
 
-    describe('retrieveAllNames', async function () {
+    describe('retrieveAllNames', function () {
         let DinosaurStub;
         const fakeData = [new MongooseData('Stegosaurus'), new MongooseData('T-Rex')];
 
-        beforeEach(() => {
+        beforeEach(function () {
             DinosaurStub = sinon.stub(Dinosaur, 'findAllNames').callsFake(() => fakeData);
         });
 
-        afterEach(() => {
+        afterEach(function () {
             DinosaurStub.restore();
         });
 
@@ -150,15 +150,15 @@ describe('Services - Functionality Tests', function () {
         });
     });
 
-    describe('retrieveDinosaurByName', async function () {
+    describe('retrieveDinosaurByName', function () {
         let DinosaurStub;
         const fakeData = new MongooseData('Stegosaurus');
 
-        beforeEach(() => {
+        beforeEach(function () {
             DinosaurStub = sinon.stub(Dinosaur, 'findByName').callsFake(() => fakeData);
         });
 
-        afterEach(() => {
+        afterEach(function () {
             DinosaurStub.restore();
         });
 
@@ -170,19 +170,19 @@ describe('Services - Functionality Tests', function () {
         });
     });
 
-    describe('retrieveDinosaursByDiet', async function () {
+    describe('retrieveDinosaursByDiet', function () {
         let DinosaurStub;
         const fakeData = [new MongooseData('Stegosaurus')];
 
-        beforeEach(() => {
+        beforeEach(function () {
             DinosaurStub = sinon.stub(Dinosaur, 'findByDiet').callsFake(() => fakeData);
         });
 
-        afterEach(() => {
+        afterEach(function () {
             DinosaurStub.restore();
         });
 
-        it('should retrieve dinosaur by name', async function () {
+        it('should retrieve dinosaur by diet', async function () {
             const result = await services.retrieveDinosaursByDiet('herbivore');
             expect(result).to.exist;
             expect(result).to.be.an('array');
@@ -191,19 +191,19 @@ describe('Services - Functionality Tests', function () {
         });
     });
 
-    describe('retrieveDinosaursByLocomotion', async function () {
+    describe('retrieveDinosaursByLocomotion', function () {
         let DinosaurStub;
         const fakeData = [new MongooseData('Stegosaurus')];
 
-        beforeEach(() => {
+        beforeEach(function () {
             DinosaurStub = sinon.stub(Dinosaur, 'findByLocomotion').callsFake(() => fakeData);
         });
 
-        afterEach(() => {
+        afterEach(function () {
             DinosaurStub.restore();
         });
 
-        it('should retrieve dinosaur by name', async function () {
+        it('should retrieve dinosaur by locomotion', async function () {
             const result = await services.retrieveDinosaursByLocomotion('quadruped');
             expect(result).to.exist;
             expect(result).to.be.an('array');
@@ -212,15 +212,15 @@ describe('Services - Functionality Tests', function () {
         });
     });
 
-    describe('retrieveImageById', async function () {
+    describe('retrieveImageById', function () {
         let DinosaurStub;
         const fakeData = { image: {} };
 
-        beforeEach(() => {
+        beforeEach(function () {
             DinosaurStub = sinon.stub(Dinosaur, 'findImageById').callsFake(() => fakeData);
         });
 
-        afterEach(() => {
+        afterEach(function () {
             DinosaurStub.restore();
         });
 
@@ -232,15 +232,15 @@ describe('Services - Functionality Tests', function () {
         });
     });
 
-    describe('returnRandomDinosaurs', async function () {
+    describe('returnRandomDinosaurs', function () {
         let DinosaurStub;
         const fakeData = [new MongooseData('Stegosaurus')];
 
-        beforeEach(() => {
+        beforeEach(function () {
             DinosaurStub = sinon.stub(Dinosaur, 'returnRandomDinosaurs').callsFake(() => fakeData);
         });
 
-        afterEach(() => {
+        afterEach(function () {
             DinosaurStub.restore();
         });
 
@@ -252,15 +252,15 @@ describe('Services - Functionality Tests', function () {
         });
     });
 
-    describe('returnRandomImages', async function () {
+    describe('returnRandomImages', function () {
         let DinosaurStub;
         const fakeData = [{ image: {} }];
 
-        beforeEach(() => {
+        beforeEach(function () {
             DinosaurStub = sinon.stub(Dinosaur, 'returnRandomImages').callsFake(() => fakeData);
         });
 
-        afterEach(() => {
+        afterEach(function () {
             DinosaurStub.restore();
         });
 
@@ -272,15 +272,15 @@ describe('Services - Functionality Tests', function () {
         });
     });
 
-    describe('returnDinosaursByQuery', async function () {
+    describe('returnDinosaursByQuery', function () {
         let DinosaurStub;
         const fakeData = [new MongooseData('Stegosaurus')];
 
-        beforeEach(() => {
+        beforeEach(function () {
             DinosaurStub = sinon.stub(Dinosaur, 'returnDinosaursByQuery');
         });
 
-        afterEach(() => {
+        afterEach(function () {
             DinosaurStub.restore();
         });
 

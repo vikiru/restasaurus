@@ -48,42 +48,27 @@ DinosaurSchema.plugin(mongooseHidden, {
 
 DinosaurSchema.statics.findAllDinosaurs = function (page) {
     const limit = 20;
-    return this.find()
+    return this.find({})
         .skip((page - 1) * limit)
         .limit(limit)
-        .populate('classificationInfo image source');
+        .populate('classificationInfo image source')
+        .exec();
 };
 
 DinosaurSchema.statics.findById = function (id) {
-    return this.findOne({ id }).populate('classificationInfo image source');
+    return this.findOne({ id }).populate('classificationInfo image source').exec();
 };
 
 DinosaurSchema.statics.findByName = function (name) {
-    return this.findOne({ name }).populate('classificationInfo image source');
-};
-
-DinosaurSchema.statics.findAllNames = function () {
-    return this.find({}, 'name');
-};
-
-DinosaurSchema.statics.findAllImages = function (page) {
-    const limit = 20;
-    return this.find({}, 'image')
-        .skip((page - 1) * limit)
-        .limit(limit)
-        .populate('image');
-};
-
-DinosaurSchema.statics.findImageById = function (id) {
-    return this.findOne({ id }).select('image').populate('image');
+    return this.findOne({ name }).populate('classificationInfo image source').exec();
 };
 
 DinosaurSchema.statics.findByDiet = function (diet) {
-    return this.find({ diet }).populate('classificationInfo image source');
+    return this.find({ diet }).populate('classificationInfo image source').exec();
 };
 
 DinosaurSchema.statics.findByLocomotion = function (locomotionType) {
-    return this.find({ locomotionType }).populate('classificationInfo image source');
+    return this.find({ locomotionType }).populate('classificationInfo image source').exec();
 };
 
 DinosaurSchema.statics.returnRandomDinosaurs = function (count) {
@@ -135,31 +120,6 @@ DinosaurSchema.statics.returnRandomDinosaurs = function (count) {
             $project: {
                 _id: 0,
                 __v: 0,
-            },
-        },
-    ]);
-};
-
-DinosaurSchema.statics.returnRandomImages = function (count) {
-    return this.aggregate([
-        {
-            $sample: { size: count },
-        },
-        {
-            $lookup: {
-                from: 'dinosaurimages',
-                let: { imageId: '$image' },
-                pipeline: [{ $match: { $expr: { $eq: ['$_id', '$$imageId'] } } }, { $project: { _id: 0, __v: 0 } }],
-                as: 'image',
-            },
-        },
-        {
-            $unwind: '$image',
-        },
-        {
-            $project: {
-                image: 1,
-                _id: 0,
             },
         },
     ]);
@@ -234,6 +194,48 @@ DinosaurSchema.statics.returnDinosaursByQuery = function (query) {
             },
         },
     ]);
+};
+
+DinosaurSchema.statics.findAllImages = function (page) {
+    const limit = 20;
+    return this.find({}, 'image')
+        .skip((page - 1) * limit)
+        .limit(limit)
+        .populate('image')
+        .exec();
+};
+
+DinosaurSchema.statics.findImageById = function (id) {
+    return this.findOne({ id }).select('image').populate('image').exec();
+};
+
+DinosaurSchema.statics.returnRandomImages = function (count) {
+    return this.aggregate([
+        {
+            $sample: { size: count },
+        },
+        {
+            $lookup: {
+                from: 'dinosaurimages',
+                let: { imageId: '$image' },
+                pipeline: [{ $match: { $expr: { $eq: ['$_id', '$$imageId'] } } }, { $project: { _id: 0, __v: 0 } }],
+                as: 'image',
+            },
+        },
+        {
+            $unwind: '$image',
+        },
+        {
+            $project: {
+                image: 1,
+                _id: 0,
+            },
+        },
+    ]);
+};
+
+DinosaurSchema.statics.findAllNames = function () {
+    return this.find({}, 'name').exec();
 };
 
 const Dinosaur = model('Dinosaur', DinosaurSchema);
