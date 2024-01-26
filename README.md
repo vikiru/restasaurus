@@ -254,6 +254,7 @@ npm run postData
 -   [Sinon Documentation](https://sinonjs.org/releases/latest/)
 -   [Shields Badges](https://github.com/badges/shields)
 -   [regex101](https://regex101.com/)
+-   [Favicon Generator](https://favicon.io/favicon-generator/)
 
 ## ©️ License
 

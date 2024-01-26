@@ -1,3 +1,5 @@
+const path = require('path');
+
 const express = require('express');
 
 const config = require('./config/index');
@@ -12,8 +14,10 @@ const app = express();
 const mongoConnection = mongoDB.connect();
 
 /* Setup middlewares */
+app.use(middlewares.favicon(path.resolve(__dirname, '../public/favicon.ico')));
 app.use(middlewares.helmet());
 app.use(middlewares.cors({ methods: ['GET'] }));
+app.use(middlewares.limiter);
 app.use(middlewares.bodyParser.json());
 app.use(middlewares.bodyParser.urlencoded({ extended: true }));
 app.use(middlewares.validator);
