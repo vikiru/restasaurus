@@ -42,6 +42,9 @@
                 "newlines-between": "always"
             }
         ],
+        "jsdoc/require-param-type": "off",
+        "jsdoc/require-returns-check": "off",
+        "jsdoc/require-returns-type": "off",
         "max-depth": ["warn", 4],
         "mocha/no-setup-in-describe": "off",
         "no-await-in-loop": "off",
@@ -65,9 +68,13 @@
         "prettier/prettier": "off",
         "security/detect-non-literal-fs-filename": "off",
         "security/detect-object-injection": "off",
-        "jsdoc/require-param-type": "off",
-        "jsdoc/require-returns-type": "off",
-        "jsdoc/require-returns-check": "off",
-        "sort-exports/sort-exports": ["error", { "sortDir": "asc", "ignoreCase": true, "sortExportKindFirst": "type" }]
+        "sort-exports/sort-exports": [
+            "error",
+            {
+                "ignoreCase": true,
+                "sortDir": "asc",
+                "sortExportKindFirst": "type"
+            }
+        ]
     }
 }
