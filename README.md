@@ -81,6 +81,7 @@ Backend:
 -   [Node.js](https://nodejs.org/en)
 -   [Express](https://expressjs.com/)
     -   various middlewares as seen [here](./app/middlewares/index.js)
+-   [Winston](https://github.com/winstonjs/winston)
 -   [MongoDB](https://www.mongodb.com/)
 -   [Mongoose](https://mongoosejs.com/)
 
@@ -90,9 +91,9 @@ CI:
 
 Dev Tools:
 
--   Linting: [ESLint](https://eslint.org/)
--   Formatting: [Prettier](https://prettier.io/)
--   Code Time Tracking: [WakaTime](https://wakatime.com/)
+-   [ESLint](https://eslint.org/)
+-   [Prettier](https://prettier.io/)
+-   [WakaTime](https://wakatime.com/)
 -   [MongoDB Compass](https://www.mongodb.com/products/tools/compass)
 -   [Postman](https://www.postman.com/)
 
@@ -131,7 +132,6 @@ npm install
 ```text
 PORT=YOUR-PORT-HERE
 MONGODB_URI='YOUR-MONGODB-URI-HERE'
-REDIS_URL='YOUR-REDIS-URL-HERE'
 NODE_ENV='development'
 ```
 
@@ -147,9 +147,12 @@ Please check your `app/logs` directory in the event of any errors.
 
 Additionally, confirm that `app/scripts/` contains the following JSON files:
 
--   `allDinoNames.json`: contains all dinosaur names
--   `filteredNames.json`: contains the names of the dinosaurs that passed the filtering process
--   `dinosaurData.json`: contains the processed data of all dinosaurs
+-   `allDinoNames.json`: contains all dinosaur names (should be around 1427 names).
+-   `filteredNames.json`: contains the names of the dinosaurs that passed the filtering process.
+-   `htmlData.json`: contains the HTML data for each Wikipedia article.
+-   `imageData.json`: contains the image data for each Dinosaur.
+-   `pageData.json`: contains the page data for each Wikipedia article.
+-   `dinosaurData.json`: contains the processed data of all dinosaurs.
 
 5. Run the `postData` script to save all dinosaurs to your MongoDB database, once retrieveData was successful.
 
@@ -161,11 +164,11 @@ Please check your MongoDB database collections and ensure that the dinosaurs wer
 
 There should be 5 collections:
 
-1. classificationinfos
-2. counters
-3. dinosaurimages
-4. dinosaurs
-5. dinosaursources
+1. `classificationinfos`: This collection contains all of the ClassificationInfo documents.
+2. `counters`: This collection is auto-created and allows for auto-indexing of documents.
+3. `dinosaurimages`: This collection contains all of the DinosaurImage documents.
+4. `dinosaurs`: This is the main collection which contains all of the Dinosaur documents.
+5. `dinosaursources`: This collection contains all of the DinosaurSource documents.
 
 After completing these steps, the API should be ready for launch, with all endpoints fully operational. 🎉
 
@@ -173,7 +176,7 @@ After completing these steps, the API should be ready for launch, with all endpo
 
 The API can be started via one of the following commands:
 
-1. Start the API in development env, with nodemon.
+1. Start the API in `development` env, with nodemon.
 
 ```bash
 npm run dev
@@ -187,7 +190,7 @@ npm start
 
 ## 🔍 Testing
 
-The comprehensive suite of tests for this project is housed within the test directory. These tests are primarily designed to verify the functionality and reliability of the API and additionally, the scripts used to retrieve the information.
+The comprehensive suite of tests for this project is housed within the [test](./test/) directory. These tests are primarily designed to verify the functionality and reliability of the API and additionally, the scripts used to retrieve the information.
 
 The tests can be run with the following command:
 
