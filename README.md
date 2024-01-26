@@ -148,7 +148,7 @@ Please check your `app/logs` directory in the event of any errors.
 Additionally, confirm that `app/scripts/` contains the following JSON files:
 
 -   `allDinoNames.json`: contains all dinosaur names (should be around 1427 names).
--   `filteredNames.json`: contains the names of the dinosaurs that passed the filtering process.
+-   `filteredNames.json`: contains the names of the dinosaurs that passed the filtering process (should be around 1153 names).
 -   `htmlData.json`: contains the HTML data for each Wikipedia article.
 -   `imageData.json`: contains the image data for each Dinosaur.
 -   `pageData.json`: contains the page data for each Wikipedia article.
