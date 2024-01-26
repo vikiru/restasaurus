@@ -26,7 +26,7 @@ async function pushDinosaurToDB(data) {
         ]);
         logger.info(`Successfully saved dinosaur, ${name} to database`);
     } catch (error) {
-        logger.error(error);
+        logger.error(error.message);
     }
 }
 

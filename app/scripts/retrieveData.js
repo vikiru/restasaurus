@@ -186,7 +186,6 @@ async function retrieveData() {
  */
 async function processAllData() {
     const totalTimeStart = process.hrtime();
-
     const { pageData, imageData, htmlData } = await retrieveData();
 
     logger.info('Starting to process all retrieved data. This may take some time, please wait.');
@@ -215,6 +214,8 @@ async function processAllData() {
     logger.info(
         `Total time to retrieve all data from Wikipedia API and save to file: ${formattedTotalSeconds} seconds.`,
     );
+
+    return filteredData;
 }
 
 processAllData();

@@ -8,6 +8,7 @@ const ClassificationInfoSchema = new Schema(
         domain: String,
         kingdom: String,
         phylum: String,
+        clade: { type: [String], index: true },
         classInfo: [
             {
                 classType: String,
@@ -15,7 +16,6 @@ const ClassificationInfoSchema = new Schema(
                 _id: false,
             },
         ],
-        clade: { type: [String], index: true },
         orderInfo: [
             {
                 orderType: String,
