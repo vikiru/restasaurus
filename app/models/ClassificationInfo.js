@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const mongooseHidden = require('mongoose-hidden')();
 
-const { sortInfo, getClassSorter, getOrderSorter, getFamilySorter } = require('../utils/classificationInfoSorter');
-
 const { Schema, model } = mongoose;
 
 const ClassificationInfoSchema = new Schema(
@@ -10,6 +8,7 @@ const ClassificationInfoSchema = new Schema(
         domain: String,
         kingdom: String,
         phylum: String,
+        clade: { type: [String], index: true },
         classInfo: [
             {
                 classType: String,
@@ -17,7 +16,6 @@ const ClassificationInfoSchema = new Schema(
                 _id: false,
             },
         ],
-        clade: { type: [String], index: true },
         orderInfo: [
             {
                 orderType: String,

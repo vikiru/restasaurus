@@ -6,30 +6,6 @@ const { DinosaurSource } = require('../models/DinosaurSource');
 const { sortInfo, getFamilySorter, getOrderSorter, getClassSorter } = require('./classificationInfoSorter');
 
 /**
- * Gets the keys for the classification and dinosaur objects.
- *
- * @function
- * @returns {object} An object containing arrays of keys for the classification and dinosaur objects.
- */
-function getClassificationAndDinosaurKeys() {
-    return {
-        classificationInfo: [
-            'domain',
-            'kingdom',
-            'phylum',
-            'clade',
-            'classInfo',
-            'orderInfo',
-            'familyInfo',
-            'tribeInfo',
-            'genusInfo',
-            'speciesInfo',
-        ],
-        dinosaur: ['name', 'temporalrange', 'diet', 'locomotionType', 'descriptions'],
-    };
-}
-
-/**
  * Creates a sub-object from a given object, including only the specified keys.
  *
  * @param {object} obj - The original object.
@@ -44,26 +20,6 @@ function createSubObject(obj, keys) {
         }
     });
     return subObject;
-}
-
-/**
- * Creates a dinosaur object from the MongooseData instance.
- *
- * @function
- * @param {object} mongooseData - The mongoose data.
- * @param {object} keys - The keys for the dinosaur object.
- * @returns {object} The created dinosaur object.
- */
-function createDinosaurObject(mongooseData, keys) {
-    const dinosaur = {};
-    Object.keys(keys).forEach((key) => {
-        if (key in mongooseData) {
-            dinosaur[key] = createSubObject(mongooseData[key], keys[key]);
-        } else {
-            dinosaur[key] = createSubObject(mongooseData, keys[key]);
-        }
-    });
-    return dinosaur;
 }
 
 /**
@@ -136,14 +92,9 @@ async function sortClasssificationInfo(classificationInfo) {
  * @returns {Promise<object>} A promise that resolves to the created data object.
  */
 async function convertToSchema(mongooseData) {
-    const keys = getClassificationAndDinosaurKeys();
-
-    mongooseData.classificationInfo = sortClasssificationInfo(mongooseData.classificationInfo);
-
-    const dinosaur = createDinosaurObject(mongooseData, keys);
+    mongooseData.classificationInfo = await sortClasssificationInfo(mongooseData.classificationInfo);
     const dinoSource = new DinosaurSource(mongooseData.source);
-
-    const classification = new ClassificationInfo(dinosaur.classificationInfo);
+    const classification = new ClassificationInfo(mongooseData.classificationInfo);
     const dinoImage = new DinosaurImage(mongooseData.image);
     const dino = createDinosaurInstance(mongooseData, classification, dinoSource, dinoImage);
     return createDataObject(dino, classification, dinoImage, dinoSource);
@@ -151,8 +102,6 @@ async function convertToSchema(mongooseData) {
 
 module.exports = {
     convertToSchema,
-    getClassificationAndDinosaurKeys,
-    createDinosaurObject,
     createDinosaurInstance,
     createDataObject,
     createSubObject,

@@ -47,7 +47,7 @@ DinosaurSchema.plugin(mongooseHidden, {
 });
 
 DinosaurSchema.statics.findAllDinosaurs = function (page) {
-    const limit = 20;
+    const limit = 50;
     return this.find({})
         .skip((page - 1) * limit)
         .limit(limit)
@@ -197,7 +197,7 @@ DinosaurSchema.statics.returnDinosaursByQuery = function (query) {
 };
 
 DinosaurSchema.statics.findAllImages = function (page) {
-    const limit = 20;
+    const limit = 50;
     return this.find({}, 'image')
         .skip((page - 1) * limit)
         .limit(limit)

@@ -32,16 +32,6 @@ function handleAuthor(data, authorInfo) {
 }
 
 /**
- * Gets the main data from the result object.
- *
- * @param {object} result - The result object to get the main data from.
- * @returns {object} The main data.
- */
-function getMainData(result) {
-    return result.query.pages[Object.keys(result.query.pages)[0]];
-}
-
-/**
  * Gets the image title from the title string.
  *
  * @param {string} title - The title string to get the image title from.
@@ -93,10 +83,13 @@ function getLicenseURL(metaData) {
 }
 
 /**
- * Gets the date created from the metadata object.
+ * The function `getDateCreated` takes in a `metaData` object and returns the ISO string representation of the
+ * `DateTime` value if it exists, otherwise it returns an empty string.
  *
- * @param {object} metaData - The metadata object to get the date created from.
- * @returns {string} The date created.
+ * @param metaData - The `metaData` parameter is an object that contains information about a file or document. It may
+ *   have various properties, but the one we are interested in is `DateTime`.
+ * @returns The date and time of creation in ISO format if it exists in the metaData object. If the metaData.DateTime
+ *   property does not exist or is empty, an empty string is returned.
  */
 function getDateCreated(metaData) {
     if (metaData.DateTime) {
@@ -106,19 +99,20 @@ function getDateCreated(metaData) {
 }
 
 /**
- * Handles the image data in the data.
+ * The function processes image data and extracts relevant information such as title, description, author, license, URL,
+ * and creation/access dates.
  *
- * @param {object} data - The data object to handle.
- * @param {object} result - The result object to handle.
- * @returns {object} The handled data object.
+ * @param imageData - The `imageData` parameter is an object that contains information about an image. It has the
+ *   following properties:
+ * @param data - The `data` parameter is an object that contains information about the image. It has the following
+ *   structure:
  */
-function handleImageData(data, result) {
-    const mainData = getMainData(result);
-    if (mainData.imageinfo) {
+function processImageData(imageData, data) {
+    if (imageData.imageinfo) {
         const {
             imageinfo: [imageInfo],
             title,
-        } = mainData;
+        } = imageData;
         const { extmetadata: metaData } = imageInfo;
 
         data.image.title = getImageTitle(title);
@@ -134,13 +128,11 @@ function handleImageData(data, result) {
         data.image.dateCreated = getDateCreated(metaData);
         data.image.dateAccessed = new Date().toISOString();
     }
-    return data;
 }
 
 module.exports = {
     handleAuthor,
-    handleImageData,
-    getMainData,
+    processImageData,
     getImageTitle,
     getImageDescription,
     getLicense,
