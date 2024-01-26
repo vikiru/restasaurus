@@ -27,6 +27,7 @@
 		"Dinosaurs"
 	],
 	"dependencies": {
+		"@cmfcmf/docusaurus-search-local": "^1.1.0",
 		"@mongodb-js/zstd": "^1.2.0",
 		"body-parser": "^1.20.2",
 		"compression": "^1.7.4",
