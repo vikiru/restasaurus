@@ -1,4 +1,6 @@
-<h1 align="center"> 🦖 RESTasaurus </h1>
+<h1 align="center">
+    <img src="./logo.png"/>
+</h1>
 
 <p align="center">
  <a href="https://github.com/vikiru/restasaurus/blob/main/LICENSE">
@@ -252,6 +254,7 @@ npm run postData
 -   [Sinon Documentation](https://sinonjs.org/releases/latest/)
 -   [Shields Badges](https://github.com/badges/shields)
 -   [regex101](https://regex101.com/)
+-   [Favicon Generator](https://favicon.io/favicon-generator/)
 
 ## ©️ License
 

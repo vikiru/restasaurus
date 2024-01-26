@@ -18,8 +18,14 @@ const limiter = rateLimit({
     standardHeaders: 'draft-7',
     legacyHeaders: false,
     handler(req, res) {
+        const resetTime = new Date(req.rateLimit.resetTime);
+        const currentTime = new Date();
+        const timeLeft = Math.ceil((resetTime - currentTime) / 1000 / 60);
+
+        res.setHeader('RateLimit-Reset', timeLeft);
+
         return res.status(429).json({
-            error: 'Please wait, you have exceeded your rate limit of 20 requests per hour.',
+            error: `Please wait, you have exceeded your rate limit of 20 requests per hour. You can make another request in ${timeLeft} minutes.`,
         });
     },
 });
