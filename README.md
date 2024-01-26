@@ -1,6 +1,6 @@
-<img src="./logo.png"/>
-
----
+<h1 align="center">
+    <img src="./logo.png"/>
+</h1>
 
 <p align="center">
  <a href="https://github.com/vikiru/restasaurus/blob/main/LICENSE">
