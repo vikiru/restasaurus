@@ -7,14 +7,11 @@ const { retrieveAllDinoNames } = require('../utils/retrieveAllDinoNames');
 const { writeData } = require('../utils/writeData');
 
 /**
- * Returns a promise that resolves after a specified amount of time. The purpose of this function is to add a delay
- * between each request to the Wikipedia API.
+ * The `delay` function returns a promise that resolves after a specified amount of time.
  *
- * @param time - The time parameter is the duration in milliseconds for which the delay function will pause the
- *   execution.
+ * @param time - The `time` parameter is the duration in milliseconds for which the delay should occur.
  * @returns A Promise object.
  */
-/** @param time */
 function delay(time) {
     return new Promise((resolve) => {
         setTimeout(resolve, time);
@@ -74,8 +71,13 @@ function getQueryByType(result, queryType) {
 }
 
 /**
- * @param names
- * @param queryType
+ * The function `handleMultiplePages` takes an array of names and a query type, and returns an array of URLs based on
+ * the Wikipedia API.
+ *
+ * @param names - An array of names. Each name represents a page on Wikipedia.
+ * @param queryType - The queryType parameter is a string that specifies the type of query to be performed. It
+ *   determines the specific API query parameters to be used in the URL.
+ * @returns The function `handleMultiplePages` returns an array of URLs.
  */
 function handleMultiplePages(names, queryType) {
     const baseUrl = 'https://en.wikipedia.org/w/api.php?';
@@ -92,8 +94,13 @@ function handleMultiplePages(names, queryType) {
 }
 
 /**
- * @param names
- * @param queryType
+ * The function `handleSinglePage` takes an array of names and a query type, and returns an array of URLs based on the
+ * names and query type.
+ *
+ * @param names - An array of names (strings) representing the pages you want to query.
+ * @param queryType - The `queryType` parameter is a string that specifies the type of query to be performed on the
+ *   Wikipedia API. It determines what information will be retrieved for each name in the `names` array.
+ * @returns An array of URLs.
  */
 function handleSinglePage(names, queryType) {
     const baseUrl = 'https://en.wikipedia.org/w/api.php?';
@@ -125,6 +132,12 @@ function urlConstructor(names, queryType) {
     return urls;
 }
 
+/**
+ * The function `constructDinoNames` reads dinosaur names from a JSON file, and if it fails, it retrieves the names from
+ * the Wikipedia API.
+ *
+ * @returns The function `constructDinoNames` returns a promise that resolves to the `names` variable.
+ */
 async function constructDinoNames() {
     let names;
     try {
@@ -139,7 +152,13 @@ async function constructDinoNames() {
     }
 }
 
-/** @param urls */
+/**
+ * The `urlHandler` function fetches data from multiple URLs and returns the collected data.
+ *
+ * @param urls - An array of URLs from which data needs to be fetched.
+ * @returns An object with a property called "data". The value of "data" is an array that contains the fetched data from
+ *   the URLs.
+ */
 async function urlHandler(urls) {
     const data = [];
     const total = urls.length;
@@ -164,16 +183,27 @@ async function urlHandler(urls) {
     return result;
 }
 
-/** @param names */
+/**
+ * The function retrieves data from multiple URLs based on a given array of names.
+ *
+ * @param names - The `names` parameter is an array of names.
+ * @returns The data retrieved from the URLs.
+ */
 async function retrievePageData(names) {
     const urls = urlConstructor(names, 'dino');
     const { data } = await urlHandler(urls);
     return data;
 }
 
-/** @param data */
+/**
+ * The function filters dinosaur data by checking if each data object has a 'pageimage' property, and then saves the
+ * filtered data and names to JSON files.
+ *
+ * @param data - The `data` parameter is an array of objects representing dinosaur data. Each object in the array should
+ *   have a `title` property and a `pageimage` property.
+ * @returns An array of filtered dinosaur names.
+ */
 async function filterDinoNames(data) {
-    console.log(typeof data);
     logger.info('Filtering retrieved dinosaur data.');
     const filteredData = data.filter((dinoData) => 'pageimage' in dinoData);
     const filteredNames = [];
@@ -186,12 +216,24 @@ async function filterDinoNames(data) {
     return filteredNames;
 }
 
-/** @param filePath */
+/**
+ * The function reads a JSON file asynchronously and returns the parsed data.
+ *
+ * @param filePath - The `filePath` parameter is a string that represents the path to the JSON file that you want to
+ *   read. It should include the file name and extension.
+ * @returns A promise that resolves to the parsed JSON data from the file.
+ */
 async function readJSONFile(filePath) {
     const data = await fs.promises.readFile(filePath, 'utf8');
     return JSON.parse(data);
 }
 
+/**
+ * The function retrieves and filters dinosaur data from a JSON file, and if that fails, it retrieves the data from the
+ * Wikipedia API.
+ *
+ * @returns An object containing two properties: "data" and "filteredNames".
+ */
 async function retrieveAndFilterDinoData() {
     const dinoData = {};
     try {

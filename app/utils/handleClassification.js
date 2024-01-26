@@ -69,7 +69,6 @@ function assignClassificationInfo(data, keyword, value) {
  * @returns {object} The information box element.
  */
 function getInfoBox(html) {
-    const tables = html.getElementsByTagName('table');
     const infoBoxTable = html.querySelector('.infobox');
     if (infoBoxTable !== undefined) {
         return infoBoxTable;
@@ -80,10 +79,9 @@ function getInfoBox(html) {
  * Retrieves all row elements from the information box.
  *
  * @param {object} infoBox - The information box element.
- * @param name
  * @returns {Array} An array of row elements.
  */
-function getRows(infoBox, name) {
+function getRows(infoBox) {
     const rows = infoBox.querySelectorAll('tr');
     if (rows) {
         return rows;

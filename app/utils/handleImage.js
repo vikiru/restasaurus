@@ -83,10 +83,13 @@ function getLicenseURL(metaData) {
 }
 
 /**
- * Gets the date created from the metadata object.
+ * The function `getDateCreated` takes in a `metaData` object and returns the ISO string representation of the
+ * `DateTime` value if it exists, otherwise it returns an empty string.
  *
- * @param {object} metaData - The metadata object to get the date created from.
- * @returns {string} The date created.
+ * @param metaData - The `metaData` parameter is an object that contains information about a file or document. It may
+ *   have various properties, but the one we are interested in is `DateTime`.
+ * @returns The date and time of creation in ISO format if it exists in the metaData object. If the metaData.DateTime
+ *   property does not exist or is empty, an empty string is returned.
  */
 function getDateCreated(metaData) {
     if (metaData.DateTime) {
@@ -96,9 +99,13 @@ function getDateCreated(metaData) {
 }
 
 /**
- * @param imageData
- * @param mongooseData
- * @param data
+ * The function processes image data and extracts relevant information such as title, description, author, license, URL,
+ * and creation/access dates.
+ *
+ * @param imageData - The `imageData` parameter is an object that contains information about an image. It has the
+ *   following properties:
+ * @param data - The `data` parameter is an object that contains information about the image. It has the following
+ *   structure:
  */
 function processImageData(imageData, data) {
     if (imageData.imageinfo) {

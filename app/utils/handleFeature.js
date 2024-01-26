@@ -92,9 +92,11 @@ function searchClassification(items, defaults, data) {
 }
 
 /**
- * Finds a feature by classification from the data object.
+ * The function "findFeatureByClassification" searches for specific features based on classification information.
  *
- * @param {object} data - The data object to search.
+ * @param data - The `data` parameter is an object that contains information about the classification of a feature. It
+ *   includes the `classificationInfo` property, which is an object that contains information about the feature's
+ *   classification, such as the family, order, and clade it belongs to.
  */
 function findFeatureByClassification(data) {
     const { classificationInfo } = data;

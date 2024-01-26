@@ -18,13 +18,7 @@
     "parserOptions": {
         "ecmaVersion": 12
     },
-    "plugins": [
-        "prettier",
-        "import",
-        "sort-exports",
-        "comment-length",
-        "mocha"
-    ],
+    "plugins": ["prettier", "import", "sort-exports", "comment-length", "mocha"],
     "rules": {
         "complexity": [
             "warn",
@@ -44,21 +38,11 @@
                     "caseInsensitive": true,
                     "order": "asc"
                 },
-                "groups": [
-                    "builtin",
-                    "external",
-                    "internal",
-                    "parent",
-                    "sibling",
-                    "index"
-                ],
+                "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
                 "newlines-between": "always"
             }
         ],
-        "max-depth": [
-            "warn",
-            4
-        ],
+        "max-depth": ["warn", 4],
         "mocha/no-setup-in-describe": "off",
         "no-await-in-loop": "off",
         "no-console": "warn",
@@ -74,14 +58,16 @@
         "node/no-unsupported-features/es-syntax": [
             "error",
             {
-                "ignores": [
-                    "modules"
-                ]
+                "ignores": ["modules"]
             }
         ],
         "prefer-destructuring": "off",
         "prettier/prettier": "off",
         "security/detect-non-literal-fs-filename": "off",
-        "security/detect-object-injection": "off"
+        "security/detect-object-injection": "off",
+        "jsdoc/require-param-type": "off",
+        "jsdoc/require-returns-type": "off",
+        "jsdoc/require-returns-check": "off",
+        "sort-exports/sort-exports": ["error", { "sortDir": "asc", "ignoreCase": true, "sortExportKindFirst": "type" }]
     }
 }
