@@ -1,4 +1,4 @@
-const { cladeDefaults, orderDefaults, familyDefaults } = require('./helperConstants').default;
+const { cladeDefaults, orderDefaults, familyDefaults } = require('./helperConstants');
 
 /**
  * Finds a specific feature in the page data. The feature that is being searched for is the diet and locomotionType.
@@ -32,7 +32,6 @@ function findFeature(pageData, featureRegex, replacements) {
                 featureCount[featureType] = (featureCount[featureType] || 0) + 1;
             }
         });
-
         if (Object.keys(featureCount).length > 0) {
             const maxCountKey = Object.entries(featureCount).reduce((maxEntry, currentEntry) => {
                 return currentEntry[1] > maxEntry[1] ? currentEntry : maxEntry;
@@ -108,10 +107,35 @@ function findFeatureByClassification(data) {
     searchClassification(orders, orderDefaults, data);
 }
 
+/**
+ * Retrieves the diet and locomotion type from the parsed HTML and updates the data object.
+ *
+ * @param {object} parsedHTML - The parsed HTML object.
+ * @param {object} data - The data object to be updated.
+ * @returns {object} The updated data object.
+ */
+function retrieveDietAndLocomotionType(parsedHTML, data) {
+    data.diet = findDiet(parsedHTML);
+    data.locomotionType = findLocomotionType(parsedHTML);
+}
+
+/**
+ * Finds missing features in the data object.
+ *
+ * @param {object} data - The data object.
+ */
+function findMissingFeatures(data) {
+    if (data.diet === '' || data.locomotionType === '') {
+        findFeatureByClassification(data);
+    }
+}
+
 module.exports = {
     findFeature,
     findDiet,
     findLocomotionType,
     findFeatureByClassification,
     searchClassification,
+    retrieveDietAndLocomotionType,
+    findMissingFeatures,
 };

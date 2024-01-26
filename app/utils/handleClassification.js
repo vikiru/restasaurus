@@ -1,4 +1,4 @@
-const { keywordRegex } = require('./helperConstants').default;
+const { keywordRegex } = require('./helperConstants');
 
 /**
  * Assigns classification information to the data object based on the keyword and value.
@@ -69,20 +69,25 @@ function assignClassificationInfo(data, keyword, value) {
  * @returns {object} The information box element.
  */
 function getInfoBox(html) {
-    return html
-        .getElementsByTagName('table')
-        .find((table) => table.attributes.class === 'infobox biota')
-        .querySelector('tbody');
+    const tables = html.getElementsByTagName('table');
+    const infoBoxTable = html.querySelector('.infobox');
+    if (infoBoxTable !== undefined) {
+        return infoBoxTable;
+    }
 }
 
 /**
  * Retrieves all row elements from the information box.
  *
  * @param {object} infoBox - The information box element.
+ * @param name
  * @returns {Array} An array of row elements.
  */
-function getRows(infoBox) {
-    return infoBox.querySelectorAll('tr');
+function getRows(infoBox, name) {
+    const rows = infoBox.querySelectorAll('tr');
+    if (rows) {
+        return rows;
+    }
 }
 
 /**
@@ -182,9 +187,11 @@ function handleOtherRows(rows, data) {
  */
 function retrieveBoxData(html, data) {
     const infoBox = getInfoBox(html);
-    const rows = getRows(infoBox);
-    handleFirstRow(rows[0], data);
-    handleOtherRows(rows, data);
+    if (infoBox) {
+        const rows = getRows(infoBox, data.name);
+        handleFirstRow(rows[0], data);
+        handleOtherRows(rows, data);
+    }
     return data;
 }
 

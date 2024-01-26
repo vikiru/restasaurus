@@ -1,3 +1,6 @@
+/* The MongooseData class is a JavaScript class that represents data about a dinosaur, including its
+name, classification information, diet, locomotion type, description, image and source information. This class
+will be converted into its respective Mongoose Schema models. */
 class MongooseData {
     constructor(name) {
         this.name = name;

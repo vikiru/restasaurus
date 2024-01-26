@@ -32,16 +32,6 @@ function handleAuthor(data, authorInfo) {
 }
 
 /**
- * Gets the main data from the result object.
- *
- * @param {object} result - The result object to get the main data from.
- * @returns {object} The main data.
- */
-function getMainData(result) {
-    return result.query.pages[Object.keys(result.query.pages)[0]];
-}
-
-/**
  * Gets the image title from the title string.
  *
  * @param {string} title - The title string to get the image title from.
@@ -106,19 +96,16 @@ function getDateCreated(metaData) {
 }
 
 /**
- * Handles the image data in the data.
- *
- * @param {object} data - The data object to handle.
- * @param {object} result - The result object to handle.
- * @returns {object} The handled data object.
+ * @param imageData
+ * @param mongooseData
+ * @param data
  */
-function handleImageData(data, result) {
-    const mainData = getMainData(result);
-    if (mainData.imageinfo) {
+function processImageData(imageData, data) {
+    if (imageData.imageinfo) {
         const {
             imageinfo: [imageInfo],
             title,
-        } = mainData;
+        } = imageData;
         const { extmetadata: metaData } = imageInfo;
 
         data.image.title = getImageTitle(title);
@@ -134,13 +121,11 @@ function handleImageData(data, result) {
         data.image.dateCreated = getDateCreated(metaData);
         data.image.dateAccessed = new Date().toISOString();
     }
-    return data;
 }
 
 module.exports = {
     handleAuthor,
-    handleImageData,
-    getMainData,
+    processImageData,
     getImageTitle,
     getImageDescription,
     getLicense,

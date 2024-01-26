@@ -9,7 +9,7 @@ const { logger } = require('../config/logger');
  */
 async function fetchData(url) {
     try {
-        const response = await fetch(url);
+        const response = await fetch(url, { headers: { 'Accept-Encoding': 'gzip' } });
         if (!response.ok) {
             throw new Error(`HTTP error, status: ${response.status}`);
         }
