@@ -38,7 +38,25 @@ const config = {
         locales: ['en'],
     },
 
-    plugins: [],
+    plugins: [
+        require.resolve('docusaurus-lunr-search'),
+        [
+            'docusaurus-plugin-openapi-docs',
+            {
+                id: 'api',
+                docsPluginId: 'classic',
+                config: {
+                    api: {
+                        specPath: 'openapi.yaml',
+                        outputDir: 'docs/endpoints',
+                        sidebarOptions: {
+                            groupPathsBy: 'tag',
+                        },
+                    },
+                },
+            },
+        ],
+    ],
 
     presets: [
         [
@@ -58,7 +76,30 @@ const config = {
                 theme: {
                     customCss: require.resolve('./src/css/custom.css'),
                 },
+                sitemap: {
+                    changefreq: 'daily',
+                    priority: 0.5,
+                    ignorePatterns: [],
+                    filename: 'sitemap.xml',
+                },
             }),
+        ],
+        [
+            'redocusaurus',
+            {
+                // Plugin Options for loading OpenAPI files
+                specs: [
+                    {
+                        spec: 'openapi.yaml',
+                        route: '/api/',
+                    },
+                ],
+                // Theme Options for modifying how redoc renders them
+                theme: {
+                    // Change with your site colors
+                    primaryColor: '#1890ff',
+                },
+            },
         ],
     ],
 
@@ -74,6 +115,17 @@ const config = {
                         docId: 'setup',
                         position: 'left',
                         label: 'Setup',
+                    },
+                    {
+                        position: 'left',
+                        label: 'Endpoints',
+                        href: '/api',
+                    },
+                    {
+                        type: 'doc',
+                        docId: 'stack',
+                        position: 'left',
+                        label: 'Development',
                     },
                 ],
             },

@@ -22,9 +22,9 @@ const sidebars = {
             items: ['intro', 'prerequisites', 'setup'],
         },
         {
-            type: 'category',
-            label: 'Endpoints',
-            items: ['endpoints/endpoints', 'endpoints/home', 'endpoints/names'],
+            type: 'link',
+            label: 'API Endpoints',
+            href: '/api',
         },
         {
             type: 'category',
