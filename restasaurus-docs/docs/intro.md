@@ -4,9 +4,9 @@ id: intro
 title: 📖 Introduction
 ---
 
-<h1 align="center">
+<p align="center" id="logo">
     <img src="logo.png"/>
-</h1>
+</p>
 
 <p align="center" id="badges">
  <a href="https://github.com/vikiru/restasaurus/blob/main/LICENSE">

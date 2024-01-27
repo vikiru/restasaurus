@@ -135,20 +135,7 @@ const config = {
                                 label: 'Setup',
                                 to: '/setup',
                             },
-                        ],
-                    },
-                    {
-                        title: 'API Endpoints',
-                        items: [
-                            { label: 'All Endpoints', to: '/endpoints' },
-                            {
-                                label: 'Dinosaur Endpoints',
-                                to: '/endpoints/dinosaur',
-                            },
-                            {
-                                label: 'Image Endpoints',
-                                to: '/endpoints/image',
-                            },
+                            { label: 'API Endpoints', to: '/api' },
                         ],
                     },
                     {

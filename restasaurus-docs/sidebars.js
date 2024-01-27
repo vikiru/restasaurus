@@ -32,9 +32,9 @@ const sidebars = {
             items: ['stack', 'run', 'test', 'scripts'],
         },
         {
-            type: 'category',
-            label: 'Conclusion',
-            items: ['acknowledgments'],
+            type: 'link',
+            label: 'Acknowledgments',
+            href: '/acknowledgments',
         },
     ],
 };
