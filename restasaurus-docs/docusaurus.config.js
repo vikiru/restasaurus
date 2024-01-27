@@ -4,6 +4,7 @@
 // There are various equivalent ways to declare your Docusaurus config.
 // See: https://docusaurus.io/docs/api/docusaurus-config
 
+const path = require('path');
 const { themes } = require('prism-react-renderer');
 
 const lightTheme = themes.github;
@@ -11,7 +12,7 @@ const darkTheme = themes.dracula;
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-    title: 'RESTasaurus | API Documentation',
+    title: 'RESTasaurus',
     url: 'https://vikiru.github.io/',
     baseUrl: '/restasaurus',
 
@@ -38,25 +39,7 @@ const config = {
         locales: ['en'],
     },
 
-    plugins: [
-        require.resolve('docusaurus-lunr-search'),
-        [
-            'docusaurus-plugin-openapi-docs',
-            {
-                id: 'api',
-                docsPluginId: 'classic',
-                config: {
-                    api: {
-                        specPath: 'openapi.yaml',
-                        outputDir: 'docs/endpoints',
-                        sidebarOptions: {
-                            groupPathsBy: 'tag',
-                        },
-                    },
-                },
-            },
-        ],
-    ],
+    plugins: [require.resolve('docusaurus-lunr-search')],
 
     presets: [
         [
@@ -87,6 +70,7 @@ const config = {
         [
             'redocusaurus',
             {
+                config: path.resolve(__dirname, 'redocly.yaml'),
                 // Plugin Options for loading OpenAPI files
                 specs: [
                     {

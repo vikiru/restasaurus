@@ -1,6 +1,6 @@
 ---
 id: setup
-title: ⚡ Setup Instructions
+title: ⚡ Setup
 ---
 
 ## ⚡ Setup Instructions
