@@ -8,6 +8,7 @@ const {
     findLocomotionType,
     retrieveDietAndLocomotionType,
     findMissingFeatures,
+    findDescription,
 } = require('../utils/handleFeature');
 const { processImageData } = require('../utils/handleImage');
 const { handleSourceInformation } = require('../utils/handleSource');
@@ -113,9 +114,11 @@ function processHTMLData(htmlData, mongooseData) {
  */
 function processPageData(pageData, htmlData, mongooseData) {
     if ('extract' in pageData) {
+        mongooseData.description = pageData.extract.split('\n')[0];
         mongooseData.diet = findDiet(pageData);
         mongooseData.locomotionType = findLocomotionType(pageData);
     } else {
+        mongooseData.description = findDescription(htmlData, mongooseData.name) || '';
         mongooseData.diet = findDiet(htmlData);
         mongooseData.locomotionType = findLocomotionType(htmlData);
     }
@@ -137,8 +140,8 @@ function processPageData(pageData, htmlData, mongooseData) {
 async function processData(pageData, imageData, htmlData) {
     const parsedHTML = parser.parse(htmlData);
     const mongooseData = new MongooseData(pageData.title);
-    processPageData(pageData, parsedHTML, mongooseData);
     processHTMLData(parsedHTML, mongooseData);
+    processPageData(pageData, parsedHTML, mongooseData);
     processImageData(imageData, mongooseData);
     return mongooseData;
 }

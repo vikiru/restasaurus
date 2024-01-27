@@ -59,6 +59,24 @@ function findDiet(pageData) {
 }
 
 /**
+ * The function `findDescription` takes in HTML data and a name as parameters, and returns the first paragraph that
+ * contains the given name.
+ *
+ * @param htmlData - The `htmlData` parameter is expected to be an HTML document or a DOM element that contains the HTML
+ *   structure.
+ * @param name - The name parameter is a string that represents the name of the dinosaur
+ * @returns The structured text of the first paragraph that contains the given name.
+ */
+function findDescription(htmlData, name) {
+    const paragraphs = htmlData.querySelectorAll('p');
+    const filteredParagraphs = paragraphs.filter((paragraph) => paragraph.structuredText.includes(name));
+    if (filteredParagraphs.length > 0) {
+        const firstParagraph = filteredParagraphs[0];
+        return firstParagraph.structuredText;
+    }
+}
+
+/**
  * Finds the locomotion type of a dinosaur from the page data.
  *
  * @param {object} pageData - The page data to search.
@@ -135,6 +153,7 @@ function findMissingFeatures(data) {
 module.exports = {
     findFeature,
     findDiet,
+    findDescription,
     findLocomotionType,
     findFeatureByClassification,
     searchClassification,
