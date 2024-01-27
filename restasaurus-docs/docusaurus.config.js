@@ -111,10 +111,9 @@ const config = {
                 title: 'RESTasaurus',
                 items: [
                     {
-                        type: 'doc',
-                        docId: 'setup',
                         position: 'left',
                         label: 'Setup',
+                        href: '/setup',
                     },
                     {
                         position: 'left',
@@ -122,10 +121,9 @@ const config = {
                         href: '/api',
                     },
                     {
-                        type: 'doc',
-                        docId: 'stack',
                         position: 'left',
                         label: 'Development',
+                        href: '/stack',
                     },
                 ],
             },

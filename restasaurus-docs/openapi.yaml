@@ -14,14 +14,8 @@ servers:
 tags:
     - name: dinosaur
       description: Retrieve dinosaur information
-      externalDocs:
-          description: Read more about this via the documentation
-          url: http://vikiru.github.io/restasaurus/endpoints/dinosaurs
     - name: image
       description: Retrieve dinosaur image information
-      externalDocs:
-          description: Find out more about our store
-          url: http://vikiru.github.io/restasaurus/endpoints/image
 paths:
     /:
         get:
