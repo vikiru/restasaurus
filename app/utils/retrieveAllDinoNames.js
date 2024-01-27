@@ -33,17 +33,18 @@ function extractNameFromItem(item) {
 function extractDinoNames(htmlText) {
     const names = new Set();
     const div = htmlText.querySelector('.mw-content-ltr');
-    const lists = div.querySelectorAll('ul');
-    const filteredLists = lists.slice(1, 79);
-    filteredLists.forEach((list) => {
-        const items = list.querySelectorAll('li');
-        items.forEach((item) => {
-            const dinoName = extractNameFromItem(item);
-            if (dinoName) {
-                names.add(dinoName);
-            }
+    if (div) {
+        const lists = div.querySelectorAll('ul');
+        lists.forEach((list) => {
+            const items = list.querySelectorAll('li');
+            items.forEach((item) => {
+                const dinoName = extractNameFromItem(item);
+                if (dinoName) {
+                    names.add(dinoName);
+                }
+            });
         });
-    });
+    }
     return Array.from(names);
 }
 

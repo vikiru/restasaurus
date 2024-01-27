@@ -17,8 +17,6 @@ describe('convertToSchema', function () {
     let createDataObjectStub;
 
     beforeEach(function () {
-        getClassificationAndDinosaurKeysStub = sinon.stub(schemaConvert, 'getClassificationAndDinosaurKeys');
-        createDinosaurObjectStub = sinon.stub(schemaConvert, 'createDinosaurObject');
         DinosaurSourceStub = sinon.stub(DinosaurSource, 'DinosaurSource');
         ClassificationInfoStub = sinon.stub(ClassificationInfo, 'ClassificationInfo');
         DinosaurImageStub = sinon.stub(DinosaurImage, 'DinosaurImage');
@@ -27,8 +25,6 @@ describe('convertToSchema', function () {
     });
 
     afterEach(function () {
-        getClassificationAndDinosaurKeysStub.restore();
-        createDinosaurObjectStub.restore();
         DinosaurSourceStub.restore();
         ClassificationInfoStub.restore();
         DinosaurImageStub.restore();
@@ -36,12 +32,35 @@ describe('convertToSchema', function () {
         createDataObjectStub.restore();
     });
 
+    describe('createSubObject', function () {
+        it('should return a sub-object with the specified keys', function () {
+            const obj = { a: 1, b: 2, c: 3 };
+            const keys = ['a', 'c'];
+            const result = schemaConvert.createSubObject(obj, keys);
+            expect(result).to.deep.equal({ a: 1, c: 3 });
+        });
+
+        it('should return an empty object if no keys match', function () {
+            const obj = { a: 1, b: 2, c: 3 };
+            const keys = ['d', 'e'];
+            const result = schemaConvert.createSubObject(obj, keys);
+            expect(result).to.deep.equal({});
+        });
+
+        it('should call Object.prototype.hasOwnProperty for each key', function () {
+            const obj = { a: 1, b: 2, c: 3 };
+            const keys = ['a', 'c'];
+            const hasOwnPropertyStub = sinon.stub(Object.prototype, 'hasOwnProperty');
+            schemaConvert.createSubObject(obj, keys);
+            expect(hasOwnPropertyStub.callCount).to.equal(keys.length);
+            hasOwnPropertyStub.restore();
+        });
+    });
+
     it('should convert data to defined schema', async function () {
         const mongooseData = new MongooseData('Tyrannosaurus');
         const expectedSchema = {};
 
-        getClassificationAndDinosaurKeysStub.returns([]);
-        createDinosaurObjectStub.returns({});
         DinosaurSourceStub.returns({});
         ClassificationInfoStub.returns({});
         DinosaurImageStub.returns({});
