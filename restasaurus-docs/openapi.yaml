@@ -1,6 +1,6 @@
 openapi: 3.1.0
 info:
-    title: RESTasaurus
+    title: OpenAPI Specification
     description: A RESTful API about dinosaurs built using Express, MongoDB and Mongoose.
     license:
         name: MIT
