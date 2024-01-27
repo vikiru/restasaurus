@@ -4,26 +4,28 @@
 // There are various equivalent ways to declare your Docusaurus config.
 // See: https://docusaurus.io/docs/api/docusaurus-config
 
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
-const lightCodeTheme = require('prism-react-renderer/themes/github');
+const { themes } = require('prism-react-renderer');
+
+const lightTheme = themes.github;
+const darkTheme = themes.dracula;
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
     title: 'RESTasaurus | API Documentation',
+    url: 'https://vikiru.github.io/',
+    baseUrl: '/restasaurus',
+
     tagline: 'A REST API about dinosaurs, built using Express, MongoDB and Mongoose.',
     favicon: 'public/favicon.ico',
     staticDirectories: ['public', 'static'],
     trailingSlash: true,
 
-    url: 'https://vikiru.github.io/',
-    // Set the /<baseUrl>/ pathname under which your site is served
-    // For GitHub pages deployment, it is often '/<projectName>/'
-    baseUrl: '/restasaurus',
-
     // GitHub pages deployment config.
     // If you aren't using GitHub pages, you don't need these.
     organizationName: 'vikiru',
     projectName: 'restasaurus',
+    // Set the /<baseUrl>/ pathname under which your site is served
+    // For GitHub pages deployment, it is often '/<projectName>/'
 
     onBrokenLinks: 'warn',
     onBrokenMarkdownLinks: 'warn',
@@ -36,29 +38,7 @@ const config = {
         locales: ['en'],
     },
 
-    plugins: [
-        [
-            require.resolve('@cmfcmf/docusaurus-search-local'),
-            {
-                indexDocs: true,
-                indexDocSidebarParentCategories: 0,
-                indexBlog: false,
-                indexPages: false,
-                language: 'en',
-                style: undefined,
-                maxSearchResults: 8,
-                lunr: {
-                    tokenizerSeparator: /[\s\-]+/,
-                    b: 0.75,
-                    k1: 1.2,
-                    titleBoost: 5,
-                    contentBoost: 1,
-                    tagsBoost: 3,
-                    parentCategoriesBoost: 2,
-                },
-            },
-        ],
-    ],
+    plugins: [],
 
     presets: [
         [
@@ -71,7 +51,7 @@ const config = {
                     breadcrumbs: true,
                 },
                 gtag: {
-                    trackingID: '', // TODO: replace this.
+                    trackingID: '123', // TODO: replace this.
                     anonymizeIP: true,
                 },
                 blog: false,
@@ -87,25 +67,13 @@ const config = {
         ({
             navbar: {
                 hideOnScroll: true,
-                title: 'restasaurus',
+                title: 'RESTasaurus',
                 items: [
                     {
                         type: 'doc',
                         docId: 'setup',
                         position: 'left',
                         label: 'Setup',
-                    },
-                    {
-                        type: 'doc',
-                        docId: 'commands/category-overview',
-                        position: 'left',
-                        label: 'Commands',
-                    },
-                    {
-                        type: 'doc',
-                        docId: 'commands/api-references',
-                        position: 'left',
-                        label: 'API References',
                     },
                 ],
             },
@@ -136,15 +104,37 @@ const config = {
                         ],
                     },
                     {
-                        title: 'Commands',
+                        title: 'API Endpoints',
                         items: [
+                            { label: 'All Endpoints', to: '/endpoints' },
                             {
-                                label: 'Category Overview',
-                                to: '/commands/category-overview',
+                                label: 'Dinosaur Endpoints',
+                                to: '/endpoints/dinosaur',
                             },
                             {
-                                label: 'API References',
-                                to: '/commands/api-references',
+                                label: 'Image Endpoints',
+                                to: '/endpoints/image',
+                            },
+                        ],
+                    },
+                    {
+                        title: 'Development',
+                        items: [
+                            {
+                                label: 'Tech Stack',
+                                to: '/stack',
+                            },
+                            {
+                                label: 'Running the API',
+                                to: '/run',
+                            },
+                            {
+                                label: 'Testing the API',
+                                to: '/test',
+                            },
+                            {
+                                label: 'Available Scripts',
+                                to: '/scripts',
                             },
                         ],
                     },
@@ -162,15 +152,13 @@ const config = {
                         ],
                     },
                 ],
-                copyright: `Copyright © ${new Date().getFullYear()} restasaurus, Visakan Kirubakaran. Built with Docusaurus.`,
+                copyright: `Copyright © ${new Date().getFullYear()} RESTasaurus, Visakan Kirubakaran. Built with Docusaurus.`,
             },
             prism: {
-                theme: lightCodeTheme,
-                darkTheme: darkCodeTheme,
+                theme: lightTheme,
+                darkTheme,
             },
         }),
 };
 
-module.exports = {
-    config,
-};
+export default config;
