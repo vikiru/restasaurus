@@ -36,3 +36,7 @@ h1 {
 p:not(#badges, #logo) {
     text-align: justify;
 }
+
+#badges a {
+    padding: 2px;
+}
