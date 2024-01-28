@@ -101,7 +101,7 @@ function handleTemporalRange(rowData) {
             return text.replace('Temporal range: ', '').trim();
         }
         if (text.includes('Ma') && !text.includes('Temporal range')) {
-            return `${temporalRange}, ${text}`;
+            return temporalRange === '' ? `${text}` : `${temporalRange}, ${text}`;
         }
         return temporalRange;
     }, '');
@@ -134,7 +134,7 @@ function handleRowData(rowData, data) {
  * @param {object} data - The data object to populate.
  */
 function handleHeaderData(headerData, rows, data) {
-    const keyword = headerData[0].structuredText.trim();
+    const keyword = headerData[0].structuredText.trim().replace(':', '');
     const index = rows.indexOf(rows) + 1;
     const headerRowData = rows[index].querySelectorAll('td');
     if (headerRowData.length > 0) {
@@ -202,4 +202,5 @@ module.exports = {
     handleOtherRows,
     handleHeaderData,
     handleTemporalRange,
+    handleRowData,
 };

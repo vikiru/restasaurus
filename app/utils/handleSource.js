@@ -1,6 +1,5 @@
 /**
  * Gets the Wikipedia URL from the page data.
- *
  * @param {object} pageData - The page data to get the URL from.
  * @returns {string} The Wikipedia URL.
  */
@@ -10,7 +9,6 @@ function getWikipediaURL(pageData) {
 
 /**
  * Gets the last revision from the page data.
- *
  * @param {object} pageData - The page data to get the last revision from.
  * @returns {string} The last revision.
  */
@@ -23,7 +21,6 @@ function getLastRevision(pageData) {
 
 /**
  * Gets the revision history URL for a dinosaur.
- *
  * @param {string} dinosaurName - The name of the dinosaur.
  * @returns {string} The revision history URL.
  */
@@ -33,7 +30,6 @@ function getRevisionHistoryURL(dinosaurName) {
 
 /**
  * Gets the license from the license information.
- *
  * @param {object} licenseInfo - The license information to get the license from.
  * @returns {string} The license.
  */
@@ -43,7 +39,6 @@ function getLicense(licenseInfo) {
 
 /**
  * Gets the license URL from the license information.
- *
  * @param {object} licenseInfo - The license information to get the license URL from.
  * @returns {string} The license URL.
  */
@@ -53,7 +48,6 @@ function getLicenseURL(licenseInfo) {
 
 /**
  * Gets the permalink for a dinosaur from the page data.
- *
  * @param {string} dinosaurName - The name of the dinosaur.
  * @param {object} pageData - The page data to get the permalink from.
  * @returns {string} The permalink.
@@ -67,7 +61,6 @@ function getPermalink(dinosaurName, pageData) {
 
 /**
  * Formats a date string.
- *
  * @param {string} dateString - The date string to format.
  * @returns {string} The formatted date string.
  */
@@ -81,7 +74,6 @@ function formatDate(dateString) {
 
 /**
  * Creates a citation from the source data.
- *
  * @param {object} sourceData - The source data to create a citation from.
  * @returns {string} The created citation.
  */
@@ -96,7 +88,6 @@ function createCitation(sourceData) {
 /**
  * Processes the retrieved source data from the Wikipedia api and updates the source information of the MongooseData
  * instance.
- *
  * @param {object} data - The data object to handle.
  * @param {string} dinosaurName - The name of the dinosaur.
  * @param {object} pageData - The page data to handle.
@@ -118,6 +109,7 @@ function handleSourceInformation(data, dinosaurName, pageData, licenseInfo) {
 
 module.exports = {
     handleSourceInformation,
+    createCitation,
     getWikipediaURL,
     getLastRevision,
     getRevisionHistoryURL,
