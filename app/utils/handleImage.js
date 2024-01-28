@@ -11,10 +11,10 @@ function handleAuthor(data, authorInfo) {
     if (authorInfo.startsWith('<a') || authorInfo.includes('href=')) {
         const authorAnchor = parser.parse(authorInfo);
         const { innerHTML, structuredText } = authorAnchor;
-        data.image.author = structuredText;
         const hrefRegex = /href="[/]*([\w]*[^"]*)/gim;
         const match = hrefRegex.exec(innerHTML);
         if (match && match[1]) {
+            data.image.author = structuredText;
             const url = match[1];
             let text = '';
             if (!url.includes('https://')) {
@@ -23,6 +23,9 @@ function handleAuthor(data, authorInfo) {
                 text = match[1];
             }
             data.image.authorURL = text;
+        } else {
+            data.image.author = '';
+            data.image.authorURL = '';
         }
     } else {
         data.image.author = authorInfo;
@@ -119,7 +122,7 @@ function processImageData(imageData, data) {
         data.image.description = getImageDescription(metaData);
         if ('Artist' in metaData) {
             data = handleAuthor(data, metaData.Artist.value);
-        } else if ('Credit' in metaData && !('Artist' in metaData)) {
+        } else if ('Credit' in metaData) {
             data = handleAuthor(data, metaData.Credit.value);
         }
         data.image.imageURL = imageInfo.descriptionurl;
