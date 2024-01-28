@@ -23,19 +23,27 @@ function findFeature(pageData, featureRegex, replacements) {
         const featureCount = {};
         const filteredText = pageText.map((text) => text.trim()).filter((text) => featureRegex.test(text));
         filteredText.forEach((text) => {
-            const match = featureRegex.exec(text);
-            if (match) {
-                let featureType = match[0].toLowerCase();
-                replacements.forEach(([original, replacement]) => {
-                    featureType = featureType.replace(original, replacement);
+            const matches = text.match(featureRegex);
+            if (matches) {
+                matches.forEach((match) => {
+                    let featureType = match.toLowerCase();
+                    replacements.forEach(([original, replacement]) => {
+                        featureType = featureType.replace(original, replacement);
+                    });
+                    featureCount[featureType] = (featureCount[featureType] || 0) + 1;
                 });
-                featureCount[featureType] = (featureCount[featureType] || 0) + 1;
             }
         });
+        let maxCountKey = '';
+        let maxCount = 0;
+
         if (Object.keys(featureCount).length > 0) {
-            const maxCountKey = Object.entries(featureCount).reduce((maxEntry, currentEntry) => {
-                return currentEntry[1] > maxEntry[1] ? currentEntry : maxEntry;
-            })[0];
+            for (const [key, count] of Object.entries(featureCount)) {
+                if (count > maxCount) {
+                    maxCount = count;
+                    maxCountKey = key;
+                }
+            }
             feature = maxCountKey;
         }
     }
