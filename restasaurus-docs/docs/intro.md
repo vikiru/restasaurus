@@ -43,9 +43,9 @@ title: 📖 Introduction
 
 :::info
 
-The information within the API is taken directly from Wikipedia, as is and may have been modified since the last time it was retrieved. All images and text belong to their respective authors and attribution is provided accordingly for both.
+The information within the API is taken directly from Wikipedia via its API, as is and may have been modified since the last time it was retrieved. All images and text belong to their respective authors and attribution is provided accordingly for both. Furthermore, after the data is retrieved, it undergoes processing to be transformed into a custom JSON object, referred to as [MongooseData](./app/models/MongooseData).
 
-> Please consider checking out the [models](./app/models/) directory to get an idea of the information being provided by the API. The models to take note of are:
+> Please consider checking out the [models](./app/models/) directory to get an idea of the information being provided by the API. The schemas used within the MongoDB database can be seen below:
 >
 > -   [Dinosaur](./app/models/Dinosaur.js)
 > -   [ClassificationInfo](./app/models/ClassificationInfo.js)

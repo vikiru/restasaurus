@@ -31,3 +31,6 @@ Testing:
 -   [Mocha](https://mochajs.org/)
 -   [Chai](https://www.chaijs.com/)
 -   [Sinon](https://sinonjs.org/)
+-   [Proxyquire](https://github.com/thlorenz/proxyquire)
+-   [Istanbul (nyc)](https://github.com/istanbuljs/nyc)
+-   [istanbul-badges-readme](https://github.com/the-bugging/istanbul-badges-readme)
