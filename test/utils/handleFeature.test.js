@@ -3,12 +3,29 @@ const { parse } = require('node-html-parser');
 const sinon = require('sinon');
 
 const { MongooseData } = require('../../app/models/MongooseData');
-const handleFeature = require('../../app/utils/handleFeature');
 
 const { expect } = chai;
 
 describe('handleFeature', function () {
+    describe('findFeature', function () {
+        afterEach(function () {
+            sinon.restore();
+        });
+
+        it('should handle case where there are no matches', function () {
+            const htmlData = '<p>This dinosaur was a bipedal carnivore\n</p>';
+            const root = parse(htmlData);
+            const matchStub = sinon.stub(String.prototype, 'match');
+            const dietRegex = /(\b\w*(ivore|ivorous))s?\b/gim;
+            matchStub.returns(null);
+            const handleFeature = require('../../app/utils/handleFeature');
+            const feature = handleFeature.findFeature(root, dietRegex, []);
+            expect(feature).to.be.equal('');
+        });
+    });
+
     describe('findDescription', function () {
+        const handleFeature = require('../../app/utils/handleFeature');
         it('should return the structuredText of the first paragraph that includes the name', function () {
             const htmlData = '<p>Some text</p><p>Text with name</p>';
             const root = parse(htmlData);
@@ -27,6 +44,7 @@ describe('handleFeature', function () {
     });
 
     describe('searchClassification', function () {
+        const handleFeature = require('../../app/utils/handleFeature');
         it('should set diet and locomotionType when value is in defaults', function () {
             const items = [{ value: 'Ankylosauridae' }];
             const defaults = {
@@ -76,6 +94,7 @@ describe('handleFeature', function () {
     });
 
     describe('retrieveDietAndLocomotionType', function () {
+        const handleFeature = require('../../app/utils/handleFeature');
         let data;
         beforeEach(function () {
             data = new MongooseData('Dino');
@@ -143,6 +162,7 @@ describe('handleFeature', function () {
     });
 
     describe('findMissingFeatures', function () {
+        const handleFeature = require('../../app/utils/handleFeature');
         let data;
         beforeEach(function () {
             data = new MongooseData('Dino');
