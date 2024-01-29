@@ -1,6 +1,7 @@
 const { expect } = require('chai');
-const sinon = require('sinon');
 const proxyquire = require('proxyquire');
+const sinon = require('sinon');
+
 const logger = require('../../app/config/logger');
 
 describe('retrieveData', function () {

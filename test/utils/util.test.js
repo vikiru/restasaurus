@@ -6,7 +6,6 @@ describe('Utility Functions - Functionality Tests', function () {
     require('./handleFeature.test');
     require('./handleImage.test');
     require('./handleSource.test');
-    require('./retrieveHTMLContent.test');
     require('./retrieveAllDinoNames.test');
     require('./writeData.test');
 });

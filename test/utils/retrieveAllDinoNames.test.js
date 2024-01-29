@@ -2,8 +2,6 @@ const chai = require('chai');
 const proxyquire = require('proxyquire');
 const sinon = require('sinon');
 
-const { extractDinoNames } = require('../../app/utils/retrieveAllDinoNames');
-
 const { expect } = chai;
 
 describe('retrieveAllDinoNames', function () {

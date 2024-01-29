@@ -156,28 +156,29 @@ async function constructDinoNames() {
  * The `urlHandler` function fetches data from multiple URLs and returns the collected data.
  *
  * @param urls - An array of URLs from which data needs to be fetched.
+ * @param requestDelay
  * @returns An object with a property called "data". The value of "data" is an array that contains the fetched data from
  *   the URLs.
  */
-async function urlHandler(urls) {
+async function urlHandler(urls, requestDelay) {
     const data = [];
     const total = urls.length;
     for (const url of urls) {
         const index = urls.indexOf(url) + 1;
-        logger.info(`Fetching data from URL (${index} of ${total})`);
+        logger.info(`Fetching data from URL (${index} of ${total}): ${url}`);
         const urlResult = await fetchData(url);
-        if ('query' in urlResult && 'pages' in urlResult.query) {
+        if (urlResult && 'query' in urlResult && 'pages' in urlResult.query) {
             const pageData = Object.values(urlResult.query.pages);
             const rightsInfo = urlResult.query.rightsinfo;
             for (const page of pageData) {
                 page.rightsInfo = rightsInfo;
             }
             data.push(pageData);
-        } else if ('parse' in urlResult && 'text' in urlResult.parse) {
+        } else if (urlResult && 'parse' in urlResult && 'text' in urlResult.parse) {
             const pageHTML = urlResult.parse.text;
             data.push(pageHTML);
         }
-        await delay(REQUEST_DELAY);
+        await requestDelay;
     }
     const result = { data: data.flat() };
     return result;
@@ -191,7 +192,7 @@ async function urlHandler(urls) {
  */
 async function retrievePageData(names) {
     const urls = urlConstructor(names, 'dino');
-    const { data } = await urlHandler(urls);
+    const { data } = await urlHandler(urls, delay(REQUEST_DELAY));
     return data;
 }
 
@@ -254,9 +255,17 @@ async function retrieveAndFilterDinoData() {
 
 module.exports = {
     delay,
+    constructDinoNames,
+    constructImageQuery,
+    constructHTMLQuery,
+    constructPageQuery,
+    handleSinglePage,
+    handleMultiplePages,
     urlConstructor,
     urlHandler,
     getQueryByType,
+    retrievePageData,
     retrieveAndFilterDinoData,
+    filterDinoNames,
     readJSONFile,
 };

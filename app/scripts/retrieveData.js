@@ -12,9 +12,10 @@ const {
 } = require('../utils/handleFeature');
 const { processImageData } = require('../utils/handleImage');
 const { handleSourceInformation } = require('../utils/handleSource');
+const { REQUEST_DELAY } = require('../utils/helperConstants');
 const { writeData } = require('../utils/writeData');
 
-const { urlConstructor, urlHandler, retrieveAndFilterDinoData, readJSONFile } = require('./constructDinoNames');
+const { urlConstructor, urlHandler, retrieveAndFilterDinoData, readJSONFile, delay } = require('./constructDinoNames');
 
 /**
  * The function `retrieveImageData` attempts to retrieve image data from a JSON file, and if that fails, it retrieves
@@ -37,7 +38,7 @@ async function retrieveImageData(names) {
         logger.info('Starting to retrieve image data from Wikipedia API.');
         const startTime = process.hrtime();
 
-        const { data } = await urlHandler(urls);
+        const { data } = await urlHandler(urls, delay(REQUEST_DELAY));
         const endTime = process.hrtime(startTime);
         const timeInSeconds = endTime[0] + endTime[1] / 1e9;
         const formattedSeconds = timeInSeconds.toFixed(2);
@@ -72,7 +73,7 @@ async function retrieveHTMLData(names) {
         logger.info('Starting to retrieve HTML data from Wikipedia API.');
         const startTime = process.hrtime();
 
-        const { data } = await urlHandler(urls);
+        const { data } = await urlHandler(urls, delay(REQUEST_DELAY));
         const endTime = process.hrtime(startTime);
         const timeInSeconds = endTime[0] + endTime[1] / 1e9;
         const formattedSeconds = timeInSeconds.toFixed(2);
