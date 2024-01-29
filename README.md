@@ -1,6 +1,6 @@
-<h1 align="center">
+<p align="center">
     <img src="./logo.png"/>
-</h1>
+</p>
 
 <p align="center">
  <a href="https://github.com/vikiru/restasaurus/blob/main/LICENSE">
@@ -191,6 +191,10 @@ npm start
 ```
 
 ## 🔍 Testing
+
+| Statements                                                                                 | Branches                                                                               | Functions                                                                              | Lines                                                                            |
+| ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| ![Statements](https://img.shields.io/badge/statements-99.85%25-brightgreen.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-98.94%25-brightgreen.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-100%25-brightgreen.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-99.84%25-brightgreen.svg?style=flat) |
 
 The comprehensive suite of tests for this project is housed within the [test](./test/) directory. These tests are primarily designed to verify the functionality and reliability of the API and additionally, the scripts used to retrieve the information.
 

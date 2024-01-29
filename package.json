@@ -9,11 +9,12 @@
 	"scripts": {
 		"start": "node .",
 		"dev": "cross-env NODE_ENV=development nodemon ./app/**/*.js",
-		"test": "cross-env NODE_ENV=testing nyc --reporter=html --reporter=text mocha test/test.js && open-cli ./coverage/index.html",
+		"test": "cross-env NODE_ENV=testing nyc --reporter=json-summary --reporter=text mocha test/test.js && open-cli ./coverage/index.html",
 		"lint": "eslint ./app/**/*.js --fix-dry-run",
 		"prettier": "eslint --fix && prettier --write .",
 		"retrieveData": "node ./app/scripts/constructDinoNames.js && node ./app/scripts/retrieveData.js",
-		"postData": "node ./app/scripts/postData.js"
+		"postData": "node ./app/scripts/postData.js",
+		"make-badges": "istanbul-badges-readme"
 	},
 	"engines": {
 		"node": ">=16.9"
@@ -66,6 +67,7 @@
 		"eslint-plugin-security": "^2.1.0",
 		"eslint-plugin-sort-exports": "^0.8.0",
 		"esm": "^3.2.25",
+		"istanbul-badges-readme": "^1.8.5",
 		"mocha": "^10.2.0",
 		"nodemon": "^3.0.3",
 		"nyc": "^15.1.0",
