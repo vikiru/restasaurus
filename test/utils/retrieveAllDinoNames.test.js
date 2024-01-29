@@ -7,10 +7,13 @@ const { expect } = chai;
 describe('retrieveAllDinoNames', function () {
     let fetchStub;
     let retrieveAllDinoNames;
+    let logger;
     const url =
         'https://en.wikipedia.org/w/api.php?action=parse&page=List_of_dinosaur_genera&prop=text&formatversion=2&format=json';
 
     beforeEach(function () {
+        logger = require('../../app/config/logger');
+        sinon.stub(logger.logger, 'info').resolves();
         fetchStub = sinon.stub(global, 'fetch');
     });
 
