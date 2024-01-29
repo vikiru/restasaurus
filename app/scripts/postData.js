@@ -3,7 +3,7 @@ const mongoDB = require('../data/mongoData');
 const { pushDinosaurToDB } = require('../services/index');
 const { convertToSchema } = require('../utils/convertToSchema');
 
-const dinosaurData = require('./dinosaurData.json');
+const { readJSONFile } = require('./constructDinoNames');
 
 /**
  * Asynchronously saves all dinosaur data to a MongoDB database. This function connects to a MongoDB database, logs the
@@ -15,6 +15,8 @@ const dinosaurData = require('./dinosaurData.json');
  *   database connection has been closed.
  */
 async function postAllDinosaurs() {
+    const dinosaurData = await readJSONFile('./dinosaurData.json');
+
     await mongoDB.connect();
     logger.info('Starting to save dinosaur data to MongoDB database.');
     const startTime = process.hrtime();
@@ -32,6 +34,12 @@ async function postAllDinosaurs() {
 
     await mongoDB.disconnect();
 }
+
+postAllDinosaurs();
+
+module.exports = {
+    postAllDinosaurs,
+};
 
 postAllDinosaurs();
 

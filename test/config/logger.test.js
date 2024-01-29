@@ -1,15 +1,24 @@
-const sinon = require('sinon');
+const fs = require('fs');
+
 const { expect } = require('chai');
+const sinon = require('sinon');
 
 describe('logger', function () {
     let sandbox;
-    beforeEach(() => {
+    beforeEach(function () {
         delete require.cache[require.resolve('../../app/config/logger')];
         sandbox = sinon.createSandbox();
     });
 
-    afterEach(() => {
+    afterEach(function () {
         sandbox.restore();
+    });
+
+    it('should create directory if not exist', function () {
+        sinon.stub(fs, 'existsSync').returns(false);
+        sinon.stub(fs, 'mkdirSync');
+        const { logger } = require('../../app/config/logger');
+        expect(fs.mkdirSync.calledOnce).to.be.true;
     });
 
     it('should call infoLogger.info', function () {
