@@ -38,7 +38,7 @@ function getRevisionHistoryURL(dinosaurName) {
  * @returns {string} The license.
  */
 function getLicense(licenseInfo) {
-    return licenseInfo.text || '';
+    return licenseInfo && licenseInfo.text ? licenseInfo.text : '';
 }
 
 /**
@@ -48,7 +48,7 @@ function getLicense(licenseInfo) {
  * @returns {string} The license URL.
  */
 function getLicenseURL(licenseInfo) {
-    return licenseInfo.url || '';
+    return licenseInfo && licenseInfo.url ? licenseInfo.url : '';
 }
 
 /**

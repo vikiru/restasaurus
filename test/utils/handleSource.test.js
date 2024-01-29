@@ -6,6 +6,34 @@ const { expect } = chai;
 const handleSource = require('../../app/utils/handleSource');
 
 describe('handleSource', function () {
+    describe('getLicense Tests', function () {
+        it('should return the correct license text', function () {
+            const licenseInfo = { text: 'MIT' };
+            const result = handleSource.getLicense(licenseInfo);
+            expect(result).to.equal('MIT');
+        });
+
+        it('should return an empty string if license text is not provided', function () {
+            const licenseInfo = {};
+            const result = handleSource.getLicense(licenseInfo);
+            expect(result).to.equal('');
+        });
+    });
+
+    describe('getLicenseURL Tests', function () {
+        it('should return the correct license URL', function () {
+            const licenseInfo = { url: 'https://license-url.com' };
+            const result = handleSource.getLicenseURL(licenseInfo);
+            expect(result).to.equal('https://license-url.com');
+        });
+
+        it('should return an empty string if license URL is not provided', function () {
+            const licenseInfo = {};
+            const result = handleSource.getLicenseURL(licenseInfo);
+            expect(result).to.equal('');
+        });
+    });
+
     describe('getLastRevision', function () {
         it('should return timestamp when revisions exist', function () {
             const pageData = { revisions: [{ timestamp: '2022-01-01T00:00:00Z' }] };

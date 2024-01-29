@@ -145,7 +145,6 @@ async function processData(pageData, imageData, htmlData) {
     processHTMLData(parsedHTML, mongooseData);
     processPageData(pageData, parsedHTML, mongooseData);
     processImageData(imageData, mongooseData);
-    console.log(mongooseData);
     return mongooseData;
 }
 
@@ -168,7 +167,6 @@ async function retrieveData() {
         result.imageData = await readJSONFile('./imageData.json');
         result.htmlData = await readJSONFile('./htmlData.json');
         logger.info('Successfully read data from JSON files.');
-        console.log('RESULT AT TRY BRANCH', result);
         return result;
     } catch (error) {
         logger.error(`Read file failed: ${error.message}\nProceeding to retrieve data from Wikipedia API.`);
@@ -183,7 +181,6 @@ async function retrieveData() {
         result.pageData = data;
         result.imageData = await retrieveImageData(imageNames);
         result.htmlData = await retrieveHTMLData(filteredNames);
-        console.log('RESULT AT RETRIEVE ERROR BRANCH', result);
         return result;
     }
 }
@@ -199,12 +196,8 @@ async function processAllData() {
     logger.info('Starting to process all retrieved data. This may take some time, please wait.');
     const startTime = process.hrtime();
 
-    console.log('PAGE HERE: ', pageData);
     const promises = pageData.map((data, index) => processData(data, imageData[index], htmlData[index]));
-    console.log(promises);
     const result = await Promise.all(promises);
-
-    console.log(result);
 
     const endTime = process.hrtime(startTime);
     const timeInSeconds = endTime[0] + endTime[1] / 1e9;
