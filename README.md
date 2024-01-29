@@ -1,6 +1,6 @@
-<h1 align="center">
-    <img src="./logo.png"/>
-</h1>
+<p align="center">
+    <img src="./logo.png" alt="RESTasaurus Logo"/>
+</p>
 
 <p align="center">
  <a href="https://github.com/vikiru/restasaurus/blob/main/LICENSE">
@@ -34,7 +34,7 @@
 **RESTasaurus** is a RESTful API, leveraging Express, MongoDB, and Mongoose to deliver comprehensive data on over 400 dinosaurs!
 
 > [!IMPORTANT]
-> The information within the API is taken directly from Wikipedia, as is and may have been modified since the last time it was retrieved. All images and text belong to their respective authors and attribution is provided accordingly for both.
+> The information within the API is taken directly from Wikipedia via its API, as is and may have been modified since the last time it was retrieved. All images and text belong to their respective authors and attribution is provided accordingly for both.
 >
 > Please consider checking out the [models](./app/models/) directory to get an idea of the information being provided by the API. The models to take note of are:
 >
@@ -74,7 +74,7 @@
 | getRandomImages      | /api/v1/images/random/        | `count`                       | Returns a random number of images. Minmum of 1 and a maximum of 10         |
 
 > [!NOTE]
-> The API is currently configured to support only GET requests.
+> The API is currently configured to support only GET requests and responses from the API are only in `json` format.
 
 ## 🛠️ Tech Stack
 
@@ -104,6 +104,9 @@ Testing:
 -   [Mocha](https://mochajs.org/)
 -   [Chai](https://www.chaijs.com/)
 -   [Sinon](https://sinonjs.org/)
+-   [Proxyquire](https://github.com/thlorenz/proxyquire)
+-   [Istanbul (nyc)](https://github.com/istanbuljs/nyc)
+-   [istanbul-badges-readme](https://github.com/the-bugging/istanbul-badges-readme)
 
 ## 📝 Prerequisites
 
@@ -192,6 +195,10 @@ npm start
 
 ## 🔍 Testing
 
+| Statements                                                                               | Branches                                                                             | Functions                                                                              | Lines                                                                          |
+| ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| ![Statements](https://img.shields.io/badge/statements-100%25-brightgreen.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-100%25-brightgreen.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-100%25-brightgreen.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-100%25-brightgreen.svg?style=flat) |
+
 The comprehensive suite of tests for this project is housed within the [test](./test/) directory. These tests are primarily designed to verify the functionality and reliability of the API and additionally, the scripts used to retrieve the information.
 
 The tests can be run with the following command:
@@ -226,7 +233,7 @@ npm test
 npm run lint
 ```
 
-1. Fix all ESLint issues then format the files with [Prettier](https://prettier.io/).
+5. Fix all ESLint issues then format the files with [Prettier](https://prettier.io/).
 
 ```bash
 npm run prettier
@@ -244,8 +251,20 @@ npm run retrieveData
 npm run postData
 ```
 
+8. Create test coverage shields badges for README using [istanbul-badges-readme](https://github.com/the-bugging/istanbul-badges-readme)
+
+```bash
+npm run make-badges
+```
+
 ## ✨ Acknowledgements
 
+-   [Docusaurus](https://docusaurus.io/)
+-   [Redocusaurus](https://github.com/rohit-gohri/redocusaurus)
+-   [GitHub Pages](https://pages.github.com/)
+-   [Wikipedia](https://en.wikipedia.org/wiki/Main_Page)
+-   [Swagger Editor](https://swagger.io/tools/swagger-editor/)
+-   [Swagger Documentation](https://swagger.io/specification/)
 -   [Chai Documentation](https://www.chaijs.com/)
 -   [Express Documentation](https://expressjs.com/en/4x/api.html)
 -   [Mocha Documentation](https://mochajs.org/)

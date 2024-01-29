@@ -1,11 +1,11 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
 
-const { constructUrls } = require('../../app/utils/handleSetup');
+const { urlConstructor } = require('../../app/scripts/constructDinoNames');
 
 describe('fetchData', function () {
     let fetchStub;
-    const urls = constructUrls(['Stegosaurus']);
+    const urls = urlConstructor(['Stegosaurus']);
     const url = urls[0];
     const expectedData = { key: 'value' };
 

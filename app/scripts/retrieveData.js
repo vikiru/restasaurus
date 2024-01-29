@@ -12,9 +12,10 @@ const {
 } = require('../utils/handleFeature');
 const { processImageData } = require('../utils/handleImage');
 const { handleSourceInformation } = require('../utils/handleSource');
+const { REQUEST_DELAY } = require('../utils/helperConstants');
 const { writeData } = require('../utils/writeData');
 
-const { urlConstructor, urlHandler, retrieveAndFilterDinoData, readJSONFile } = require('./constructDinoNames');
+const { urlConstructor, urlHandler, retrieveAndFilterDinoData, readJSONFile, delay } = require('./constructDinoNames');
 
 /**
  * The function `retrieveImageData` attempts to retrieve image data from a JSON file, and if that fails, it retrieves
@@ -37,7 +38,7 @@ async function retrieveImageData(names) {
         logger.info('Starting to retrieve image data from Wikipedia API.');
         const startTime = process.hrtime();
 
-        const { data } = await urlHandler(urls);
+        const { data } = await urlHandler(urls, delay(REQUEST_DELAY));
         const endTime = process.hrtime(startTime);
         const timeInSeconds = endTime[0] + endTime[1] / 1e9;
         const formattedSeconds = timeInSeconds.toFixed(2);
@@ -72,7 +73,7 @@ async function retrieveHTMLData(names) {
         logger.info('Starting to retrieve HTML data from Wikipedia API.');
         const startTime = process.hrtime();
 
-        const { data } = await urlHandler(urls);
+        const { data } = await urlHandler(urls, delay(REQUEST_DELAY));
         const endTime = process.hrtime(startTime);
         const timeInSeconds = endTime[0] + endTime[1] / 1e9;
         const formattedSeconds = timeInSeconds.toFixed(2);
@@ -87,13 +88,14 @@ async function retrieveHTMLData(names) {
 }
 
 /**
- * The function processes HTML data and Mongoose data to retrieve box data, diet and locomotion type, and find missing
- * features.
+ * The function processes HTML data and updates a mongooseData object with box data, diet and locomotion type, and
+ * missing features.
  *
- * @param htmlData - The HTML data that contains information about the mongoose.
- * @param mongooseData - The `mongooseData` parameter is likely an object or an array that contains data retrieved from
- *   a MongoDB database using Mongoose. It could be used to store and manipulate data related to mongoose objects or
- *   documents.
+ * @param htmlData - The `htmlData` parameter is the data retrieved from an HTML page. It could be the raw HTML content
+ *   or a parsed representation of the HTML structure.
+ * @param mongooseData - The `mongooseData` parameter is an object that contains data related to a mongoose. It is
+ *   likely being used to store information about the mongoose's box, diet, locomotion type, and other features.
+ * @returns The updated mongooseData.
  */
 function processHTMLData(htmlData, mongooseData) {
     retrieveBoxData(htmlData, mongooseData);
@@ -155,9 +157,9 @@ async function processData(pageData, imageData, htmlData) {
  */
 async function retrieveData() {
     const result = {
-        pageData: undefined,
-        htmlData: undefined,
-        imageData: undefined,
+        pageData: [],
+        htmlData: [],
+        imageData: [],
     };
     try {
         logger.info('Attempting to read page, image and html data from JSON files.');
@@ -194,10 +196,7 @@ async function processAllData() {
     logger.info('Starting to process all retrieved data. This may take some time, please wait.');
     const startTime = process.hrtime();
 
-    const promises = [];
-    for (let index = 0; index < pageData.length; index++) {
-        promises.push(processData(pageData[index], imageData[index], htmlData[index]));
-    }
+    const promises = pageData.map((data, index) => processData(data, imageData[index], htmlData[index]));
     const result = await Promise.all(promises);
 
     const endTime = process.hrtime(startTime);
