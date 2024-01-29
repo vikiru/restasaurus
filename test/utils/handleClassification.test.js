@@ -299,15 +299,19 @@ describe('handleClassification', function () {
         });
 
         it('should handle infoBox when it exists', function () {
-            html = parser.parse('<table class="infobox"><tr><td>Row 1</td></tr><tr><td>Row 2</td></tr></table>');
-            const result = handleClassification.retrieveBoxData(html, data);
-            expect(result).to.equal(data);
+            html = parser.parse(
+                '<table class="infobox"><tr>Dino</tr><tr><td>Row 1</td></tr><tr><td>Row 2</td></tr></table>',
+            );
+            handleClassification.retrieveBoxData(html, data);
+            expect(data.name).to.equal('Dino');
+            expect(data.classificationInfo.domain).to.equal('');
         });
 
         it('should not handle infobox if it does not exist', function () {
             html = parser.parse('<table class="other"><td>No infoBox here</td></table>');
-            const result = handleClassification.retrieveBoxData(html, data);
-            expect(result).to.equal(data);
+            handleClassification.retrieveBoxData(html, data);
+            expect(data.name).to.equal('Dino');
+            expect(data.classificationInfo.domain).to.equal('');
         });
     });
 });

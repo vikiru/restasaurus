@@ -153,12 +153,12 @@ async function constructDinoNames() {
 }
 
 /**
- * The `urlHandler` function fetches data from multiple URLs and returns the collected data.
+ * The `urlHandler` function fetches data from multiple URLs, processes the data, and returns the result.
  *
  * @param urls - An array of URLs from which data needs to be fetched.
- * @param requestDelay
- * @returns An object with a property called "data". The value of "data" is an array that contains the fetched data from
- *   the URLs.
+ * @param requestDelay - The `requestDelay` parameter is the delay between each request made to fetch data from the
+ *   URLs.
+ * @returns An object with a property called "data" which contains the fetched data from the URLs.
  */
 async function urlHandler(urls, requestDelay) {
     const data = [];

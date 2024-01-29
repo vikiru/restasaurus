@@ -190,7 +190,6 @@ function retrieveBoxData(html, data) {
         handleFirstRow(rows[0], data);
         handleOtherRows(rows, data);
     }
-    return data;
 }
 
 module.exports = {

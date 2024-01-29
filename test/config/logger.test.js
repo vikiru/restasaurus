@@ -1,14 +1,14 @@
-const sinon = require('sinon');
 const { expect } = require('chai');
+const sinon = require('sinon');
 
 describe('logger', function () {
     let sandbox;
-    beforeEach(() => {
+    beforeEach(function () {
         delete require.cache[require.resolve('../../app/config/logger')];
         sandbox = sinon.createSandbox();
     });
 
-    afterEach(() => {
+    afterEach(function () {
         sandbox.restore();
     });
 

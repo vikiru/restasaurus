@@ -43,6 +43,7 @@
             }
         ],
         "jsdoc/require-param-type": "off",
+        "jsdoc/require-returns": "off",
         "jsdoc/require-returns-check": "off",
         "jsdoc/require-returns-type": "off",
         "max-depth": ["warn", 4],

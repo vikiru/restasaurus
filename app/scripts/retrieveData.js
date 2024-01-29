@@ -88,13 +88,14 @@ async function retrieveHTMLData(names) {
 }
 
 /**
- * The function processes HTML data and Mongoose data to retrieve box data, diet and locomotion type, and find missing
- * features.
+ * The function processes HTML data and updates a mongooseData object with box data, diet and locomotion type, and
+ * missing features.
  *
- * @param htmlData - The HTML data that contains information about the mongoose.
- * @param mongooseData - The `mongooseData` parameter is likely an object or an array that contains data retrieved from
- *   a MongoDB database using Mongoose. It could be used to store and manipulate data related to mongoose objects or
- *   documents.
+ * @param htmlData - The `htmlData` parameter is the data retrieved from an HTML page. It could be the raw HTML content
+ *   or a parsed representation of the HTML structure.
+ * @param mongooseData - The `mongooseData` parameter is an object that contains data related to a mongoose. It is
+ *   likely being used to store information about the mongoose's box, diet, locomotion type, and other features.
+ * @returns The updated mongooseData.
  */
 function processHTMLData(htmlData, mongooseData) {
     retrieveBoxData(htmlData, mongooseData);
@@ -144,6 +145,7 @@ async function processData(pageData, imageData, htmlData) {
     processHTMLData(parsedHTML, mongooseData);
     processPageData(pageData, parsedHTML, mongooseData);
     processImageData(imageData, mongooseData);
+    console.log(mongooseData);
     return mongooseData;
 }
 
@@ -156,9 +158,9 @@ async function processData(pageData, imageData, htmlData) {
  */
 async function retrieveData() {
     const result = {
-        pageData: undefined,
-        htmlData: undefined,
-        imageData: undefined,
+        pageData: [],
+        htmlData: [],
+        imageData: [],
     };
     try {
         logger.info('Attempting to read page, image and html data from JSON files.');
@@ -166,6 +168,7 @@ async function retrieveData() {
         result.imageData = await readJSONFile('./imageData.json');
         result.htmlData = await readJSONFile('./htmlData.json');
         logger.info('Successfully read data from JSON files.');
+        console.log('RESULT AT TRY BRANCH', result);
         return result;
     } catch (error) {
         logger.error(`Read file failed: ${error.message}\nProceeding to retrieve data from Wikipedia API.`);
@@ -180,6 +183,7 @@ async function retrieveData() {
         result.pageData = data;
         result.imageData = await retrieveImageData(imageNames);
         result.htmlData = await retrieveHTMLData(filteredNames);
+        console.log('RESULT AT RETRIEVE ERROR BRANCH', result);
         return result;
     }
 }
@@ -195,11 +199,12 @@ async function processAllData() {
     logger.info('Starting to process all retrieved data. This may take some time, please wait.');
     const startTime = process.hrtime();
 
-    const promises = [];
-    for (let index = 0; index < pageData.length; index++) {
-        promises.push(processData(pageData[index], imageData[index], htmlData[index]));
-    }
+    console.log('PAGE HERE: ', pageData);
+    const promises = pageData.map((data, index) => processData(data, imageData[index], htmlData[index]));
+    console.log(promises);
     const result = await Promise.all(promises);
+
+    console.log(result);
 
     const endTime = process.hrtime(startTime);
     const timeInSeconds = endTime[0] + endTime[1] / 1e9;

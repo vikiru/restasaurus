@@ -1,7 +1,7 @@
 {
 	"name": "restasaurus",
 	"version": "1.0.0",
-	"description": "A dinosaur REST API built using Express.js.",
+	"description": "A dinosaur REST API built using Express, MongoDB and Mongoose with comprehensive data for almost 1200 dinosaurs.",
 	"private": true,
 	"author": "Visakan Kirubakaran",
 	"license": "MIT",
@@ -9,8 +9,7 @@
 	"scripts": {
 		"start": "node .",
 		"dev": "cross-env NODE_ENV=development nodemon ./app/**/*.js",
-		"test": "cross-env NODE_ENV=testing nyc --reporter=json-summary --reporter=text mocha test/test.js && open-cli ./coverage/index.html",
-		"lint": "eslint ./app/**/*.js --fix-dry-run",
+		"test": "cross-env NODE_ENV=testing nyc --reporter=json-summary --reporter=html --reporter=text mocha test/test.js && open-cli ./coverage/index.html",		"lint": "eslint ./app/**/*.js --fix-dry-run",
 		"prettier": "eslint --fix && prettier --write .",
 		"retrieveData": "node ./app/scripts/constructDinoNames.js && node ./app/scripts/retrieveData.js",
 		"postData": "node ./app/scripts/postData.js",
