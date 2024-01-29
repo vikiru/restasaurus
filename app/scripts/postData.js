@@ -40,9 +40,3 @@ postAllDinosaurs();
 module.exports = {
     postAllDinosaurs,
 };
-
-postAllDinosaurs();
-
-module.exports = {
-    postAllDinosaurs,
-};
