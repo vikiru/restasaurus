@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 
 const { logger } = require('../config/logger');
 const { fetchData } = require('../utils/fetchData');
@@ -221,11 +222,13 @@ async function filterDinoNames(data) {
  * The function reads a JSON file asynchronously and returns the parsed data.
  *
  * @param filePath - The `filePath` parameter is a string that represents the path to the JSON file that you want to
- *   read. It should include the file name and extension.
+ *   read.
  * @returns A promise that resolves to the parsed JSON data from the file.
  */
 async function readJSONFile(filePath) {
-    const data = await fs.promises.readFile(filePath, 'utf8');
+    const scriptsDir = path.resolve(__dirname, '../scripts');
+    const resolvedPath = path.resolve(scriptsDir, filePath);
+    const data = await fs.promises.readFile(resolvedPath, 'utf8');
     return JSON.parse(data);
 }
 
