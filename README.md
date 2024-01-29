@@ -106,7 +106,7 @@ Testing:
 -   [Sinon](https://sinonjs.org/)
 -   [Proxyquire](https://github.com/thlorenz/proxyquire)
 -   [Istanbul (nyc)](https://github.com/istanbuljs/nyc)
--   [istanbul-readme-badges](https://github.com/the-bugging/istanbul-badges-readme)
+-   [istanbul-badges-readme](https://github.com/the-bugging/istanbul-badges-readme)
 
 ## 📝 Prerequisites
 
@@ -251,7 +251,7 @@ npm run retrieveData
 npm run postData
 ```
 
-8. Create test coverage shields badges using [istanbul-readme-badges](https://github.com/the-bugging/istanbul-badges-readme)
+8. Create test coverage shields badges for README using [istanbul-badges-readme](https://github.com/the-bugging/istanbul-badges-readme)
 
 ```bash
 npm run make-badges
@@ -259,6 +259,12 @@ npm run make-badges
 
 ## ✨ Acknowledgements
 
+-   [Docusaurus](https://docusaurus.io/)
+-   [Redocusaurus](https://github.com/rohit-gohri/redocusaurus)
+-   [GitHub Pages](https://pages.github.com/)
+-   [Wikipedia](https://en.wikipedia.org/wiki/Main_Page)
+-   [Swagger Editor](https://swagger.io/tools/swagger-editor/)
+-   [Swagger Documentation](https://swagger.io/specification/)
 -   [Chai Documentation](https://www.chaijs.com/)
 -   [Express Documentation](https://expressjs.com/en/4x/api.html)
 -   [Mocha Documentation](https://mochajs.org/)
