@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 const { expect } = require('chai');
 const sinon = require('sinon');
 
@@ -10,6 +12,13 @@ describe('logger', function () {
 
     afterEach(function () {
         sandbox.restore();
+    });
+
+    it('should create directory if not exist', function () {
+        sinon.stub(fs, 'existsSync').returns(false);
+        sinon.stub(fs, 'mkdirSync');
+        const { logger } = require('../../app/config/logger');
+        expect(fs.mkdirSync.calledOnce).to.be.true;
     });
 
     it('should call infoLogger.info', function () {
