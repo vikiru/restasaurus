@@ -316,6 +316,24 @@ Backend:
 -   [MongoDB](https://www.mongodb.com/)
 -   [Mongoose](https://mongoosejs.com/)
 
+Testing:
+
+-   [Mocha](https://mochajs.org/)
+-   [Chai](https://www.chaijs.com/)
+-   [Sinon](https://sinonjs.org/)
+-   [Proxyquire](https://github.com/thlorenz/proxyquire)
+-   [Istanbul (nyc)](https://github.com/istanbuljs/nyc)
+-   [istanbul-badges-readme](https://github.com/the-bugging/istanbul-badges-readme)
+
+Hosting:
+
+1. Documentation:
+
+    - [GitHub Pages](https://pages.github.com/)
+
+2. REST API
+    - [Adaptable](https://adaptable.io/)
+
 CI:
 
 -   [GitHub Actions](https://github.com/features/actions)
@@ -327,15 +345,6 @@ Dev Tools:
 -   [WakaTime](https://wakatime.com/)
 -   [MongoDB Compass](https://www.mongodb.com/products/tools/compass)
 -   [Postman](https://www.postman.com/)
-
-Testing:
-
--   [Mocha](https://mochajs.org/)
--   [Chai](https://www.chaijs.com/)
--   [Sinon](https://sinonjs.org/)
--   [Proxyquire](https://github.com/thlorenz/proxyquire)
--   [Istanbul (nyc)](https://github.com/istanbuljs/nyc)
--   [istanbul-badges-readme](https://github.com/the-bugging/istanbul-badges-readme)
 
 ## 📝 Prerequisites
 
