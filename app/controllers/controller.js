@@ -4,6 +4,8 @@ const dinosaurService = require('../services/index');
 const apiEndpoints = {
     home: '/api/v1',
     getAllNames: '/api/v1/names',
+    getAllDiets: '/api/v1/diets',
+    getAllLocomotions: '/api/v1/locomotions',
     getAllDinos: '/api/v1/dinosaurs',
     getDinoById: '/api/v1/dinosaurs/:id',
     getDinoByName: '/api/v1/dinosaurs/name/:name',
@@ -21,8 +23,8 @@ const apiEndpoints = {
  *
  * @async
  * @function
- * @param {object} req - Express request object.
- * @param {object} res - Express response object.
+ * @param {object} req - The request object.
+ * @param {object} res - The response object.
  * @returns {Promise<void>} Promise representing the completion of the Express response.
  */
 async function returnHome(req, res) {
@@ -103,6 +105,59 @@ async function retrieveAllNames(req, res) {
         logger.error(error);
         res.status(500).json({
             error: ' Sorry, an unexpected error occurred while retrieving all dinosaur names',
+        });
+    }
+}
+
+/**
+ * The function retrieves all dinosaur diets and returns them as a JSON response, or returns an error message if there
+ * was an issue retrieving the diets.
+ *
+ * @param {object} req - The request object.
+ * @param {object} res - The response object.
+ */
+async function retrieveAllDiets(req, res) {
+    try {
+        const diets = await dinosaurService.retrieveAllDiets();
+        if (diets.length > 0) {
+            res.status(200).json({
+                uniqueDiets: diets.length,
+                data: diets,
+            });
+        } else {
+            res.status(404).json({
+                error: 'Sorry, there was an error retrieving all dinosaur diets',
+            });
+        }
+    } catch (error) {
+        logger.error(error);
+        res.status(500).json({
+            error: ' Sorry, an unexpected error occurred while retrieving all dinosaur diets',
+        });
+    }
+}
+
+/**
+ * @param req
+ * @param res
+ */
+async function retrieveAllLocomotions(req, res) {
+    try {
+        const locomotions = await dinosaurService.retrieveAllLocomotions();
+        if (locomotions.length > 0) {
+            res.status(200).json({
+                uniqueLocomotions: locomotions.length,
+                data: locomotions,
+            });
+        } else {
+            res.status(404).json({
+                error: 'Sorry, there was an error retrieving all dinosaur locomotions',
+            });
+        }
+    } catch (error) {
+        logger.error(error);
+        res.status(500).json({
+            error: ' Sorry, an unexpected error occurred while retrieving all dinosaur locomotions',
         });
     }
 }
@@ -312,6 +367,8 @@ module.exports = {
     retrieveAllDinosaurs,
     retrieveAllImages,
     retrieveAllNames,
+    retrieveAllDiets,
+    retrieveAllLocomotions,
     retrieveDinoById,
     retrieveDinoByName,
     retrieveDinoByDiet,
