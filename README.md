@@ -31,20 +31,24 @@
 
 ---
 
-**RESTasaurus** is a RESTful API, leveraging Express, MongoDB, and Mongoose to deliver comprehensive data on over 400 dinosaurs!
+## Overview
+
+**RESTasaurus** is a RESTful API, leveraging Express, MongoDB, and Mongoose to deliver comprehensive data on almost 1200 dinosaurs!
 
 > [!IMPORTANT]
-> The information within the API is taken directly from Wikipedia via its API, as is and may have been modified since the last time it was retrieved. All images and text belong to their respective authors and attribution is provided accordingly for both.
 >
-> Please consider checking out the [models](./app/models/) directory to get an idea of the information being provided by the API. The models to take note of are:
->
-> -   [Dinosaur](./app/models/Dinosaur.js)
-> -   [ClassificationInfo](./app/models/ClassificationInfo.js)
-> -   [DinosaurImage](./app/models/DinosaurImage.js)
-> -   [DinosaurSource](./app/models/DinosaurSource.js)
+> The data within the API is taken directly from **Wikipedia** via its API, as is. Please note that the information may have been modified since the last retrieval. All images and text belong to their respective authors, and attribution is provided accordingly for both. After retrieval, the data undergoes processing to be transformed into a custom JSON object, referred to as [MongooseData](https://github.com/vikiru/restasaurus/blob/main/app/models/MongooseData.js).
+
+Please consider checking out the [models](https://github.com/vikiru/restasaurus/tree/main/app/models) directory to get an idea of the information being provided by the API. The schemas used within the MongoDB database can be seen below:
+
+> -   [**Dinosaur**](https://github.com/vikiru/restasaurus/blob/main/app/models/Dinosaur.js): This model represents a dinosaur, including its unique properties such as name, temporal range, diet, locomotion type, and a description.
+> -   [**ClassificationInfo**](./app/models/ClassificationInfo.js): This model contains the classification information of a dinosaur, including details like its family, order, and genus.
+> -   [**DinosaurImage**](https://github.com/vikiru/restasaurus/blob/main/app/models/DinosaurImage.js): This model is used to store the image data related to a dinosaur, including the image source and attribution details.
+> -   [**DinosaurSource**](https://github.com/vikiru/restasaurus/blob/main/app/models/DinosaurSource.js): This model represents the source of the dinosaur data, which is the Wikipedia article for that particular dinosaur. This includes information such as the title, author, last revision date, revision history url, and more.
 
 ## 📖 Table of Contents
 
+-   [Overview](#overview)
 -   [📖 Table of Contents](#-table-of-contents)
 -   [📍 API Endpoints](#-api-endpoints)
 -   [🛠️ Tech Stack](#️-tech-stack)
@@ -58,23 +62,251 @@
 
 ## 📍 API Endpoints
 
-| API Endpoint         | URL                           | Parameters                    | Description                                                                |
-| -------------------- | ----------------------------- | ----------------------------- | -------------------------------------------------------------------------- |
-| home                 | /api/v1                       | `none`                        | Returns the home endpoint of the API                                       |
-| getAllNames          | /api/v1/names                 | `none`                        | Returns all dinosaur names that exist within the API                       |
-| getAllDinos          | /api/v1/dinosaurs             | `page`                        | Returns all dinosaurs within the API, 20 dinosaurs per page.               |
-| getDinoById          | /api/v1/dinosaurs/            | `id`                          | Returns a dinosaur matching a specific id, returns an error if not found.  |
-| getDinoByName        | /api/v1/dinosaurs/name/       | `name`                        | Returns a dinosaur matching a specific name, returns an error if not found |
-| getDinosByDiet       | /api/v1/dinosaurs/diet/       | `diet`                        | Returns all dinosaurs matching a specific diet                             |
-| getDinosByLocomotion | /api/v1/dinosaurs/locomotion/ | `locomotion`                  | Returns all dinosaurs matching a specific locomotion type                  |
-| getRandomDinos       | /api/v1/dinosaurs/random/     | `count`                       | Returns a random number of dinosaurs. Minimum of 1 and maximum of 10.      |
-| getDinosaurByQuery   | /api/v1/search                | `clade`, `diet`, `locomotion` | Returns all dinosaurs matching a specific query                            |
-| getAllImages         | /api/v1/images                | `page`                        | Returns all dinosaur images within the API, 20 images per page.            |
-| getImageById         | /api/v1/images/               | `id`                          | Returns an image matching a specific id, returns an error if not found     |
-| getRandomImages      | /api/v1/images/random/        | `count`                       | Returns a random number of images. Minmum of 1 and a maximum of 10         |
-
 > [!NOTE]
 > The API is currently configured to support only GET requests and responses from the API are only in `json` format.
+
+<details>
+<summary><h3>Home Endpoint</h3></summary>
+
+**API Endpoint and Description**
+
+`GET {baseUrl}/api/v1`
+
+Returns the home endpoint of the API.
+
+**Parameters**
+
+No parameters are required for this endpoint.
+
+</details>
+
+<details>
+<summary><h3>Get all dinosaur names</h3></summary>
+
+**API Endpoint and Description**
+
+`GET {baseUrl}/api/v1/names`
+
+Returns all dinosaur names that exist within the API.
+
+**Parameters**
+
+No parameters are required for this endpoint.
+
+</details>
+
+<details>
+<summary><h3>Get all dinosaur clades</h3></summary>
+
+**API Endpoint and Description**
+
+`GET {baseUrl}/api/v1/clades`
+
+Returns all dinosaur clades that exist within the API.
+
+**Parameters**
+
+No parameters are required for this endpoint.
+
+</details>
+
+<details>
+<summary><h3>Get all dinosaur diets</h3></summary>
+
+**API Endpoint and Description**
+
+`GET {baseUrl}/api/v1/diets`
+
+Returns all dinosaur diets that exist within the API.
+
+**Parameters**
+
+No parameters are required for this endpoint.
+
+</details>
+
+<details>
+<summary><h3>Get all dinosaur locomotions</h3></summary>
+
+**API Endpoint and Description**
+
+`GET {baseUrl}/api/v1/locomotions`
+
+Returns all dinosaur locomotions that exist within the API.
+
+**Parameters**
+
+No parameters are required for this endpoint.
+
+</details>
+
+<details>
+<summary><h3>Get all dinosaurs</h3></summary>
+
+**API Endpoint and Description**
+
+`GET {baseUrl}/api/v1/dinosaurs?page={page}`
+
+Returns all dinosaurs within the API, 50 dinosaurs per page.
+
+**Parameters**
+
+-   `page`: The page number to retrieve, 50 dinosaurs are displayed per page.
+
+</details>
+
+<details>
+<summary><h3>Get a dinosaur by id</h3></summary>
+
+**API Endpoint and Description**
+
+`GET {baseUrl}/api/v1/dinosaurs/{id}`
+
+Returns a dinosaur matching a specific id, returns an error if not found.
+
+**Parameters**
+
+-   `id`: The id corresponding to the dinosaur you wish to retrieve. Must be an integer between `1` and `1153`.
+
+</details>
+
+<details>
+<summary><h3>Get a dinosaur by name</h3></summary>
+
+**API Endpoint and Description**
+
+`GET {baseUrl}/api/v1/dinosaurs/{name}`
+
+Returns a dinosaur matching a specific name, returns an error if not found.
+
+**Parameters**
+
+-   `name`: The name corresponding to the dinosaur you wish to retrieve.
+
+</details>
+
+<details>
+<summary><h3>Get dinosaurs by diet</h3></summary>
+
+**API Endpoint and Description**
+
+`GET {baseUrl}/api/v1/dinosaurs/{diet}`
+
+Returns all dinosaurs matching a specific diet.
+
+**Parameters**
+
+-   `diet`: The diet of the dinosaurs you wish to retrieve.
+
+Examples include: `herbivore`, `carnivore`, `omnivore`, `piscivore`, etc.
+
+</details>
+
+<details>
+<summary><h3>Get dinosaurs by locomotion</h3></summary>
+
+**API Endpoint and Description**
+
+`GET {baseUrl}/api/v1/dinosaurs/{locomotion}`
+
+Returns all dinosaurs matching a specific locomotion type.
+
+**Parameters**
+
+-   `locomotion`: The locomotion of the dinosaurs you wish to retrieve.
+
+Examples include: `biped`, `quadruped`, `facultative biped`, `gliding`, `swimming`, etc.
+
+</details>
+
+<details>
+<summary><h3>Get random number of dinosaurs</h3></summary>
+
+**API Endpoint and Description**
+
+`GET {baseUrl}/api/v1/dinosaurs/random/{count}`
+
+Returns a random number of dinosaurs. Minimum of 1 and maximum of 10.
+
+**Parameters**
+
+-   `count`: The number of random dinosaurs you wish to retrieve. Must be a valid
+    integer between `1` and including `10`.
+
+</details>
+
+<details>
+<summary><h3>Get dinosaurs by query</h3></summary>
+
+**API Endpoint and Description**
+
+`GET {baseUrl}/api/v1/search?clade={clade}&diet={diet}&locomotion={locomotion}`
+
+Returns all dinosaurs matching a specific query.
+
+**Parameters**
+
+-   `clade`: The group that the dinosaur belongs to within its classification. This can be passed in various ways:
+
+    1. `GET {baseUrl}/api/v1/search?clade=clade1,clade2`
+    2. `GET {baseUrl}/api/v1/search?clade=clade1&clade=clade2`
+
+-   `diet`: The diet of the dinosaurs you wish to retrieve.
+
+-   `locomotion`: The locomotion of the dinosaurs you wish to retrieve.
+
+Example `clade` include: `Therapoda`, `Sauropodamorpha`, `Ornithischia`, `Thyreophora`, etc.
+
+Example `diet` include: `herbivore`, `carnivore`, `omnivore`, `piscivore`, etc.
+
+Example `locomotion` include: `biped`, `quadruped`, `facultative biped`, `gliding`, `swimming`, etc.
+
+</details>
+
+<details>
+<summary><h3>Get all dinosaur images</h3></summary>
+
+**API Endpoint and Description**
+
+`GET {baseUrl}/api/v1/images?page={page}`
+
+Returns all dinosaur images within the API, 50 dinosaurs per page.
+
+**Parameters**
+
+-   `page`: The page number to retrieve, 50 dinosaur images are displayed per page.
+
+</details>
+
+<details>
+<summary><h3>Get a dinosaur image by id</h3></summary>
+
+**API Endpoint and Description**
+
+`GET {baseUrl}/api/v1/images/{id}`
+
+Returns a dinosaur image matching a specific id, returns an error if not found.
+
+**Parameters**
+
+-   `id`: The id corresponding to the dinosaur image you wish to retrieve. Must be an integer between `1` and `1153`.
+
+</details>
+
+<details>
+<summary><h3>Get random number of dinosaur images</h3></summary>
+
+**API Endpoint and Description**
+
+`GET {baseUrl}/api/v1/images/random/{count}`
+
+Returns a random number of dinosaur images. Minimum of 1 and maximum of 10.
+
+**Parameters**
+
+-   `count`: The number of random dinosaur images you wish to retrieve. Must be a valid integer between `1` and including `10`.
+
+</details>
 
 ## 🛠️ Tech Stack
 
