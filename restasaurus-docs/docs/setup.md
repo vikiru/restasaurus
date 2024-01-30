@@ -38,7 +38,9 @@ npm run retrieveData
 
 This script will retrieve information about dinosaurs from Wikipedia via its API and then process that data to construct a JSON object represented by [MongooseData](./app/models/MongooseData.js).
 
-Please check your `app/logs` directory in the event of any errors.
+Please check the `app/logs` directory in the event of any errors. Specifically,
+you can check the `errors.log` or `all.log` to view the errors or all levels of
+logging, respectively.
 
 Additionally, confirm that `app/scripts/` contains the following JSON files:
 
