@@ -1,5 +1,5 @@
 ---
-title: Diet
+title: Diets
 ---
 
 ## API Endpoint and Description
