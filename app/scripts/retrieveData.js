@@ -12,7 +12,6 @@ const {
 } = require('../utils/handleFeature');
 const { processImageData } = require('../utils/handleImage');
 const { handleSourceInformation } = require('../utils/handleSource');
-const { REQUEST_DELAY } = require('../utils/helperConstants');
 const { writeData } = require('../utils/writeData');
 
 const { urlConstructor, urlHandler, retrieveAndFilterDinoData, readJSONFile, delay } = require('./constructDinoNames');
