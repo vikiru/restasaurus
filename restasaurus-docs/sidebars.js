@@ -22,9 +22,32 @@ const sidebars = {
             items: ['intro', 'prerequisites', 'setup'],
         },
         {
-            type: 'link',
+            type: 'category',
             label: 'API Endpoints',
-            href: '/api',
+            items: [
+                {
+                    type: 'category',
+                    label: 'General Endpoints',
+                    items: [
+                        'endpoints/home',
+                        'endpoints/clades',
+                        'endpoints/diets',
+                        'endpoints/locomotions',
+                        'endpoints/names',
+                    ],
+                },
+                {
+                    type: 'category',
+                    label: 'Dinosaur Endpoints',
+                    items: ['endpoints/allDinosaurs'],
+                },
+                {
+                    type: 'category',
+                    label: 'Image Endpoints',
+                    items: ['endpoints/allImages', 'endpoints/imagesByID', 'endpoints/randomImages'],
+                },
+                { type: 'link', label: 'OpenAPI Spec', href: '/api' },
+            ],
         },
         {
             type: 'category',
@@ -32,9 +55,9 @@ const sidebars = {
             items: ['stack', 'run', 'test', 'scripts'],
         },
         {
-            type: 'link',
-            label: 'Acknowledgments',
-            href: '/acknowledgments',
+            type: 'category',
+            label: 'Conclusion',
+            items: ['acknowledgments'],
         },
     ],
 };
