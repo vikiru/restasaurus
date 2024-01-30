@@ -33,6 +33,10 @@
 
 **RESTasaurus** is a RESTful API, leveraging Express, MongoDB, and Mongoose to deliver comprehensive data on almost 1200 dinosaurs!
 
+<p align="center">
+    <img src="https://github.com/vikiru/restasaurus/blob/docs/restasaurus-docs/public/endpoints/demo.gif" alt="RESTasaurus Demo"/>
+</p>
+
 > [!IMPORTANT]
 >
 > The data within the API is taken directly from **Wikipedia** via its API, as is. Please note that the information may have been modified since the last retrieval. All images and text belong to their respective authors, and attribution is provided accordingly for both. After retrieval, the data undergoes processing to be transformed into a custom JSON object, referred to as [MongooseData](https://github.com/vikiru/restasaurus/blob/main/app/models/MongooseData.js).
