@@ -33,7 +33,7 @@
 
 **RESTasaurus** is a RESTful API, leveraging Express, MongoDB, and Mongoose to deliver comprehensive data on almost 1200 dinosaurs!
 
-![demo](https://github.com/vikiru/restasaurus/assets/72267229/c72487a0-1fad-4e82-9739-07ba7d3a76bd)
+[RESTasaurus Demo](https://github.com/vikiru/restasaurus/assets/72267229/0ba09dca-56cc-4b24-9697-3585126b2fb0)
 
 > [!IMPORTANT]
 >
