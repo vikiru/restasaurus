@@ -13,9 +13,9 @@ const { writeData } = require('../utils/writeData');
  * @param time - The `time` parameter is the duration in milliseconds for which the delay should occur.
  * @returns A Promise object.
  */
-function delay(time) {
+function delay() {
     return new Promise((resolve) => {
-        setTimeout(resolve, time);
+        setTimeout(resolve, REQUEST_DELAY);
     });
 }
 

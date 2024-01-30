@@ -341,7 +341,7 @@ async function retrieveDinosaursByQuery(req, res) {
         let { clade } = req.query;
         const { diet, locomotion } = req.query;
         if (typeof clade === 'string') {
-            clade = [clade];
+            clade = clade.split(',').map((item) => item.trim());
         }
 
         const dinosaurs = await dinosaurService.returnDinosaursByQuery(clade, diet, locomotion);

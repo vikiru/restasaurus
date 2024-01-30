@@ -136,7 +136,7 @@ DinosaurSchema.statics.returnDinosaursByQuery = function (query) {
             },
         },
         { $unwind: '$classificationInfo' },
-        query,
+        { $match: query.$match },
         {
             $lookup: {
                 from: 'dinosaursources',

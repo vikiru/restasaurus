@@ -230,8 +230,7 @@ async function returnDinosaursByQuery(clade, diet, locomotion) {
     }
 
     if (clade) {
-        query.$match.classificationInfo = {};
-        query.$match.classificationInfo.clade = { $in: clade };
+        query.$match['classificationInfo.clade'] = { $in: clade };
     }
 
     const dinosaurs = await Dinosaur.returnDinosaursByQuery(query);

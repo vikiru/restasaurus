@@ -38,7 +38,7 @@ async function retrieveImageData(names) {
         logger.info('Starting to retrieve image data from Wikipedia API.');
         const startTime = process.hrtime();
 
-        const { data } = await urlHandler(urls, delay(REQUEST_DELAY));
+        const { data } = await urlHandler(urls, delay);
         const endTime = process.hrtime(startTime);
         const timeInSeconds = endTime[0] + endTime[1] / 1e9;
         const formattedSeconds = timeInSeconds.toFixed(2);
