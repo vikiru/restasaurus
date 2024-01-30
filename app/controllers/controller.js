@@ -163,6 +163,31 @@ async function retrieveAllLocomotions(req, res) {
 }
 
 /**
+ * @param req
+ * @param res
+ */
+async function retrieveAllClades(req, res) {
+    try {
+        const clades = await dinosaurService.retrieveAllClades();
+        if (clades.length > 0) {
+            res.status(200).json({
+                uniqueClades: clades.length,
+                data: clades,
+            });
+        } else {
+            res.status(404).json({
+                error: 'Sorry, there was an error retrieving all dinosaur clades',
+            });
+        }
+    } catch (error) {
+        logger.error(error);
+        res.status(500).json({
+            error: ' Sorry, an unexpected error occurred while retrieving all dinosaur clades',
+        });
+    }
+}
+
+/**
  * Retrieves a dinosaur by ID.
  *
  * @param {object} req - The request object.
@@ -369,6 +394,7 @@ module.exports = {
     retrieveAllNames,
     retrieveAllDiets,
     retrieveAllLocomotions,
+    retrieveAllClades,
     retrieveDinoById,
     retrieveDinoByName,
     retrieveDinoByDiet,

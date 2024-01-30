@@ -98,7 +98,7 @@ async function retrieveAllDiets() {
         diet: diet._id.diet,
         count: diet.count,
     }));
-    formattedDiets.sort((a, b) => b.count - a   .count);
+    formattedDiets.sort((a, b) => b.count - a.count);
     return formattedDiets;
 }
 
@@ -112,6 +112,15 @@ async function retrieveAllLocomotions() {
     return formattedLocomotions;
 }
 
+async function retrieveAllClades() {
+    const clades = await Dinosaur.findAllClades();
+    const formattedClades = clades.map((clade) => ({
+        clade: clade._id,
+        count: clade.count,
+    }));
+    formattedClades.sort((a, b) => b.count - a.count);
+    return formattedClades;
+}
 
 /**
  * Retrieves a dinosaur by its ID.
@@ -244,6 +253,7 @@ module.exports = {
     retrieveAllNames,
     retrieveAllDiets,
     retrieveAllLocomotions,
+    retrieveAllClades,
     retrieveDinosaurById,
     retrieveDinosaurByName,
     retrieveDinosaursByDiet,

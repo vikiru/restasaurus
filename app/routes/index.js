@@ -6,6 +6,7 @@ const {
     retrieveAllImages,
     retrieveAllNames,
     retrieveAllDiets,
+    retrieveAllClades,
     retrieveAllLocomotions,
     retrieveDinoById,
     retrieveDinoByName,
@@ -22,7 +23,8 @@ const router = express.Router();
 router.get('/', returnHome);
 router.get('/names', retrieveAllNames);
 router.get('/diets', retrieveAllDiets);
-router.get("/locomotions", retrieveAllLocomotions);
+router.get('/locomotions', retrieveAllLocomotions);
+router.get('/clades', retrieveAllClades);
 router.get('/dinosaurs', retrieveAllDinosaurs);
 router.get('/dinosaurs/:id', retrieveDinoById);
 router.get('/dinosaurs/name/:name', retrieveDinoByName);
