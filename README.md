@@ -63,7 +63,7 @@ Please consider checking out the [models](https://github.com/vikiru/restasaurus/
 > The API is currently configured to support only GET requests and responses from the API are only in `json` format.
 
 <details>
-<summary><h3>Home Endpoint</h3></summary>
+<summary><h3>Get main API endpoint</h3></summary>
 
 **API Endpoint and Description**
 
