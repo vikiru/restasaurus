@@ -39,18 +39,20 @@ title: 📖 Introduction
 
 ## Overview
 
-**RESTasaurus** is a RESTful API, leveraging Express, MongoDB, and Mongoose to deliver comprehensive data on over 400 dinosaurs!
+**RESTasaurus** is a RESTful API, leveraging Express, MongoDB, and Mongoose to deliver comprehensive data on almost 1200 dinosaurs!
 
 :::info
 
-The information within the API is taken directly from Wikipedia via its API, as is and may have been modified since the last time it was retrieved. All images and text belong to their respective authors and attribution is provided accordingly for both. Furthermore, after the data is retrieved, it undergoes processing to be transformed into a custom JSON object, referred to as [MongooseData](./app/models/MongooseData).
+The data within the API is taken directly from **Wikipedia** via its API, as is. Please note that the information may have been modified since the last retrieval. All images and text belong to their respective authors, and attribution is provided accordingly for both. After retrieval, the data undergoes processing to be transformed into a custom JSON object, referred to as [MongooseData](https://github.com/vikiru/restasaurus/blob/main/app/models/MongooseData.js).
 
-> Please consider checking out the [models](./app/models/) directory to get an idea of the information being provided by the API. The schemas used within the MongoDB database can be seen below:
->
-> -   [Dinosaur](./app/models/Dinosaur.js)
-> -   [ClassificationInfo](./app/models/ClassificationInfo.js)
-> -   [DinosaurImage](./app/models/DinosaurImage.js)
-> -   [DinosaurSource](./app/models/DinosaurSource.js)
+For a better understanding of the information provided by the API, please check out the models directory. The schemas used within the MongoDB database include:
+
+Please consider checking out the [models](https://github.com/vikiru/restasaurus/tree/main/app/models) directory to get an idea of the information being provided by the API. The schemas used within the MongoDB database can be seen below:
+
+-   [**Dinosaur**](https://github.com/vikiru/restasaurus/blob/main/app/models/Dinosaur.js): This model represents a dinosaur, including its unique properties such as name, temporal range, diet, locomotion type, and a description.
+-   [**ClassificationInfo**](./app/models/ClassificationInfo.js): This model contains the classification information of a dinosaur, including details like its family, order, and genus.
+-   [**DinosaurImage**](https://github.com/vikiru/restasaurus/blob/main/app/models/DinosaurImage.js): This model is used to store the image data related to a dinosaur, including the image source and attribution details.
+-   [**DinosaurSource**](https://github.com/vikiru/restasaurus/blob/main/app/models/DinosaurSource.js): This model represents the source of the dinosaur data, which is the Wikipedia article for that particular dinosaur. This includes information such as the title, author, last revision date, revision history url, and more.
 
 :::
 
@@ -58,4 +60,4 @@ The information within the API is taken directly from Wikipedia via its API, as 
 
 The contents of this repository are licensed under the terms and conditions of the [MIT](https://choosealicense.com/licenses/mit/) license.
 
-[MIT](./LICENSE) © 2024-present Visakan Kirubakaran.
+[MIT](https://github.com/vikiru/restasaurus/blob/main/LICENSE) © 2024-present Visakan Kirubakaran.
