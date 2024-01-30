@@ -34,7 +34,9 @@
 **RESTasaurus** is a RESTful API, leveraging Express, MongoDB, and Mongoose to deliver comprehensive data on almost 1200 dinosaurs!
 
 <p align="center">
-    <video src="https://github.com/vikiru/restasaurus/blob/docs/restasaurus-docs/public/endpoints/demo.mp4" alt="RESTasaurus Demo"/>
+<video controls>
+  <source src="https://github.com/vikiru/restasaurus/blob/docs/restasaurus-docs/public/endpoints/demo.mp4" type="video/mp4">
+</video>
 </p>
 
 > [!IMPORTANT]
