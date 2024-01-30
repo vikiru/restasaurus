@@ -45,6 +45,8 @@ title: 📖 Introduction
 
 The data within the API is taken directly from **Wikipedia** via its API, as is. Please note that the information may have been modified since the last retrieval. All images and text belong to their respective authors, and attribution is provided accordingly for both. After retrieval, the data undergoes processing to be transformed into a custom JSON object, referred to as [MongooseData](https://github.com/vikiru/restasaurus/blob/main/app/models/MongooseData.js).
 
+:::
+
 For a better understanding of the information provided by the API, please check out the models directory. The schemas used within the MongoDB database include:
 
 Please consider checking out the [models](https://github.com/vikiru/restasaurus/tree/main/app/models) directory to get an idea of the information being provided by the API. The schemas used within the MongoDB database can be seen below:
@@ -53,8 +55,6 @@ Please consider checking out the [models](https://github.com/vikiru/restasaurus/
 -   [**ClassificationInfo**](./app/models/ClassificationInfo.js): This model contains the classification information of a dinosaur, including details like its family, order, and genus.
 -   [**DinosaurImage**](https://github.com/vikiru/restasaurus/blob/main/app/models/DinosaurImage.js): This model is used to store the image data related to a dinosaur, including the image source and attribution details.
 -   [**DinosaurSource**](https://github.com/vikiru/restasaurus/blob/main/app/models/DinosaurSource.js): This model represents the source of the dinosaur data, which is the Wikipedia article for that particular dinosaur. This includes information such as the title, author, last revision date, revision history url, and more.
-
-:::
 
 ## ©️ License
 
