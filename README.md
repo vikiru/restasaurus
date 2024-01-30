@@ -65,7 +65,7 @@ Please consider checking out the [models](https://github.com/vikiru/restasaurus/
 > The API is currently configured to support only GET requests and responses from the API are only in `json` format.
 
 <details>
-<summary><h3>Get main API endpoint</h3></summary>
+<summary><h4>Get main API endpoint</h4></summary>
 
 **API Endpoint and Description**
 
@@ -80,7 +80,7 @@ No parameters are required for this endpoint.
 </details>
 
 <details>
-<summary><h3>Get all dinosaur names</h3></summary>
+<summary><h4>Get all dinosaur names</h4></summary>
 
 **API Endpoint and Description**
 
@@ -95,7 +95,7 @@ No parameters are required for this endpoint.
 </details>
 
 <details>
-<summary><h3>Get all dinosaur clades</h3></summary>
+<summary><h4>Get all dinosaur clades</h4></summary>
 
 **API Endpoint and Description**
 
@@ -110,7 +110,7 @@ No parameters are required for this endpoint.
 </details>
 
 <details>
-<summary><h3>Get all dinosaur diets</h3></summary>
+<summary><h4>Get all dinosaur diets</h4></summary>
 
 **API Endpoint and Description**
 
@@ -125,7 +125,7 @@ No parameters are required for this endpoint.
 </details>
 
 <details>
-<summary><h3>Get all dinosaur locomotions</h3></summary>
+<summary><h4>Get all dinosaur locomotions</h4></summary>
 
 **API Endpoint and Description**
 
@@ -140,7 +140,7 @@ No parameters are required for this endpoint.
 </details>
 
 <details>
-<summary><h3>Get all dinosaurs</h3></summary>
+<summary><h4>Get all dinosaurs</h4></summary>
 
 **API Endpoint and Description**
 
@@ -155,7 +155,7 @@ Returns all dinosaurs within the API, 50 dinosaurs per page.
 </details>
 
 <details>
-<summary><h3>Get a dinosaur by id</h3></summary>
+<summary><h4>Get a dinosaur by id</h4></summary>
 
 **API Endpoint and Description**
 
@@ -170,7 +170,7 @@ Returns a dinosaur matching a specific id, returns an error if not found.
 </details>
 
 <details>
-<summary><h3>Get a dinosaur by name</h3></summary>
+<summary><h4>Get a dinosaur by name</h4></summary>
 
 **API Endpoint and Description**
 
@@ -185,7 +185,7 @@ Returns a dinosaur matching a specific name, returns an error if not found.
 </details>
 
 <details>
-<summary><h3>Get dinosaurs by diet</h3></summary>
+<summary><h4>Get dinosaurs by diet</h4></summary>
 
 **API Endpoint and Description**
 
@@ -202,7 +202,7 @@ Examples include: `herbivore`, `carnivore`, `omnivore`, `piscivore`, etc.
 </details>
 
 <details>
-<summary><h3>Get dinosaurs by locomotion</h3></summary>
+<summary><h4>Get dinosaurs by locomotion</h4></summary>
 
 **API Endpoint and Description**
 
@@ -219,7 +219,7 @@ Examples include: `biped`, `quadruped`, `facultative biped`, `gliding`, `swimmin
 </details>
 
 <details>
-<summary><h3>Get random number of dinosaurs</h3></summary>
+<summary><h4>Get random number of dinosaurs</h4></summary>
 
 **API Endpoint and Description**
 
@@ -235,7 +235,7 @@ Returns a random number of dinosaurs. Minimum of 1 and maximum of 10.
 </details>
 
 <details>
-<summary><h3>Get dinosaurs by query</h3></summary>
+<summary><h4>Get dinosaurs by query</h4></summary>
 
 **API Endpoint and Description**
 
@@ -263,7 +263,7 @@ Example `locomotion` include: `biped`, `quadruped`, `facultative biped`, `glidin
 </details>
 
 <details>
-<summary><h3>Get all dinosaur images</h3></summary>
+<summary><h4>Get all dinosaur images</h4></summary>
 
 **API Endpoint and Description**
 
@@ -278,7 +278,7 @@ Returns all dinosaur images within the API, 50 dinosaurs per page.
 </details>
 
 <details>
-<summary><h3>Get a dinosaur image by id</h3></summary>
+<summary><h4>Get a dinosaur image by id</h4></summary>
 
 **API Endpoint and Description**
 
@@ -293,7 +293,7 @@ Returns a dinosaur image matching a specific id, returns an error if not found.
 </details>
 
 <details>
-<summary><h3>Get random number of dinosaur images</h3></summary>
+<summary><h4>Get random number of dinosaur images</h4></summary>
 
 **API Endpoint and Description**
 
