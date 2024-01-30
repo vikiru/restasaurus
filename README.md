@@ -373,7 +373,7 @@ npm install
 3. Setup your `.env` file with the required information.
 
 ```text
-PORT=YOUR-PORT-HERE
+PORT='YOUR-PORT-HERE'
 MONGODB_URI='YOUR-MONGODB-URI-HERE'
 NODE_ENV='development'
 ```
@@ -386,9 +386,11 @@ npm run retrieveData
 
 This script will retrieve information about dinosaurs from Wikipedia via its API and then process that data to construct a JSON object represented by [MongooseData](./app/models/MongooseData.js).
 
-Please check your `app/logs` directory in the event of any errors.
+Please check the `app/logs` directory in the event of any errors. Specifically,
+you can check the `errors.log` or `all.log` to view the errors or all levels of
+logging, respectively.
 
-Additionally, confirm that `app/scripts/` contains the following JSON files:
+Additionally, confirm that the `app/scripts` contains the following JSON files:
 
 -   `allDinoNames.json`: contains all dinosaur names (should be around 1427 names).
 -   `filteredNames.json`: contains the names of the dinosaurs that passed the filtering process (should be around 1153 names).
