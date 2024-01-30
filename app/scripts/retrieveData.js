@@ -100,7 +100,6 @@ async function retrieveHTMLData(names) {
 function processHTMLData(htmlData, mongooseData) {
     retrieveBoxData(htmlData, mongooseData);
     retrieveDietAndLocomotionType(htmlData, mongooseData);
-    findMissingFeatures(mongooseData);
 }
 
 /**
@@ -121,9 +120,8 @@ function processPageData(pageData, htmlData, mongooseData) {
         mongooseData.locomotionType = findLocomotionType(pageData);
     } else {
         mongooseData.description = findDescription(htmlData, mongooseData.name) || '';
-        mongooseData.diet = findDiet(htmlData);
-        mongooseData.locomotionType = findLocomotionType(htmlData);
     }
+    findMissingFeatures(mongooseData);
     mongooseData.source = handleSourceInformation(mongooseData, mongooseData.name, pageData, pageData.rightsInfo);
 }
 
