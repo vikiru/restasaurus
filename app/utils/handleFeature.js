@@ -1,7 +1,7 @@
 const { cladeDefaults, orderDefaults, familyDefaults } = require('./helperConstants');
 
 /**
- * Finds a specific feature in the page data. The feature that is being searched for is the diet and locomotionType.
+ * Finds a specific feature in the page data. The feature that is being searched for is either the diet or locomotionType.
  *
  * @param {object} pageData - The page data to search.
  * @param {RegExp} featureRegex - The regular expression to match the feature.
@@ -34,17 +34,23 @@ function findFeature(pageData, featureRegex, replacements) {
                 });
             }
         });
+
         let maxCountKey = '';
         let maxCount = 0;
-
+        const ties = [];
         if (Object.keys(featureCount).length > 0) {
             for (const [key, count] of Object.entries(featureCount)) {
                 if (count > maxCount) {
                     maxCount = count;
                     maxCountKey = key;
+                } else if (count === maxCount) {
+                    ties.push(count);
                 }
             }
-            feature = maxCountKey;
+            const filteredTies = ties.filter((tie) => tie === maxCount);
+            if (filteredTies.length === 0 && maxCount > 1) {
+                feature = maxCountKey;
+            }
         }
     }
     return feature;

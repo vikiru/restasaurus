@@ -87,6 +87,33 @@ async function retrieveAllNames() {
 }
 
 /**
+ * The function retrieves all diets from a database and returns them in a formatted array.
+ *
+ * @returns The function `retrieveAllDiets` is returning an array of objects, where each object has two properties:
+ *   `diet` and `count`.
+ */
+async function retrieveAllDiets() {
+    const diets = await Dinosaur.findAllDiets();
+    const formattedDiets = diets.map((diet) => ({
+        diet: diet._id.diet,
+        count: diet.count,
+    }));
+    formattedDiets.sort((a, b) => b.count - a   .count);
+    return formattedDiets;
+}
+
+async function retrieveAllLocomotions() {
+    const locomotions = await Dinosaur.findAllLocomotions();
+    const formattedLocomotions = locomotions.map((locomotion) => ({
+        locomotionType: locomotion._id.locomotionType,
+        count: locomotion.count,
+    }));
+    formattedLocomotions.sort((a, b) => b.count - a.count);
+    return formattedLocomotions;
+}
+
+
+/**
  * Retrieves a dinosaur by its ID.
  *
  * @async
@@ -203,8 +230,7 @@ async function returnDinosaursByQuery(clade, diet, locomotion) {
     }
 
     if (clade) {
-        query.$match.classificationInfo = {};
-        query.$match.classificationInfo.clade = { $in: clade };
+        query.$match['classificationInfo.clade'] = { $in: clade };
     }
 
     const dinosaurs = await Dinosaur.returnDinosaursByQuery(query);
@@ -216,6 +242,8 @@ module.exports = {
     retrieveAllDinosaurs,
     retrieveAllImages,
     retrieveAllNames,
+    retrieveAllDiets,
+    retrieveAllLocomotions,
     retrieveDinosaurById,
     retrieveDinosaurByName,
     retrieveDinosaursByDiet,

@@ -25,6 +25,8 @@ async function postAllDinosaurs() {
         const dinosaurSchema = await convertToSchema(dinosaur);
         return pushDinosaurToDB(dinosaurSchema);
     });
+
+    logger.info('Dinosaurs will be pushed to the database async using promises, please wait.');
     await Promise.all(dinosaurPromises);
 
     const endTime = process.hrtime(startTime);
@@ -34,12 +36,6 @@ async function postAllDinosaurs() {
 
     await mongoDB.disconnect();
 }
-
-postAllDinosaurs();
-
-module.exports = {
-    postAllDinosaurs,
-};
 
 postAllDinosaurs();
 

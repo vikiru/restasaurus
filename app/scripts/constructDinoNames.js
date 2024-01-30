@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 
 const { logger } = require('../config/logger');
 const { fetchData } = require('../utils/fetchData');
@@ -7,14 +8,13 @@ const { retrieveAllDinoNames } = require('../utils/retrieveAllDinoNames');
 const { writeData } = require('../utils/writeData');
 
 /**
- * The `delay` function returns a promise that resolves after a specified amount of time.
+ * The delay function returns a promise that resolves after a specified delay.
  *
- * @param time - The `time` parameter is the duration in milliseconds for which the delay should occur.
  * @returns A Promise object.
  */
-function delay(time) {
+function delay() {
     return new Promise((resolve) => {
-        setTimeout(resolve, time);
+        setTimeout(resolve, REQUEST_DELAY);
     });
 }
 
@@ -133,6 +133,20 @@ function urlConstructor(names, queryType) {
 }
 
 /**
+ * The function reads a JSON file asynchronously and returns the parsed data.
+ *
+ * @param filePath - The `filePath` parameter is a string that represents the path to the JSON file that you want to
+ *   read.
+ * @returns A promise that resolves to the parsed JSON data from the file.
+ */
+async function readJSONFile(filePath) {
+    const scriptsDir = path.resolve(__dirname, '../scripts');
+    const resolvedPath = path.resolve(scriptsDir, filePath);
+    const data = await fs.promises.readFile(resolvedPath, 'utf8');
+    return JSON.parse(data);
+}
+
+/**
  * The function `constructDinoNames` reads dinosaur names from a JSON file, and if it fails, it retrieves the names from
  * the Wikipedia API.
  *
@@ -141,8 +155,7 @@ function urlConstructor(names, queryType) {
 async function constructDinoNames() {
     let names;
     try {
-        const data = await fs.promises.readFile('./allDinoNames.json', 'utf8');
-        names = JSON.parse(data);
+        names = await readJSONFile('./allDinoNames.json');
         logger.info('Successfully read all dino names from JSON file.');
         return names;
     } catch (err) {
@@ -178,7 +191,7 @@ async function urlHandler(urls, requestDelay) {
             const pageHTML = urlResult.parse.text;
             data.push(pageHTML);
         }
-        await requestDelay;
+        await requestDelay();
     }
     const result = { data: data.flat() };
     return result;
@@ -192,7 +205,7 @@ async function urlHandler(urls, requestDelay) {
  */
 async function retrievePageData(names) {
     const urls = urlConstructor(names, 'dino');
-    const { data } = await urlHandler(urls, delay(REQUEST_DELAY));
+    const { data } = await urlHandler(urls, delay);
     return data;
 }
 
@@ -215,18 +228,6 @@ async function filterDinoNames(data) {
     await writeData(filteredData, 'pageData.json');
     await writeData(filteredNames, 'filteredNames.json');
     return filteredNames;
-}
-
-/**
- * The function reads a JSON file asynchronously and returns the parsed data.
- *
- * @param filePath - The `filePath` parameter is a string that represents the path to the JSON file that you want to
- *   read. It should include the file name and extension.
- * @returns A promise that resolves to the parsed JSON data from the file.
- */
-async function readJSONFile(filePath) {
-    const data = await fs.promises.readFile(filePath, 'utf8');
-    return JSON.parse(data);
 }
 
 /**

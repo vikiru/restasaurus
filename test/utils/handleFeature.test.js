@@ -115,7 +115,8 @@ describe('handleFeature', function () {
 
         it('should return biped carnivore as locmotion and diet', function () {
             const pageData = {
-                structuredText: 'This dinosaur was a bipedal carnivore\nIt was not the first of its kind.\n',
+                structuredText:
+                    'This dinosaur was a bipedal carnivore\nIt was not the first bipedal carnivore of its kind.\ncarnivore biped carnivore biped carnivore\n',
             };
             handleFeature.retrieveDietAndLocomotionType(pageData, data);
             expect(data.diet).to.equal('carnivore');
