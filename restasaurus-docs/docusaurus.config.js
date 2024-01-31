@@ -130,11 +130,6 @@ const config = {
             },
             footer: {
                 style: 'dark',
-                logo: {
-                    alt: 'RESTasaurus Logo',
-                    src: 'logo.png',
-                    href: '/',
-                },
                 links: [
                     {
                         title: 'Getting Started',
