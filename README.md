@@ -77,6 +77,7 @@ Additionally, if you would like to see an example of a response from the API, pl
 
 > [!NOTE]
 > The API is currently configured to only support GET requests and responses from the API are only in `json` format.
+> The current rate limit is set to `20 requests per hour`.
 
 A comprehensive overview detailing all available endpoints can be located within the documentation under the [Endpoint Overview](https://vikiru.github.io/restasaurus/overview/) section. Each endpoint has a dedicated page detailing its url along with a general description, parameters (if any) and finally, a demonstration of the endpoint via Postman is also provided for clarity.
 
