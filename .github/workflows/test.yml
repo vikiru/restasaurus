@@ -1,11 +1,9 @@
 name: Run tests and update test coverage badges
 run-name: Execute all tests using Mocha and update coverage badges
 on:
-    workflow_run:
-        workflows:
-            - Lint Files
-        types:
-            - completed
+    pull_request:
+      branches:
+        - main
 
 
 permissions:
