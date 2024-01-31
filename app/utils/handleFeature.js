@@ -1,7 +1,8 @@
 const { cladeDefaults, orderDefaults, familyDefaults } = require('./helperConstants');
 
 /**
- * Finds a specific feature in the page data. The feature that is being searched for is either the diet or locomotionType.
+ * Finds a specific feature in the page data. The feature that is being searched for is either the diet or
+ * locomotionType.
  *
  * @param {object} pageData - The page data to search.
  * @param {RegExp} featureRegex - The regular expression to match the feature.
