@@ -40,7 +40,15 @@ const sidebars = {
                 {
                     type: 'category',
                     label: 'Dinosaur Endpoints',
-                    items: ['endpoints/allDinosaurs'],
+                    items: [
+                        'endpoints/allDinosaurs',
+                        'endpoints/dinosaursByID',
+                        'endpoints/dinosaursByName',
+                        'endpoints/dinosaursByDiet',
+                        'endpoints/dinosaursByLocomotion',
+                        'endpoints/dinosaursByQuery',
+                        'endpoints/randomDinosaurs',
+                    ],
                 },
                 {
                     type: 'category',
