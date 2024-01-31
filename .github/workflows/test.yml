@@ -1,4 +1,4 @@
-name: Run tests and update test coverage badges
+name: Tests
 run-name: Execute all tests using Mocha and update coverage badges
 on:
     pull_request:
