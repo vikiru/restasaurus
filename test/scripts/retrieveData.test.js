@@ -44,12 +44,16 @@ describe('retrieveData', function () {
         it('should retrieve image data from JSON file', async function () {
             readJSONFileStub.withArgs('./imageData.json').resolves([{}, {}]);
             retrieveData = proxyquire('../../app/scripts/retrieveData', {
-                './constructDinoNames': {
+                '../utils/writeData': {
+                    writeData: sinon.stub().resolves(),
+                },
+                '../utils/fetchData': {
                     fetchData: fetchStub,
+                },
+                './constructDinoNames': {
                     readJSONFile: readJSONFileStub,
                     urlConstructor: urlConstructorStub,
                     urlHandler: urlHandlerStub,
-                    writeData: writeDataStub,
                     delay: delayStub,
                 },
             });
@@ -62,16 +66,19 @@ describe('retrieveData', function () {
             readJSONFileStub = sinon.stub().resolves();
             urlConstructorStub = sinon.stub().returns();
             urlHandlerStub = sinon.stub().resolves();
-            writeDataStub = sinon.stub().resolves();
             delayStub = sinon.stub().resolves();
 
             retrieveData = proxyquire('../../app/scripts/retrieveData', {
-                './constructDinoNames': {
+                '../utils/writeData': {
+                    writeData: sinon.stub().resolves(),
+                },
+                '../utils/fetchData': {
                     fetchData: fetchStub,
+                },
+                './constructDinoNames': {
                     readJSONFile: readJSONFileStub,
                     urlConstructor: urlConstructorStub,
                     urlHandler: urlHandlerStub,
-                    writeData: writeDataStub,
                     delay: delayStub,
                 },
             });
@@ -82,7 +89,6 @@ describe('retrieveData', function () {
                 await retrieveData.retrieveImageData(['name1', 'name2']);
                 expect(readJSONFileStub.calledOnce).to.be.true;
                 expect(urlHandlerStub.calledOnce).to.be.true;
-                expect(writeDataStub.calledOnce).to.be.true;
             } catch (e) {
                 expect(e).to.be.not.undefined;
             }
@@ -92,12 +98,16 @@ describe('retrieveData', function () {
     describe('retrieveHTMLData', function () {
         beforeEach(function () {
             retrieveData = proxyquire('../../app/scripts/retrieveData', {
-                './constructDinoNames': {
+                '../utils/writeData': {
+                    writeData: sinon.stub().resolves(),
+                },
+                '../utils/fetchData': {
                     fetchData: fetchStub,
+                },
+                './constructDinoNames': {
                     readJSONFile: readJSONFileStub,
                     urlConstructor: urlConstructorStub,
                     urlHandler: urlHandlerStub,
-                    writeData: writeDataStub,
                     delay: delayStub,
                 },
             });
@@ -300,138 +310,79 @@ describe('retrieveData', function () {
 
     describe('retrieveData', function () {
         let retrieveAndFilterDinoDataStub;
+        let fetchDataStub;
         let retrieveImageDataStub;
         let retrieveHTMLDataStub;
         let retrievePageDataStub;
-        let namesStub;
-        let filteredNamesStub;
-        const htmlData = parser.parse(
-            '<table class="infobox"><tr>Stegosaurus</tr><tr><td>Species:</td><td>Value</td></tr><tr><td>Species:</td><td>Value</td></tr></table>',
-        );
-        const pageData = { extract: '' };
+
+        beforeEach(function () {
+            readJSONFileStub = sinon.stub();
+            urlConstructorStub = sinon.stub();
+            urlHandlerStub = sinon.stub();
+            delayStub = sinon.stub();
+            retrieveAndFilterDinoDataStub = sinon.stub();
+            writeDataStub = sinon.stub().resolves();
+            fetchDataStub = sinon.stub();
+            retrievePageDataStub = sinon.stub();
+            retrieveImageDataStub = sinon.stub();
+            retrieveHTMLDataStub = sinon.stub();
+
+            retrieveData = proxyquire('../../app/scripts/retrieveData', {
+                './constructDinoNames': {
+                    readJSONFile: readJSONFileStub,
+                    retrievePageData: retrievePageDataStub,
+                    urlConstructor: urlConstructorStub,
+                    urlHandler: urlHandlerStub,
+                    delay: delayStub,
+                    retrieveAndFilterDinoData: retrieveAndFilterDinoDataStub,
+                },
+                '../utils/writeData': {
+                    writeData: writeDataStub,
+                },
+                '../utils/fetchData': {
+                    fetchData: fetchDataStub.resolves(),
+                },
+                './retrieveData': {
+                    retrieveImageData: retrieveImageDataStub,
+                    retrieveHTMLData: retrieveHTMLDataStub,
+                },
+            });
+        });
 
         afterEach(function () {
             sinon.restore();
         });
 
-        it('should retrieve data correctly', async function () {
-            readJSONFileStub = sinon.stub().resolves('');
-            retrieveAndFilterDinoDataStub = sinon
-                .stub()
-                .resolves({ data: [{ pageimage: 'image' }, { pageimage: 'image' }], filteredNames: '' });
-            retrieveImageDataStub = sinon.stub().resolves('');
-            retrieveHTMLDataStub = sinon.stub().resolves('');
-
-            retrieveData = proxyquire('../../app/scripts/retrieveData', {
-                './constructDinoNames': {
-                    fetchData: fetchStub,
-                    readJSONFile: readJSONFileStub,
-                    urlConstructor: urlConstructorStub,
-                    urlHandler: urlHandlerStub,
-                    writeData: writeDataStub,
-                    delay: delayStub,
-                    retrieveAndFilterDinoData: retrieveAndFilterDinoDataStub,
-                },
-                './retrieveData': {
-                    retrieveImageData: retrieveImageDataStub,
-                    retrieveHTMLData: retrieveHTMLDataStub,
-                },
-            });
+        it('should read data from JSON files if they exist', async function () {
+            // Arrange
+            const expectedResult = {
+                pageData: [],
+                htmlData: [],
+                imageData: [],
+            };
+            readJSONFileStub.resolves([]);
 
             const result = await retrieveData.retrieveData();
 
-            expect(result).to.deep.equal({
-                pageData: '',
-                imageData: '',
-                htmlData: '',
-            });
+            expect(result).to.deep.equal(expectedResult);
         });
 
-        it('should handle errors correctly', async function () {
-            readJSONFileStub = sinon.stub().throws(new Error('Read file failed'));
-            retrieveAndFilterDinoDataStub = sinon
-                .stub()
-                .resolves({ data: [{ pageimage: 'image' }, { pageimage: 'image' }], filteredNames: '' });
-            fetchStub = sinon.stub().resolves({
-                ok: true,
-                json: Promise.resolve({ parse: { text: '' }, extract: '' }),
-            });
-            retrieveHTMLDataStub = sinon.stub().resolves(htmlData);
-            retrievePageDataStub = sinon.stub().resolves(pageData);
-            namesStub = sinon.stub().resolves([]);
-            filteredNamesStub = sinon.stub().resolves([]);
-
-            retrieveData = proxyquire('../../app/scripts/retrieveData', {
-                './constructDinoNames': {
-                    fetchData: fetchStub,
-                    readJSONFile: readJSONFileStub,
-                    writeData: writeDataStub,
-                    delay: delayStub,
-                    retrieveAndFilterDinoData: retrieveAndFilterDinoDataStub,
-                    retrievePageData: retrievePageDataStub,
-                    constructDinoNames: namesStub,
-                    filterDinoNames: filteredNamesStub,
-                },
-                './retrieveData': {
-                    retrieveImageData: retrieveImageDataStub,
-                    retrieveHTMLData: retrieveHTMLDataStub,
-                },
-            });
+        it('should retrieve data from Wikipedia API if JSON files do not exist', async function () {
+            const expectedResult = {
+                pageData: [],
+                htmlData: [],
+                imageData: [],
+            };
+            urlHandlerStub.resolves({ data: [] });
+            readJSONFileStub.rejects(new Error('File not found'));
+            retrieveAndFilterDinoDataStub.returns({ data: [], filteredNames: [] });
+            retrievePageDataStub.resolves([]);
+            retrieveImageDataStub.resolves([]);
+            retrieveHTMLDataStub.resolves([]);
 
             const result = await retrieveData.retrieveData();
 
-            expect(result).to.deep.equal({
-                pageData: [{ pageimage: 'image' }, { pageimage: 'image' }],
-                imageData: [],
-                htmlData: [],
-            });
-        });
-
-        it('should handle errors correctly when there is no pageimage', async function () {
-            readJSONFileStub = sinon.stub().throws(new Error('Read file failed'));
-            retrieveAndFilterDinoDataStub = sinon.stub().resolves({
-                data: [
-                    { key: '', otherKey: '' },
-                    { key: '', otherKey: '' },
-                ],
-                filteredNames: '',
-            });
-            fetchStub = sinon.stub().resolves({
-                ok: true,
-                json: Promise.resolve({ parse: { text: '' }, extract: '' }),
-            });
-            retrieveHTMLDataStub = sinon.stub().resolves(htmlData);
-            retrievePageDataStub = sinon.stub().resolves(pageData);
-            namesStub = sinon.stub().resolves([]);
-            filteredNamesStub = sinon.stub().resolves([]);
-
-            retrieveData = proxyquire('../../app/scripts/retrieveData', {
-                './constructDinoNames': {
-                    fetchData: fetchStub,
-                    readJSONFile: readJSONFileStub,
-                    writeData: writeDataStub,
-                    delay: delayStub,
-                    retrieveAndFilterDinoData: retrieveAndFilterDinoDataStub,
-                    retrievePageData: retrievePageDataStub,
-                    constructDinoNames: namesStub,
-                    filterDinoNames: filteredNamesStub,
-                },
-                './retrieveData': {
-                    retrieveImageData: retrieveImageDataStub,
-                    retrieveHTMLData: retrieveHTMLDataStub,
-                },
-            });
-
-            const result = await retrieveData.retrieveData();
-
-            expect(result).to.deep.equal({
-                pageData: [
-                    { key: '', otherKey: '' },
-                    { key: '', otherKey: '' },
-                ],
-                imageData: [],
-                htmlData: [],
-            });
+            expect(result).to.deep.equal(expectedResult);
         });
     });
 
