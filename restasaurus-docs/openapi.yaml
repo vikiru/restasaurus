@@ -1,4 +1,5 @@
 openapi: 3.1.0
+
 info:
     title: OpenAPI Specification
     description: A RESTful API about dinosaurs built using Express, MongoDB and Mongoose.
@@ -6,16 +7,21 @@ info:
         name: MIT
         url: https://choosealicense.com/licenses/mit/
     version: 1.0.0
+
 externalDocs:
     description: Read more about the API
     url: http://vikiru.github.io/restasaurus
+
 servers:
     - url: localhost:3000/api/v1
+
 tags:
+    - name: general
+      description: Retrieve general information about the API or dinosaurs such as all clades, diets, locomotions, and names within the API.
     - name: dinosaur
-      description: Retrieve dinosaur information
+      description: Retrieve dinosaur information.
     - name: image
-      description: Retrieve dinosaur image information
+      description: Retrieve dinosaur image information.
 paths:
     /:
         get:
@@ -39,10 +45,119 @@ paths:
                                         type: string
                                     disclaimer:
                                         type: string
+
+    /clades:
+        get:
+            tags:
+                - general
+            summary: Retrieve all dinosaur clades
+            description: This endpoint retrieves all dinosaur clades.
+            responses:
+                '200':
+                    description: A list of dinosaur clades
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    uniqueClades:
+                                        type: integer
+                                        description: The number of unique clades
+                                    data:
+                                        type: array
+                                        items:
+                                            type: string
+                                            description: The list of clades
+                '404':
+                    description: Error message when no clades are found
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                '500':
+                    description: Error message when an unexpected error occurred
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+
+    /diets:
+        get:
+            tags:
+                - general
+            summary: Retrieve all dinosaur diets
+            description: This endpoint retrieves all dinosaur diets.
+            responses:
+                '200':
+                    description: A list of dinosaur diets
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    uniqueDiets:
+                                        type: integer
+                                        description: The number of unique diets
+                                    data:
+                                        type: array
+                                        items:
+                                            type: string
+                                            description: The list of diets
+                '404':
+                    description: Error message when no diets are found
+                '500':
+                    description: Error message when an unexpected error occurred
+
+    /locomotions:
+        get:
+            tags:
+                - general
+            summary: Retrieve all dinosaur locomotions
+            description: This endpoint retrieves all dinosaur locomotions.
+            responses:
+                '200':
+                    description: A list of dinosaur locomotions
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    uniqueLocomotions:
+                                        type: integer
+                                        description: The number of unique locomotions
+                                    data:
+                                        type: array
+                                        items:
+                                            type: string
+                                            description: The list of locomotions
+                '404':
+                    description: Error message when no locomotions are found
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                '500':
+                    description: Error message when an unexpected error occurred
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
     /names:
         get:
             tags:
-                - dinosaur
+                - general
             summary: Retrieve all dinosaur names
             description: This endpoint retrieves all dinosaur names.
             responses:
@@ -63,6 +178,7 @@ paths:
                     description: Dinosaur names not found
                 '500':
                     description: Unexpected error
+
     /dinosaurs/{page}:
         get:
             tags:
@@ -325,7 +441,7 @@ paths:
                                         type: string
                                         example: 'Sorry, an unexpected error occurred while trying to retrieve a random number of dinosaurs.'
 
-    /dinosaurs/query:
+    /dinosaurs/search:
         get:
             tags:
                 - dinosaur
