@@ -188,13 +188,13 @@ describe('retrieveData', function () {
 
         const pageData = { extract: '' };
         const htmlData = '';
-        const mongooseData = { name: '' };
+        const mongooseData = new MongooseData('Dino');
 
         beforeEach(function () {
             dietStub = sinon.stub(handleFeature, 'findDiet').returns('');
             locomotionTypeStub = sinon.stub(handleFeature, 'findLocomotionType').returns('');
             descriptionStub = sinon.stub(handleFeature, 'findDescription').returns('');
-            sourceStub = sinon.stub(handleSource, 'handleSourceInformation').returns('');
+            sourceStub = sinon.stub(handleSource, 'handleSourceInformation').returns(mongooseData.source);
 
             retrieveData = proxyquire('../../app/scripts/retrieveData', {
                 './constructDinoNames': {
@@ -222,26 +222,12 @@ describe('retrieveData', function () {
 
         it('should process page data correctly from pageData', function () {
             retrieveData.processPageData(pageData, htmlData, mongooseData);
-
-            expect(mongooseData).to.deep.equal({
-                name: '',
-                description: '',
-                diet: '',
-                locomotionType: '',
-                source: '',
-            });
+            expect(mongooseData).to.deep.equal(new MongooseData('Dino'));
         });
 
         it('should process page data correctly from parse.text', function () {
             retrieveData.processPageData({ parse: { text: '' } }, htmlData, mongooseData);
-
-            expect(mongooseData).to.deep.equal({
-                name: '',
-                description: '',
-                diet: '',
-                locomotionType: '',
-                source: '',
-            });
+            expect(mongooseData).to.deep.equal(new MongooseData('Dino'));
         });
     });
 

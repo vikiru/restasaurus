@@ -260,6 +260,22 @@ DinosaurSchema.statics.findAllLocomotions = function () {
     ]);
 };
 
+DinosaurSchema.statics.findAllClades = function () {
+    return this.aggregate([
+        {
+            $lookup: {
+                from: 'classificationinfos',
+                localField: 'classificationInfo',
+                foreignField: '_id',
+                as: 'classificationInfo',
+            },
+        },
+        { $unwind: '$classificationInfo' },
+        { $unwind: '$classificationInfo.clade' },
+        { $group: { _id: '$classificationInfo.clade', count: { $sum: 1 } } },
+    ]);
+};
+
 const Dinosaur = model('Dinosaur', DinosaurSchema);
 
 module.exports = {

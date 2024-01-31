@@ -6,6 +6,7 @@ const apiEndpoints = {
     getAllNames: '/api/v1/names',
     getAllDiets: '/api/v1/diets',
     getAllLocomotions: '/api/v1/locomotions',
+    getAllClades: '/api/v1/clades',
     getAllDinos: '/api/v1/dinosaurs',
     getDinoById: '/api/v1/dinosaurs/:id',
     getDinoByName: '/api/v1/dinosaurs/name/:name',
@@ -138,8 +139,10 @@ async function retrieveAllDiets(req, res) {
 }
 
 /**
- * @param req
- * @param res
+ * The function retrieves all dinosaur locomotions and returns them in a JSON response.
+ *
+ * @param {object} req - The request object.
+ * @param {object} res - The response object.
  */
 async function retrieveAllLocomotions(req, res) {
     try {
@@ -158,6 +161,33 @@ async function retrieveAllLocomotions(req, res) {
         logger.error(error);
         res.status(500).json({
             error: ' Sorry, an unexpected error occurred while retrieving all dinosaur locomotions',
+        });
+    }
+}
+
+/**
+ * The function retrieves all dinosaur clades and returns them as a JSON response, handling any errors that occur.
+ *
+ * @param {object} req - The request object.
+ * @param {object} res - The response object.
+ */
+async function retrieveAllClades(req, res) {
+    try {
+        const clades = await dinosaurService.retrieveAllClades();
+        if (clades.length > 0) {
+            res.status(200).json({
+                uniqueClades: clades.length,
+                data: clades,
+            });
+        } else {
+            res.status(404).json({
+                error: 'Sorry, there was an error retrieving all dinosaur clades',
+            });
+        }
+    } catch (error) {
+        logger.error(error);
+        res.status(500).json({
+            error: ' Sorry, an unexpected error occurred while retrieving all dinosaur clades',
         });
     }
 }
@@ -369,6 +399,7 @@ module.exports = {
     retrieveAllNames,
     retrieveAllDiets,
     retrieveAllLocomotions,
+    retrieveAllClades,
     retrieveDinoById,
     retrieveDinoByName,
     retrieveDinoByDiet,
