@@ -1,23 +1,21 @@
 openapi: 3.1.0
-
 info:
     title: OpenAPI Specification
-    description: A RESTful API about dinosaurs built using Express, MongoDB and Mongoose.
+    description: 'A RESTful API about dinosaurs built using Express, MongoDB and Mongoose.'
     license:
         name: MIT
-        url: https://choosealicense.com/licenses/mit/
+        url: 'https://choosealicense.com/licenses/mit/'
     version: 1.0.0
-
 externalDocs:
     description: Read more about the API
-    url: http://vikiru.github.io/restasaurus
-
+    url: 'http://vikiru.github.io/restasaurus'
 servers:
-    - url: localhost:3000/api/v1
-
+    - url: 'localhost:3000/api/v1'
 tags:
     - name: general
-      description: Retrieve general information about the API or dinosaurs such as all clades, diets, locomotions, and names within the API.
+      description: >-
+          Retrieve general information about the API or dinosaurs such as all
+          clades, diets, locomotions, and names within the API.
     - name: dinosaur
       description: Retrieve dinosaur information.
     - name: image
@@ -25,8 +23,12 @@ tags:
 paths:
     /:
         get:
-            summary: Home route
-            description: This endpoint returns the API version, available endpoints, rate limit, and a disclaimer.
+            tags:
+                - general
+            summary: Retrieve the main API endpoint
+            description: >-
+                This endpoint returns the API version, available endpoints, rate limit,
+                and a disclaimer.
             responses:
                 '200':
                     description: successful operation
@@ -45,7 +47,6 @@ paths:
                                         type: string
                                     disclaimer:
                                         type: string
-
     /clades:
         get:
             tags:
@@ -86,7 +87,6 @@ paths:
                                 properties:
                                     error:
                                         type: string
-
     /diets:
         get:
             tags:
@@ -113,7 +113,6 @@ paths:
                     description: Error message when no diets are found
                 '500':
                     description: Error message when an unexpected error occurred
-
     /locomotions:
         get:
             tags:
@@ -178,8 +177,7 @@ paths:
                     description: Dinosaur names not found
                 '500':
                     description: Unexpected error
-
-    /dinosaurs/{page}:
+    '/dinosaurs/{page}':
         get:
             tags:
                 - dinosaur
@@ -221,9 +219,10 @@ paths:
                                 properties:
                                     error:
                                         type: string
-                                        example: 'Sorry, an unexpected error occurred while retrieving all dinosaurs.'
-
-    /dinosaurs/{id}:
+                                        example: >-
+                                            Sorry, an unexpected error occurred while retrieving all
+                                            dinosaurs.
+    '/dinosaurs/{id}':
         get:
             tags:
                 - dinosaur
@@ -253,7 +252,9 @@ paths:
                                 properties:
                                     error:
                                         type: string
-                                        example: 'Sorry, there doesnt seem to be a dinosaur matching that id.'
+                                        example: >-
+                                            Sorry, there doesnt seem to be a dinosaur matching that
+                                            id.
                 '500':
                     description: Unexpected error
                     content:
@@ -263,9 +264,10 @@ paths:
                                 properties:
                                     error:
                                         type: string
-                                        example: 'Sorry, an unexpected error occurred while retrieving a dinosaur matching the specified id.'
-
-    /dinosaurs/name/{name}:
+                                        example: >-
+                                            Sorry, an unexpected error occurred while retrieving a
+                                            dinosaur matching the specified id.
+    '/dinosaurs/name/{name}':
         get:
             tags:
                 - dinosaur
@@ -294,7 +296,9 @@ paths:
                                 properties:
                                     error:
                                         type: string
-                                        example: 'Sorry, there doesnt seem to be a dinosaur matching that name.'
+                                        example: >-
+                                            Sorry, there doesnt seem to be a dinosaur matching that
+                                            name.
                 '500':
                     description: Unexpected error
                     content:
@@ -304,9 +308,10 @@ paths:
                                 properties:
                                     error:
                                         type: string
-                                        example: 'Sorry, an unexpected error occurred trying to find a dinosaur matching that name.'
-
-    /dinosaurs/diet/{diet}:
+                                        example: >-
+                                            Sorry, an unexpected error occurred trying to find a
+                                            dinosaur matching that name.
+    '/dinosaurs/diet/{diet}':
         get:
             tags:
                 - dinosaur
@@ -342,7 +347,9 @@ paths:
                                 properties:
                                     error:
                                         type: string
-                                        example: "Sorry, there doesn't seem to be any dinosaurs matching that diet."
+                                        example: >-
+                                            Sorry, there doesn't seem to be any dinosaurs matching
+                                            that diet.
                 '500':
                     description: Unexpected error
                     content:
@@ -352,9 +359,10 @@ paths:
                                 properties:
                                     error:
                                         type: string
-                                        example: 'Sorry, an unexpected error occurred while retrieving all dinosaurs matching that diet.'
-
-    /dinosaurs/locomotion/{locomotion}:
+                                        example: >-
+                                            Sorry, an unexpected error occurred while retrieving all
+                                            dinosaurs matching that diet.
+    '/dinosaurs/locomotion/{locomotion}':
         get:
             tags:
                 - dinosaur
@@ -390,7 +398,9 @@ paths:
                                 properties:
                                     error:
                                         type: string
-                                        example: "Sorry, there doesn't seem to be any dinosaurs matching that locomotion type."
+                                        example: >-
+                                            Sorry, there doesn't seem to be any dinosaurs matching
+                                            that locomotion type.
                 '500':
                     description: Unexpected error
                     content:
@@ -400,9 +410,10 @@ paths:
                                 properties:
                                     error:
                                         type: string
-                                        example: 'Sorry, an unexpected error occurred while retrieving all dinosaurs matching that diet.'
-
-    /dinosaurs/random/{count}:
+                                        example: >-
+                                            Sorry, an unexpected error occurred while retrieving all
+                                            dinosaurs matching that diet.
+    '/dinosaurs/random/{count}':
         get:
             tags:
                 - dinosaur
@@ -439,8 +450,9 @@ paths:
                                 properties:
                                     error:
                                         type: string
-                                        example: 'Sorry, an unexpected error occurred while trying to retrieve a random number of dinosaurs.'
-
+                                        example: >-
+                                            Sorry, an unexpected error occurred while trying to
+                                            retrieve a random number of dinosaurs.
     /dinosaurs/search:
         get:
             tags:
@@ -488,7 +500,9 @@ paths:
                                 properties:
                                     error:
                                         type: string
-                                        example: 'Sorry, there doesnt seem to be any dinosaurs matching that query.'
+                                        example: >-
+                                            Sorry, there doesnt seem to be any dinosaurs matching that
+                                            query.
                 '500':
                     description: Unexpected error
                     content:
@@ -498,9 +512,10 @@ paths:
                                 properties:
                                     error:
                                         type: string
-                                        example: 'Sorry, an unexpected error occurred while performing that query.'
-
-    /images/{page}:
+                                        example: >-
+                                            Sorry, an unexpected error occurred while performing that
+                                            query.
+    '/images/{page}':
         get:
             tags:
                 - image
@@ -527,8 +542,7 @@ paths:
                     description: Dinosaur images not found
                 '500':
                     description: Unexpected error
-
-    /images/{id}:
+    '/images/{id}':
         get:
             tags:
                 - image
@@ -558,7 +572,9 @@ paths:
                                 properties:
                                     error:
                                         type: string
-                                        example: 'Sorry, there doesnt seem to be a dinosaur image matching that id.'
+                                        example: >-
+                                            Sorry, there doesnt seem to be a dinosaur image matching
+                                            that id.
                 '500':
                     description: Unexpected error
                     content:
@@ -568,9 +584,10 @@ paths:
                                 properties:
                                     error:
                                         type: string
-                                        example: 'Sorry, an unexpected occurred while trying to recieve an image matching that id.'
-
-    /images/random/{count}:
+                                        example: >-
+                                            Sorry, an unexpected occurred while trying to recieve an
+                                            image matching that id.
+    '/images/random/{count}':
         get:
             tags:
                 - image
@@ -607,7 +624,9 @@ paths:
                                 properties:
                                     error:
                                         type: string
-                                        example: 'Sorry, an unexpected error occurred while trying to retrieve a random number of dinosaur images.'
+                                        example: >-
+                                            Sorry, an unexpected error occurred while trying to
+                                            retrieve a random number of dinosaur images.
 components:
     schemas:
         Dinosaur:
@@ -732,7 +751,6 @@ components:
                     type: string
                 dateAccessed:
                     type: string
-
         DinosaurSource:
             type: object
             properties:
