@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 const { assert, expect } = require('chai');
 const parser = require('node-html-parser');
 const proxyquire = require('proxyquire');
@@ -14,6 +16,8 @@ describe('retrieveData', function () {
     let fetchStub;
     let delayStub;
     let retrieveData;
+    let readStub;
+    let writeStub;
 
     beforeEach(function () {
         logger = require('../../app/config/logger');
@@ -25,6 +29,12 @@ describe('retrieveData', function () {
         urlHandlerStub = sinon.stub().resolves();
         writeDataStub = sinon.stub().resolves();
         delayStub = sinon.stub().resolves();
+
+        readStub = sinon.stub(fs.promises, 'readFile');
+        readStub.callsFake((path, options, callback) => callback(null, JSON.stringify({})));
+
+        writeStub = sinon.stub(fs.promises, 'writeFile');
+        writeStub.callsFake((path, data, options, callback) => callback(null));
 
         fetchStub = sinon.stub(global, 'fetch').resolves({
             ok: true,
@@ -43,6 +53,9 @@ describe('retrieveData', function () {
 
         it('should retrieve image data from JSON file', async function () {
             readJSONFileStub.withArgs('./imageData.json').resolves([{}, {}]);
+            urlConstructorStub = sinon.stub().resolves();
+            urlHandlerStub = sinon.stub().resolves();
+            writeDataStub = sinon.stub().resolves();
             retrieveData = proxyquire('../../app/scripts/retrieveData', {
                 '../utils/writeData': {
                     writeData: sinon.stub().resolves(),
@@ -56,6 +69,7 @@ describe('retrieveData', function () {
                     urlHandler: urlHandlerStub,
                     delay: delayStub,
                 },
+                processAllData: sinon.stub().resolves(),
             });
             const data = await retrieveData.retrieveImageData(['name']);
             expect(data).to.deep.equal([{}, {}]);
@@ -81,6 +95,7 @@ describe('retrieveData', function () {
                     urlHandler: urlHandlerStub,
                     delay: delayStub,
                 },
+                processAllData: sinon.stub().resolves(),
             });
             const error = new Error('Read file failed');
             readJSONFileStub.rejects(error);

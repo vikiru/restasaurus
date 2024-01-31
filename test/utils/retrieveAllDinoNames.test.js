@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 const chai = require('chai');
 const proxyquire = require('proxyquire');
 const sinon = require('sinon');
@@ -6,6 +8,7 @@ const { expect } = chai;
 
 describe('retrieveAllDinoNames', function () {
     let fetchStub;
+    let writeStub;
     let retrieveAllDinoNames;
     let logger;
     const url =
@@ -14,7 +17,10 @@ describe('retrieveAllDinoNames', function () {
     beforeEach(function () {
         logger = require('../../app/config/logger');
         sinon.stub(logger.logger, 'info').resolves();
+        sinon.stub(logger.logger, 'error').resolves();
         fetchStub = sinon.stub(global, 'fetch');
+        writeStub = sinon.stub(fs.promises, 'writeFile');
+        writeStub.callsFake((path, data, options, callback) => callback(null));
     });
 
     afterEach(function () {

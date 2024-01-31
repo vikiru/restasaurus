@@ -5,10 +5,15 @@ const proxyquire = require('proxyquire');
 const sinon = require('sinon');
 
 describe('constructDinoNames - Script', function () {
+    let writeStub;
+
     beforeEach(function () {
         const logger = require('../../app/config/logger');
         sinon.stub(logger.logger, 'info').resolves();
         sinon.stub(logger.logger, 'error').resolves();
+
+        writeStub = sinon.stub(fs.promises, 'writeFile');
+        writeStub.callsFake((path, data, options, callback) => callback(null));
     });
 
     afterEach(function () {
