@@ -105,7 +105,7 @@ async function retrieveAllNames(req, res) {
     } catch (error) {
         logger.error(error);
         res.status(500).json({
-            error: ' Sorry, an unexpected error occurred while retrieving all dinosaur names',
+            error: 'Sorry, an unexpected error occurred while retrieving all dinosaur names',
         });
     }
 }
@@ -133,7 +133,7 @@ async function retrieveAllDiets(req, res) {
     } catch (error) {
         logger.error(error);
         res.status(500).json({
-            error: ' Sorry, an unexpected error occurred while retrieving all dinosaur diets',
+            error: 'Sorry, an unexpected error occurred while retrieving all dinosaur diets',
         });
     }
 }
@@ -160,7 +160,7 @@ async function retrieveAllLocomotions(req, res) {
     } catch (error) {
         logger.error(error);
         res.status(500).json({
-            error: ' Sorry, an unexpected error occurred while retrieving all dinosaur locomotions',
+            error: 'Sorry, an unexpected error occurred while retrieving all dinosaur locomotions',
         });
     }
 }
@@ -187,7 +187,7 @@ async function retrieveAllClades(req, res) {
     } catch (error) {
         logger.error(error);
         res.status(500).json({
-            error: ' Sorry, an unexpected error occurred while retrieving all dinosaur clades',
+            error: 'Sorry, an unexpected error occurred while retrieving all dinosaur clades',
         });
     }
 }
