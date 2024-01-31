@@ -54,7 +54,7 @@ Please consider checking out the [models](https://github.com/vikiru/restasaurus/
 -   [**DinosaurImage**](https://github.com/vikiru/restasaurus/blob/main/app/models/DinosaurImage.js): This model is used to store the image data related to a dinosaur, including the image source and attribution details.
 -   [**DinosaurSource**](https://github.com/vikiru/restasaurus/blob/main/app/models/DinosaurSource.js): This model represents the source of the dinosaur data, which is the Wikipedia article for that particular dinosaur. This includes information such as the title, author, last revision date, revision history url, and more.
 
-Additionally, if you would like to see an example of a response from the API, please see the [Model Overview](model) page to see the model structure present within the API.
+Additionally, if you would like to see an example of a response from the API, please see the [Model Overview](/models) page to see the model structure present within the API.
 
 ## ©️ License
 
