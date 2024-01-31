@@ -557,7 +557,7 @@ describe('Controller - Functionality Tests', function () {
             assert(statusStub.calledWith(500), 'status method was not called with 500');
             assert(
                 jsonStub.calledWith({
-                    error: ' Sorry, an unexpected error occurred while retrieving all dinosaur names',
+                    error: 'Sorry, an unexpected error occurred while retrieving all dinosaur names',
                 }),
                 'json method was not called with the correct error message',
             );
