@@ -25,6 +25,7 @@ const sidebars = {
             type: 'category',
             label: 'API Endpoints',
             items: [
+                'overview',
                 {
                     type: 'category',
                     label: 'General Endpoints',
