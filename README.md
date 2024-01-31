@@ -32,6 +32,9 @@
  <a href="https://github.com/vikiru/restasaurus/actions/workflows/lint.yml">
   <img src="https://github.com/vikiru/restasaurus/actions/workflows/lint.yml/badge.svg" alt="GitHub Lint Action Workflow Status"/>
  </a>
+ <a href="https://github.com/vikiru/restasaurus/actions/workflows/test.yml">
+    <img src="https://github.com/vikiru/restasaurus/actions/workflows/test.yml/badge.svg">
+ </a>
 </div>
 
 ---
