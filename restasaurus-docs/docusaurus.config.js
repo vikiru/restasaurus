@@ -99,7 +99,7 @@ const config = {
                 },
             ],
             navbar: {
-                hideOnScroll: false,
+                hideOnScroll: true,
                 logo: {
                     alt: 'RESTasaurus Logo',
                     src: 'logo.png',
