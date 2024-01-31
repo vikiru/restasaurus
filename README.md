@@ -1,33 +1,38 @@
-<p align="center">
-    <img src="./logo.png" alt="RESTasaurus Logo"/>
-</p>
+<div align="center" id="logo">
+    <img src="logo.png"/>
+</div>
 
-<p align="center">
- <a href="https://github.com/vikiru/restasaurus/blob/main/LICENSE">
-  <img src="https://img.shields.io/badge/license-MIT-aqua" alt="MIT License Badge"/>
- </a>
- <a href="https://github.com/prettier/prettier">
-  <img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square" alt="Code Style - Prettier"/>
- </a>
+<div align="center" id="badges">
+<br/>
  <a href="https://wakatime.com/@vikiru/projects/oducsokuft">
   <img src="https://wakatime.com/badge/github/vikiru/restasaurus.svg"
   alt="Wakatime Coding Stats for RESTasaurus"/>
  </a>
- <br>
- <a href="https://github.com/vikiru/restasaurus/releases">
-  <img src="https://img.shields.io/github/v/release/vikiru/restasaurus" alt="Release"/>
+<br/>
+ <a href="https://github.com/vikiru/restasaurus/blob/main/LICENSE">
+  <img src="https://img.shields.io/badge/license-MIT-aqua" alt="MIT License Badge"/>
  </a>
+<a href="https://vikiru.github.io/restasaurus/">
+	<img src="https://img.shields.io/badge/documentation-docs-orange" alt="Documentation"/>
+</a>
+ <a href="https://github.com/prettier/prettier">
+  <img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square" alt="Code Style - Prettier"/>
+ </a>
+<br/>
  <a href="https://github.com/vikiru/restasaurus/issues?q=is%3Aissue+is%3Aclosed">
   <img src="https://img.shields.io/github/issues-closed/vikiru/restasaurus" alt="Closed Issues"/>
  </a>
  <a href="https://github.com/vikiru/restasaurus/pulls?q=is%3Apr+is%3Aclosed">
-  <img src="https://img.shields.io/github/issues-pr-closed/vikiru/restasaurus?label=closed%20prs" alt="Closed PRs">
+  <img src="https://img.shields.io/github/issues-pr-closed/vikiru/restasaurus?label=closed%20prs" alt="Closed PRs"/>
  </a>
- <br>
+  <a href="https://github.com/vikiru/restasaurus/releases">
+  <img src="https://img.shields.io/github/v/release/vikiru/restasaurus" alt="Release"/>
+ </a>
+<br/>
  <a href="https://github.com/vikiru/restasaurus/actions/workflows/lint.yml">
   <img src="https://github.com/vikiru/restasaurus/actions/workflows/lint.yml/badge.svg" alt="GitHub Lint Action Workflow Status"/>
  </a>
-</p>
+</div>
 
 ---
 
@@ -39,12 +44,14 @@
 >
 > The data within the API is taken directly from **Wikipedia** via its API, as is. Please note that the information may have been modified since the last retrieval. All images and text belong to their respective authors, and attribution is provided accordingly for both. After retrieval, the data undergoes processing to be transformed into a custom JSON object, referred to as [MongooseData](https://github.com/vikiru/restasaurus/blob/main/app/models/MongooseData.js).
 
-Please consider checking out the [models](https://github.com/vikiru/restasaurus/tree/main/app/models) directory to get an idea of the information being provided by the API. The schemas used within the MongoDB database can be seen below:
+For a better understanding of the information provided by the API, please check out the [models](./app/models) directory. The schemas used within the MongoDB database include:
 
 > -   [**Dinosaur**](https://github.com/vikiru/restasaurus/blob/main/app/models/Dinosaur.js): This model represents a dinosaur, including its unique properties such as name, temporal range, diet, locomotion type, and a description.
 > -   [**ClassificationInfo**](./app/models/ClassificationInfo.js): This model contains the classification information of a dinosaur, including details like its family, order, and genus.
 > -   [**DinosaurImage**](https://github.com/vikiru/restasaurus/blob/main/app/models/DinosaurImage.js): This model is used to store the image data related to a dinosaur, including the image source and attribution details.
 > -   [**DinosaurSource**](https://github.com/vikiru/restasaurus/blob/main/app/models/DinosaurSource.js): This model represents the source of the dinosaur data, which is the Wikipedia article for that particular dinosaur. This includes information such as the title, author, last revision date, revision history url, and more.
+
+Additionally, if you would like to see an example of a response from the API, please see the [Model Overview](https://vikiru.github.io/restasaurus/models/) page to see the model structure present within the API.
 
 ## 📖 Table of Contents
 
@@ -62,250 +69,38 @@ Please consider checking out the [models](https://github.com/vikiru/restasaurus/
 ## 📍 API Endpoints
 
 > [!NOTE]
-> The API is currently configured to support only GET requests and responses from the API are only in `json` format.
+> The API is currently configured to  only support GET requests and responses from the API are only in `json` format.
 
-<details>
-<summary><h4>Get main API endpoint</h4></summary>
+A comprehensive overview detailing all available endpoints can be located within the documentation under the [Endpoint Overview](https://vikiru.github.io/restasaurus/overview/) section. Each endpoint has a dedicated page detailing its url along with a general description, parameters (if any) and finally, a demonstration of the endpoint via Postman is also provided for clarity.
 
-**API Endpoint and Description**
+### 📄 General Endpoints
 
-`GET {baseUrl}/api/v1`
+-   [**Get main API endpoint**](https://vikiru.github.io/restasaurus/endpoints/home/): Returns the home endpoint of the API.
+-   [**Get all dinosaur clades**](https://vikiru.github.io/restasaurus/endpoints/clades/): Returns all dinosaur clades that exist within the API.
+-   [**Get all dinosaur diets**](https://vikiru.github.io/restasaurus/endpoints/diets/): Returns all dinosaur diets that exist within the API.
+-   [**Get all dinosaur locomotions**](https://vikiru.github.io/restasaurus/endpoints/locomotions/): Returns all dinosaur locomotions that exist within the API.
+-   [**Get all dinosaur names**](https://vikiru.github.io/restasaurus/endpoints/names/): Returns all dinosaur names that exist within the API.
 
-Returns the home endpoint of the API.
+### 🦖 Dinosaur Endpoints
 
-**Parameters**
+-   [**Get all dinosaurs**](https://vikiru.github.io/restasaurus/endpoints/allDinosaurs/): Returns all dinosaurs within the API, 50 dinosaurs per page.
+-   [**Get a dinosaur by ID**](https://vikiru.github.io/restasaurus/endpoints/dinosaursByID/): Returns a dinosaur matching a specific id, returns an error if not found.
+-   [**Get a dinosaur by name**](https://vikiru.github.io/restasaurus/endpoints/dinosaursByName/): Returns a dinosaur matching a specific name, returns an error if not found.
+-   [**Get dinosaurs by diet**](https://vikiru.github.io/restasaurus/endpoints/dinosaursByDiet/): Returns all dinosaurs matching a specific diet.
+-   [**Get dinosaurs by locomotion**](https://vikiru.github.io/restasaurus/endpoints/dinosaursByLocomotion/): Returns all dinosaurs matching a specific locomotion type.
+-   [**Get random dinosaurs**](https://vikiru.github.io/restasaurus/endpoints/randomDinosaurs/): Returns a random number of dinosaurs. Minimum of 1 and maximum of 10.
+-   [**Get dinosaurs by query**](https://vikiru.github.io/restasaurus/endpoints/dinosaursByQuery/): Returns all dinosaurs matching a specific query.
 
-No parameters are required for this endpoint.
+### 📷 Image Endpoints
 
-</details>
+-   [**Get all dinosaur images**](https://vikiru.github.io/restasaurus/endpoints/allImages/): Returns all dinosaur images within the API, 50 dinosaurs per page.
+-   [**Get a image by ID**](https://vikiru.github.io/restasaurus/endpoints/imagesByID/): Returns a dinosaur image matching a specific id, returns an error if not found.
+-   [**Get random number of dinosaur images**](https://vikiru.github.io/restasaurus/endpoints/randomImages/): Returns a random number of dinosaur images. Minimum of 1 and maximum of 10.
 
-<details>
-<summary><h4>Get all dinosaur names</h4></summary>
+### OpenAPI Specification
 
-**API Endpoint and Description**
-
-`GET {baseUrl}/api/v1/names`
-
-Returns all dinosaur names that exist within the API.
-
-**Parameters**
-
-No parameters are required for this endpoint.
-
-</details>
-
-<details>
-<summary><h4>Get all dinosaur clades</h4></summary>
-
-**API Endpoint and Description**
-
-`GET {baseUrl}/api/v1/clades`
-
-Returns all dinosaur clades that exist within the API.
-
-**Parameters**
-
-No parameters are required for this endpoint.
-
-</details>
-
-<details>
-<summary><h4>Get all dinosaur diets</h4></summary>
-
-**API Endpoint and Description**
-
-`GET {baseUrl}/api/v1/diets`
-
-Returns all dinosaur diets that exist within the API.
-
-**Parameters**
-
-No parameters are required for this endpoint.
-
-</details>
-
-<details>
-<summary><h4>Get all dinosaur locomotions</h4></summary>
-
-**API Endpoint and Description**
-
-`GET {baseUrl}/api/v1/locomotions`
-
-Returns all dinosaur locomotions that exist within the API.
-
-**Parameters**
-
-No parameters are required for this endpoint.
-
-</details>
-
-<details>
-<summary><h4>Get all dinosaurs</h4></summary>
-
-**API Endpoint and Description**
-
-`GET {baseUrl}/api/v1/dinosaurs?page={page}`
-
-Returns all dinosaurs within the API, 50 dinosaurs per page.
-
-**Parameters**
-
--   `page`: The page number to retrieve, 50 dinosaurs are displayed per page.
-
-</details>
-
-<details>
-<summary><h4>Get a dinosaur by id</h4></summary>
-
-**API Endpoint and Description**
-
-`GET {baseUrl}/api/v1/dinosaurs/{id}`
-
-Returns a dinosaur matching a specific id, returns an error if not found.
-
-**Parameters**
-
--   `id`: The id corresponding to the dinosaur you wish to retrieve. Must be an integer between `1` and `1153`.
-
-</details>
-
-<details>
-<summary><h4>Get a dinosaur by name</h4></summary>
-
-**API Endpoint and Description**
-
-`GET {baseUrl}/api/v1/dinosaurs/{name}`
-
-Returns a dinosaur matching a specific name, returns an error if not found.
-
-**Parameters**
-
--   `name`: The name corresponding to the dinosaur you wish to retrieve.
-
-</details>
-
-<details>
-<summary><h4>Get dinosaurs by diet</h4></summary>
-
-**API Endpoint and Description**
-
-`GET {baseUrl}/api/v1/dinosaurs/{diet}`
-
-Returns all dinosaurs matching a specific diet.
-
-**Parameters**
-
--   `diet`: The diet of the dinosaurs you wish to retrieve.
-
-Examples include: `herbivore`, `carnivore`, `omnivore`, `piscivore`, etc.
-
-</details>
-
-<details>
-<summary><h4>Get dinosaurs by locomotion</h4></summary>
-
-**API Endpoint and Description**
-
-`GET {baseUrl}/api/v1/dinosaurs/{locomotion}`
-
-Returns all dinosaurs matching a specific locomotion type.
-
-**Parameters**
-
--   `locomotion`: The locomotion of the dinosaurs you wish to retrieve.
-
-Examples include: `biped`, `quadruped`, `facultative biped`, `gliding`, `swimming`, etc.
-
-</details>
-
-<details>
-<summary><h4>Get random number of dinosaurs</h4></summary>
-
-**API Endpoint and Description**
-
-`GET {baseUrl}/api/v1/dinosaurs/random/{count}`
-
-Returns a random number of dinosaurs. Minimum of 1 and maximum of 10.
-
-**Parameters**
-
--   `count`: The number of random dinosaurs you wish to retrieve. Must be a valid
-    integer between `1` and including `10`.
-
-</details>
-
-<details>
-<summary><h4>Get dinosaurs by query</h4></summary>
-
-**API Endpoint and Description**
-
-`GET {baseUrl}/api/v1/search?clade={clade}&diet={diet}&locomotion={locomotion}`
-
-Returns all dinosaurs matching a specific query.
-
-**Parameters**
-
--   `clade`: The group that the dinosaur belongs to within its classification. This can be passed in various ways:
-
-    1. `GET {baseUrl}/api/v1/search?clade=clade1,clade2`
-    2. `GET {baseUrl}/api/v1/search?clade=clade1&clade=clade2`
-
--   `diet`: The diet of the dinosaurs you wish to retrieve.
-
--   `locomotion`: The locomotion of the dinosaurs you wish to retrieve.
-
-Example `clade` include: `Therapoda`, `Sauropodamorpha`, `Ornithischia`, `Thyreophora`, etc.
-
-Example `diet` include: `herbivore`, `carnivore`, `omnivore`, `piscivore`, etc.
-
-Example `locomotion` include: `biped`, `quadruped`, `facultative biped`, `gliding`, `swimming`, etc.
-
-</details>
-
-<details>
-<summary><h4>Get all dinosaur images</h4></summary>
-
-**API Endpoint and Description**
-
-`GET {baseUrl}/api/v1/images?page={page}`
-
-Returns all dinosaur images within the API, 50 dinosaurs per page.
-
-**Parameters**
-
--   `page`: The page number to retrieve, 50 dinosaur images are displayed per page.
-
-</details>
-
-<details>
-<summary><h4>Get a dinosaur image by id</h4></summary>
-
-**API Endpoint and Description**
-
-`GET {baseUrl}/api/v1/images/{id}`
-
-Returns a dinosaur image matching a specific id, returns an error if not found.
-
-**Parameters**
-
--   `id`: The id corresponding to the dinosaur image you wish to retrieve. Must be an integer between `1` and `1153`.
-
-</details>
-
-<details>
-<summary><h4>Get random number of dinosaur images</h4></summary>
-
-**API Endpoint and Description**
-
-`GET {baseUrl}/api/v1/images/random/{count}`
-
-Returns a random number of dinosaur images. Minimum of 1 and maximum of 10.
-
-**Parameters**
-
--   `count`: The number of random dinosaur images you wish to retrieve. Must be a valid integer between `1` and including `10`.
-
-</details>
+To view more details about all endpoints such as the expected responses and status codes, please take a look at the
+[OpenAPI Specification](https://vikiru.github.io/restasaurus/api/).
 
 ## 🛠️ Tech Stack
 
@@ -359,6 +154,8 @@ Ensure that the following dependencies are installed onto your machine by follow
 
 ## ⚡ Setup Instructions
 
+### Environment Setup
+
 1. Clone this repository to your local machine.
 
 ```bash
@@ -375,12 +172,14 @@ npm install
 3. Setup your `.env` file with the required information.
 
 ```text
-PORT='YOUR-PORT-HERE'
+PORT=YOUR-PORT-HERE
 MONGODB_URI='YOUR-MONGODB-URI-HERE'
 NODE_ENV='development'
 ```
 
-4. Run the `retrieveData` script to retrieve all dinosaur information.
+### Retrieving data from Wikipedia via its API
+
+Run the `retrieveData` script to retrieve all dinosaur information.
 
 ```bash
 npm run retrieveData
@@ -392,7 +191,7 @@ Please check the `app/logs` directory in the event of any errors. Specifically,
 you can check the `errors.log` or `all.log` to view the errors or all levels of
 logging, respectively.
 
-Additionally, confirm that the `app/scripts` contains the following JSON files:
+Additionally, confirm that `app/scripts/` contains the following JSON files:
 
 -   `allDinoNames.json`: contains all dinosaur names (should be around 1427 names).
 -   `filteredNames.json`: contains the names of the dinosaurs that passed the filtering process (should be around 1153 names).
@@ -401,7 +200,9 @@ Additionally, confirm that the `app/scripts` contains the following JSON files:
 -   `pageData.json`: contains the page data for each Wikipedia article.
 -   `dinosaurData.json`: contains the processed data of all dinosaurs.
 
-5. Run the `postData` script to save all dinosaurs to your MongoDB database, once retrieveData was successful.
+### Saving the processed data to the MongoDB database
+
+Run the `postData` script to save all dinosaurs to your MongoDB database, once retrieveData was successful.
 
 ```bash
 npm run postData
@@ -493,7 +294,7 @@ npm run retrieveData
 npm run postData
 ```
 
-8. Create test coverage shields badges for README using [istanbul-badges-readme](https://github.com/the-bugging/istanbul-badges-readme)
+8. Create test coverage shields badges for README using [istanbul-badges-readme](https://github.com/the-bugging/istanbul-badges-readme).
 
 ```bash
 npm run make-badges
@@ -504,7 +305,6 @@ npm run make-badges
 -   [Docusaurus](https://docusaurus.io/)
 -   [Redocusaurus](https://github.com/rohit-gohri/redocusaurus)
 -   [GitHub Pages](https://pages.github.com/)
--   [Wikipedia](https://en.wikipedia.org/wiki/Main_Page)
 -   [Swagger Editor](https://swagger.io/tools/swagger-editor/)
 -   [Swagger Documentation](https://swagger.io/specification/)
 -   [Chai Documentation](https://www.chaijs.com/)
@@ -516,6 +316,8 @@ npm run make-badges
 -   [Shields Badges](https://github.com/badges/shields)
 -   [regex101](https://regex101.com/)
 -   [Favicon Generator](https://favicon.io/favicon-generator/)
+
+Additionally, this API would not be possible without the dinosaur information and image information retrieved from all of the [Wikipedia](https://en.wikipedia.org/wiki/Main_Page) articles accessed through the [Wikipedia API](https://www.mediawiki.org/wiki/Special:MyLanguage/API:Main_page). All images and text provided by this API belong to their respective authors.
 
 ## ©️ License
 
