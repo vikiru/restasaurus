@@ -22,6 +22,24 @@ describe('handleFeature', function () {
             const feature = handleFeature.findFeature(root, dietRegex, []);
             expect(feature).to.be.equal('');
         });
+
+        it('should handle cases where there are ties in matches', function () {
+            const htmlData = '<p>This dinosaur was a bipedal carnivore, maybe omnivorous\n</p>';
+            const root = parse(htmlData);
+            const dietRegex = /(\b\w*(ivore|ivorous))s?\b/gim;
+            const handleFeature = require('../../app/utils/handleFeature');
+            const feature = handleFeature.findFeature(root, dietRegex, []);
+            expect(feature).to.be.equal('');
+        });
+
+        it('should handle cases where there are no ties in matches', function () {
+            const htmlData = '<p>This dinosaur was a bipedal carnivore carnivore\n</p>';
+            const root = parse(htmlData);
+            const dietRegex = /(\b\w*(ivore|ivorous))s?\b/gim;
+            const handleFeature = require('../../app/utils/handleFeature');
+            const feature = handleFeature.findFeature(root, dietRegex, []);
+            expect(feature).to.be.equal('carnivore');
+        });
     });
 
     describe('findDescription', function () {
