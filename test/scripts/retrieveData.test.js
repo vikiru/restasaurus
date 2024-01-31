@@ -369,7 +369,6 @@ describe('retrieveData', function () {
         });
 
         it('should read data from JSON files if they exist', async function () {
-            // Arrange
             const expectedResult = {
                 pageData: [],
                 htmlData: [],
@@ -384,13 +383,31 @@ describe('retrieveData', function () {
 
         it('should retrieve data from Wikipedia API if JSON files do not exist', async function () {
             const expectedResult = {
-                pageData: [],
+                pageData: [{ pageimage: '' }],
                 htmlData: [],
                 imageData: [],
             };
             urlHandlerStub.resolves({ data: [] });
             readJSONFileStub.rejects(new Error('File not found'));
-            retrieveAndFilterDinoDataStub.returns({ data: [], filteredNames: [] });
+            retrieveAndFilterDinoDataStub.returns({ data: [{ pageimage: '' }], filteredNames: [] });
+            retrievePageDataStub.resolves([]);
+            retrieveImageDataStub.resolves([]);
+            retrieveHTMLDataStub.resolves([]);
+
+            const result = await retrieveData.retrieveData();
+
+            expect(result).to.deep.equal(expectedResult);
+        });
+
+        it('should retrieve data from Wikipedia API if JSON files do not exist and handle no pageimage', async function () {
+            const expectedResult = {
+                pageData: [{}],
+                htmlData: [],
+                imageData: [],
+            };
+            urlHandlerStub.resolves({ data: [] });
+            readJSONFileStub.rejects(new Error('File not found'));
+            retrieveAndFilterDinoDataStub.returns({ data: [{}], filteredNames: [] });
             retrievePageDataStub.resolves([]);
             retrieveImageDataStub.resolves([]);
             retrieveHTMLDataStub.resolves([]);

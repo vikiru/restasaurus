@@ -5,15 +5,15 @@ const sinon = require('sinon');
 describe('mongoData', function () {
     describe('connect', function () {
         let connectStub;
-        let infoLogSpy;
-        let errorLogSpy;
+        let infoLogStub;
+        let errorLogStub;
 
         beforeEach(function () {
             process.env.NODE_ENV = 'testing';
             const { logger } = require('../../app/config/logger');
             connectStub = sinon.stub(mongoose, 'connect');
-            infoLogSpy = sinon.spy(logger, 'info');
-            errorLogSpy = sinon.spy(logger, 'error');
+            infoLogStub = sinon.stub(logger, 'info').resolves();
+            errorLogStub = sinon.stub(logger, 'error').resolves();
         });
 
         afterEach(function () {
@@ -27,8 +27,8 @@ describe('mongoData', function () {
             const result = await connect();
 
             expect(result).to.be.ok;
-            expect(infoLogSpy.calledOnce).to.be.true;
-            expect(infoLogSpy.calledWith('Successfully connected to the MongoDB database.')).to.be.true;
+            expect(infoLogStub.calledOnce).to.be.true;
+            expect(infoLogStub.calledWith('Successfully connected to the MongoDB database.')).to.be.true;
         });
 
         it('should log an error message if the connection fails', async function () {
@@ -38,22 +38,22 @@ describe('mongoData', function () {
 
             await connect();
 
-            expect(errorLogSpy.calledOnce).to.be.true;
-            expect(errorLogSpy.calledWith(error)).to.be.true;
+            expect(errorLogStub.calledOnce).to.be.true;
+            expect(errorLogStub.calledWith(error)).to.be.true;
         });
     });
 
     describe('disconnect', function () {
         let disconnectStub;
-        let infoLogSpy;
-        let errorLogSpy;
+        let infoLogStub;
+        let errorLogStub;
 
         beforeEach(function () {
             process.env.NODE_ENV = 'testing';
             const { logger } = require('../../app/config/logger');
             disconnectStub = sinon.stub(mongoose, 'disconnect');
-            infoLogSpy = sinon.spy(logger, 'info');
-            errorLogSpy = sinon.spy(logger, 'error');
+            infoLogStub = sinon.stub(logger, 'info').resolves();
+            errorLogStub = sinon.stub(logger, 'error').resolves();
         });
 
         afterEach(function () {
@@ -67,8 +67,8 @@ describe('mongoData', function () {
 
             await disconnect();
 
-            expect(infoLogSpy.calledOnce).to.be.true;
-            expect(infoLogSpy.calledWith('Successfully disconnected from the MongoDB database.')).to.be.true;
+            expect(infoLogStub.calledOnce).to.be.true;
+            expect(infoLogStub.calledWith('Successfully disconnected from the MongoDB database.')).to.be.true;
         });
 
         it('should log an error message if the disconnection fails', async function () {
@@ -78,8 +78,8 @@ describe('mongoData', function () {
 
             await disconnect();
 
-            expect(errorLogSpy.calledOnce).to.be.true;
-            expect(errorLogSpy.calledWith(error)).to.be.true;
+            expect(errorLogStub.calledOnce).to.be.true;
+            expect(errorLogStub.calledWith(error)).to.be.true;
         });
     });
 });
