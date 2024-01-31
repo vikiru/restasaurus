@@ -28,9 +28,9 @@ MONGODB_URI='YOUR-MONGODB-URI-HERE'
 NODE_ENV='development'
 ```
 
-### Data Retrieval and Database Setup
+### Retrieving data from Wikipedia via its API
 
-1. Run the `retrieveData` script to retrieve all dinosaur information.
+Run the `retrieveData` script to retrieve all dinosaur information.
 
 ```bash
 npm run retrieveData
@@ -51,7 +51,9 @@ Additionally, confirm that `app/scripts/` contains the following JSON files:
 -   `pageData.json`: contains the page data for each Wikipedia article.
 -   `dinosaurData.json`: contains the processed data of all dinosaurs.
 
-2. Run the `postData` script to save all dinosaurs to your MongoDB database, once retrieveData was successful.
+### Saving the processed data to the MongoDB database
+
+Run the `postData` script to save all dinosaurs to your MongoDB database, once retrieveData was successful.
 
 ```bash
 npm run postData
