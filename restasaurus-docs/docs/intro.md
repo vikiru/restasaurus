@@ -4,11 +4,11 @@ id: intro
 title: 📖 Introduction
 ---
 
-<p align="center" id="logo">
+<div align="center" id="logo">
     <img src="logo.png"/>
-</p>
+</div>
 
-<p align="center" id="badges">
+<div align="center" id="badges">
  <a href="https://github.com/vikiru/restasaurus/blob/main/LICENSE">
   <img src="https://img.shields.io/badge/license-MIT-aqua" alt="MIT License Badge"/>
  </a>
@@ -19,21 +19,19 @@ title: 📖 Introduction
   <img src="https://wakatime.com/badge/github/vikiru/restasaurus.svg"
   alt="Wakatime Coding Stats for RESTasaurus"/>
  </a>
- <br/>
- <a href="https://github.com/vikiru/restasaurus/releases">
-  <img src="https://img.shields.io/github/v/release/vikiru/restasaurus" alt="Release"/>
- </a>
  <a href="https://github.com/vikiru/restasaurus/issues?q=is%3Aissue+is%3Aclosed">
   <img src="https://img.shields.io/github/issues-closed/vikiru/restasaurus" alt="Closed Issues"/>
  </a>
  <a href="https://github.com/vikiru/restasaurus/pulls?q=is%3Apr+is%3Aclosed">
   <img src="https://img.shields.io/github/issues-pr-closed/vikiru/restasaurus?label=closed%20prs" alt="Closed PRs"/>
  </a>
- <br/>
+  <a href="https://github.com/vikiru/restasaurus/releases">
+  <img src="https://img.shields.io/github/v/release/vikiru/restasaurus" alt="Release"/>
+ </a>
  <a href="https://github.com/vikiru/restasaurus/actions/workflows/lint.yml">
   <img src="https://github.com/vikiru/restasaurus/actions/workflows/lint.yml/badge.svg" alt="GitHub Lint Action Workflow Status"/>
  </a>
-</p>
+</div>
 
 ---
 
