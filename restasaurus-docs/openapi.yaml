@@ -1,4 +1,5 @@
 openapi: 3.1.0
+
 info:
     title: OpenAPI Specification
     description: 'A RESTful API about dinosaurs built using Express, MongoDB and Mongoose.'
@@ -8,7 +9,7 @@ info:
     version: 1.0.0
 externalDocs:
     description: Read more about the API
-    url: 'http://vikiru.github.io/restasaurus'
+    url: 'http://vikiru.github.io/restasaurus/'
 servers:
     - url: 'localhost:3000/api/v1'
 tags:
@@ -20,6 +21,7 @@ tags:
       description: Retrieve dinosaur information.
     - name: image
       description: Retrieve dinosaur image information.
+
 paths:
     /:
         get:
@@ -648,14 +650,17 @@ components:
                 classificationInfo:
                     type: string
                     format: ObjectId
+                    $ref: '#/components/schemas/ClassificationInfo'
                     description: Reference to ClassificationInfo
                 image:
                     type: string
                     format: ObjectId
+                    $ref: '#/components/schemas/DinosaurImage'
                     description: Reference to DinosaurImage
                 source:
                     type: string
                     format: ObjectId
+                    $ref: '#/components/schemas/DinosaurSource'
                     description: Reference to DinosaurSource
             required:
                 - id
