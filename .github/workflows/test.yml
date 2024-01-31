@@ -17,7 +17,9 @@ jobs:
         steps:
         - name: Checkout repo
           uses: actions/checkout@v4
-          
+          with:
+            ref: ${{ github.head_ref }}
+
         - name: Setup github-actions[bot] git config
           run: |
             git config --local user.name "github-actions[bot]"
@@ -52,7 +54,7 @@ jobs:
             CHANGES_EXIST: ${{ steps.changes.outputs.changes_exist }}
           run: echo "$CHANGES_EXIST"
   
-        - name: Commit prettier formatting changes via GitHub Actions, if changes exist
+        - name: Update README test coverage badges via GitHub Actions, if changes exist
           if: steps.changes.outputs.changes_exist == 'true'
           run: |
             git commit -m "Update test coverage badges via GitHub Actions"
