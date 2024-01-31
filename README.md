@@ -57,9 +57,16 @@ Additionally, if you would like to see an example of a response from the API, pl
 
 -   [📖 Table of Contents](#-table-of-contents)
 -   [📍 API Endpoints](#-api-endpoints)
+    -   [📄 General Endpoints](#-general-endpoints)
+    -   [🦖 Dinosaur Endpoints](#-dinosaur-endpoints)
+    -   [📷 Image Endpoints](#-image-endpoints)
+    -   [OpenAPI Specification](#openapi-specification)
 -   [🛠️ Tech Stack](#️-tech-stack)
 -   [📝 Prerequisites](#-prerequisites)
 -   [⚡ Setup Instructions](#-setup-instructions)
+    -   [Environment Setup](#environment-setup)
+    -   [Retrieving data from Wikipedia via its API](#retrieving-data-from-wikipedia-via-its-api)
+    -   [Saving the processed data to the MongoDB database](#saving-the-processed-data-to-the-mongodb-database)
 -   [🚀 Run](#-run)
 -   [🔍 Testing](#-testing)
 -   [📜 Available Scripts](#-available-scripts)
@@ -69,7 +76,7 @@ Additionally, if you would like to see an example of a response from the API, pl
 ## 📍 API Endpoints
 
 > [!NOTE]
-> The API is currently configured to  only support GET requests and responses from the API are only in `json` format.
+> The API is currently configured to only support GET requests and responses from the API are only in `json` format.
 
 A comprehensive overview detailing all available endpoints can be located within the documentation under the [Endpoint Overview](https://vikiru.github.io/restasaurus/overview/) section. Each endpoint has a dedicated page detailing its url along with a general description, parameters (if any) and finally, a demonstration of the endpoint via Postman is also provided for clarity.
 
