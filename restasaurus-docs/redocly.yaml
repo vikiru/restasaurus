@@ -8,3 +8,4 @@ theme:
     # See https://redocly.com/docs/api-reference-docs/configuration/functionality/
     openapi:
         disableSearch: true
+        hideDownloadButton: true
