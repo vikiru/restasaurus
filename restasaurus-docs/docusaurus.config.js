@@ -151,7 +151,7 @@ const config = {
                                 label: 'Setup',
                                 to: '/setup',
                             },
-                            { label: 'API Endpoints', to: '/api' },
+                            { label: 'Model Overview', to: '/models' },
                         ],
                     },
                     {
