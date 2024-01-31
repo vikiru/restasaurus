@@ -90,6 +90,14 @@ const config = {
     themeConfig:
         /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
+            metadata: [
+                { name: 'keywords', content: 'RESTasaurus, REST, API, Express, MongoDB, Mongoose, Dinosaurs' },
+                {
+                    name: 'description',
+                    content:
+                        'RESTasaurus is a dinosaur REST API built using Express, MongoDB, and Mongoose with data on almost 1200 dinosaurs.',
+                },
+            ],
             navbar: {
                 hideOnScroll: false,
                 logo: {
