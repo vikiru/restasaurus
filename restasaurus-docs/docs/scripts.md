@@ -45,3 +45,9 @@ npm run retrieveData
 ```bash
 npm run postData
 ```
+
+8. Create test coverage shields badges for README using [istanbul-badges-readme](https://github.com/the-bugging/istanbul-badges-readme).
+
+```bash
+npm run make-badges
+```
