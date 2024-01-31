@@ -45,9 +45,7 @@ The data within the API is taken directly from **Wikipedia** via its API, as is.
 
 :::
 
-For a better understanding of the information provided by the API, please check out the models directory. The schemas used within the MongoDB database include:
-
-Please consider checking out the [models](https://github.com/vikiru/restasaurus/tree/main/app/models) directory to get an idea of the information being provided by the API. The schemas used within the MongoDB database can be seen below:
+For a better understanding of the information provided by the API, please check out the [models](https://github.com/vikiru/restasaurus/tree/main/app/models) directory. The schemas used within the MongoDB database include:
 
 -   [**Dinosaur**](https://github.com/vikiru/restasaurus/blob/main/app/models/Dinosaur.js): This model represents a dinosaur, including its unique properties such as name, temporal range, diet, locomotion type, and a description.
 -   [**ClassificationInfo**](./app/models/ClassificationInfo.js): This model contains the classification information of a dinosaur, including details like its family, order, and genus.
