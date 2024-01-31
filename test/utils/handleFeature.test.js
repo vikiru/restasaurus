@@ -122,7 +122,7 @@ describe('handleFeature', function () {
             sinon.restore();
         });
 
-        it('should return biped carnivore as locmotion and diet from extract', function () {
+        it('should return biped carnivore as locomotion and diet from extract', function () {
             const pageData = {
                 extract: 'This dinosaur was a bipedal carnivore',
             };
@@ -131,7 +131,7 @@ describe('handleFeature', function () {
             expect(data.locomotionType).to.equal('biped');
         });
 
-        it('should return biped carnivore as locmotion and diet', function () {
+        it('should return biped carnivore as locomotion and diet', function () {
             const pageData = {
                 structuredText:
                     'This dinosaur was a bipedal carnivore\nIt was not the first bipedal carnivore of its kind.\ncarnivore biped carnivore biped carnivore\n',
