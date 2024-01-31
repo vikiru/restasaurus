@@ -12,7 +12,6 @@ const {
 } = require('../utils/handleFeature');
 const { processImageData } = require('../utils/handleImage');
 const { handleSourceInformation } = require('../utils/handleSource');
-const { REQUEST_DELAY } = require('../utils/helperConstants');
 const { writeData } = require('../utils/writeData');
 
 const { urlConstructor, urlHandler, retrieveAndFilterDinoData, readJSONFile, delay } = require('./constructDinoNames');
@@ -38,7 +37,7 @@ async function retrieveImageData(names) {
         logger.info('Starting to retrieve image data from Wikipedia API.');
         const startTime = process.hrtime();
 
-        const { data } = await urlHandler(urls, delay(REQUEST_DELAY));
+        const { data } = await urlHandler(urls, delay);
         const endTime = process.hrtime(startTime);
         const timeInSeconds = endTime[0] + endTime[1] / 1e9;
         const formattedSeconds = timeInSeconds.toFixed(2);
@@ -73,7 +72,7 @@ async function retrieveHTMLData(names) {
         logger.info('Starting to retrieve HTML data from Wikipedia API.');
         const startTime = process.hrtime();
 
-        const { data } = await urlHandler(urls, delay(REQUEST_DELAY));
+        const { data } = await urlHandler(urls, delay);
         const endTime = process.hrtime(startTime);
         const timeInSeconds = endTime[0] + endTime[1] / 1e9;
         const formattedSeconds = timeInSeconds.toFixed(2);
@@ -100,7 +99,6 @@ async function retrieveHTMLData(names) {
 function processHTMLData(htmlData, mongooseData) {
     retrieveBoxData(htmlData, mongooseData);
     retrieveDietAndLocomotionType(htmlData, mongooseData);
-    findMissingFeatures(mongooseData);
 }
 
 /**
@@ -121,9 +119,8 @@ function processPageData(pageData, htmlData, mongooseData) {
         mongooseData.locomotionType = findLocomotionType(pageData);
     } else {
         mongooseData.description = findDescription(htmlData, mongooseData.name) || '';
-        mongooseData.diet = findDiet(htmlData);
-        mongooseData.locomotionType = findLocomotionType(htmlData);
     }
+    findMissingFeatures(mongooseData);
     mongooseData.source = handleSourceInformation(mongooseData, mongooseData.name, pageData, pageData.rightsInfo);
 }
 

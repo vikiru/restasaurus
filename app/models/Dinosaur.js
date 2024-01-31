@@ -136,7 +136,7 @@ DinosaurSchema.statics.returnDinosaursByQuery = function (query) {
             },
         },
         { $unwind: '$classificationInfo' },
-        query,
+        { $match: query.$match },
         {
             $lookup: {
                 from: 'dinosaursources',
@@ -236,6 +236,44 @@ DinosaurSchema.statics.returnRandomImages = function (count) {
 
 DinosaurSchema.statics.findAllNames = function () {
     return this.find({}, 'name').exec();
+};
+
+DinosaurSchema.statics.findAllDiets = function () {
+    return this.aggregate([
+        {
+            $group: {
+                _id: { diet: '$diet' },
+                count: { $sum: 1 },
+            },
+        },
+    ]);
+};
+
+DinosaurSchema.statics.findAllLocomotions = function () {
+    return this.aggregate([
+        {
+            $group: {
+                _id: { locomotionType: '$locomotionType' },
+                count: { $sum: 1 },
+            },
+        },
+    ]);
+};
+
+DinosaurSchema.statics.findAllClades = function () {
+    return this.aggregate([
+        {
+            $lookup: {
+                from: 'classificationinfos',
+                localField: 'classificationInfo',
+                foreignField: '_id',
+                as: 'classificationInfo',
+            },
+        },
+        { $unwind: '$classificationInfo' },
+        { $unwind: '$classificationInfo.clade' },
+        { $group: { _id: '$classificationInfo.clade', count: { $sum: 1 } } },
+    ]);
 };
 
 const Dinosaur = model('Dinosaur', DinosaurSchema);

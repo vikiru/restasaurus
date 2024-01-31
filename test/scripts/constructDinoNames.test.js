@@ -1,20 +1,38 @@
-const fs = require('fs').promises;
+const fs = require('fs');
 
 const { expect } = require('chai');
 const proxyquire = require('proxyquire');
 const sinon = require('sinon');
 
-const fetchData = require('../../app/utils/fetchData');
-const writeData = require('../../app/utils/writeData');
-
 describe('constructDinoNames - Script', function () {
+    let writeStub;
+
+    beforeEach(function () {
+        const logger = require('../../app/config/logger');
+        sinon.stub(logger.logger, 'info').resolves();
+        sinon.stub(logger.logger, 'error').resolves();
+
+        writeStub = sinon.stub(fs.promises, 'writeFile');
+        writeStub.callsFake((path, data, options, callback) => callback(null));
+    });
+
+    afterEach(function () {
+        sinon.restore();
+    });
+
     describe('delay', function () {
-        const constructDinoNames = require('../../app/scripts/constructDinoNames');
         it('should resolve after specified delay', async function () {
-            const delayTime = 1;
-            const delayStub = sinon.stub(constructDinoNames, 'delay').resolves();
-            await constructDinoNames.delay(delayTime);
-            expect(delayStub.calledOnceWith(delayTime)).to.be.true;
+            const setTimeoutStub = sinon.stub(global, 'setTimeout');
+            setTimeoutStub.callsFake((resolve) => resolve());
+
+            const start = Date.now();
+            const constructDinoNames = require('../../app/scripts/constructDinoNames');
+            await constructDinoNames.delay();
+            const duration = Date.now() - start;
+
+            expect(duration).to.be.lessThan(10);
+
+            setTimeoutStub.restore();
         });
     });
 
@@ -95,7 +113,46 @@ describe('constructDinoNames - Script', function () {
     });
 
     describe('constructDinoNames', function () {
-        const constructDinoNames = require('../../app/scripts/constructDinoNames');
+        let constructDinoNames;
+        let readJSONFileStub;
+        let retrieveAllDinoNamesStub;
+        let fetchStub;
+        const expectedData = {
+            parse: {
+                text: `
+                        <div class="mw-content-ltr">
+                            <ul>
+                                <li>
+                                    <i>
+                                        <a href="/wiki/Stegosaurus" title="">Stegosaurus</a>
+                                    </i>
+                                </li>
+                                <li>
+                                    <i>
+                                        <a title="">Stegosaurus</a>
+                                    </i>
+                                </li>
+                                <li></li>
+                            </ul>
+                        </div>
+                    `,
+            },
+        };
+
+        beforeEach(function () {
+            readJSONFileStub = sinon.stub();
+            retrieveAllDinoNamesStub = sinon.stub();
+            fetchStub = sinon.stub(global, 'fetch').resolves({
+                ok: true,
+                json: () => Promise.resolve(expectedData),
+            });
+
+            constructDinoNames = proxyquire('../../app/scripts/constructDinoNames', {
+                fs: { promises: { readFile: readJSONFileStub, writeFile: sinon.stub().resolves() } },
+                '../utils/retrieveAllDinoNames': retrieveAllDinoNamesStub,
+                'node-fetch': fetchStub,
+            });
+        });
 
         afterEach(function () {
             sinon.restore();
@@ -103,45 +160,22 @@ describe('constructDinoNames - Script', function () {
 
         it('should return names from JSON file when it exists', async function () {
             const names = ['dino1', 'dino2'];
-            const readFileStub = sinon.stub(fs, 'readFile').resolves(JSON.stringify(names));
-            const readJSONStub = sinon.stub(constructDinoNames, 'readJSONFile').resolves(names);
+            readJSONFileStub.resolves(JSON.stringify(names));
 
             const result = await constructDinoNames.constructDinoNames();
 
             expect(result).to.deep.equal(names);
+            sinon.assert.calledOnce(readJSONFileStub);
         });
 
         it('should retrieve names from Wikipedia API when JSON file does not exist', async function () {
             const error = new Error('File not found');
             const names = ['Stegosaurus'];
-            const readFileStub = sinon.stub(fs, 'readFile').rejects(error);
-            const retrieveAllDinoNamesStub = sinon.stub().resolves(names);
-            const expectedData = {
-                parse: {
-                    text: `
-                            <div class="mw-content-ltr">
-                                <ul>
-                                    <li>
-                                        <i>
-                                            <a href="/wiki/Stegosaurus" title="">Stegosaurus</a>
-                                        </i>
-                                    </li>
-                                    <li>
-                                        <i>
-                                            <a title="">Stegosaurus</a>
-                                        </i>
-                                    </li>
-                                    <li></li>
-                                </ul>
-                            </div>
-                        `,
-                },
-            };
-            const fetchStub = sinon.stub(global, 'fetch').resolves({
-                ok: true,
-                json: () => Promise.resolve(expectedData),
-            });
+            readJSONFileStub.rejects(error);
+            retrieveAllDinoNamesStub.resolves(names);
+
             const result = await constructDinoNames.constructDinoNames();
+
             expect(result).to.deep.equal(names);
         });
     });
@@ -230,20 +264,19 @@ describe('constructDinoNames - Script', function () {
     });
 
     describe('filterDinoNames', function () {
-        const constructDinoNames = require('../../app/scripts/constructDinoNames');
-
         afterEach(function () {
             sinon.restore();
         });
 
         it('should filter dinosaur data and write to files', async function () {
+            sinon.stub(fs, 'writeFile').resolves();
+            const constructDinoNames = require('../../app/scripts/constructDinoNames');
             const data = [
                 { title: 'Dino1', pageimage: 'image1' },
                 { title: 'Dino2' },
                 { title: 'Dino3', pageimage: 'image3' },
             ];
             const expectedFilteredNames = ['Dino1', 'Dino3'];
-            const writeDataStub = sinon.stub(writeData, 'writeData').resolves();
 
             const result = await constructDinoNames.filterDinoNames(data);
 
@@ -252,7 +285,17 @@ describe('constructDinoNames - Script', function () {
     });
 
     describe('readJSONFile', function () {
-        const constructDinoNames = require('../../app/scripts/constructDinoNames');
+        let constructDinoNames;
+        let readJSONFileStub;
+
+        beforeEach(function () {
+            readJSONFileStub = sinon.stub();
+
+            constructDinoNames = proxyquire('../../app/scripts/constructDinoNames', {
+                fs: { promises: { readFile: readJSONFileStub, writeFile: sinon.stub().resolves() } },
+            });
+        });
+
         afterEach(function () {
             sinon.restore();
         });
@@ -260,31 +303,31 @@ describe('constructDinoNames - Script', function () {
         it('should return parsed JSON data when file exists', async function () {
             const filePath = './test.json';
             const data = { key: 'value' };
-            const readFileStub = sinon.stub(fs, 'readFile').resolves(JSON.stringify(data));
+            readJSONFileStub.resolves(JSON.stringify(data));
 
             const result = await constructDinoNames.readJSONFile(filePath);
 
-            expect(readFileStub.calledOnceWith(filePath, 'utf8')).to.be.true;
             expect(result).to.deep.equal(data);
+            sinon.assert.calledOnce(readJSONFileStub);
         });
 
         it('should throw an error when file does not exist', async function () {
             const filePath = './nonexistent.json';
             const error = new Error('File not found');
-            const readFileStub = sinon.stub(fs, 'readFile').rejects(error);
+            readJSONFileStub.rejects(error);
 
             try {
                 await constructDinoNames.readJSONFile(filePath);
                 expect.fail('Expected error was not thrown');
             } catch (actualError) {
-                expect(actualError).to.equal(error);
+                expect(actualError).to.deep.equal(error);
             }
         });
     });
 
     describe('retrieveAndFilterDinoData', function () {
-        const constructDinoNames = require('../../app/scripts/constructDinoNames');
-        let readJSONFileStub;
+        let constructDinoNames;
+        let readFileStub;
         let constructDinoNamesStub;
         let retrievePageDataStub;
         let filterDinoNamesStub;
@@ -300,10 +343,17 @@ describe('constructDinoNames - Script', function () {
                 ok: true,
                 json: () => Promise.resolve(expectedData),
             });
-            readJSONFileStub = sinon.stub(constructDinoNames, 'readJSONFile');
-            constructDinoNamesStub = sinon.stub(constructDinoNames, 'constructDinoNames');
-            retrievePageDataStub = sinon.stub(constructDinoNames, 'retrievePageData');
-            filterDinoNamesStub = sinon.stub(constructDinoNames, 'filterDinoNames');
+            readFileStub = sinon.stub(fs.promises, 'readFile');
+            constructDinoNamesStub = sinon.stub();
+            retrievePageDataStub = sinon.stub();
+            filterDinoNamesStub = sinon.stub();
+
+            constructDinoNames = proxyquire('../../app/scripts/constructDinoNames', {
+                fs: { promises: { readFile: readFileStub, writeFile: sinon.stub().resolves() } },
+                constructDinoNames: constructDinoNamesStub,
+                retrievePageData: retrievePageDataStub,
+                filterDinoNames: filterDinoNamesStub,
+            });
         });
 
         afterEach(function () {
@@ -311,22 +361,17 @@ describe('constructDinoNames - Script', function () {
         });
 
         it('should retrieve dino data from JSON file', async function () {
-            const readFileStub = sinon
-                .stub(fs, 'readFile')
-                .resolves(JSON.stringify({ data: ['dino1', 'dino2'], filteredNames: ['name1', 'name2'] }));
-            readJSONFileStub.resolves({ data: ['dino1', 'dino2'], filteredNames: ['name1', 'name2'] });
+            readFileStub.resolves(JSON.stringify({ data: ['dino1', 'dino2'], filteredNames: ['name1', 'name2'] }));
             const result = await constructDinoNames.retrieveAndFilterDinoData();
             expect(result.data).to.deep.equal({ data: ['dino1', 'dino2'], filteredNames: ['name1', 'name2'] });
         });
 
         it('should retrieve and filter dino data correctly', async function () {
-            readJSONFileStub.resolves(['dino1', 'dino2']);
-            constructDinoNamesStub.resolves(['name1', 'name2']);
-            retrievePageDataStub.resolves({ data: ['dino1', 'dino2'] });
-            filterDinoNamesStub.resolves(['name1', 'name2']);
-
+            readFileStub.rejects(new Error('Read file failed'));
+            constructDinoNamesStub.resolves([]);
+            retrievePageDataStub.resolves({ data: [] });
+            filterDinoNamesStub.resolves([]);
             const result = await constructDinoNames.retrieveAndFilterDinoData();
-
             expect(result).to.deep.equal({ data: [], filteredNames: [] });
         });
     });

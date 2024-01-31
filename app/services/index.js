@@ -4,7 +4,7 @@ const { Dinosaur } = require('../models/Dinosaur');
 const { DinosaurImage } = require('../models/DinosaurImage');
 const { DinosaurSource } = require('../models/DinosaurSource');
 
-const MAX_PAGE = 20;
+const MAX_PAGE = 24;
 
 /**
  * Asynchronously pushes dinosaur data to the database.
@@ -84,6 +84,42 @@ async function retrieveAllImages(page) {
 async function retrieveAllNames() {
     const dinosaurs = await Dinosaur.findAllNames();
     return dinosaurs.map((dino) => dino.name).sort();
+}
+
+/**
+ * The function retrieves all diets from a database and returns them in a formatted array.
+ *
+ * @returns The function `retrieveAllDiets` is returning an array of objects, where each object has two properties:
+ *   `diet` and `count`.
+ */
+async function retrieveAllDiets() {
+    const diets = await Dinosaur.findAllDiets();
+    const formattedDiets = diets.map((diet) => ({
+        diet: diet._id.diet,
+        count: diet.count,
+    }));
+    formattedDiets.sort((a, b) => b.count - a.count);
+    return formattedDiets;
+}
+
+async function retrieveAllLocomotions() {
+    const locomotions = await Dinosaur.findAllLocomotions();
+    const formattedLocomotions = locomotions.map((locomotion) => ({
+        locomotionType: locomotion._id.locomotionType,
+        count: locomotion.count,
+    }));
+    formattedLocomotions.sort((a, b) => b.count - a.count);
+    return formattedLocomotions;
+}
+
+async function retrieveAllClades() {
+    const clades = await Dinosaur.findAllClades();
+    const formattedClades = clades.map((clade) => ({
+        clade: clade._id,
+        count: clade.count,
+    }));
+    formattedClades.sort((a, b) => b.count - a.count);
+    return formattedClades;
 }
 
 /**
@@ -203,8 +239,7 @@ async function returnDinosaursByQuery(clade, diet, locomotion) {
     }
 
     if (clade) {
-        query.$match.classificationInfo = {};
-        query.$match.classificationInfo.clade = { $in: clade };
+        query.$match['classificationInfo.clade'] = { $in: clade };
     }
 
     const dinosaurs = await Dinosaur.returnDinosaursByQuery(query);
@@ -216,6 +251,9 @@ module.exports = {
     retrieveAllDinosaurs,
     retrieveAllImages,
     retrieveAllNames,
+    retrieveAllDiets,
+    retrieveAllLocomotions,
+    retrieveAllClades,
     retrieveDinosaurById,
     retrieveDinosaurByName,
     retrieveDinosaursByDiet,

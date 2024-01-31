@@ -14,7 +14,7 @@ describe('logger', function () {
         sandbox.restore();
     });
 
-    it('should create directory if not exist', function () {
+    it('should create logs directory if it does not exist', function () {
         sinon.stub(fs, 'existsSync').returns(false);
         sinon.stub(fs, 'mkdirSync');
         const { logger } = require('../../app/config/logger');

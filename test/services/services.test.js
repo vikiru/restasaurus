@@ -70,9 +70,9 @@ describe('Services - Functionality Tests', function () {
         });
 
         it('should retrieve all dinosaurs within database on last page', async function () {
-            const result = await services.retrieveAllDinosaurs(20);
-            expect(result.prevPage).to.equal('/api/v1/dinosaurs?page=19');
-            expect(result.currentPage).to.equal(20);
+            const result = await services.retrieveAllDinosaurs(24);
+            expect(result.prevPage).to.equal('/api/v1/dinosaurs?page=23');
+            expect(result.currentPage).to.equal(24);
             expect(result.nextPage).to.equal('');
             expect(result.count).to.equal(fakeData.length);
             expect(result.data).to.deep.equal(fakeData);
@@ -102,9 +102,9 @@ describe('Services - Functionality Tests', function () {
         });
 
         it('should retrieve all dinosaur images within database on last page', async function () {
-            const result = await services.retrieveAllImages(20);
-            expect(result.prevPage).to.equal('/api/v1/images?page=19');
-            expect(result.currentPage).to.equal(20);
+            const result = await services.retrieveAllImages(24);
+            expect(result.prevPage).to.equal('/api/v1/images?page=23');
+            expect(result.currentPage).to.equal(24);
             expect(result.nextPage).to.equal('');
             expect(result.count).to.equal(fakeData.length);
             expect(result.data).to.deep.equal(fakeData);
@@ -131,12 +131,75 @@ describe('Services - Functionality Tests', function () {
         });
     });
 
+    describe('retrieveAllClades', function () {
+        let DinosaurStub;
+        const fakeData = [
+            { clade: 'Theropoda', count: 1 },
+            { clade: 'Sauropodamorpha', count: 2 },
+        ];
+
+        beforeEach(function () {
+            DinosaurStub = sinon.stub(Dinosaur, 'findAllClades').resolves(fakeData);
+        });
+
+        afterEach(function () {
+            DinosaurStub.restore();
+        });
+
+        it('should retrieve all clades within database', async function () {
+            const result = await services.retrieveAllClades();
+            expect(result).to.be.an('array');
+            expect(result.length).to.be.equal(2);
+        });
+    });
+
+    describe('retrieveAllDiets', function () {
+        let DinosaurStub;
+        const fakeData = [{ _id: { diet: 'herbivore', count: 1 } }, { _id: { diet: 'carnivore', count: 2 } }];
+
+        beforeEach(function () {
+            DinosaurStub = sinon.stub(Dinosaur, 'findAllDiets').resolves(fakeData);
+        });
+
+        afterEach(function () {
+            DinosaurStub.restore();
+        });
+
+        it('should retrieve all diets within database', async function () {
+            const result = await services.retrieveAllDiets();
+            expect(result).to.be.an('array');
+            expect(result.length).to.be.equal(2);
+        });
+    });
+
+    describe('retrieveAllLocomotions', function () {
+        let DinosaurStub;
+        const fakeData = [
+            { _id: { locomotionType: 'biped', count: 1 } },
+            { _id: { locomotionType: 'quadruped', count: 2 } },
+        ];
+
+        beforeEach(function () {
+            DinosaurStub = sinon.stub(Dinosaur, 'findAllLocomotions').resolves(fakeData);
+        });
+
+        afterEach(function () {
+            DinosaurStub.restore();
+        });
+
+        it('should retrieve all locomotions within database', async function () {
+            const result = await services.retrieveAllLocomotions();
+            expect(result).to.be.an('array');
+            expect(result.length).to.be.equal(2);
+        });
+    });
+
     describe('retrieveAllNames', function () {
         let DinosaurStub;
         const fakeData = [new MongooseData('Stegosaurus'), new MongooseData('T-Rex')];
 
         beforeEach(function () {
-            DinosaurStub = sinon.stub(Dinosaur, 'findAllNames').callsFake(() => fakeData);
+            DinosaurStub = sinon.stub(Dinosaur, 'findAllNames').resolves(fakeData);
         });
 
         afterEach(function () {
