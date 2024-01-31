@@ -16,4 +16,4 @@ Examples include: `biped`, `quadruped`, `facultative biped`, `gliding`, `swimmin
 
 ## Demo
 
-![Demo](../../public/endpoints/dinosaursByLocomotion)
+![Demo](../../public/endpoints/dinosaursByLocomotion.gif)

@@ -1,8 +1,12 @@
 ---
-title:
+title: Dinosaurs by Query
 ---
 
 ## API Endpoints and Description
+
+`GET {baseUrl}/api/v1/search?clade={clade}&diet={diet}&locomotion={locomotion}`
+
+Returns all dinosaurs matching a specific query.
 
 ## Parameters
 
