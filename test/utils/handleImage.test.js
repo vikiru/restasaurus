@@ -216,7 +216,7 @@ describe('handleImage', function () {
             };
             handleImage.processImageData(imageData, data);
             expect(data.image.title).to.equal('Image');
-            expect(data.image.dateCreated).to.equal('2022-02-21T19:54:31.000Z');
+            expect(data.image.dateCreated).to.equal('2022-02-21T14:54:31.000Z');
         });
 
         it('should handle author info using Credit if Artist is not present', function () {
@@ -302,7 +302,7 @@ describe('handleImage', function () {
             };
             handleImage.processImageData(imageData, data);
             expect(data.image.title).to.equal('Image');
-            expect(data.image.dateCreated).to.equal('2022-02-21T19:54:31.000Z');
+            expect(data.image.dateCreated).to.equal('2022-02-21T14:54:31.000Z');
             expect(data.image.author).to.equal('Author');
         });
 
@@ -385,7 +385,7 @@ describe('handleImage', function () {
             };
             handleImage.processImageData(imageData, data);
             expect(data.image.title).to.equal('Image');
-            expect(data.image.dateCreated).to.equal('2022-02-21T19:54:31.000Z');
+            expect(data.image.dateCreated).to.equal('2022-02-21T14:54:31.000Z');
             expect(data.image.author).to.equal('');
         });
 
