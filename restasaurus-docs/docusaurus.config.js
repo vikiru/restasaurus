@@ -91,8 +91,11 @@ const config = {
         /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
             navbar: {
-                hideOnScroll: true,
-                title: 'RESTasaurus',
+                hideOnScroll: false,
+                logo: {
+                    alt: 'RESTasaurus Logo',
+                    src: 'logo.png',
+                },
                 items: [
                     {
                         position: 'left',
@@ -102,7 +105,7 @@ const config = {
                     {
                         position: 'left',
                         label: 'Endpoints',
-                        href: '/api',
+                        href: '/overview',
                     },
                     {
                         position: 'left',
@@ -119,6 +122,11 @@ const config = {
             },
             footer: {
                 style: 'dark',
+                logo: {
+                    alt: 'RESTasaurus Logo',
+                    src: 'logo.png',
+                    href: '/',
+                },
                 links: [
                     {
                         title: 'Getting Started',
@@ -136,6 +144,31 @@ const config = {
                                 to: '/setup',
                             },
                             { label: 'API Endpoints', to: '/api' },
+                        ],
+                    },
+                    {
+                        title: 'API Endpoints',
+                        items: [
+                            {
+                                label: 'Endpoint Overview',
+                                to: '/overview',
+                            },
+                            {
+                                label: 'General Endpoints',
+                                to: '/endpoints/home',
+                            },
+                            {
+                                label: 'Dinosaur Endpoints',
+                                to: '/endpoints/allDinosaurs',
+                            },
+                            {
+                                label: 'Image Endpoints',
+                                to: '/endpoints/allImages',
+                            },
+                            {
+                                label: 'OpenAPI Specification',
+                                to: '/api',
+                            },
                         ],
                     },
                     {
