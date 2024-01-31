@@ -9,7 +9,7 @@ Backend:
 
 -   [Node.js](https://nodejs.org/en)
 -   [Express](https://expressjs.com/)
-    -   various middlewares as seen [here](./app/middlewares/index.js)
+    -   various middlewares as seen [here](https://github.com/vikiru/restasaurus/blob/main/app/middlewares/index.js)
 -   [Winston](https://github.com/winstonjs/winston)
 -   [MongoDB](https://www.mongodb.com/)
 -   [Mongoose](https://mongoosejs.com/)
@@ -23,14 +23,15 @@ Testing:
 -   [Istanbul (nyc)](https://github.com/istanbuljs/nyc)
 -   [istanbul-badges-readme](https://github.com/the-bugging/istanbul-badges-readme)
 
-Hosting:
+Documentation:
 
-1. Documentation:
+-   Docs are built using [Docusaurus](https://docusaurus.io/)
+    -   OpenAPI Specification Converted to `.md` using: [Redocusaurus](https://github.com/rohit-gohri/redocusaurus)
+-   Documentation site hosted via [GitHub Pages](https://pages.github.com/)
 
-    - [GitHub Pages](https://pages.github.com/)
+REST API
 
-2. REST API
-    - [Adaptable](https://adaptable.io/)
+-   [Adaptable](https://adaptable.io/)
 
 CI:
 
