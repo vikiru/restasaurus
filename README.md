@@ -36,7 +36,7 @@
   <img src="https://github.com/vikiru/restasaurus/actions/workflows/lint.yml/badge.svg" alt="GitHub Lint Action Workflow Status"/>
  </a>
  <a href="https://github.com/vikiru/restasaurus/actions/workflows/test.yml">
-    <img src="https://github.com/vikiru/restasaurus/actions/workflows/test.yml/badge.svg">
+    <img src="https://github.com/vikiru/restasaurus/actions/workflows/test.yml/badge.svg"/>
  </a>
 </div>
 
@@ -136,14 +136,15 @@ Testing:
 -   [Istanbul (nyc)](https://github.com/istanbuljs/nyc)
 -   [istanbul-badges-readme](https://github.com/the-bugging/istanbul-badges-readme)
 
-Hosting:
+Documentation:
 
-1. Documentation:
+-   Docs are built using [Docusaurus](https://docusaurus.io/)
+    -   OpenAPI Specification converted to `.md` using: [Redocusaurus](https://github.com/rohit-gohri/redocusaurus)
+-   Documentation site hosted via [GitHub Pages](https://pages.github.com/)
 
-    - [GitHub Pages](https://pages.github.com/)
+REST API
 
-2. REST API
-    - [Render](https://render.com/) - the API can be accessed via the endpoint [here](https://restasaurus.onrender.com/api/v1)
+-   [Render](https://render.com/) - the API can be accessed via the endpoint [here](https://restasaurus.onrender.com/api/v1)
 
 CI:
 

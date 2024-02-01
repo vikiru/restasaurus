@@ -26,6 +26,7 @@ app.use(middlewares.morgan);
 
 app.listen(config.port, () => logger.info(`restasaurus started on port: http://localhost:${config.port}/api/v1.`));
 
+app.set('trust proxy', 1);
 app.use('/api/v1', routes);
 
 module.exports = {
