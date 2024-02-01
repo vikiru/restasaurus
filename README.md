@@ -4,17 +4,20 @@
 
 <div align="center" id="badges">
 <br/>
+<a href="https://vikiru.github.io/restasaurus/">
+	<img src="https://img.shields.io/badge/documentation-docs-orange" alt="Documentation"/>
+</a>
+<a href="https://restasaurus.onrender.com/api/v1">
+    <img src="https://img.shields.io/badge/API-live%20site-blue" alt="RESTasaurus API hosted via Render"/>
+</a>
+<br/>
  <a href="https://wakatime.com/@vikiru/projects/oducsokuft">
   <img src="https://wakatime.com/badge/github/vikiru/restasaurus.svg"
   alt="Wakatime Coding Stats for RESTasaurus"/>
  </a>
-<br/>
  <a href="https://github.com/vikiru/restasaurus/blob/main/LICENSE">
   <img src="https://img.shields.io/badge/license-MIT-aqua" alt="MIT License Badge"/>
  </a>
-<a href="https://vikiru.github.io/restasaurus/">
-	<img src="https://img.shields.io/badge/documentation-docs-orange" alt="Documentation"/>
-</a>
  <a href="https://github.com/prettier/prettier">
   <img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square" alt="Code Style - Prettier"/>
  </a>
@@ -58,23 +61,23 @@ Additionally, if you would like to see an example of a response from the API, pl
 
 ## 📖 Table of Contents
 
--   [📖 Table of Contents](#-table-of-contents)
--   [📍 API Endpoints](#-api-endpoints)
-    -   [📄 General Endpoints](#-general-endpoints)
-    -   [🦖 Dinosaur Endpoints](#-dinosaur-endpoints)
-    -   [📷 Image Endpoints](#-image-endpoints)
-    -   [OpenAPI Specification](#openapi-specification)
--   [🛠️ Tech Stack](#️-tech-stack)
--   [📝 Prerequisites](#-prerequisites)
--   [⚡ Setup Instructions](#-setup-instructions)
-    -   [Environment Setup](#environment-setup)
-    -   [Retrieving data from Wikipedia via its API](#retrieving-data-from-wikipedia-via-its-api)
-    -   [Saving the processed data to the MongoDB database](#saving-the-processed-data-to-the-mongodb-database)
--   [🚀 Run](#-run)
--   [🔍 Testing](#-testing)
--   [📜 Available Scripts](#-available-scripts)
--   [✨ Acknowledgements](#-acknowledgements)
--   [©️ License](#️-license)
+- [📖 Table of Contents](#-table-of-contents)
+- [📍 API Endpoints](#-api-endpoints)
+  - [📄 General Endpoints](#-general-endpoints)
+  - [🦖 Dinosaur Endpoints](#-dinosaur-endpoints)
+  - [📷 Image Endpoints](#-image-endpoints)
+  - [OpenAPI Specification](#openapi-specification)
+- [🛠️ Tech Stack](#️-tech-stack)
+- [📝 Prerequisites](#-prerequisites)
+- [⚡ Setup Instructions](#-setup-instructions)
+  - [Environment Setup](#environment-setup)
+  - [Retrieving data from Wikipedia via its API](#retrieving-data-from-wikipedia-via-its-api)
+  - [Saving the processed data to the MongoDB database](#saving-the-processed-data-to-the-mongodb-database)
+- [🚀 Run](#-run)
+- [🔍 Testing](#-testing)
+- [📜 Available Scripts](#-available-scripts)
+- [✨ Acknowledgements](#-acknowledgements)
+- [©️ License](#️-license)
 
 ## 📍 API Endpoints
 
@@ -140,7 +143,7 @@ Hosting:
     - [GitHub Pages](https://pages.github.com/)
 
 2. REST API
-    - [Adaptable](https://adaptable.io/)
+    - [Render](https://render.com/) - the API can be accessed via the endpoint [here](https://restasaurus.onrender.com/api/v1)
 
 CI:
 
