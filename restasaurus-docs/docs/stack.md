@@ -11,7 +11,7 @@ Backend:
 -   [Express](https://expressjs.com/)
 
     -   [Winston](https://github.com/winstonjs/winston)
-    -   various middlewares as seen [here](./app/middlewares/index.js)
+    -   various middlewares as seen [here](https://github.com/vikiru/restasaurus/blob/main/app/middlewares/index.js)
 
 -   [MongoDB](https://www.mongodb.com/)
 -   [Mongoose](https://mongoosejs.com/)
