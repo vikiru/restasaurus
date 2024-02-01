@@ -52,7 +52,7 @@ const config = {
                     breadcrumbs: true,
                 },
                 gtag: {
-                    trackingID: '123', // TODO: replace this.
+                    trackingID: 'G-4N09E9KTQ0',
                     anonymizeIP: true,
                 },
                 blog: false,
@@ -60,7 +60,6 @@ const config = {
                     customCss: require.resolve('./src/css/custom.css'),
                 },
                 sitemap: {
-                    changefreq: 'daily',
                     priority: 0.5,
                     ignorePatterns: [],
                     filename: 'sitemap.xml',
