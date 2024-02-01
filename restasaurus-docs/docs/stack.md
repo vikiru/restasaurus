@@ -9,10 +9,7 @@ Backend:
 
 -   [Node.js](https://nodejs.org/en)
 -   [Express](https://expressjs.com/)
-
-    -   [Winston](https://github.com/winstonjs/winston)
-    -   various middlewares as seen [here](https://github.com/vikiru/restasaurus/blob/main/app/middlewares/index.js)
-
+    -   Logging via [Winston](https://github.com/winstonjs/winston), along with various other middlewares as seen [here](./app/middlewares/index.js)
 -   [MongoDB](https://www.mongodb.com/)
 -   [Mongoose](https://mongoosejs.com/)
 

@@ -42,7 +42,7 @@ Please check the `app/logs` directory in the event of any errors. Specifically,
 you can check the `errors.log` or `all.log` to view the errors or all levels of
 logging, respectively.
 
-Additionally, confirm that `app/scripts/` contains the following JSON files:
+Additionally, confirm that `app/scripts` contains the following JSON files:
 
 -   `allDinoNames.json`: contains all dinosaur names (should be around 1427 names).
 -   `filteredNames.json`: contains the names of the dinosaurs that passed the filtering process (should be around 1153 names).
