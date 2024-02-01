@@ -137,10 +137,12 @@ function processPageData(pageData, htmlData, mongooseData) {
  * @returns The `mongooseData` object.
  */
 async function processData(pageData, imageData, htmlData) {
-    const parsedHTML = parser.parse(htmlData);
     const mongooseData = new MongooseData(pageData.title);
-    processHTMLData(parsedHTML, mongooseData);
-    processPageData(pageData, parsedHTML, mongooseData);
+    if (htmlData !== undefined) {
+        const parsedHTML = parser.parse(htmlData);
+        processHTMLData(parsedHTML, mongooseData);
+        processPageData(pageData, parsedHTML, mongooseData);
+    }
     processImageData(imageData, mongooseData);
     return mongooseData;
 }
