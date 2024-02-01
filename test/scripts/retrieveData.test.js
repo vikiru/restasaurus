@@ -1,4 +1,3 @@
-const exp = require('constants');
 const fs = require('fs');
 
 const { assert, expect } = require('chai');
@@ -215,9 +214,6 @@ describe('retrieveData', function () {
         const pageData = { extract: '' };
         const htmlData = '';
         const mongooseData = new MongooseData('Dino');
-        const expectedData = new MongooseData('Dino');
-        expectedData.diet = 'unknown';
-        expectedData.locomotionType = 'unknown';
 
         beforeEach(function () {
             dietStub = sinon.stub(handleFeature, 'findDiet').returns('');
@@ -251,12 +247,12 @@ describe('retrieveData', function () {
 
         it('should process page data correctly from pageData', function () {
             retrieveData.processPageData(pageData, htmlData, mongooseData);
-            expect(mongooseData).to.deep.equal(expectedData);
+            expect(mongooseData).to.deep.equal(new MongooseData('Dino'));
         });
 
         it('should process page data correctly from parse.text', function () {
             retrieveData.processPageData({ parse: { text: '' } }, htmlData, mongooseData);
-            expect(mongooseData).to.deep.equal(expectedData);
+            expect(mongooseData).to.deep.equal(new MongooseData('Dino'));
         });
     });
 
