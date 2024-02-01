@@ -1,3 +1,7 @@
+.vscode/
+.docusaurus
+build/
+
 # Logs
 *.json
 logs
