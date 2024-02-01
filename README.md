@@ -44,7 +44,7 @@
 
 **RESTasaurus** is a RESTful API, leveraging Express, MongoDB, and Mongoose to deliver comprehensive data on almost 1200 dinosaurs!
 
-[RESTasaurus Demo](https://github.com/vikiru/restasaurus/assets/72267229/0ba09dca-56cc-4b24-9697-3585126b2fb0)
+[RESTasaurus Demo](https://github.com/vikiru/restasaurus/assets/72267229/0a3679f8-90e9-4106-b030-a4d0751390f0)
 
 > [!IMPORTANT]
 >
@@ -122,10 +122,7 @@ Backend:
 
 -   [Node.js](https://nodejs.org/en)
 -   [Express](https://expressjs.com/)
-
-    -   [Winston](https://github.com/winstonjs/winston)
-    -   various middlewares as seen [here](./app/middlewares/index.js)
-
+    -   Logging via [Winston](https://github.com/winstonjs/winston), along with various other middlewares as seen [here](./app/middlewares/index.js)
 -   [MongoDB](https://www.mongodb.com/)
 -   [Mongoose](https://mongoosejs.com/)
 
@@ -212,7 +209,7 @@ Please check the `app/logs` directory in the event of any errors. Specifically,
 you can check the `errors.log` or `all.log` to view the errors or all levels of
 logging, respectively.
 
-Additionally, confirm that `app/scripts/` contains the following JSON files:
+Additionally, confirm that `app/scripts` contains the following JSON files:
 
 -   `allDinoNames.json`: contains all dinosaur names (should be around 1427 names).
 -   `filteredNames.json`: contains the names of the dinosaurs that passed the filtering process (should be around 1153 names).
