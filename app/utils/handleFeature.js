@@ -162,6 +162,8 @@ function retrieveDietAndLocomotionType(parsedHTML, data) {
 function findMissingFeatures(data) {
     if (data.diet === '' || data.locomotionType === '') {
         findFeatureByClassification(data);
+        data.diet = data.diet.replace('', 'unknown');
+        data.locomotionType = data.locomotionType.replace('', 'unknown');
     }
 }
 
