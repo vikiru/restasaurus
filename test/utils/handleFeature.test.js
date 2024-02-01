@@ -22,6 +22,24 @@ describe('handleFeature', function () {
             const feature = handleFeature.findFeature(root, dietRegex, []);
             expect(feature).to.be.equal('');
         });
+
+        it('should handle cases where there are ties in matches', function () {
+            const htmlData = '<p>This dinosaur was a bipedal carnivore, maybe omnivorous\n</p>';
+            const root = parse(htmlData);
+            const dietRegex = /(\b\w*(ivore|ivorous))s?\b/gim;
+            const handleFeature = require('../../app/utils/handleFeature');
+            const feature = handleFeature.findFeature(root, dietRegex, []);
+            expect(feature).to.be.equal('');
+        });
+
+        it('should handle cases where there are no ties in matches', function () {
+            const htmlData = '<p>This dinosaur was a bipedal carnivore carnivore\n</p>';
+            const root = parse(htmlData);
+            const dietRegex = /(\b\w*(ivore|ivorous))s?\b/gim;
+            const handleFeature = require('../../app/utils/handleFeature');
+            const feature = handleFeature.findFeature(root, dietRegex, []);
+            expect(feature).to.be.equal('carnivore');
+        });
     });
 
     describe('findDescription', function () {
@@ -104,7 +122,7 @@ describe('handleFeature', function () {
             sinon.restore();
         });
 
-        it('should return biped carnivore as locmotion and diet from extract', function () {
+        it('should return biped carnivore as locomotion and diet from extract', function () {
             const pageData = {
                 extract: 'This dinosaur was a bipedal carnivore',
             };
@@ -113,7 +131,7 @@ describe('handleFeature', function () {
             expect(data.locomotionType).to.equal('biped');
         });
 
-        it('should return biped carnivore as locmotion and diet', function () {
+        it('should return biped carnivore as locomotion and diet', function () {
             const pageData = {
                 structuredText:
                     'This dinosaur was a bipedal carnivore\nIt was not the first bipedal carnivore of its kind.\ncarnivore biped carnivore biped carnivore\n',

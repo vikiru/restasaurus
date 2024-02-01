@@ -230,6 +230,63 @@ describe('DinosaurSchema', function () {
         });
     });
 
+    describe('findAllClades', function () {
+        let findStub;
+
+        beforeEach(function () {
+            const query = [{ clade: 'Therapoda', count: 1 }];
+            findStub = sinon.stub(mongoose.Model, 'aggregate').returns(query);
+        });
+
+        afterEach(function () {
+            findStub.restore();
+        });
+
+        it('should return all clades', async function () {
+            const clades = await Dinosaur.findAllClades();
+            expect(clades.length).to.equal(1);
+            expect(clades[0].clade).to.equal('Therapoda');
+        });
+    });
+
+    describe('findAllDiets', function () {
+        let findStub;
+
+        beforeEach(function () {
+            const query = [{ diet: 'herbivore', count: 1 }];
+            findStub = sinon.stub(mongoose.Model, 'aggregate').resolves(query);
+        });
+
+        afterEach(function () {
+            findStub.restore();
+        });
+
+        it('should return all diets', async function () {
+            const diets = await Dinosaur.findAllDiets();
+            expect(diets.length).to.equal(1);
+            expect(diets[0].diet).to.equal('herbivore');
+        });
+    });
+
+    describe('findAllLocomotions', function () {
+        let findStub;
+
+        beforeEach(function () {
+            const query = [{ locomotionType: 'biped', count: 1 }];
+            findStub = sinon.stub(mongoose.Model, 'aggregate').returns(query);
+        });
+
+        afterEach(function () {
+            findStub.restore();
+        });
+
+        it('should return all locomotions', async function () {
+            const locomotions = await Dinosaur.findAllLocomotions();
+            expect(locomotions.length).to.equal(1);
+            expect(locomotions[0].locomotionType).to.equal('biped');
+        });
+    });
+
     describe('findAllNames', function () {
         let findStub;
 

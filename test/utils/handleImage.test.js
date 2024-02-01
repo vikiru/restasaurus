@@ -3,10 +3,10 @@ const sinon = require('sinon');
 
 const { expect } = chai;
 const { MongooseData } = require('../../app/models/MongooseData');
-const handleImage = require('../../app/utils/handleImage');
 
 describe('handleImage', function () {
     describe('getImageDescription', function () {
+        const handleImage = require('../../app/utils/handleImage');
         it('should return image description when metaData.ImageDescription exists', function () {
             const metaData = { ImageDescription: { value: '<p>Description</p>' } };
             const result = handleImage.getImageDescription(metaData);
@@ -21,6 +21,7 @@ describe('handleImage', function () {
     });
 
     describe('getLicense', function () {
+        const handleImage = require('../../app/utils/handleImage');
         it('should return UsageTerms.value when LicenseShortName.value is not "Public domain"', function () {
             const metaData = {
                 LicenseShortName: { value: 'CC BY-SA 3.0' },
@@ -38,6 +39,7 @@ describe('handleImage', function () {
     });
 
     describe('getLicenseURL', function () {
+        const handleImage = require('../../app/utils/handleImage');
         it('should return LicenseUrl.value when LicenseShortName.value is not "Public domain"', function () {
             const metaData = {
                 LicenseShortName: { value: 'CC BY-SA 3.0' },
@@ -55,6 +57,7 @@ describe('handleImage', function () {
     });
 
     describe('getDateCreated', function () {
+        const handleImage = require('../../app/utils/handleImage');
         it('should return date when metaData.DateTime exists', function () {
             const metaData = { DateTime: { value: '2007-12-12T00:00:00Z' } };
             const result = handleImage.getDateCreated(metaData);
@@ -69,6 +72,7 @@ describe('handleImage', function () {
     });
 
     describe('handleAuthor', function () {
+        const handleImage = require('../../app/utils/handleImage');
         let data;
         let authorInfo;
 
@@ -106,6 +110,7 @@ describe('handleImage', function () {
     });
 
     describe('processImageData', function () {
+        const handleImage = require('../../app/utils/handleImage');
         let imageData;
         let data;
         let getImageTitleStub;
@@ -139,7 +144,7 @@ describe('handleImage', function () {
                         descriptionshorturl: '',
                         extmetadata: {
                             DateTime: {
-                                value: '2022-02-21 14:54:31',
+                                value: '2022-02-21T14:54:31Z',
                                 source: '',
                                 hidden: '',
                             },
@@ -214,9 +219,10 @@ describe('handleImage', function () {
                     },
                 ],
             };
+            getDateCreatedStub.returns('2022-02-21T14:54:31.000Z');
             handleImage.processImageData(imageData, data);
             expect(data.image.title).to.equal('Image');
-            expect(data.image.dateCreated).to.equal('2022-02-21T19:54:31.000Z');
+            expect(data.image.dateCreated).to.equal('2022-02-21T14:54:31.000Z');
         });
 
         it('should handle author info using Credit if Artist is not present', function () {
@@ -229,7 +235,7 @@ describe('handleImage', function () {
                         descriptionshorturl: '',
                         extmetadata: {
                             DateTime: {
-                                value: '2022-02-21 14:54:31',
+                                value: '2022-02-21T14:54:31Z',
                                 source: '',
                                 hidden: '',
                             },
@@ -301,8 +307,9 @@ describe('handleImage', function () {
                 ],
             };
             handleImage.processImageData(imageData, data);
+            getDateCreatedStub.returns('2022-02-21T14:54:31.000Z');
             expect(data.image.title).to.equal('Image');
-            expect(data.image.dateCreated).to.equal('2022-02-21T19:54:31.000Z');
+            expect(data.image.dateCreated).to.equal('2022-02-21T14:54:31.000Z');
             expect(data.image.author).to.equal('Author');
         });
 
@@ -316,7 +323,7 @@ describe('handleImage', function () {
                         descriptionshorturl: '',
                         extmetadata: {
                             DateTime: {
-                                value: '2022-02-21 14:54:31',
+                                value: '2022-02-21T14:54:31Z',
                                 source: '',
                                 hidden: '',
                             },
@@ -384,8 +391,9 @@ describe('handleImage', function () {
                 ],
             };
             handleImage.processImageData(imageData, data);
+            getDateCreatedStub.returns('2022-02-21T14:54:31.000Z');
             expect(data.image.title).to.equal('Image');
-            expect(data.image.dateCreated).to.equal('2022-02-21T19:54:31.000Z');
+            expect(data.image.dateCreated).to.equal('2022-02-21T14:54:31.000Z');
             expect(data.image.author).to.equal('');
         });
 

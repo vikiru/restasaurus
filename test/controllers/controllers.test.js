@@ -18,6 +18,9 @@ const {
     retrieveDinoByLocomotion,
     retrieveImageById,
     retrieveRandomDinosaurs,
+    retrieveAllClades,
+    retrieveAllDiets,
+    retrieveAllLocomotions,
 } = require('../../app/controllers/controller');
 const dinosaurService = require('../../app/services/index');
 
@@ -226,6 +229,270 @@ describe('Controller - Functionality Tests', function () {
         });
     });
 
+    describe('retrieveAllClades', function () {
+        let jsonStub;
+        let statusStub;
+        let dinosaurServiceStub;
+        let loggerStub;
+
+        beforeEach(function () {
+            jsonStub = sinon.stub();
+            statusStub = sinon.stub().returns({ json: jsonStub });
+            dinosaurServiceStub = sinon.stub(dinosaurService, 'retrieveAllClades');
+            loggerStub = sinon.stub(logger.logger, 'error');
+        });
+
+        afterEach(function () {
+            sinon.restore();
+        });
+
+        it('should return all dinosaur clades', async function () {
+            const req = {};
+            const res = {};
+
+            res.status = statusStub;
+            dinosaurServiceStub.resolves([
+                { clade: 'Sauropodamorpha', count: 1 },
+                { clade: 'Theropoda', count: 1 },
+            ]);
+
+            await retrieveAllClades(req, res);
+
+            assert(statusStub.calledWith(200), 'status method was not called with 200');
+            assert(
+                jsonStub.calledWith({
+                    uniqueClades: 2,
+                    data: [
+                        { clade: 'Sauropodamorpha', count: 1 },
+                        { clade: 'Theropoda', count: 1 },
+                    ],
+                }),
+                'json method was not called with the correct response',
+            );
+        });
+
+        it('should return status 404 when there are no clades found', async function () {
+            const req = {};
+            const res = {};
+
+            res.status = statusStub;
+            dinosaurServiceStub.resolves({ data: [] });
+
+            await retrieveAllClades(req, res);
+
+            assert(statusStub.calledWith(404), 'status method was not called with 404');
+            assert(
+                jsonStub.calledWith({
+                    error: 'Sorry, there was an error retrieving all dinosaur clades',
+                }),
+                'json method was not called with the correct response',
+            );
+        });
+
+        it('should handle errors correctly', async function () {
+            const req = {};
+            const res = {};
+
+            res.status = statusStub;
+            dinosaurServiceStub.rejects(new Error('Test error'));
+
+            await retrieveAllClades(req, res);
+
+            assert(loggerStub.calledOnce, 'logger.error was not called');
+            assert(statusStub.calledWith(500), 'status method was not called with 500');
+            assert(
+                jsonStub.calledWith({
+                    error: 'Sorry, an unexpected error occurred while retrieving all dinosaur clades',
+                }),
+                'json method was not called with the correct error message',
+            );
+        });
+    });
+
+    describe('retrieveAllDiets', function () {
+        let jsonStub;
+        let statusStub;
+        let dinosaurServiceStub;
+        let loggerStub;
+
+        beforeEach(function () {
+            jsonStub = sinon.stub();
+            statusStub = sinon.stub().returns({ json: jsonStub });
+            dinosaurServiceStub = sinon.stub(dinosaurService, 'retrieveAllDiets');
+            loggerStub = sinon.stub(logger.logger, 'error');
+        });
+
+        afterEach(function () {
+            sinon.restore();
+        });
+
+        it('should return all dinosaur diets', async function () {
+            const req = {};
+            const res = {};
+
+            res.status = statusStub;
+            dinosaurServiceStub.resolves([
+                {
+                    diet: 'herbivore',
+                    count: 1,
+                },
+                {
+                    diet: 'carnivore',
+                    count: 1,
+                },
+            ]);
+
+            await retrieveAllDiets(req, res);
+
+            assert(statusStub.calledWith(200), 'status method was not called with 200');
+            assert(
+                jsonStub.calledWith({
+                    uniqueDiets: 2,
+                    data: [
+                        {
+                            diet: 'herbivore',
+                            count: 1,
+                        },
+                        {
+                            diet: 'carnivore',
+                            count: 1,
+                        },
+                    ],
+                }),
+                'json method was not called with the correct response',
+            );
+        });
+
+        it('should return status 404 when there are no diets found', async function () {
+            const req = {};
+            const res = {};
+
+            res.status = statusStub;
+            dinosaurServiceStub.resolves({ uniqueDiets: 0, data: [] });
+
+            await retrieveAllDiets(req, res);
+
+            assert(statusStub.calledWith(404), 'status method was not called with 404');
+            assert(
+                jsonStub.calledWith({
+                    error: 'Sorry, there was an error retrieving all dinosaur diets',
+                }),
+                'json method was not called with the correct response',
+            );
+        });
+
+        it('should handle errors correctly', async function () {
+            const req = {};
+            const res = {};
+
+            res.status = statusStub;
+            dinosaurServiceStub.rejects(new Error('Test error'));
+
+            await retrieveAllDiets(req, res);
+
+            assert(loggerStub.calledOnce, 'logger.error was not called');
+            assert(statusStub.calledWith(500), 'status method was not called with 500');
+            assert(
+                jsonStub.calledWith({
+                    error: 'Sorry, an unexpected error occurred while retrieving all dinosaur diets',
+                }),
+                'json method was not called with the correct error message',
+            );
+        });
+    });
+
+    describe('retrieveAllLocomotions', function () {
+        let jsonStub;
+        let statusStub;
+        let dinosaurServiceStub;
+        let loggerStub;
+
+        beforeEach(function () {
+            jsonStub = sinon.stub();
+            statusStub = sinon.stub().returns({ json: jsonStub });
+            dinosaurServiceStub = sinon.stub(dinosaurService, 'retrieveAllLocomotions');
+            loggerStub = sinon.stub(logger.logger, 'error');
+        });
+
+        afterEach(function () {
+            sinon.restore();
+        });
+
+        it('should return all dinosaur locomotions', async function () {
+            const req = {};
+            const res = {};
+
+            res.status = statusStub;
+            dinosaurServiceStub.resolves([
+                {
+                    locomotionType: 'biped',
+                    count: 1,
+                },
+                {
+                    locomotionType: 'quadruped',
+                    count: 1,
+                },
+            ]);
+
+            await retrieveAllLocomotions(req, res);
+
+            assert(statusStub.calledWith(200), 'status method was not called with 200');
+            assert(
+                jsonStub.calledWith({
+                    uniqueLocomotions: 2,
+                    data: [
+                        {
+                            locomotionType: 'biped',
+                            count: 1,
+                        },
+                        {
+                            locomotionType: 'quadruped',
+                            count: 1,
+                        },
+                    ],
+                }),
+                'json method was not called with the correct response',
+            );
+        });
+
+        it('should return status 404 when there are no locomotions found', async function () {
+            const req = {};
+            const res = {};
+
+            res.status = statusStub;
+            dinosaurServiceStub.resolves({ uniqueDiets: 0, data: [] });
+
+            await retrieveAllLocomotions(req, res);
+
+            assert(statusStub.calledWith(404), 'status method was not called with 404');
+            assert(
+                jsonStub.calledWith({
+                    error: 'Sorry, there was an error retrieving all dinosaur locomotions',
+                }),
+                'json method was not called with the correct response',
+            );
+        });
+
+        it('should handle errors correctly', async function () {
+            const req = {};
+            const res = {};
+
+            res.status = statusStub;
+            dinosaurServiceStub.rejects(new Error('Test error'));
+
+            await retrieveAllLocomotions(req, res);
+
+            assert(loggerStub.calledOnce, 'logger.error was not called');
+            assert(statusStub.calledWith(500), 'status method was not called with 500');
+            assert(
+                jsonStub.calledWith({
+                    error: 'Sorry, an unexpected error occurred while retrieving all dinosaur locomotions',
+                }),
+                'json method was not called with the correct error message',
+            );
+        });
+    });
+
     describe('retrieveAllNames', function () {
         let jsonStub;
         let statusStub;
@@ -260,7 +527,7 @@ describe('Controller - Functionality Tests', function () {
         });
 
         it('should return status 404 when there are no names found', async function () {
-            const req = { query: { page: '1' } };
+            const req = {};
             const res = {};
 
             res.status = statusStub;
@@ -290,7 +557,7 @@ describe('Controller - Functionality Tests', function () {
             assert(statusStub.calledWith(500), 'status method was not called with 500');
             assert(
                 jsonStub.calledWith({
-                    error: ' Sorry, an unexpected error occurred while retrieving all dinosaur names',
+                    error: 'Sorry, an unexpected error occurred while retrieving all dinosaur names',
                 }),
                 'json method was not called with the correct error message',
             );

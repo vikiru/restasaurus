@@ -105,7 +105,89 @@ async function retrieveAllNames(req, res) {
     } catch (error) {
         logger.error(error);
         res.status(500).json({
-            error: ' Sorry, an unexpected error occurred while retrieving all dinosaur names',
+            error: 'Sorry, an unexpected error occurred while retrieving all dinosaur names',
+        });
+    }
+}
+
+/**
+ * The function retrieves all dinosaur diets and returns them as a JSON response, or returns an error message if there
+ * was an issue retrieving the diets.
+ *
+ * @param {object} req - The request object.
+ * @param {object} res - The response object.
+ */
+async function retrieveAllDiets(req, res) {
+    try {
+        const diets = await dinosaurService.retrieveAllDiets();
+        if (diets.length > 0) {
+            res.status(200).json({
+                uniqueDiets: diets.length,
+                data: diets,
+            });
+        } else {
+            res.status(404).json({
+                error: 'Sorry, there was an error retrieving all dinosaur diets',
+            });
+        }
+    } catch (error) {
+        logger.error(error);
+        res.status(500).json({
+            error: 'Sorry, an unexpected error occurred while retrieving all dinosaur diets',
+        });
+    }
+}
+
+/**
+ * The function retrieves all dinosaur locomotions and returns them in a JSON response.
+ *
+ * @param {object} req - The request object.
+ * @param {object} res - The response object.
+ */
+async function retrieveAllLocomotions(req, res) {
+    try {
+        const locomotions = await dinosaurService.retrieveAllLocomotions();
+        if (locomotions.length > 0) {
+            res.status(200).json({
+                uniqueLocomotions: locomotions.length,
+                data: locomotions,
+            });
+        } else {
+            res.status(404).json({
+                error: 'Sorry, there was an error retrieving all dinosaur locomotions',
+            });
+        }
+    } catch (error) {
+        logger.error(error);
+        res.status(500).json({
+            error: 'Sorry, an unexpected error occurred while retrieving all dinosaur locomotions',
+        });
+    }
+}
+
+/**
+ * The function retrieves all dinosaur clades and returns them as a JSON response, handling any errors that occur.
+ *
+ * @param {object} req - The request object.
+ * @param {object} res - The response object.
+ */
+async function retrieveAllClades(req, res) {
+    try {
+        const clades = await dinosaurService.retrieveAllClades();
+        if (clades.length > 0) {
+            res.status(200).json({
+                uniqueClades: clades.length,
+                data: clades,
+            });
+        } else {
+            res.status(404).json({
+                error: 'Sorry, there was an error retrieving all dinosaur clades',
+            });
+        }
+    } catch (error) {
+        logger.error(error);
+        res.status(500).json({
+            error: 'Sorry, an unexpected error occurred while retrieving all dinosaur clades',
         });
     }
 }

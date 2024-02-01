@@ -4,7 +4,7 @@ const { Dinosaur } = require('../models/Dinosaur');
 const { DinosaurImage } = require('../models/DinosaurImage');
 const { DinosaurSource } = require('../models/DinosaurSource');
 
-const MAX_PAGE = 20;
+const MAX_PAGE = 24;
 
 /**
  * Asynchronously pushes dinosaur data to the database.
