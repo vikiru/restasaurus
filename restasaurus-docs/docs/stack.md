@@ -26,7 +26,7 @@ Testing:
 Documentation:
 
 -   Docs are built using [Docusaurus](https://docusaurus.io/)
-    -   OpenAPI Specification Converted to `.md` using: [Redocusaurus](https://github.com/rohit-gohri/redocusaurus)
+    -   OpenAPI Specification converted to `.md` using: [Redocusaurus](https://github.com/rohit-gohri/redocusaurus)
 -   Documentation site hosted via [GitHub Pages](https://pages.github.com/)
 
 REST API
