@@ -5,15 +5,15 @@ slug: /models
 
 ## 📖 Table of Contents
 
--   [📖 Table of Contents](#-table-of-contents)
--   [🦖 Dinosaur Model](#-dinosaur-model)
--   [🔍 ClassificationInfo Model](#-classificationinfo-model)
--   [📸 DinosaurImage Model](#-dinosaurimage-model)
--   [📚 DinosaurSource Model](#-dinosaursource-model)
+- [📖 Table of Contents](#-table-of-contents)
+- [🦖 Dinosaur Model](#-dinosaur-model)
+- [🔍 ClassificationInfo Model](#-classificationinfo-model)
+- [📸 DinosaurImage Model](#-dinosaurimage-model)
+- [📚 DinosaurSource Model](#-dinosaursource-model)
 
 ## 🦖 Dinosaur Model
 
-[**Dinosaur**](https://github.com/vikiru/restasaurus/blob/main/app/models/Dinosaur.js): This model represents a dinosaur, including its unique properties such as name, temporal range, diet, locomotion type, and a description.
+[**Dinosaur**](https://github.com/vikiru/restasaurus/blob/main/app/models/Dinosaur.js): This is the main model which represents a dinosaur, including its unique properties such as name, temporal range, diet, locomotion type, and a description. Additionally, it also contains references to the sub-models below, which are populated with their relevant values when handling API requests.
 
 An example of a Dinosaur model stored within the MongoDB database is shown below, with all of its relevant properties. It should
 be noted that although `classificationInfo`, `image`, `source` show their value as being an `ObjectId`, when the API processes

@@ -9,8 +9,10 @@ Backend:
 
 -   [Node.js](https://nodejs.org/en)
 -   [Express](https://expressjs.com/)
-    -   various middlewares as seen [here](https://github.com/vikiru/restasaurus/blob/main/app/middlewares/index.js)
--   [Winston](https://github.com/winstonjs/winston)
+
+    -   [Winston](https://github.com/winstonjs/winston)
+    -   various middlewares as seen [here](./app/middlewares/index.js)
+
 -   [MongoDB](https://www.mongodb.com/)
 -   [Mongoose](https://mongoosejs.com/)
 
@@ -27,11 +29,15 @@ Documentation:
 
 -   Docs are built using [Docusaurus](https://docusaurus.io/)
     -   OpenAPI Specification converted to `.md` using: [Redocusaurus](https://github.com/rohit-gohri/redocusaurus)
+    -   Search functionality provided by: [docusaurus-lunr-search](https://github.com/praveenn77/docusaurus-lunr-search)
+    -   Analytics using [Google Analytics](https://marketingplatform.google.com/about/analytics/)
 -   Documentation site hosted via [GitHub Pages](https://pages.github.com/)
 
 REST API
 
 -   [Render](https://render.com/) - the API can be accessed via the endpoint [here](https://restasaurus.onrender.com/api/v1)
+
+Please note that the API is hosted on Render, using the [Free Tier](https://docs.render.com/free) and as such, is limited to the constraints of that free tier, such as spinning down on idle (no requests after 15 minutes) and 750 instance hours per month.
 
 CI:
 
