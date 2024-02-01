@@ -31,7 +31,7 @@ Documentation:
 
 REST API
 
--   [Adaptable](https://adaptable.io/)
+-   [Render](https://render.com/) - the API can be accessed via the endpoint [here](https://restasaurus.onrender.com/api/v1)
 
 CI:
 
