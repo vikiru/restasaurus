@@ -5,6 +5,18 @@
 	"private": true,
 	"author": "Visakan Kirubakaran",
 	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/vikiru/restasaurus.git"
+	},
+	"keywords": [
+		"REST",
+		"API",
+		"MongoDB",
+		"Mongoose",
+		"Express",
+		"Dinosaurs"
+	],
 	"main": "./app/app.js",
 	"scripts": {
 		"start": "node .",
@@ -16,17 +28,6 @@
 		"postData": "node ./app/scripts/postData.js",
 		"make-badges": "istanbul-badges-readme"
 	},
-	"engines": {
-		"node": ">=16.9"
-	},
-	"keywords": [
-		"REST",
-		"API",
-		"MongoDB",
-		"Mongoose",
-		"Express",
-		"Dinosaurs"
-	],
 	"dependencies": {
 		"@mongodb-js/zstd": "^1.2.0",
 		"body-parser": "^1.20.2",
@@ -80,5 +81,8 @@
 	"ignorePatterns": [
 		"./node_modules/**",
 		"./.github/**"
-	]
+	],
+	"engines": {
+		"node": ">=16.9"
+	}
 }
