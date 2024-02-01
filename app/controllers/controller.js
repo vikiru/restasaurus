@@ -3,20 +3,20 @@ const dinosaurService = require('../services/index');
 
 const apiEndpoints = {
     home: '/api/v1',
-    getAllNames: '/api/v1/names',
+    getAllClades: '/api/v1/clades',
     getAllDiets: '/api/v1/diets',
     getAllLocomotions: '/api/v1/locomotions',
-    getAllClades: '/api/v1/clades',
+    getAllNames: '/api/v1/names',
     getAllDinos: '/api/v1/dinosaurs',
     getDinoById: '/api/v1/dinosaurs/:id',
     getDinoByName: '/api/v1/dinosaurs/name/:name',
     getDinosByDiet: '/api/v1/dinosaurs/diet/:diet',
     getDinosByLocomotion: '/api/v1/dinosaurs/locomotion/:locomotion',
     getRandomDinos: '/api/v1/dinosaurs/random/:count',
+    getDinosaurByQuery: '/api/v1/search',
     getAllImages: '/api/v1/images',
     getImageById: '/api/v1/images/:id',
     getRandomImages: '/api/v1/images/random/:count',
-    getDinosaurByQuery: '/api/v1/search',
 };
 
 /**
