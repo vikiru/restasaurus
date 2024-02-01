@@ -9,6 +9,14 @@ title: 📖 Introduction
 </div>
 
 <div align="center" id="badges">
+
+<a href="https://vikiru.github.io/restasaurus/">
+	<img src="https://img.shields.io/badge/documentation-docs-orange" alt="Documentation"/>
+</a>
+<a href="https://restasaurus.onrender.com/api/v1">
+    <img src="https://img.shields.io/badge/API-live%20site-blue" alt="RESTasaurus API hosted via Render"/>
+</a>
+<br/>
  <a href="https://wakatime.com/@vikiru/projects/oducsokuft">
   <img src="https://wakatime.com/badge/github/vikiru/restasaurus.svg"
   alt="Wakatime Coding Stats for RESTasaurus"/>
@@ -16,12 +24,10 @@ title: 📖 Introduction
  <a href="https://github.com/vikiru/restasaurus/blob/main/LICENSE">
   <img src="https://img.shields.io/badge/license-MIT-aqua" alt="MIT License Badge"/>
  </a>
-<a href="https://vikiru.github.io/restasaurus/">
-	<img src="https://img.shields.io/badge/documentation-docs-orange" alt="Documentation"/>
-</a>
  <a href="https://github.com/prettier/prettier">
   <img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square" alt="Code Style - Prettier"/>
  </a>
+ <br/>
  <a href="https://github.com/vikiru/restasaurus/issues?q=is%3Aissue+is%3Aclosed">
   <img src="https://img.shields.io/github/issues-closed/vikiru/restasaurus" alt="Closed Issues"/>
  </a>
@@ -35,7 +41,7 @@ title: 📖 Introduction
   <img src="https://github.com/vikiru/restasaurus/actions/workflows/lint.yml/badge.svg" alt="GitHub Lint Action Workflow Status"/>
  </a>
  <a href="https://github.com/vikiru/restasaurus/actions/workflows/test.yml">
-    <img src="https://github.com/vikiru/restasaurus/actions/workflows/test.yml/badge.svg" />
+    <img src="https://github.com/vikiru/restasaurus/actions/workflows/test.yml/badge.svg"/>
  </a>
 </div>
 
