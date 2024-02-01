@@ -650,17 +650,14 @@ components:
                 classificationInfo:
                     type: string
                     format: ObjectId
-                    $ref: '#/components/schemas/ClassificationInfo'
                     description: Reference to ClassificationInfo
                 image:
                     type: string
                     format: ObjectId
-                    $ref: '#/components/schemas/DinosaurImage'
                     description: Reference to DinosaurImage
                 source:
                     type: string
                     format: ObjectId
-                    $ref: '#/components/schemas/DinosaurSource'
                     description: Reference to DinosaurSource
             required:
                 - id
