@@ -42,7 +42,7 @@
 		"mongoose": "^8.1.0",
 		"mongoose-autopopulate": "^1.1.0",
 		"mongoose-hidden": "^1.9.1",
-		"mongoose-sequence": "^6.0.0",
+		"mongoose-sequence": "^6.0.1",
 		"morgan": "^1.10.0",
 		"node-html-parser": "^6.1.12",
 		"redis": "^4.6.12",
