@@ -45,7 +45,7 @@
 		"mongoose-sequence": "^6.0.1",
 		"morgan": "^1.10.0",
 		"node-html-parser": "^6.1.12",
-		"redis": "^4.6.12",
+		"redis": "^4.6.13",
 		"serve-favicon": "^2.5.0",
 		"snappy": "^7.2.2",
 		"winston": "^3.11.0"
