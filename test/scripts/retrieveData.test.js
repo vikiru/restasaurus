@@ -476,7 +476,7 @@ describe('retrieveData', function () {
                 },
             });
 
-            retrieveData = proxyquire('../../app/scripts/retrieveData', {                
+            retrieveData = proxyquire('../../app/scripts/retrieveData', {
                 './constructDinoNames': {
                     readJSONFile: readJSONFileStub,
                     delay: delayStub,
