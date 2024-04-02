@@ -6,6 +6,7 @@ const proxyquire = require('proxyquire');
 const sinon = require('sinon');
 
 const { MongooseData } = require('../../app/models/MongooseData');
+const { processData } = require('../../app/scripts/retrieveData');
 
 describe('retrieveData', function () {
     let logger;
@@ -475,14 +476,26 @@ describe('retrieveData', function () {
                 },
             });
 
-            retrieveData = proxyquire('../../app/scripts/retrieveData', {
+            retrieveData = proxyquire('../../app/scripts/retrieveData', {                
                 './constructDinoNames': {
+                    readJSONFile: readJSONFileStub,
+                    delay: delayStub,
                     fetchData: fetchStub,
                     processData: processDataStub,
                     writeData: writeDataStub,
                     retrieveData: retrieveDataStub,
-                    readJSONFile: readJSONFileStub,
-                    delay: delayStub,
+                },
+                '../utils/writeData': {
+                    writeData: writeDataStub,
+                },
+                '../utils/fetchData': {
+                    fetchData: sinon.stub().resolves(),
+                },
+                './retrieveData': {
+                    retrieveImageData: sinon.stub().resolves(),
+                    retrieveHTMLData: sinon.stub().resolves(),
+                    retrieveData: retrieveDataStub,
+                    processData: processDataStub,
                 },
             });
 
