@@ -22,14 +22,14 @@
   <img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square" alt="Code Style - Prettier"/>
  </a>
 <br/>
+  <a href="https://github.com/vikiru/restasaurus/releases">
+  <img src="https://img.shields.io/github/v/release/vikiru/restasaurus" alt="Release"/>
+ </a>
  <a href="https://github.com/vikiru/restasaurus/issues?q=is%3Aissue+is%3Aclosed">
   <img src="https://img.shields.io/github/issues-closed/vikiru/restasaurus" alt="Closed Issues"/>
  </a>
  <a href="https://github.com/vikiru/restasaurus/pulls?q=is%3Apr+is%3Aclosed">
   <img src="https://img.shields.io/github/issues-pr-closed/vikiru/restasaurus?label=closed%20prs" alt="Closed PRs"/>
- </a>
-  <a href="https://github.com/vikiru/restasaurus/releases">
-  <img src="https://img.shields.io/github/v/release/vikiru/restasaurus" alt="Release"/>
  </a>
 <br/>
  <a href="https://github.com/vikiru/restasaurus/actions/workflows/lint.yml">
@@ -61,23 +61,23 @@ Additionally, if you would like to see an example of a response from the API, pl
 
 ## 📖 Table of Contents
 
--   [📖 Table of Contents](#-table-of-contents)
--   [📍 API Endpoints](#-api-endpoints)
-    -   [📄 General Endpoints](#-general-endpoints)
-    -   [🦖 Dinosaur Endpoints](#-dinosaur-endpoints)
-    -   [📷 Image Endpoints](#-image-endpoints)
-    -   [OpenAPI Specification](#openapi-specification)
--   [🛠️ Tech Stack](#️-tech-stack)
--   [📝 Prerequisites](#-prerequisites)
--   [⚡ Setup Instructions](#-setup-instructions)
-    -   [Environment Setup](#environment-setup)
-    -   [Retrieving data from Wikipedia via its API](#retrieving-data-from-wikipedia-via-its-api)
-    -   [Saving the processed data to the MongoDB database](#saving-the-processed-data-to-the-mongodb-database)
--   [🚀 Run](#-run)
--   [🔍 Testing](#-testing)
--   [📜 Available Scripts](#-available-scripts)
--   [✨ Acknowledgements](#-acknowledgements)
--   [©️ License](#️-license)
+- [📖 Table of Contents](#-table-of-contents)
+- [📍 API Endpoints](#-api-endpoints)
+  - [📄 General Endpoints](#-general-endpoints)
+  - [🦖 Dinosaur Endpoints](#-dinosaur-endpoints)
+  - [📷 Image Endpoints](#-image-endpoints)
+  - [OpenAPI Specification](#openapi-specification)
+- [🛠️ Tech Stack](#️-tech-stack)
+- [📝 Prerequisites](#-prerequisites)
+- [⚡ Setup Instructions](#-setup-instructions)
+  - [Environment Setup](#environment-setup)
+  - [Retrieving data from Wikipedia via its API](#retrieving-data-from-wikipedia-via-its-api)
+  - [Saving the processed data to the MongoDB database](#saving-the-processed-data-to-the-mongodb-database)
+- [🚀 Run](#-run)
+- [🔍 Testing](#-testing)
+- [📜 Available Scripts](#-available-scripts)
+- [✨ Acknowledgements](#-acknowledgements)
+- [©️ License](#️-license)
 
 ## 📍 API Endpoints
 
