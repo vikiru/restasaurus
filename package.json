@@ -22,7 +22,7 @@
 	"scripts": {
 		"start": "node .",
 		"dev": "cross-env NODE_ENV=development nodemon ./app/**/*.js",
-		"test": "cross-env NODE_ENV=testing nyc --reporter=json-summary --reporter=html --reporter=text mocha test/test.js && open-cli ./coverage/index.html",
+		"test": "cross-env NODE_ENV=testing nyc --reporter=json-summary --reporter=html --reporter=text mocha test/test.js",
 		"lint": "eslint ./app/**/*.js --fix-dry-run",
 		"prettier": "eslint --fix && prettier --write .",
 		"retrieveData": "node ./app/scripts/constructDinoNames.js && node ./app/scripts/retrieveData.js",
