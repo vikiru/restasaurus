@@ -22,14 +22,14 @@
   <img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square" alt="Code Style - Prettier"/>
  </a>
 <br/>
+  <a href="https://github.com/vikiru/restasaurus/releases">
+  <img src="https://img.shields.io/github/v/release/vikiru/restasaurus" alt="Release"/>
+ </a>
  <a href="https://github.com/vikiru/restasaurus/issues?q=is%3Aissue+is%3Aclosed">
   <img src="https://img.shields.io/github/issues-closed/vikiru/restasaurus" alt="Closed Issues"/>
  </a>
  <a href="https://github.com/vikiru/restasaurus/pulls?q=is%3Apr+is%3Aclosed">
   <img src="https://img.shields.io/github/issues-pr-closed/vikiru/restasaurus?label=closed%20prs" alt="Closed PRs"/>
- </a>
-  <a href="https://github.com/vikiru/restasaurus/releases">
-  <img src="https://img.shields.io/github/v/release/vikiru/restasaurus" alt="Release"/>
  </a>
 <br/>
  <a href="https://github.com/vikiru/restasaurus/actions/workflows/lint.yml">
@@ -76,7 +76,7 @@ Additionally, if you would like to see an example of a response from the API, pl
 -   [🚀 Run](#-run)
 -   [🔍 Testing](#-testing)
 -   [📜 Available Scripts](#-available-scripts)
--   [✨ Acknowledgements](#-acknowledgements)
+-   [✨ Acknowledgments](#-acknowledgments)
 -   [©️ License](#️-license)
 
 ## 📍 API Endpoints
@@ -318,7 +318,7 @@ npm run postData
 npm run make-badges
 ```
 
-## ✨ Acknowledgements
+## ✨ Acknowledgments
 
 -   [Docusaurus](https://docusaurus.io/)
 -   [Redocusaurus](https://github.com/rohit-gohri/redocusaurus)
