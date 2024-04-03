@@ -31,7 +31,7 @@
                     frontMatter: { title: '\ud83d\udcdc Available Scripts' },
                     sidebar: 'docs',
                     previous: { title: '\ud83d\udd0d Testing', permalink: '/restasaurus/test' },
-                    next: { title: '\u2728 Acknowledgements', permalink: '/restasaurus/acknowledgments' },
+                    next: { title: '\u2728 Acknowledgments', permalink: '/restasaurus/acknowledgments' },
                 },
                 c = {},
                 o = [{ value: '\ud83d\udcdc Available Scripts', id: '-available-scripts', level: 2 }];

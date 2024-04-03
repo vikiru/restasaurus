@@ -76,7 +76,6 @@
                                         alt: 'RESTasaurus API hosted via Render',
                                     }),
                                 }),
-                                (0, t.jsx)('br', {}),
                                 (0, t.jsx)('a', {
                                     href: 'https://wakatime.com/@vikiru/projects/oducsokuft',
                                     children: (0, t.jsx)('img', {
@@ -100,6 +99,13 @@
                                 }),
                                 (0, t.jsx)('br', {}),
                                 (0, t.jsx)('a', {
+                                    href: 'https://github.com/vikiru/restasaurus/releases',
+                                    children: (0, t.jsx)('img', {
+                                        src: 'https://img.shields.io/github/v/release/vikiru/restasaurus',
+                                        alt: 'Release',
+                                    }),
+                                }),
+                                (0, t.jsx)('a', {
                                     href: 'https://github.com/vikiru/restasaurus/issues?q=is%3Aissue+is%3Aclosed',
                                     children: (0, t.jsx)('img', {
                                         src: 'https://img.shields.io/github/issues-closed/vikiru/restasaurus',
@@ -111,13 +117,6 @@
                                     children: (0, t.jsx)('img', {
                                         src: 'https://img.shields.io/github/issues-pr-closed/vikiru/restasaurus?label=closed%20prs',
                                         alt: 'Closed PRs',
-                                    }),
-                                }),
-                                (0, t.jsx)('a', {
-                                    href: 'https://github.com/vikiru/restasaurus/releases',
-                                    children: (0, t.jsx)('img', {
-                                        src: 'https://img.shields.io/github/v/release/vikiru/restasaurus',
-                                        alt: 'Release',
                                     }),
                                 }),
                                 (0, t.jsx)('a', {

@@ -14,12 +14,12 @@
                 });
             var t = s(5893),
                 i = s(1151);
-            const r = { id: 'acknowledgments', title: '\u2728 Acknowledgements' },
+            const r = { id: 'acknowledgments', title: '\u2728 Acknowledgments' },
                 o = void 0,
                 a = {
                     id: 'acknowledgments',
-                    title: '\u2728 Acknowledgements',
-                    description: '\u2728 Acknowledgements',
+                    title: '\u2728 Acknowledgments',
+                    description: '\u2728 Acknowledgments',
                     source: '@site/docs/acknolwedgments.md',
                     sourceDirName: '.',
                     slug: '/acknowledgments',
@@ -28,17 +28,17 @@
                     unlisted: !1,
                     tags: [],
                     version: 'current',
-                    frontMatter: { id: 'acknowledgments', title: '\u2728 Acknowledgements' },
+                    frontMatter: { id: 'acknowledgments', title: '\u2728 Acknowledgments' },
                     sidebar: 'docs',
                     previous: { title: '\ud83d\udcdc Available Scripts', permalink: '/restasaurus/scripts' },
                 },
                 c = {},
-                l = [{ value: '\u2728 Acknowledgements', id: '-acknowledgements', level: 2 }];
+                l = [{ value: '\u2728 Acknowledgments', id: '-acknowledgments', level: 2 }];
             function h(e) {
                 const n = { a: 'a', h2: 'h2', li: 'li', p: 'p', ul: 'ul', ...(0, i.a)(), ...e.components };
                 return (0, t.jsxs)(t.Fragment, {
                     children: [
-                        (0, t.jsx)(n.h2, { id: '-acknowledgements', children: '\u2728 Acknowledgements' }),
+                        (0, t.jsx)(n.h2, { id: '-acknowledgments', children: '\u2728 Acknowledgments' }),
                         '\n',
                         (0, t.jsxs)(n.ul, {
                             children: [
