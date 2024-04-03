@@ -61,23 +61,23 @@ Additionally, if you would like to see an example of a response from the API, pl
 
 ## 📖 Table of Contents
 
--   [📖 Table of Contents](#-table-of-contents)
--   [📍 API Endpoints](#-api-endpoints)
-    -   [📄 General Endpoints](#-general-endpoints)
-    -   [🦖 Dinosaur Endpoints](#-dinosaur-endpoints)
-    -   [📷 Image Endpoints](#-image-endpoints)
-    -   [OpenAPI Specification](#openapi-specification)
--   [🛠️ Tech Stack](#️-tech-stack)
--   [📝 Prerequisites](#-prerequisites)
--   [⚡ Setup Instructions](#-setup-instructions)
-    -   [Environment Setup](#environment-setup)
-    -   [Retrieving data from Wikipedia via its API](#retrieving-data-from-wikipedia-via-its-api)
-    -   [Saving the processed data to the MongoDB database](#saving-the-processed-data-to-the-mongodb-database)
--   [🚀 Run](#-run)
--   [🔍 Testing](#-testing)
--   [📜 Available Scripts](#-available-scripts)
--   [✨ Acknowledgements](#-acknowledgements)
--   [©️ License](#️-license)
+- [📖 Table of Contents](#-table-of-contents)
+- [📍 API Endpoints](#-api-endpoints)
+  - [📄 General Endpoints](#-general-endpoints)
+  - [🦖 Dinosaur Endpoints](#-dinosaur-endpoints)
+  - [📷 Image Endpoints](#-image-endpoints)
+  - [OpenAPI Specification](#openapi-specification)
+- [🛠️ Tech Stack](#️-tech-stack)
+- [📝 Prerequisites](#-prerequisites)
+- [⚡ Setup Instructions](#-setup-instructions)
+  - [Environment Setup](#environment-setup)
+  - [Retrieving data from Wikipedia via its API](#retrieving-data-from-wikipedia-via-its-api)
+  - [Saving the processed data to the MongoDB database](#saving-the-processed-data-to-the-mongodb-database)
+- [🚀 Run](#-run)
+- [🔍 Testing](#-testing)
+- [📜 Available Scripts](#-available-scripts)
+- [✨ Acknowledgments](#-acknowledgments)
+- [©️ License](#️-license)
 
 ## 📍 API Endpoints
 
@@ -318,7 +318,7 @@ npm run postData
 npm run make-badges
 ```
 
-## ✨ Acknowledgements
+## ✨ Acknowledgments
 
 -   [Docusaurus](https://docusaurus.io/)
 -   [Redocusaurus](https://github.com/rohit-gohri/redocusaurus)
