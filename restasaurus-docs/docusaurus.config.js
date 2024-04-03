@@ -90,6 +90,7 @@ const config = {
         /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
             metadata: [
+                { name: 'author', content: 'Visakan Kirubakaran' },
                 { name: 'keywords', content: 'RESTasaurus, REST, API, Express, MongoDB, Mongoose, Dinosaurs' },
                 {
                     name: 'description',
@@ -99,10 +100,7 @@ const config = {
             ],
             navbar: {
                 hideOnScroll: true,
-                logo: {
-                    alt: 'RESTasaurus Logo',
-                    src: 'logo.png',
-                },
+                title: 'RESTasaurus',
                 items: [
                     {
                         position: 'left',

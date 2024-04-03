@@ -90,7 +90,7 @@ describe('constructDinoNames - Script', function () {
             expect(actualUrls).to.deep.equal(expectedUrls);
         });
     });
-    
+
     describe('urlConstructor', function () {
         const constructDinoNames = require('../../app/scripts/constructDinoNames');
         it('should call handleSinglePage when queryType is html', function () {

@@ -1,9 +1,9 @@
 ---
 id: acknowledgments
-title: ✨ Acknowledgements
+title: ✨ Acknowledgments
 ---
 
-## ✨ Acknowledgements
+## ✨ Acknowledgments
 
 -   [Docusaurus](https://docusaurus.io/)
 -   [Redocusaurus](https://github.com/rohit-gohri/redocusaurus)

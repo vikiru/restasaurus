@@ -5,11 +5,11 @@ slug: /models
 
 ## 📖 Table of Contents
 
-- [📖 Table of Contents](#-table-of-contents)
-- [🦖 Dinosaur Model](#-dinosaur-model)
-- [🔍 ClassificationInfo Model](#-classificationinfo-model)
-- [📸 DinosaurImage Model](#-dinosaurimage-model)
-- [📚 DinosaurSource Model](#-dinosaursource-model)
+-   [📖 Table of Contents](#-table-of-contents)
+-   [🦖 Dinosaur Model](#-dinosaur-model)
+-   [🔍 ClassificationInfo Model](#-classificationinfo-model)
+-   [📸 DinosaurImage Model](#-dinosaurimage-model)
+-   [📚 DinosaurSource Model](#-dinosaursource-model)
 
 ## 🦖 Dinosaur Model
 
