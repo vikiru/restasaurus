@@ -4,36 +4,39 @@
 
 <div align="center" id="badges">
 <br/>
+<a href="https://vikiru.github.io/restasaurus/">
+	<img src="https://img.shields.io/badge/documentation-docs-orange" alt="Documentation"/>
+</a>
+<a href="https://restasaurus.onrender.com/api/v1">
+    <img src="https://img.shields.io/badge/API-live%20site-blue" alt="RESTasaurus API hosted via Render"/>
+</a>
+<br/>
  <a href="https://wakatime.com/@vikiru/projects/oducsokuft">
   <img src="https://wakatime.com/badge/github/vikiru/restasaurus.svg"
   alt="Wakatime Coding Stats for RESTasaurus"/>
  </a>
-<br/>
  <a href="https://github.com/vikiru/restasaurus/blob/main/LICENSE">
   <img src="https://img.shields.io/badge/license-MIT-aqua" alt="MIT License Badge"/>
  </a>
-<a href="https://vikiru.github.io/restasaurus/">
-	<img src="https://img.shields.io/badge/documentation-docs-orange" alt="Documentation"/>
-</a>
  <a href="https://github.com/prettier/prettier">
   <img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square" alt="Code Style - Prettier"/>
  </a>
 <br/>
+  <a href="https://github.com/vikiru/restasaurus/releases">
+  <img src="https://img.shields.io/github/v/release/vikiru/restasaurus" alt="Release"/>
+ </a>
  <a href="https://github.com/vikiru/restasaurus/issues?q=is%3Aissue+is%3Aclosed">
   <img src="https://img.shields.io/github/issues-closed/vikiru/restasaurus" alt="Closed Issues"/>
  </a>
  <a href="https://github.com/vikiru/restasaurus/pulls?q=is%3Apr+is%3Aclosed">
   <img src="https://img.shields.io/github/issues-pr-closed/vikiru/restasaurus?label=closed%20prs" alt="Closed PRs"/>
  </a>
-  <a href="https://github.com/vikiru/restasaurus/releases">
-  <img src="https://img.shields.io/github/v/release/vikiru/restasaurus" alt="Release"/>
- </a>
 <br/>
  <a href="https://github.com/vikiru/restasaurus/actions/workflows/lint.yml">
   <img src="https://github.com/vikiru/restasaurus/actions/workflows/lint.yml/badge.svg" alt="GitHub Lint Action Workflow Status"/>
  </a>
  <a href="https://github.com/vikiru/restasaurus/actions/workflows/test.yml">
-    <img src="https://github.com/vikiru/restasaurus/actions/workflows/test.yml/badge.svg">
+    <img src="https://github.com/vikiru/restasaurus/actions/workflows/test.yml/badge.svg"/>
  </a>
 </div>
 
@@ -41,7 +44,7 @@
 
 **RESTasaurus** is a RESTful API, leveraging Express, MongoDB, and Mongoose to deliver comprehensive data on almost 1200 dinosaurs!
 
-[RESTasaurus Demo](https://github.com/vikiru/restasaurus/assets/72267229/0ba09dca-56cc-4b24-9697-3585126b2fb0)
+[RESTasaurus Demo](https://github.com/vikiru/restasaurus/assets/72267229/0a3679f8-90e9-4106-b030-a4d0751390f0)
 
 > [!IMPORTANT]
 >
@@ -49,7 +52,7 @@
 
 For a better understanding of the information provided by the API, please check out the [models](./app/models) directory. The schemas used within the MongoDB database include:
 
-> -   [**Dinosaur**](https://github.com/vikiru/restasaurus/blob/main/app/models/Dinosaur.js): This model represents a dinosaur, including its unique properties such as name, temporal range, diet, locomotion type, and a description.
+> -   [**Dinosaur**](https://github.com/vikiru/restasaurus/blob/main/app/models/Dinosaur.js): This is the main model which represents a dinosaur, including its unique properties such as name, temporal range, diet, locomotion type, and a description. Additionally, it also contains references to the sub-models below, which are populated with their relevant values when handling API requests.
 > -   [**ClassificationInfo**](./app/models/ClassificationInfo.js): This model contains the classification information of a dinosaur, including details like its family, order, and genus.
 > -   [**DinosaurImage**](https://github.com/vikiru/restasaurus/blob/main/app/models/DinosaurImage.js): This model is used to store the image data related to a dinosaur, including the image source and attribution details.
 > -   [**DinosaurSource**](https://github.com/vikiru/restasaurus/blob/main/app/models/DinosaurSource.js): This model represents the source of the dinosaur data, which is the Wikipedia article for that particular dinosaur. This includes information such as the title, author, last revision date, revision history url, and more.
@@ -73,7 +76,7 @@ Additionally, if you would like to see an example of a response from the API, pl
 -   [🚀 Run](#-run)
 -   [🔍 Testing](#-testing)
 -   [📜 Available Scripts](#-available-scripts)
--   [✨ Acknowledgements](#-acknowledgements)
+-   [✨ Acknowledgments](#-acknowledgments)
 -   [©️ License](#️-license)
 
 ## 📍 API Endpoints
@@ -119,8 +122,7 @@ Backend:
 
 -   [Node.js](https://nodejs.org/en)
 -   [Express](https://expressjs.com/)
-    -   various middlewares as seen [here](./app/middlewares/index.js)
--   [Winston](https://github.com/winstonjs/winston)
+    -   Logging via [Winston](https://github.com/winstonjs/winston), along with various other middlewares as seen [here](./app/middlewares/index.js)
 -   [MongoDB](https://www.mongodb.com/)
 -   [Mongoose](https://mongoosejs.com/)
 
@@ -133,14 +135,19 @@ Testing:
 -   [Istanbul (nyc)](https://github.com/istanbuljs/nyc)
 -   [istanbul-badges-readme](https://github.com/the-bugging/istanbul-badges-readme)
 
-Hosting:
+Documentation:
 
-1. Documentation:
+-   Docs are built using [Docusaurus](https://docusaurus.io/)
+    -   OpenAPI Specification converted to `.md` using: [Redocusaurus](https://github.com/rohit-gohri/redocusaurus)
+    -   Search functionality provided by: [docusaurus-lunr-search](https://github.com/praveenn77/docusaurus-lunr-search)
+    -   Analytics using [Google Analytics](https://marketingplatform.google.com/about/analytics/)
+-   Documentation site hosted via [GitHub Pages](https://pages.github.com/)
 
-    - [GitHub Pages](https://pages.github.com/)
+REST API
 
-2. REST API
-    - [Adaptable](https://adaptable.io/)
+-   [Render](https://render.com/) - the API can be accessed via the endpoint [here](https://restasaurus.onrender.com/api/v1)
+
+Please note that the API is hosted on Render, using the [Free Tier](https://docs.render.com/free) and as such, is limited to the constraints of that free tier, such as spinning down on idle (no requests after 15 minutes) and 750 instance hours per month.
 
 CI:
 
@@ -202,7 +209,7 @@ Please check the `app/logs` directory in the event of any errors. Specifically,
 you can check the `errors.log` or `all.log` to view the errors or all levels of
 logging, respectively.
 
-Additionally, confirm that `app/scripts/` contains the following JSON files:
+Additionally, confirm that `app/scripts` contains the following JSON files:
 
 -   `allDinoNames.json`: contains all dinosaur names (should be around 1427 names).
 -   `filteredNames.json`: contains the names of the dinosaurs that passed the filtering process (should be around 1153 names).
@@ -311,7 +318,7 @@ npm run postData
 npm run make-badges
 ```
 
-## ✨ Acknowledgements
+## ✨ Acknowledgments
 
 -   [Docusaurus](https://docusaurus.io/)
 -   [Redocusaurus](https://github.com/rohit-gohri/redocusaurus)
@@ -327,6 +334,7 @@ npm run make-badges
 -   [Shields Badges](https://github.com/badges/shields)
 -   [regex101](https://regex101.com/)
 -   [Favicon Generator](https://favicon.io/favicon-generator/)
+-   [node-html-parser](https://github.com/taoqf/node-html-parser)
 
 Additionally, this API would not be possible without the dinosaur information and image information retrieved from all of the [Wikipedia](https://en.wikipedia.org/wiki/Main_Page) articles accessed through the [Wikipedia API](https://www.mediawiki.org/wiki/Special:MyLanguage/API:Main_page). All images and text provided by this API belong to their respective authors.
 
