@@ -45,7 +45,7 @@
 		"mongoose-hidden": "^1.9.1",
 		"mongoose-sequence": "^6.0.1",
 		"morgan": "^1.10.0",
-		"node-html-parser": "^6.1.12",
+		"node-html-parser": "^6.1.13",
 		"redis": "^4.6.12",
 		"serve-favicon": "^2.5.0",
 		"snappy": "^7.2.2",
