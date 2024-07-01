@@ -39,7 +39,7 @@
 		"express-rate-limit": "^7.1.5",
 		"express-validator": "^7.0.1",
 		"helmet": "^7.1.0",
-		"mongodb": "^6.3.0",
+		"mongodb": "^6.8.0",
 		"mongoose": "^8.1.1",
 		"mongoose-autopopulate": "^1.1.0",
 		"mongoose-hidden": "^1.9.1",
