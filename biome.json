@@ -1,0 +1,99 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.3.8/schema.json",
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on",
+        "useSortedAttributes": "on",
+        "useSortedKeys": "off",
+        "useSortedProperties": "on"
+      }
+    },
+    "enabled": true
+  },
+  "files": {
+    "ignoreUnknown": true,
+    "includes": [
+      "app/**/*.ts",
+      "app/**/*.js",
+      "**/*.cjs",
+      "**/*.mjs",
+      "**/*.mts",
+      "**/*.cts",
+      "*.config.mjs",
+      "*.config.cjs",
+      "*.config.ts",
+      "*.config.js",
+      "!/**/node_modules",
+      "!/**/dist",
+      "!/**/build",
+      "!/**/public",
+      "!/**/out",
+      "!/**/.git",
+      "!/**/.github",
+      "!/**/*.css",
+      "!/**/*.html",
+      "!/**/*.json",
+      "!/**/*.md",
+      "!/**/*.mdx"
+    ]
+  },
+  "formatter": {
+    "attributePosition": "auto",
+    "bracketSameLine": false,
+    "bracketSpacing": true,
+    "enabled": true,
+    "expand": "auto",
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 80,
+    "useEditorconfig": true
+  },
+  "javascript": {
+    "formatter": {
+      "arrowParentheses": "asNeeded",
+      "bracketSameLine": true,
+      "bracketSpacing": true,
+      "jsxQuoteStyle": "double",
+      "quoteProperties": "asNeeded",
+      "quoteStyle": "single",
+      "semicolons": "always",
+      "trailingCommas": "es5"
+    }
+  },
+  "linter": {
+    "domains": {
+      "next": "none",
+      "project": "none",
+      "react": "none"
+    },
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "a11y": "info",
+      "suspicious": {
+        "noConsole": "off",
+        "noReactSpecificProps": "off"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "off"
+      },
+      "nursery": {
+        "recommended": false
+      },
+      "correctness": {
+        "noUndeclaredDependencies": "off",
+        "noUnusedVariables": "off",
+        "useImportExtensions": "off"
+      }
+    }
+  },
+  "vcs": {
+    "clientKind": "git",
+    "enabled": true,
+    "useIgnoreFile": true,
+    "defaultBranch": "main"
+  }
+}

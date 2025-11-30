@@ -1,9 +1,10 @@
+todos.md
 .vscode/
 .docusaurus
 build/
+app/scripts/*.json
 
 # Logs
-*.json
 logs
 *.log
 npm-debug.log*
