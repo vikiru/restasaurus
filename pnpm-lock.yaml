@@ -9,40 +9,40 @@ importers:
   .:
     dependencies:
       '@mongodb-js/zstd':
-        specifier: ^1.2.0
+        specifier: ^1.2.2
         version: 1.2.2
       body-parser:
-        specifier: ^1.20.2
+        specifier: ^1.20.3
         version: 1.20.3
       compression:
-        specifier: ^1.7.4
+        specifier: ^1.8.1
         version: 1.8.1
       cors:
         specifier: ^2.8.5
         version: 2.8.5
       dotenv:
-        specifier: ^16.4.1
+        specifier: ^16.6.1
         version: 16.6.1
       express:
-        specifier: ^4.18.2
+        specifier: ^4.21.2
         version: 4.21.2
       express-rate-limit:
-        specifier: ^7.1.5
+        specifier: ^7.5.1
         version: 7.5.1(express@4.21.2)
       express-validator:
-        specifier: ^7.0.1
+        specifier: ^7.3.1
         version: 7.3.1
       helmet:
-        specifier: ^7.1.0
+        specifier: ^7.2.0
         version: 7.2.0
       mongodb:
-        specifier: ^6.3.0
+        specifier: ^6.21.0
         version: 6.21.0(@mongodb-js/zstd@1.2.2)(snappy@7.3.3)
       mongoose:
-        specifier: ^8.1.1
+        specifier: ^8.20.1
         version: 8.20.1(@mongodb-js/zstd@1.2.2)(snappy@7.3.3)
       mongoose-autopopulate:
-        specifier: ^1.1.0
+        specifier: ^1.2.1
         version: 1.2.1(mongoose@8.20.1(@mongodb-js/zstd@1.2.2)(snappy@7.3.3))
       mongoose-hidden:
         specifier: ^1.9.1
@@ -51,47 +51,47 @@ importers:
         specifier: ^6.0.1
         version: 6.0.1(mongoose@8.20.1(@mongodb-js/zstd@1.2.2)(snappy@7.3.3))
       morgan:
-        specifier: ^1.10.0
+        specifier: ^1.10.1
         version: 1.10.1
       node-html-parser:
-        specifier: ^6.1.12
+        specifier: ^6.1.13
         version: 6.1.13
       redis:
-        specifier: ^4.6.12
+        specifier: ^4.7.1
         version: 4.7.1
       serve-favicon:
-        specifier: ^2.5.0
+        specifier: ^2.5.1
         version: 2.5.1
       snappy:
-        specifier: ^7.2.2
+        specifier: ^7.3.3
         version: 7.3.3
       winston:
-        specifier: ^3.11.0
+        specifier: ^3.18.3
         version: 3.18.3
     devDependencies:
       '@biomejs/biome':
         specifier: 2.3.8
         version: 2.3.8
       chai:
-        specifier: ^4.3.10
+        specifier: ^4.5.0
         version: 4.5.0
       chai-http:
         specifier: ^4.4.0
         version: 4.4.0
       cross-env:
-        specifier: ^5.1.6
+        specifier: ^5.2.1
         version: 5.2.1
       esm:
         specifier: ^3.2.25
         version: 3.2.25
       istanbul-badges-readme:
-        specifier: ^1.8.5
+        specifier: ^1.9.0
         version: 1.9.0
       mocha:
-        specifier: ^10.2.0
+        specifier: ^10.8.2
         version: 10.8.2
       nodemon:
-        specifier: ^3.0.3
+        specifier: ^3.1.11
         version: 3.1.11
       nyc:
         specifier: ^15.1.0
@@ -104,7 +104,7 @@ importers:
         version: 2.1.3
       sinon:
         specifier: ^17.0.1
-        version: 17.0.2
+        version: 17.0.1
 
 packages:
 
@@ -575,8 +575,8 @@ packages:
   base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
 
-  baseline-browser-mapping@2.8.31:
-    resolution: {integrity: sha512-a28v2eWrrRWPpJSzxc+mKwm0ZtVx/G8SepdQZDArnXYU/XS+IF6mp8aB/4E+hH1tyGCoDo3KlUCdlSxGDsRkAw==}
+  baseline-browser-mapping@2.8.32:
+    resolution: {integrity: sha512-OPz5aBThlyLFgxyhdwf/s2+8ab3OvT7AdTNvKHBwpXomIYeXqpUUuT8LrdtxZSsWJ4R4CU1un4XGh5Ez3nlTpw==}
     hasBin: true
 
   basic-auth@2.0.1:
@@ -871,8 +871,8 @@ packages:
   ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
 
-  electron-to-chromium@1.5.261:
-    resolution: {integrity: sha512-cmyHEWFqEt3ICUNF93ShneOF47DHoSDbLb7E/AonsWcbzg95N+kPXeLNfkdzgTT/vEUcoW76fxbLBkeYtfoM8A==}
+  electron-to-chromium@1.5.262:
+    resolution: {integrity: sha512-NlAsMteRHek05jRUxUR0a5jpjYq9ykk6+kO0yRaMi5moe7u0fVIOeQ3Y30A8dIiWFBNUoQGi1ljb1i5VtS9WQQ==}
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -1808,9 +1808,8 @@ packages:
     resolution: {integrity: sha512-a2B9Y0KlNXl9u/vsW6sTIu9vGEpfKu2wRV6l1H3XEas/0gUIzGzBoP/IouTcUQbm9JWZLH3COxyn03TYlFax6w==}
     engines: {node: '>=10'}
 
-  sinon@17.0.2:
-    resolution: {integrity: sha512-uihLiaB9FhzesElPDFZA7hDcNABzsVHwr3YfmM9sBllVwab3l0ltGlRV1XhpNfIacNDLGD1QRZNLs5nU5+hTuA==}
-    deprecated: There
+  sinon@17.0.1:
+    resolution: {integrity: sha512-wmwE19Lie0MLT+ZYNpDymasPHUKTaZHUH/pKEubRXIzySv9Atnlw+BUMGCzWgV7b7wO+Hw6f1TEOr0IUnmU8/g==}
 
   snappy@7.3.3:
     resolution: {integrity: sha512-UDJVCunvgblRpfTOjo/uT7pQzfrTsSICJ4yVS4aq7SsGBaUSpJwaVP15nF//jqinSLpN7boe/BqbUmtWMTQ5MQ==}
@@ -2496,7 +2495,7 @@ snapshots:
 
   base64-js@1.5.1: {}
 
-  baseline-browser-mapping@2.8.31: {}
+  baseline-browser-mapping@2.8.32: {}
 
   basic-auth@2.0.1:
     dependencies:
@@ -2540,9 +2539,9 @@ snapshots:
 
   browserslist@4.28.0:
     dependencies:
-      baseline-browser-mapping: 2.8.31
+      baseline-browser-mapping: 2.8.32
       caniuse-lite: 1.0.30001757
-      electron-to-chromium: 1.5.261
+      electron-to-chromium: 1.5.262
       node-releases: 2.0.27
       update-browserslist-db: 1.1.4(browserslist@4.28.0)
 
@@ -2826,7 +2825,7 @@ snapshots:
 
   ee-first@1.1.1: {}
 
-  electron-to-chromium@1.5.261: {}
+  electron-to-chromium@1.5.262: {}
 
   emoji-regex@8.0.0: {}
 
@@ -3774,7 +3773,7 @@ snapshots:
     dependencies:
       semver: 7.7.3
 
-  sinon@17.0.2:
+  sinon@17.0.1:
     dependencies:
       '@sinonjs/commons': 3.0.1
       '@sinonjs/fake-timers': 11.3.1
