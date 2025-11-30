@@ -1,0 +1,51 @@
+name: Format Files
+run-name: Format files using Biome
+on:
+  push:
+    branches:
+      - main
+permissions:
+  contents: write
+  statuses: write
+  actions: write
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup github-actions[bot] git config
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - name: Install dependencies
+        run: HUSKY=0 pnpm install --frozen-lockfile # Skip Husky, install from frozen lockfile
+      - name: Format files
+        run: pnpm run format
+      - name: Check for changes
+        id: changes
+        run: |
+          git add -A
+          if git diff --staged --quiet; then
+            echo "changes_exist=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          else
+            echo "changes_exist=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Output if changes exist
+        env:
+          CHANGES_EXIST: ${{ steps.changes.outputs.changes_exist }}
+        run: echo "$CHANGES_EXIST"
+      - name: Commit formatting changes via GitHub Actions, if changes exist
+        if: steps.changes.outputs.changes_exist == 'true'
+        run: |-
+          git commit -m "chore: format files via github actions"
+          git push
