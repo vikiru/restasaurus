@@ -12,13 +12,13 @@ const { logger } = require('../config/logger');
  * @throws {Error} Will throw an error if the connection fails.
  */
 async function connect() {
-    try {
-        await mongoose.connect(config.mongoString);
-        logger.info('Successfully connected to the MongoDB database.');
-        return mongoose.connection;
-    } catch (error) {
-        logger.error(error);
-    }
+  try {
+    await mongoose.connect(config.mongoString);
+    logger.info('Successfully connected to the MongoDB database.');
+    return mongoose.connection;
+  } catch (error) {
+    logger.error(error);
+  }
 }
 
 /**
@@ -30,15 +30,15 @@ async function connect() {
  * @throws {Error} Will throw an error if the disconnection fails.
  */
 async function disconnect() {
-    try {
-        await mongoose.disconnect();
-        logger.info('Successfully disconnected from the MongoDB database.');
-    } catch (error) {
-        logger.error(error);
-    }
+  try {
+    await mongoose.disconnect();
+    logger.info('Successfully disconnected from the MongoDB database.');
+  } catch (error) {
+    logger.error(error);
+  }
 }
 
 module.exports = {
-    connect,
-    disconnect,
+  connect,
+  disconnect,
 };

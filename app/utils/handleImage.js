@@ -8,30 +8,30 @@ const parser = require('node-html-parser');
  * @returns {object} The handled data object.
  */
 function handleAuthor(data, authorInfo) {
-    if (authorInfo.startsWith('<a') || authorInfo.includes('href=')) {
-        const authorAnchor = parser.parse(authorInfo);
-        const { innerHTML, structuredText } = authorAnchor;
-        const hrefRegex = /href="[/]*([\w]*[^"]*)/gim;
-        const match = hrefRegex.exec(innerHTML);
-        if (match && match[1]) {
-            data.image.author = structuredText;
-            const url = match[1];
-            let text = '';
-            if (!url.includes('https://')) {
-                text = `https://${match[1]}`;
-            } else {
-                text = match[1];
-            }
-            data.image.authorURL = text;
-        } else {
-            data.image.author = '';
-            data.image.authorURL = '';
-        }
+  if (authorInfo.startsWith('<a') || authorInfo.includes('href=')) {
+    const authorAnchor = parser.parse(authorInfo);
+    const { innerHTML, structuredText } = authorAnchor;
+    const hrefRegex = /href="[/]*([\w]*[^"]*)/gim;
+    const match = hrefRegex.exec(innerHTML);
+    if (match?.[1]) {
+      data.image.author = structuredText;
+      const url = match[1];
+      let text = '';
+      if (!url.includes('https://')) {
+        text = `https://${match[1]}`;
+      } else {
+        text = match[1];
+      }
+      data.image.authorURL = text;
     } else {
-        data.image.author = authorInfo;
-        data.image.authorURL = '';
+      data.image.author = '';
+      data.image.authorURL = '';
     }
-    return data;
+  } else {
+    data.image.author = authorInfo;
+    data.image.authorURL = '';
+  }
+  return data;
 }
 
 /**
@@ -41,9 +41,9 @@ function handleAuthor(data, authorInfo) {
  * @returns {string} The image title.
  */
 function getImageTitle(title) {
-    const imageTitle = title.replace('File:', '');
-    const extension = imageTitle.lastIndexOf('.');
-    return imageTitle.substring(0, extension);
+  const imageTitle = title.replace('File:', '');
+  const extension = imageTitle.lastIndexOf('.');
+  return imageTitle.substring(0, extension);
 }
 
 /**
@@ -53,10 +53,10 @@ function getImageTitle(title) {
  * @returns {string} The image description.
  */
 function getImageDescription(metaData) {
-    if (metaData.ImageDescription) {
-        return parser.parse(metaData.ImageDescription.value).structuredText;
-    }
-    return '';
+  if (metaData.ImageDescription) {
+    return parser.parse(metaData.ImageDescription.value).structuredText;
+  }
+  return '';
 }
 
 /**
@@ -66,10 +66,16 @@ function getImageDescription(metaData) {
  * @returns {string} The license.
  */
 function getLicense(metaData) {
-    if (metaData.LicenseShortName && metaData.LicenseShortName.value !== 'Public domain' && metaData.UsageTerms) {
-        return metaData.UsageTerms.value;
-    }
-    return metaData.LicenseShortName && metaData.LicenseShortName.value ? metaData.LicenseShortName.value : '';
+  if (
+    metaData.LicenseShortName &&
+    metaData.LicenseShortName.value !== 'Public domain' &&
+    metaData.UsageTerms
+  ) {
+    return metaData.UsageTerms.value;
+  }
+  return metaData.LicenseShortName?.value
+    ? metaData.LicenseShortName.value
+    : '';
 }
 
 /**
@@ -79,10 +85,14 @@ function getLicense(metaData) {
  * @returns {string} The license URL.
  */
 function getLicenseURL(metaData) {
-    if (metaData.LicenseShortName && metaData.LicenseShortName.value !== 'Public domain' && metaData.LicenseUrl) {
-        return metaData.LicenseUrl.value;
-    }
-    return 'https://creativecommons.org/public-domain/';
+  if (
+    metaData.LicenseShortName &&
+    metaData.LicenseShortName.value !== 'Public domain' &&
+    metaData.LicenseUrl
+  ) {
+    return metaData.LicenseUrl.value;
+  }
+  return 'https://creativecommons.org/public-domain/';
 }
 
 /**
@@ -95,10 +105,10 @@ function getLicenseURL(metaData) {
  *   property does not exist or is empty, an empty string is returned.
  */
 function getDateCreated(metaData) {
-    if (metaData.DateTime) {
-        return new Date(metaData.DateTime.value).toISOString();
-    }
-    return '';
+  if (metaData.DateTime) {
+    return new Date(metaData.DateTime.value).toISOString();
+  }
+  return '';
 }
 
 /**
@@ -111,34 +121,34 @@ function getDateCreated(metaData) {
  *   structure:
  */
 function processImageData(imageData, data) {
-    if (imageData.imageinfo) {
-        const {
-            imageinfo: [imageInfo],
-            title,
-        } = imageData;
-        const { extmetadata: metaData } = imageInfo;
+  if (imageData.imageinfo) {
+    const {
+      imageinfo: [imageInfo],
+      title,
+    } = imageData;
+    const { extmetadata: metaData } = imageInfo;
 
-        data.image.title = getImageTitle(title);
-        data.image.description = getImageDescription(metaData);
-        if ('Artist' in metaData) {
-            data = handleAuthor(data, metaData.Artist.value);
-        } else if ('Credit' in metaData) {
-            data = handleAuthor(data, metaData.Credit.value);
-        }
-        data.image.imageURL = imageInfo.url;
-        data.image.license = getLicense(metaData);
-        data.image.licenseURL = getLicenseURL(metaData);
-        data.image.dateCreated = getDateCreated(metaData);
-        data.image.dateAccessed = new Date().toISOString();
+    data.image.title = getImageTitle(title);
+    data.image.description = getImageDescription(metaData);
+    if ('Artist' in metaData) {
+      data = handleAuthor(data, metaData.Artist.value);
+    } else if ('Credit' in metaData) {
+      data = handleAuthor(data, metaData.Credit.value);
     }
+    data.image.imageURL = imageInfo.url;
+    data.image.license = getLicense(metaData);
+    data.image.licenseURL = getLicenseURL(metaData);
+    data.image.dateCreated = getDateCreated(metaData);
+    data.image.dateAccessed = new Date().toISOString();
+  }
 }
 
 module.exports = {
-    handleAuthor,
-    processImageData,
-    getImageTitle,
-    getImageDescription,
-    getLicense,
-    getLicenseURL,
-    getDateCreated,
+  handleAuthor,
+  processImageData,
+  getImageTitle,
+  getImageDescription,
+  getLicense,
+  getLicenseURL,
+  getDateCreated,
 };

@@ -15,19 +15,19 @@ const MAX_PAGE = 24;
  * @throws {Error} Will throw an error if saving to the database fails.
  */
 async function pushDinosaurToDB(data) {
-    try {
-        const { dinosaur, classificationInfo, source, image } = data;
-        const { name } = dinosaur;
-        await Promise.all([
-            Dinosaur.create(dinosaur),
-            ClassificationInfo.create(classificationInfo),
-            DinosaurSource.create(source),
-            DinosaurImage.create(image),
-        ]);
-        logger.info(`Successfully saved dinosaur, ${name} to database`);
-    } catch (error) {
-        logger.error(error.message);
-    }
+  try {
+    const { dinosaur, classificationInfo, source, image } = data;
+    const { name } = dinosaur;
+    await Promise.all([
+      Dinosaur.create(dinosaur),
+      ClassificationInfo.create(classificationInfo),
+      DinosaurSource.create(source),
+      DinosaurImage.create(image),
+    ]);
+    logger.info(`Successfully saved dinosaur, ${name} to database`);
+  } catch (error) {
+    logger.error(error.message);
+  }
 }
 
 /**
@@ -40,16 +40,17 @@ async function pushDinosaurToDB(data) {
  *   dinosaurs.
  */
 async function retrieveAllDinosaurs(page) {
-    const dinosaurs = await Dinosaur.findAllDinosaurs(page);
-    const prevPage = page - 1 > 0 ? `/api/v1/dinosaurs?page=${page - 1}` : '';
-    const nextPage = page + 1 < MAX_PAGE ? `/api/v1/dinosaurs?page=${page + 1}` : '';
-    return {
-        prevPage,
-        currentPage: page,
-        nextPage,
-        count: dinosaurs.length,
-        data: dinosaurs,
-    };
+  const dinosaurs = await Dinosaur.findAllDinosaurs(page);
+  const prevPage = page - 1 > 0 ? `/api/v1/dinosaurs?page=${page - 1}` : '';
+  const nextPage =
+    page + 1 < MAX_PAGE ? `/api/v1/dinosaurs?page=${page + 1}` : '';
+  return {
+    prevPage,
+    currentPage: page,
+    nextPage,
+    count: dinosaurs.length,
+    data: dinosaurs,
+  };
 }
 
 /**
@@ -62,16 +63,16 @@ async function retrieveAllDinosaurs(page) {
  *   dinosaur images.
  */
 async function retrieveAllImages(page) {
-    const dinosaurImages = await Dinosaur.findAllImages(page);
-    const prevPage = page - 1 > 0 ? `/api/v1/images?page=${page - 1}` : '';
-    const nextPage = page + 1 < MAX_PAGE ? `/api/v1/images?page=${page + 1}` : '';
-    return {
-        prevPage,
-        currentPage: page,
-        nextPage,
-        count: dinosaurImages.length,
-        data: dinosaurImages,
-    };
+  const dinosaurImages = await Dinosaur.findAllImages(page);
+  const prevPage = page - 1 > 0 ? `/api/v1/images?page=${page - 1}` : '';
+  const nextPage = page + 1 < MAX_PAGE ? `/api/v1/images?page=${page + 1}` : '';
+  return {
+    prevPage,
+    currentPage: page,
+    nextPage,
+    count: dinosaurImages.length,
+    data: dinosaurImages,
+  };
 }
 
 /**
@@ -82,8 +83,8 @@ async function retrieveAllImages(page) {
  * @returns {Promise<string[]>} A promise that resolves to an array of dinosaur names.
  */
 async function retrieveAllNames() {
-    const dinosaurs = await Dinosaur.findAllNames();
-    return dinosaurs.map((dino) => dino.name).sort();
+  const dinosaurs = await Dinosaur.findAllNames();
+  return dinosaurs.map(dino => dino.name).sort();
 }
 
 /**
@@ -93,33 +94,33 @@ async function retrieveAllNames() {
  *   `diet` and `count`.
  */
 async function retrieveAllDiets() {
-    const diets = await Dinosaur.findAllDiets();
-    const formattedDiets = diets.map((diet) => ({
-        diet: diet._id.diet,
-        count: diet.count,
-    }));
-    formattedDiets.sort((a, b) => b.count - a.count);
-    return formattedDiets;
+  const diets = await Dinosaur.findAllDiets();
+  const formattedDiets = diets.map(diet => ({
+    diet: diet._id.diet,
+    count: diet.count,
+  }));
+  formattedDiets.sort((a, b) => b.count - a.count);
+  return formattedDiets;
 }
 
 async function retrieveAllLocomotions() {
-    const locomotions = await Dinosaur.findAllLocomotions();
-    const formattedLocomotions = locomotions.map((locomotion) => ({
-        locomotionType: locomotion._id.locomotionType,
-        count: locomotion.count,
-    }));
-    formattedLocomotions.sort((a, b) => b.count - a.count);
-    return formattedLocomotions;
+  const locomotions = await Dinosaur.findAllLocomotions();
+  const formattedLocomotions = locomotions.map(locomotion => ({
+    locomotionType: locomotion._id.locomotionType,
+    count: locomotion.count,
+  }));
+  formattedLocomotions.sort((a, b) => b.count - a.count);
+  return formattedLocomotions;
 }
 
 async function retrieveAllClades() {
-    const clades = await Dinosaur.findAllClades();
-    const formattedClades = clades.map((clade) => ({
-        clade: clade._id,
-        count: clade.count,
-    }));
-    formattedClades.sort((a, b) => b.count - a.count);
-    return formattedClades;
+  const clades = await Dinosaur.findAllClades();
+  const formattedClades = clades.map(clade => ({
+    clade: clade._id,
+    count: clade.count,
+  }));
+  formattedClades.sort((a, b) => b.count - a.count);
+  return formattedClades;
 }
 
 /**
@@ -131,8 +132,8 @@ async function retrieveAllClades() {
  * @returns {Promise<object>} A promise that resolves to the dinosaur object.
  */
 async function retrieveDinosaurById(id) {
-    const dinosaur = await Dinosaur.findById(id);
-    return dinosaur;
+  const dinosaur = await Dinosaur.findById(id);
+  return dinosaur;
 }
 
 /**
@@ -144,8 +145,8 @@ async function retrieveDinosaurById(id) {
  * @returns {Promise<object>} A promise that resolves to the dinosaur object.
  */
 async function retrieveDinosaurByName(name) {
-    const dinosaur = await Dinosaur.findByName(name);
-    return dinosaur;
+  const dinosaur = await Dinosaur.findByName(name);
+  return dinosaur;
 }
 
 /**
@@ -157,8 +158,8 @@ async function retrieveDinosaurByName(name) {
  * @returns {Promise<object[]>} A promise that resolves to an array of dinosaur objects.
  */
 async function retrieveDinosaursByDiet(diet) {
-    const dinosaurs = await Dinosaur.findByDiet(diet);
-    return dinosaurs;
+  const dinosaurs = await Dinosaur.findByDiet(diet);
+  return dinosaurs;
 }
 
 /**
@@ -170,8 +171,8 @@ async function retrieveDinosaursByDiet(diet) {
  * @returns {Promise<object[]>} A promise that resolves to an array of dinosaur objects.
  */
 async function retrieveDinosaursByLocomotion(locomotion) {
-    const dinosaurs = await Dinosaur.findByLocomotion(locomotion);
-    return dinosaurs;
+  const dinosaurs = await Dinosaur.findByLocomotion(locomotion);
+  return dinosaurs;
 }
 
 /**
@@ -183,8 +184,8 @@ async function retrieveDinosaursByLocomotion(locomotion) {
  * @returns {Promise<string>} A promise that resolves to the image URL.
  */
 async function retrieveImageById(id) {
-    const image = await Dinosaur.findImageById(id);
-    return image;
+  const image = await Dinosaur.findImageById(id);
+  return image;
 }
 
 /**
@@ -196,8 +197,8 @@ async function retrieveImageById(id) {
  * @returns {Promise<object[]>} A promise that resolves to an array of dinosaur objects.
  */
 async function returnRandomDinosaurs(count) {
-    const dinosaurs = await Dinosaur.returnRandomDinosaurs(count);
-    return dinosaurs;
+  const dinosaurs = await Dinosaur.returnRandomDinosaurs(count);
+  return dinosaurs;
 }
 
 /**
@@ -209,8 +210,8 @@ async function returnRandomDinosaurs(count) {
  * @returns {Promise<string[]>} A promise that resolves to an array of image URLs.
  */
 async function returnRandomImages(count) {
-    const dinosaurImages = await Dinosaur.returnRandomImages(count);
-    return dinosaurImages;
+  const dinosaurImages = await Dinosaur.returnRandomImages(count);
+  return dinosaurImages;
 }
 
 /**
@@ -226,40 +227,40 @@ async function returnRandomImages(count) {
  *   parameters.
  */
 async function returnDinosaursByQuery(clade, diet, locomotion) {
-    const query = {
-        $match: {},
-    };
+  const query = {
+    $match: {},
+  };
 
-    if (diet) {
-        query.$match.diet = diet;
-    }
+  if (diet) {
+    query.$match.diet = diet;
+  }
 
-    if (locomotion) {
-        query.$match.locomotionType = locomotion;
-    }
+  if (locomotion) {
+    query.$match.locomotionType = locomotion;
+  }
 
-    if (clade) {
-        query.$match['classificationInfo.clade'] = { $in: clade };
-    }
+  if (clade) {
+    query.$match['classificationInfo.clade'] = { $in: clade };
+  }
 
-    const dinosaurs = await Dinosaur.returnDinosaursByQuery(query);
-    return dinosaurs;
+  const dinosaurs = await Dinosaur.returnDinosaursByQuery(query);
+  return dinosaurs;
 }
 
 module.exports = {
-    pushDinosaurToDB,
-    retrieveAllDinosaurs,
-    retrieveAllImages,
-    retrieveAllNames,
-    retrieveAllDiets,
-    retrieveAllLocomotions,
-    retrieveAllClades,
-    retrieveDinosaurById,
-    retrieveDinosaurByName,
-    retrieveDinosaursByDiet,
-    retrieveDinosaursByLocomotion,
-    retrieveImageById,
-    returnRandomDinosaurs,
-    returnRandomImages,
-    returnDinosaursByQuery,
+  pushDinosaurToDB,
+  retrieveAllDinosaurs,
+  retrieveAllImages,
+  retrieveAllNames,
+  retrieveAllDiets,
+  retrieveAllLocomotions,
+  retrieveAllClades,
+  retrieveDinosaurById,
+  retrieveDinosaurByName,
+  retrieveDinosaursByDiet,
+  retrieveDinosaursByLocomotion,
+  retrieveImageById,
+  returnRandomDinosaurs,
+  returnRandomImages,
+  returnDinosaursByQuery,
 };

@@ -50,10 +50,10 @@ describe('convertToSchema', function () {
         it('should call Object.prototype.hasOwnProperty for each key', function () {
             const obj = { a: 1, b: 2, c: 3 };
             const keys = ['a', 'c'];
-            const hasOwnPropertyStub = sinon.stub(Object.prototype, 'hasOwnProperty');
+            const hasOwnStub = sinon.stub(Object, 'hasOwn');
             schemaConvert.createSubObject(obj, keys);
-            expect(hasOwnPropertyStub.callCount).to.equal(keys.length);
-            hasOwnPropertyStub.restore();
+            expect(hasOwnStub.callCount).to.equal(keys.length);
+            hasOwnStub.restore();
         });
     });
 

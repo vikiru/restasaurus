@@ -3,7 +3,12 @@ const { Dinosaur } = require('../models/Dinosaur');
 const { DinosaurImage } = require('../models/DinosaurImage');
 const { DinosaurSource } = require('../models/DinosaurSource');
 
-const { sortInfo, getFamilySorter, getOrderSorter, getClassSorter } = require('./classificationInfoSorter');
+const {
+  sortInfo,
+  getFamilySorter,
+  getOrderSorter,
+  getClassSorter,
+} = require('./classificationInfoSorter');
 
 /**
  * Creates a sub-object from a given object, including only the specified keys.
@@ -13,13 +18,13 @@ const { sortInfo, getFamilySorter, getOrderSorter, getClassSorter } = require('.
  * @returns {object} The sub-object containing only the specified keys.
  */
 function createSubObject(obj, keys) {
-    const subObject = {};
-    keys.forEach((key) => {
-        if (Object.prototype.hasOwnProperty.call(obj, key)) {
-            subObject[key] = obj[key];
-        }
-    });
-    return subObject;
+  const subObject = {};
+  keys.forEach(key => {
+    if (Object.hasOwn(obj, key)) {
+      subObject[key] = obj[key];
+    }
+  });
+  return subObject;
 }
 
 /**
@@ -33,17 +38,22 @@ function createSubObject(obj, keys) {
  * @param {object} dinoImage - The dinosaur image.
  * @returns {object} The created dinosaur instance.
  */
-function createDinosaurInstance(mongooseData, classification, dinoSource, dinoImage) {
-    return new Dinosaur({
-        name: mongooseData.name,
-        temporalRange: mongooseData.temporalrange.replace(',,', ','),
-        diet: mongooseData.diet,
-        locomotionType: mongooseData.locomotionType,
-        description: mongooseData.description,
-        classificationInfo: classification,
-        source: dinoSource,
-        image: dinoImage,
-    });
+function createDinosaurInstance(
+  mongooseData,
+  classification,
+  dinoSource,
+  dinoImage
+) {
+  return new Dinosaur({
+    name: mongooseData.name,
+    temporalRange: mongooseData.temporalrange.replace(',,', ','),
+    diet: mongooseData.diet,
+    locomotionType: mongooseData.locomotionType,
+    description: mongooseData.description,
+    classificationInfo: classification,
+    source: dinoSource,
+    image: dinoImage,
+  });
 }
 
 /**
@@ -58,12 +68,12 @@ function createDinosaurInstance(mongooseData, classification, dinoSource, dinoIm
  * @returns {object} The created data object.
  */
 function createDataObject(dino, classification, dinoImage, dinoSource) {
-    return {
-        dinosaur: dino,
-        classificationInfo: classification,
-        image: dinoImage,
-        source: dinoSource,
-    };
+  return {
+    dinosaur: dino,
+    classificationInfo: classification,
+    image: dinoImage,
+    source: dinoSource,
+  };
 }
 
 /**
@@ -73,14 +83,14 @@ function createDataObject(dino, classification, dinoImage, dinoSource) {
  * @returns ClassificationInfo - The sorted classification information.
  */
 async function sortClasssificationInfo(classificationInfo) {
-    const familyInfo = classificationInfo.familyInfo;
-    const orderInfo = classificationInfo.orderInfo;
-    const classInfo = classificationInfo.classInfo;
+  const familyInfo = classificationInfo.familyInfo;
+  const orderInfo = classificationInfo.orderInfo;
+  const classInfo = classificationInfo.classInfo;
 
-    classificationInfo.familyInfo = sortInfo(familyInfo, getFamilySorter());
-    classificationInfo.orderInfo = sortInfo(orderInfo, getOrderSorter());
-    classificationInfo.classInfo = sortInfo(classInfo, getClassSorter());
-    return classificationInfo;
+  classificationInfo.familyInfo = sortInfo(familyInfo, getFamilySorter());
+  classificationInfo.orderInfo = sortInfo(orderInfo, getOrderSorter());
+  classificationInfo.classInfo = sortInfo(classInfo, getClassSorter());
+  return classificationInfo;
 }
 
 /**
@@ -92,18 +102,27 @@ async function sortClasssificationInfo(classificationInfo) {
  * @returns {Promise<object>} A promise that resolves to the created data object.
  */
 async function convertToSchema(mongooseData) {
-    mongooseData.classificationInfo = await sortClasssificationInfo(mongooseData.classificationInfo);
-    const dinoSource = new DinosaurSource(mongooseData.source);
-    const classification = new ClassificationInfo(mongooseData.classificationInfo);
-    const dinoImage = new DinosaurImage(mongooseData.image);
-    const dino = createDinosaurInstance(mongooseData, classification, dinoSource, dinoImage);
-    return createDataObject(dino, classification, dinoImage, dinoSource);
+  mongooseData.classificationInfo = await sortClasssificationInfo(
+    mongooseData.classificationInfo
+  );
+  const dinoSource = new DinosaurSource(mongooseData.source);
+  const classification = new ClassificationInfo(
+    mongooseData.classificationInfo
+  );
+  const dinoImage = new DinosaurImage(mongooseData.image);
+  const dino = createDinosaurInstance(
+    mongooseData,
+    classification,
+    dinoSource,
+    dinoImage
+  );
+  return createDataObject(dino, classification, dinoImage, dinoSource);
 }
 
 module.exports = {
-    convertToSchema,
-    createDinosaurInstance,
-    createDataObject,
-    createSubObject,
-    sortClasssificationInfo,
+  convertToSchema,
+  createDinosaurInstance,
+  createDataObject,
+  createSubObject,
+  sortClasssificationInfo,
 };

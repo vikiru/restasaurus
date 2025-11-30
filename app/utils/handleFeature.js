@@ -1,4 +1,8 @@
-const { cladeDefaults, orderDefaults, familyDefaults } = require('./helperConstants');
+const {
+  cladeDefaults,
+  orderDefaults,
+  familyDefaults,
+} = require('./helperConstants');
 
 /**
  * Finds a specific feature in the page data. The feature that is being searched for is either the diet or
@@ -10,51 +14,53 @@ const { cladeDefaults, orderDefaults, familyDefaults } = require('./helperConsta
  * @returns {string} The found feature.
  */
 function findFeature(pageData, featureRegex, replacements) {
-    let feature = '';
-    if ('extract' in pageData) {
-        const matches = pageData.extract.match(featureRegex);
-        if (matches && matches.length > 0) {
-            [feature] = matches;
-            replacements.forEach(([original, replacement]) => {
-                feature = feature.replace(original, replacement);
-            });
-        }
-    } else {
-        const pageText = pageData.structuredText.split('\n');
-        const featureCount = {};
-        const filteredText = pageText.map((text) => text.trim()).filter((text) => featureRegex.test(text));
-        filteredText.forEach((text) => {
-            const matches = text.match(featureRegex);
-            if (matches) {
-                matches.forEach((match) => {
-                    let featureType = match.toLowerCase();
-                    replacements.forEach(([original, replacement]) => {
-                        featureType = featureType.replace(original, replacement);
-                    });
-                    featureCount[featureType] = (featureCount[featureType] || 0) + 1;
-                });
-            }
-        });
-
-        let maxCountKey = '';
-        let maxCount = 0;
-        const ties = [];
-        if (Object.keys(featureCount).length > 0) {
-            for (const [key, count] of Object.entries(featureCount)) {
-                if (count > maxCount) {
-                    maxCount = count;
-                    maxCountKey = key;
-                } else if (count === maxCount) {
-                    ties.push(count);
-                }
-            }
-            const filteredTies = ties.filter((tie) => tie === maxCount);
-            if (filteredTies.length === 0 && maxCount > 1) {
-                feature = maxCountKey;
-            }
-        }
+  let feature = '';
+  if ('extract' in pageData) {
+    const matches = pageData.extract.match(featureRegex);
+    if (matches && matches.length > 0) {
+      [feature] = matches;
+      replacements.forEach(([original, replacement]) => {
+        feature = feature.replace(original, replacement);
+      });
     }
-    return feature;
+  } else {
+    const pageText = pageData.structuredText.split('\n');
+    const featureCount = {};
+    const filteredText = pageText
+      .map(text => text.trim())
+      .filter(text => featureRegex.test(text));
+    filteredText.forEach(text => {
+      const matches = text.match(featureRegex);
+      if (matches) {
+        matches.forEach(match => {
+          let featureType = match.toLowerCase();
+          replacements.forEach(([original, replacement]) => {
+            featureType = featureType.replace(original, replacement);
+          });
+          featureCount[featureType] = (featureCount[featureType] || 0) + 1;
+        });
+      }
+    });
+
+    let maxCountKey = '';
+    let maxCount = 0;
+    const ties = [];
+    if (Object.keys(featureCount).length > 0) {
+      for (const [key, count] of Object.entries(featureCount)) {
+        if (count > maxCount) {
+          maxCount = count;
+          maxCountKey = key;
+        } else if (count === maxCount) {
+          ties.push(count);
+        }
+      }
+      const filteredTies = ties.filter(tie => tie === maxCount);
+      if (filteredTies.length === 0 && maxCount > 1) {
+        feature = maxCountKey;
+      }
+    }
+  }
+  return feature;
 }
 
 /**
@@ -64,13 +70,13 @@ function findFeature(pageData, featureRegex, replacements) {
  * @returns {string} The found diet.
  */
 function findDiet(pageData) {
-    const dietRegex = /(\b\w*(ivore|ivorous))s?\b/gim;
-    const replacements = [
-        ['orous', 'ore'],
-        ['mega', ''],
-        ['vores', 'vore'],
-    ];
-    return findFeature(pageData, dietRegex, replacements);
+  const dietRegex = /(\b\w*(ivore|ivorous))s?\b/gim;
+  const replacements = [
+    ['orous', 'ore'],
+    ['mega', ''],
+    ['vores', 'vore'],
+  ];
+  return findFeature(pageData, dietRegex, replacements);
 }
 
 /**
@@ -83,12 +89,14 @@ function findDiet(pageData) {
  * @returns The structured text of the first paragraph that contains the given name.
  */
 function findDescription(htmlData, name) {
-    const paragraphs = htmlData.querySelectorAll('p');
-    const filteredParagraphs = paragraphs.filter((paragraph) => paragraph.structuredText.includes(name));
-    if (filteredParagraphs.length > 0) {
-        const firstParagraph = filteredParagraphs[0];
-        return firstParagraph.structuredText;
-    }
+  const paragraphs = htmlData.querySelectorAll('p');
+  const filteredParagraphs = paragraphs.filter(paragraph =>
+    paragraph.structuredText.includes(name)
+  );
+  if (filteredParagraphs.length > 0) {
+    const firstParagraph = filteredParagraphs[0];
+    return firstParagraph.structuredText;
+  }
 }
 
 /**
@@ -98,13 +106,14 @@ function findDescription(htmlData, name) {
  * @returns {string} The found locomotion type.
  */
 function findLocomotionType(pageData) {
-    const locomotionRegex = /(bipedal|biped|quadrupedal|quadruped|glide|gliding|flying|swim|swimming)/gim;
-    const replacements = [
-        ['pedal', 'ped'],
-        ['swim', 'swimming'],
-        ['glide', 'gliding'],
-    ];
-    return findFeature(pageData, locomotionRegex, replacements);
+  const locomotionRegex =
+    /(bipedal|biped|quadrupedal|quadruped|glide|gliding|flying|swim|swimming)/gim;
+  const replacements = [
+    ['pedal', 'ped'],
+    ['swim', 'swimming'],
+    ['glide', 'gliding'],
+  ];
+  return findFeature(pageData, locomotionRegex, replacements);
 }
 
 /**
@@ -115,13 +124,14 @@ function findLocomotionType(pageData) {
  * @param {object} data - The data object to be updated.
  */
 function searchClassification(items, defaults, data) {
-    items.forEach((item) => {
-        const value = item.value || item;
-        if (value in defaults) {
-            data.diet = data.diet || defaults[value].diet;
-            data.locomotionType = data.locomotionType || defaults[value].locomotionType;
-        }
-    });
+  items.forEach(item => {
+    const value = item.value || item;
+    if (value in defaults) {
+      data.diet = data.diet || defaults[value].diet;
+      data.locomotionType =
+        data.locomotionType || defaults[value].locomotionType;
+    }
+  });
 }
 
 /**
@@ -132,14 +142,14 @@ function searchClassification(items, defaults, data) {
  *   classification, such as the family, order, and clade it belongs to.
  */
 function findFeatureByClassification(data) {
-    const { classificationInfo } = data;
-    const families = classificationInfo.familyInfo;
-    const orders = classificationInfo.orderInfo;
-    const clades = classificationInfo.clade;
+  const { classificationInfo } = data;
+  const families = classificationInfo.familyInfo;
+  const orders = classificationInfo.orderInfo;
+  const clades = classificationInfo.clade;
 
-    searchClassification(clades, cladeDefaults, data);
-    searchClassification(families, familyDefaults, data);
-    searchClassification(orders, orderDefaults, data);
+  searchClassification(clades, cladeDefaults, data);
+  searchClassification(families, familyDefaults, data);
+  searchClassification(orders, orderDefaults, data);
 }
 
 /**
@@ -150,8 +160,8 @@ function findFeatureByClassification(data) {
  * @returns {object} The updated data object.
  */
 function retrieveDietAndLocomotionType(parsedHTML, data) {
-    data.diet = findDiet(parsedHTML);
-    data.locomotionType = findLocomotionType(parsedHTML);
+  data.diet = findDiet(parsedHTML);
+  data.locomotionType = findLocomotionType(parsedHTML);
 }
 
 /**
@@ -160,18 +170,18 @@ function retrieveDietAndLocomotionType(parsedHTML, data) {
  * @param {object} data - The data object.
  */
 function findMissingFeatures(data) {
-    if (data.diet === '' || data.locomotionType === '') {
-        findFeatureByClassification(data);
-    }
+  if (data.diet === '' || data.locomotionType === '') {
+    findFeatureByClassification(data);
+  }
 }
 
 module.exports = {
-    findFeature,
-    findDiet,
-    findDescription,
-    findLocomotionType,
-    findFeatureByClassification,
-    searchClassification,
-    retrieveDietAndLocomotionType,
-    findMissingFeatures,
+  findFeature,
+  findDiet,
+  findDescription,
+  findLocomotionType,
+  findFeatureByClassification,
+  searchClassification,
+  retrieveDietAndLocomotionType,
+  findMissingFeatures,
 };

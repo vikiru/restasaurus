@@ -140,7 +140,9 @@ describe('constructDinoNames - Script', function () {
         };
 
         beforeEach(function () {
-            readJSONFileStub = sinon.stub();
+            delete require.cache[require.resolve('../../app/scripts/constructDinoNames')];
+            
+            readJSONFileStub = sinon.stub(fs.promises, 'readFile');
             retrieveAllDinoNamesStub = sinon.stub();
             fetchStub = sinon.stub(global, 'fetch').resolves({
                 ok: true,
@@ -148,8 +150,15 @@ describe('constructDinoNames - Script', function () {
             });
 
             constructDinoNames = proxyquire('../../app/scripts/constructDinoNames', {
-                fs: { promises: { readFile: readJSONFileStub, writeFile: sinon.stub().resolves() } },
-                '../utils/retrieveAllDinoNames': retrieveAllDinoNamesStub,
+                'fs': { 
+                    promises: { 
+                        readFile: readJSONFileStub, 
+                        writeFile: sinon.stub().resolves() 
+                    } 
+                },
+                '../utils/retrieveAllDinoNames': { 
+                    retrieveAllDinoNames: retrieveAllDinoNamesStub 
+                },
                 'node-fetch': fetchStub,
             });
         });
@@ -165,7 +174,7 @@ describe('constructDinoNames - Script', function () {
             const result = await constructDinoNames.constructDinoNames();
 
             expect(result).to.deep.equal(names);
-            sinon.assert.calledOnce(readJSONFileStub);
+            expect(readJSONFileStub.calledOnce).to.be.true;
         });
 
         it('should retrieve names from Wikipedia API when JSON file does not exist', async function () {
@@ -177,6 +186,7 @@ describe('constructDinoNames - Script', function () {
             const result = await constructDinoNames.constructDinoNames();
 
             expect(result).to.deep.equal(names);
+            expect(retrieveAllDinoNamesStub.calledOnce).to.be.true;
         });
     });
 
@@ -289,10 +299,17 @@ describe('constructDinoNames - Script', function () {
         let readJSONFileStub;
 
         beforeEach(function () {
-            readJSONFileStub = sinon.stub();
+            delete require.cache[require.resolve('../../app/scripts/constructDinoNames')];
+            
+            readJSONFileStub = sinon.stub(fs.promises, 'readFile');
 
             constructDinoNames = proxyquire('../../app/scripts/constructDinoNames', {
-                fs: { promises: { readFile: readJSONFileStub, writeFile: sinon.stub().resolves() } },
+                'fs': { 
+                    promises: { 
+                        readFile: readJSONFileStub, 
+                        writeFile: sinon.stub().resolves() 
+                    } 
+                },
             });
         });
 
@@ -313,15 +330,18 @@ describe('constructDinoNames - Script', function () {
 
         it('should throw an error when file does not exist', async function () {
             const filePath = './nonexistent.json';
-            const error = new Error('File not found');
+            const error = new Error('ENOENT: no such file or directory, open \'/home/vikiru/projects/restasaurus/app/scripts/nonexistent.json\'');
             readJSONFileStub.rejects(error);
 
             try {
                 await constructDinoNames.readJSONFile(filePath);
                 expect.fail('Expected error was not thrown');
-            } catch (actualError) {
-                expect(actualError).to.deep.equal(error);
+            } catch (err) {
+                expect(err).to.be.an('error');
+                expect(err.message).to.include('ENOENT');
+                expect(err.message).to.include('no such file or directory');
             }
+            expect(readJSONFileStub.calledOnce).to.be.true;
         });
     });
 
