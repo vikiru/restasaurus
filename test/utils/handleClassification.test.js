@@ -94,6 +94,79 @@ describe('handleClassification', function () {
             expect(data.classificationInfo.speciesInfo).to.deep.equal([{ speciesType: keyword, value }]);
         });
 
+        it('should assign value to speciesInfo if keyword is "typespecies"', function () {
+            keyword = 'typespecies';
+            handleClassification.assignClassificationInfo(data, keyword, value);
+            expect(data.classificationInfo.speciesInfo).to.deep.equal([{ speciesType: keyword, value }]);
+        });
+
+        it('should assign value to speciesInfo if keyword is "otherspecies"', function () {
+            keyword = 'otherspecies';
+            handleClassification.assignClassificationInfo(data, keyword, value);
+            expect(data.classificationInfo.speciesInfo).to.deep.equal([{ speciesType: keyword, value }]);
+        });
+
+        it('should filter out "see text" from species values', function () {
+            keyword = 'typespecies';
+            value = 'See text';
+            handleClassification.assignClassificationInfo(data, keyword, value);
+            expect(data.classificationInfo.speciesInfo).to.deep.equal([]);
+        });
+
+        it('should clean question marks and references from species values', function () {
+            keyword = 'typespecies';
+            value = '?T. rex[1] Author, 2020';
+            handleClassification.assignClassificationInfo(data, keyword, value);
+            expect(data.classificationInfo.speciesInfo).to.deep.equal([
+                {
+                    speciesType: keyword,
+                    value: 'T. rex Author, 2020',
+                },
+            ]);
+        });
+
+        it('should handle species values that become empty after cleaning', function () {
+            keyword = 'typespecies';
+            value = '?[1]';
+            handleClassification.assignClassificationInfo(data, keyword, value);
+            expect(data.classificationInfo.speciesInfo).to.deep.equal([]);
+        });
+
+        it('should handle otherspecies values that become empty after cleaning', function () {
+            keyword = 'otherspecies';
+            value = '?[1]';
+            handleClassification.assignClassificationInfo(data, keyword, value);
+            expect(data.classificationInfo.speciesInfo).to.deep.equal([]);
+        });
+
+        it('should handle otherspecies with valid value', function () {
+            keyword = 'otherspecies';
+            value = 'A. europaeus';
+            handleClassification.assignClassificationInfo(data, keyword, value);
+            expect(data.classificationInfo.speciesInfo).to.deep.equal([{ speciesType: keyword, value }]);
+        });
+
+        it('should handle otherspecies when value fails initial validation', function () {
+            keyword = 'otherspecies';
+            value = 'See text';  
+            handleClassification.assignClassificationInfo(data, keyword, value);
+            expect(data.classificationInfo.speciesInfo).to.deep.equal([]);
+        });
+
+        it('should handle species with valid value', function () {
+            keyword = 'species';
+            value = 'T. rex';
+            handleClassification.assignClassificationInfo(data, keyword, value);
+            expect(data.classificationInfo.speciesInfo).to.deep.equal([{ speciesType: keyword, value }]);
+        });
+
+        it('should handle species when value becomes empty after cleaning', function () {
+            keyword = 'species';
+            value = '?[1]';
+            handleClassification.assignClassificationInfo(data, keyword, value);
+            expect(data.classificationInfo.speciesInfo).to.deep.equal([]);
+        });
+
         it('should assign value to classificationInfo if keyword does not match any predefined keywords', function () {
             keyword = 'other';
             handleClassification.assignClassificationInfo(data, keyword, value);
@@ -109,7 +182,7 @@ describe('handleClassification', function () {
         });
 
         it('should return undefined when infoBox does not exist', function () {
-            const html = { querySelector: () => undefined };
+            const html = { querySelector: function () { return undefined; } };
             const result = handleClassification.getInfoBox(html);
             expect(result).to.be.undefined;
         });
@@ -125,7 +198,7 @@ describe('handleClassification', function () {
         });
 
         it('should return undefined when rows do not exist', function () {
-            const infoBox = { querySelectorAll: () => undefined };
+            const infoBox = { querySelectorAll: function () { return undefined; } };
             const result = handleClassification.getRows(infoBox);
             expect(result).to.equal(undefined);
         });
@@ -195,7 +268,7 @@ describe('handleClassification', function () {
 
         beforeEach(function () {
             headerData = [{ structuredText: 'Species' }];
-            rows = [{ querySelectorAll: () => [{ structuredText: '†Value\n' }] }];
+            rows = [{ querySelectorAll: function () { return [{ structuredText: '†Value\n' }]; } }];
             data = new MongooseData('Dino');
         });
 
@@ -213,7 +286,7 @@ describe('handleClassification', function () {
         });
 
         it('should split value at newline character and assign classification info', function () {
-            const rowWithNewline = { querySelectorAll: () => [{ structuredText: 'Value\nExtra' }] };
+            const rowWithNewline = { querySelectorAll: function () { return [{ structuredText: 'Value\nExtra' }]; } };
             rows = [rowWithNewline, rowWithNewline];
             handleClassification.handleHeaderData(headerData, rows, data);
             expect(data.classificationInfo.speciesInfo).to.deep.equal([{ speciesType: 'Species', value: 'Value' }]);
@@ -226,6 +299,20 @@ describe('handleClassification', function () {
                 data,
             );
             expect(data).to.deep.equal(data);
+        });
+
+        it('should handle header data when header is at the end of rows array', function () {
+            const mockHeaderRow = { querySelectorAll: function () { return [{ structuredText: 'Species' }]; } };
+            const mockRows = [
+                { querySelectorAll: function () { return []; } },
+                { querySelectorAll: function () { return []; } },
+                mockHeaderRow
+            ];
+            
+            headerData[0].parentNode = mockHeaderRow;
+            
+            handleClassification.handleHeaderData(headerData, mockRows, data);
+            expect(data.classificationInfo.speciesInfo).to.deep.equal([]);
         });
     });
 
@@ -280,7 +367,7 @@ describe('handleClassification', function () {
         });
 
         it('should handle rows without matching conditions', function () {
-            rows = [{ querySelectorAll: () => [{ structuredText: '' }] }];
+            rows = [{ querySelectorAll: function () { return [{ structuredText: '' }]; } }];;
             handleClassification.handleOtherRows(rows, data);
             expect(data).to.deep.equal(data);
         });

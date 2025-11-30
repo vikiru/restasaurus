@@ -60,16 +60,22 @@ const keywords = [
     'Suborder:',
     'Infraorder:',
     'Parvorder:',
+    'Superfamily:',
     'Family:',
     'Subfamily:',
     'Genus:',
     'Temporal range:',
     'Tribe:',
     'Type species',
-    'Species',
+    'Other species',
+    'Species:',
 ];
 
-const keywordRegex = /binomial|clade|class|domain|family|genus|kingdom|order|species|tribe/gim;
+const keywordRegex = new RegExp(
+    keywords.map((keyword) => keyword.replace(':', '').replace(/\s+/g, '').toLowerCase()).join('|'),
+    'gim',
+);
+
 const dinoQuery = `action=query&meta=siteinfo&siprop=rightsinfo&prop=revisions|pageimages|info|extracts&exintro=&explaintext=&inprop=url&titles=`;
 const imageQuery = `action=query&prop=imageinfo&iiprop=extmetadata|url&titles=`;
 const REQUEST_DELAY = 250;

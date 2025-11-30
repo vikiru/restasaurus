@@ -69,7 +69,7 @@ function getLicense(metaData) {
     if (metaData.LicenseShortName && metaData.LicenseShortName.value !== 'Public domain' && metaData.UsageTerms) {
         return metaData.UsageTerms.value;
     }
-    return metaData.LicenseShortName.value;
+    return metaData.LicenseShortName && metaData.LicenseShortName.value ? metaData.LicenseShortName.value : '';
 }
 
 /**
@@ -125,7 +125,7 @@ function processImageData(imageData, data) {
         } else if ('Credit' in metaData) {
             data = handleAuthor(data, metaData.Credit.value);
         }
-        data.image.imageURL = imageInfo.descriptionurl;
+        data.image.imageURL = imageInfo.url;
         data.image.license = getLicense(metaData);
         data.image.licenseURL = getLicenseURL(metaData);
         data.image.dateCreated = getDateCreated(metaData);

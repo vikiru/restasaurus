@@ -202,11 +202,11 @@ async function processAllData() {
     const timeInSeconds = endTime[0] + endTime[1] / 1e9;
     const formattedSeconds = timeInSeconds.toFixed(2);
 
-    const filteredData = result.filter((res) => res.classificationInfo.domain !== '');
     logger.info(
-        `Finished processing all dinosaur data in ${formattedSeconds} seconds. ${filteredData.length} dinosaurs were processed.`,
+        `Finished processing all dinosaur data in ${formattedSeconds} seconds. ${result.length} dinosaurs were processed.`,
     );
     logger.info('Proceeding to save data to file.');
+    const filteredData = result.filter((dino) => dino.classificationInfo.clade.includes('Dinosauria'));
     await writeData(filteredData, 'dinosaurData.json');
 
     const totalTimeEnd = process.hrtime(totalTimeStart);
@@ -216,7 +216,7 @@ async function processAllData() {
         `Total time to retrieve all data from Wikipedia API and save to file: ${formattedTotalSeconds} seconds.`,
     );
 
-    return filteredData;
+    return result;
 }
 
 processAllData();
