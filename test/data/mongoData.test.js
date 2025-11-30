@@ -36,10 +36,14 @@ describe('mongoData', function () {
             const error = new Error('Connection failed');
             connectStub.rejects(error);
 
-            await connect();
-
-            expect(errorLogStub.calledOnce).to.be.true;
-            expect(errorLogStub.calledWith(error)).to.be.true;
+            try {
+                await connect();
+                expect.fail('connect() should have thrown an error');
+            } catch (err) {
+                expect(err).to.equal(error);
+                expect(errorLogStub.calledOnce).to.be.true;
+                expect(errorLogStub.calledWith("Failed to connect to MongoDB database:", error.message)).to.be.true;
+            }
         });
     });
 
