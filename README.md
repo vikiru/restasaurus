@@ -287,7 +287,7 @@ Additionally, confirm that `app/scripts` contains the following JSON files:
 
 - `allDinoNames.json`: contains all dinosaur names.
 - `filteredNames.json`: contains the names of the dinosaurs that passed the filtering process.
-- `htmlData.json`: contains the raw HTML for each Wikipedia article as a String.
+- `htmlData.json`: contains the raw HTML for each Wikipedia article.
 - `imageData.json`: contains the image data for each Dinosaur.
 - `pageData.json`: contains the page data for each Wikipedia article.
 - `dinosaurData.json`: contains the processed data of all dinosaurs.
