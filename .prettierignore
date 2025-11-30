@@ -1,6 +1,0 @@
-node_modules/
-.github/
-package-lock.json
-package.json
-.eslintrc
-.prettierrc
