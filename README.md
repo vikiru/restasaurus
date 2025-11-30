@@ -3,24 +3,18 @@
 </div>
 
 <div align="center" id="badges">
-<br/>
 <a href="https://vikiru.github.io/restasaurus/">
 	<img src="https://img.shields.io/badge/documentation-docs-orange" alt="Documentation"/>
 </a>
 <a href="https://restasaurus.onrender.com/api/v1">
     <img src="https://img.shields.io/badge/API-live%20site-blue" alt="RESTasaurus API hosted via Render"/>
 </a>
-<br/>
- <a href="https://wakatime.com/@vikiru/projects/oducsokuft">
-  <img src="https://wakatime.com/badge/github/vikiru/restasaurus.svg"
-  alt="Wakatime Coding Stats for RESTasaurus"/>
- </a>
  <a href="https://github.com/vikiru/restasaurus/blob/main/LICENSE">
   <img src="https://img.shields.io/badge/license-MIT-aqua" alt="MIT License Badge"/>
  </a>
- <a href="https://github.com/prettier/prettier">
-  <img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square" alt="Code Style - Prettier"/>
- </a>
+  <a href="https://biomejs.dev">
+    <img alt="Static Badge" src="https://img.shields.io/badge/Formatted_with-Biome-60a5fa?style=flat&logo=biome">
+  </a>
 <br/>
   <a href="https://github.com/vikiru/restasaurus/releases">
   <img src="https://img.shields.io/github/v/release/vikiru/restasaurus" alt="Release"/>
@@ -48,7 +42,15 @@
 
 > [!IMPORTANT]
 >
-> The data within the API is taken directly from **Wikipedia** via its API, as is. Please note that the information may have been modified since the last retrieval. All images and text belong to their respective authors, and attribution is provided accordingly for both. After retrieval, the data undergoes processing to be transformed into a custom JSON object, referred to as [MongooseData](https://github.com/vikiru/restasaurus/blob/main/app/models/MongooseData.js).
+> The data within the API is taken directly from **Wikipedia** via its API, as is. Please note that the information may have been modified since the last retrieval. All images and text belong to their respective authors, and attribution is provided accordingly for both.
+> 
+> All dinosaur text information sourced from Wikipedia articles are licensed under [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/), unless otherwise noted.
+> 
+> All dinosaur images are sourced from Wikimedia Commons and are licensed under various Creative Commons licenses, with attribution provided accordingly for each image.
+>
+> By using this API, you agree to properly attribute the sources and comply with their respective licenses.
+>
+> Examples can be seen below in []
 
 For a better understanding of the information provided by the API, please check out the [models](./app/models) directory. The schemas used within the MongoDB database include:
 
@@ -62,6 +64,9 @@ Additionally, if you would like to see an example of a response from the API, pl
 ## 📖 Table of Contents
 
 - [📖 Table of Contents](#-table-of-contents)
+- [📋 Attribution Examples](#-attribution-examples)
+    - [Example Wikipedia Article Attribution](#example-wikipedia-article-attribution)
+    - [Example Image Attribution](#example-image-attribution)
 - [📍 API Endpoints](#-api-endpoints)
     - [📄 General Endpoints](#-general-endpoints)
     - [🦖 Dinosaur Endpoints](#-dinosaur-endpoints)
@@ -78,6 +83,76 @@ Additionally, if you would like to see an example of a response from the API, pl
 - [📜 Available Scripts](#-available-scripts)
 - [✨ Acknowledgments](#-acknowledgments)
 - [©️ License](#️-license)
+
+## 📋 Attribution Examples
+
+When using data from the RESTasaurus API, please ensure that the following four elements are included in your attribution (where possible):
+
+1. **Title**: Include the title of the Wikipedia article or image
+2. **Author**: Include the author information for the Wikipedia article or image. For Wikipedia articles, this would be "Wikipedia contributors" and for images, include the author name(s) and author URL, if available.
+3. **Source**: Include the source URL where the data was retrieved from (e.g., the Wikipedia page URL or image source URL)
+4. **License**: Include a link to the license under which the data is distributed (e.g., Creative Commons, GNU Free Documentation License, etc.)
+
+The above attribution elements should be included in a clear and prominent manner when using data from the RESTasaurus API. 
+
+The API provides all the information needed for proper attribution in its responses. Please see [DinosaurSource](https://github.com/vikiru/restasaurus/blob/main/app/models/DinosaurSource.js) and [DinosaurImage](https://github.com/vikiru/restasaurus/blob/main/app/models/DinosaurImage.js) to understand the structure of the attribution data.
+
+### Example Wikipedia Article Attribution
+
+Here's an example of how to properly attribute a Wikipedia article:
+
+```json
+"source": {
+    "pageTitle": "Zephyrosaurus",
+    "author": "Wikipedia contributors",
+    "wikipediaURL": "https://en.wikipedia.org/wiki/Zephyrosaurus",
+    "license": "Creative Commons Attribution-Share Alike 4.0",
+    "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0/deed.en",
+    "permalink": "https://en.wikipedia.org/w/index.php?title=Zephyrosaurus&oldid=1187326953",
+    "revisionHistoryURL": "https://en.wikipedia.org/w/index.php?title=Zephyrosaurus&action=history",
+    "lastRevision": "2023-11-28T15:28:47Z",
+    "dateAccessed": "2024-01-30T14:27:20.682Z",
+    "source": "Wikipedia, The Free Encyclopedia",
+    "publisher": "Wikimedia Foundation",
+    "citation": "Wikipedia contributors. \"Zephyrosaurus.\" Wikipedia, The Free Encyclopedia. Wikimedia Foundation, 28 Nov 2023. Web. 30 Jan 2024."
+}
+```
+
+Given the above attribution structure, you should include all four required elements (title, author, source, license) when using data from the RESTasaurus API. The API response will contain all this information in the `source` object within each dinosaur, making it easy to construct proper attribution.
+
+For example, you should display the following information:
+
+- **Title**: Zephyrosaurus
+- **Author**: Wikipedia contributors
+- **Source**: https://en.wikipedia.org/wiki/Zephyrosaurus
+- **License**: Creative Commons Attribution-Share Alike 4.0 (https://creativecommons.org/licenses/by-sa/4.0/deed.en)
+
+### Example Image Attribution
+
+For images, the attribution should include the image title, author, source URL, and license information from the `image` object within each dinosaur in the API response.
+
+```json
+"image": {
+    "title": "Zephyrosaurus in Copenhagen",
+    "description": "Zephyrosaurus skeleton, Natural History Museum of Denmark, Copenhagen.",
+    "author": "FunkMonk",
+    "authorURL": "https://commons.wikimedia.org/wiki/User:FunkMonk",
+    "imageURL": "https://commons.wikimedia.org/wiki/File:Zephyrosaurus_in_Copenhagen.jpg",
+    "license": "Creative Commons Attribution-Share Alike 3.0",
+    "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+    "dateCreated": "2021-10-01T07:58:48.000Z",
+    "dateAccessed": "2024-01-30T14:27:20.683Z"
+}
+```
+
+Given the above image attribution structure, you should include all relevant elements (title, author, source, license) when using images from the RESTasaurus API. The API response will contain all this information in the `image` object, making it easy to construct proper attribution.
+
+For example, you should display the following information:
+
+- **Title**: Zephyrosaurus in Copenhagen
+- **Author**: FunkMonk (https://commons.wikimedia.org/wiki/User:FunkMonk)
+- **Source**: https://commons.wikimedia.org/wiki/File:Zephyrosaurus_in_Copenhagen.jpg
+- **License**: Creative Commons Attribution-Share Alike 3.0 (https://creativecommons.org/licenses/by-sa/3.0)
 
 ## 📍 API Endpoints
 
@@ -155,8 +230,7 @@ CI:
 
 Dev Tools:
 
-- [ESLint](https://eslint.org/)
-- [Prettier](https://prettier.io/)
+- [Biome](https://biomejs.dev/)
 - [WakaTime](https://wakatime.com/)
 - [MongoDB Compass](https://www.mongodb.com/products/tools/compass)
 - [Postman](https://www.postman.com/)
@@ -184,7 +258,7 @@ cd restasaurus
 2. Download and install all required dependencies.
 
 ```bash
-npm install
+pnpm install
 ```
 
 3. Setup your `.env` file with the required information.
@@ -200,7 +274,7 @@ NODE_ENV='development'
 Run the `retrieveData` script to retrieve all dinosaur information.
 
 ```bash
-npm run retrieveData
+pnpm retrieveData
 ```
 
 This script will retrieve information about dinosaurs from Wikipedia via its API and then process that data to construct a JSON object represented by [MongooseData](./app/models/MongooseData.js).
@@ -211,8 +285,8 @@ logging, respectively.
 
 Additionally, confirm that `app/scripts` contains the following JSON files:
 
-- `allDinoNames.json`: contains all dinosaur names (should be around 1427 names).
-- `filteredNames.json`: contains the names of the dinosaurs that passed the filtering process (should be around 1153 names).
+- `allDinoNames.json`: contains all dinosaur names.
+- `filteredNames.json`: contains the names of the dinosaurs that passed the filtering process.
 - `htmlData.json`: contains the raw HTML for each Wikipedia article as a String.
 - `imageData.json`: contains the image data for each Dinosaur.
 - `pageData.json`: contains the page data for each Wikipedia article.
@@ -223,7 +297,7 @@ Additionally, confirm that `app/scripts` contains the following JSON files:
 Run the `postData` script to save all dinosaurs to your MongoDB database, once retrieveData was successful.
 
 ```bash
-npm run postData
+pnpm postData
 ```
 
 Please check your MongoDB database collections and ensure that the dinosaurs were saved successfully.
@@ -245,13 +319,13 @@ The API can be started via one of the following commands:
 1. Start the API in `development` env, with nodemon.
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
 2. Start the API in `production` env, without nodemon.
 
 ```bash
-npm start
+pnpm start
 ```
 
 ## 🔍 Testing
@@ -265,7 +339,7 @@ The comprehensive suite of tests for this project is housed within the [test](./
 The tests can be run with the following command:
 
 ```bash
-npm test
+pnpm test
 ```
 
 ## 📜 Available Scripts
@@ -273,49 +347,49 @@ npm test
 1. Start the API in `production` env, without nodemon.
 
 ```bash
-npm start
+pnpm start
 ```
 
 2. Start the API in `development` env, with nodemon.
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
 3. Run all tests.
 
 ```bash
-npm test
+pnpm test
 ```
 
-4. Lint all files and check if there are any issues, with [ESLint](https://eslint.org/).
+4. Lint all files and check if there are any issues, with [Biome](https://biomejs.dev/).
 
 ```bash
-npm run lint
+pnpm lint
 ```
 
-5. Fix all ESLint issues then format the files with [Prettier](https://prettier.io/).
+5. Format all files with [Biome](https://biomejs.dev/).
 
 ```bash
-npm run prettier
+pnpm format
 ```
 
 6. Retrieve all information needed for the API via Wikipedia directly from its API.
 
 ```bash
-npm run retrieveData
+pnpm retrieveData
 ```
 
 7. Save all dinosaur information to your MongoDB database.
 
-```bash
-npm run postData
+```
+pnpm postData
 ```
 
 8. Create test coverage shields badges for README using [istanbul-badges-readme](https://github.com/the-bugging/istanbul-badges-readme).
 
 ```bash
-npm run make-badges
+pnpm make-badges
 ```
 
 ## ✨ Acknowledgments
