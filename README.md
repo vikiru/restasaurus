@@ -392,6 +392,12 @@ pnpm postData
 pnpm make-badges
 ```
 
+9. Prepare Git Hooks via [Husky](https://typicode.github.io/husky/).
+
+```bash
+pnpm prepare
+```
+
 ## ✨ Acknowledgments
 
 - [Docusaurus](https://docusaurus.io/)
@@ -409,6 +415,7 @@ pnpm make-badges
 - [regex101](https://regex101.com/)
 - [Favicon Generator](https://favicon.io/favicon-generator/)
 - [node-html-parser](https://github.com/taoqf/node-html-parser)
+- [Semantic Release](https://github.com/semantic-release/semantic-release)
 
 Additionally, this API would not be possible without the dinosaur information and image information retrieved from all of the [Wikipedia](https://en.wikipedia.org/wiki/Main_Page) articles accessed through the [Wikipedia API](https://www.mediawiki.org/wiki/Special:MyLanguage/API:Main_page). All images and text provided by this API belong to their respective authors.
 
