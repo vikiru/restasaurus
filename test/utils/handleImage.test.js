@@ -36,6 +36,18 @@ describe('handleImage', function () {
             const result = handleImage.getLicense(metaData);
             expect(result).to.equal('Public domain');
         });
+
+        it('should return empty string when LicenseShortName does not exist', function () {
+            const metaData = {};
+            const result = handleImage.getLicense(metaData);
+            expect(result).to.equal('');
+        });
+
+        it('should return empty string when LicenseShortName.value is falsy', function () {
+            const metaData = { LicenseShortName: { value: '' } };
+            const result = handleImage.getLicense(metaData);
+            expect(result).to.equal('');
+        });
     });
 
     describe('getLicenseURL', function () {
