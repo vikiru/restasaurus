@@ -1,7 +1,5 @@
-before(function () {
-    process.env.NODE_ENV = 'test';
-    process.env.MONGODB_URI = 'mongodb://localhost:27017/test';
-});
+process.env.NODE_ENV = 'test';
+process.env.MONGODB_URI = 'mongodb://localhost:27017/test';
 
 require('./config/config.test');
 require('./controllers/controllers.test');
