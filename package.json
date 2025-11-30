@@ -1,6 +1,6 @@
 {
 	"name": "restasaurus",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "A dinosaur REST API built using Express, MongoDB and Mongoose with comprehensive data for almost 1200 dinosaurs.",
 	"private": true,
 	"author": "Visakan Kirubakaran",
