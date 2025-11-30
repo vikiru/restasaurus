@@ -7,6 +7,21 @@ const { MongooseData } = require('../../app/models/MongooseData');
 const handleClassification = require('../../app/utils/handleClassification');
 
 describe('handleClassification', function () {
+    let dotenvStub;
+    let mongooseConnectStub;
+
+    beforeEach(function () {
+        process.env.MONGODB_URI = 'mongodb://localhost:27017/restasaurus';
+        dotenvStub = sinon.stub(require('dotenv'), 'config');
+        mongooseConnectStub = sinon.stub(require('mongoose'), 'connect');
+    });
+
+    afterEach(function () {
+        dotenvStub.restore();
+        mongooseConnectStub.restore();
+        sinon.restore();
+    });
+
     describe('assignClassificationInfo', function () {
         let data;
         let keyword;
@@ -298,6 +313,96 @@ describe('handleClassification', function () {
             const result = handleClassification.handleTemporalRange(rowData);
             expect(result).to.equal('Late Jurassic, Early Cretaceous');
         });
+
+        it('should handle multiple Ma values with references', function () {
+            const rowData = ['Temporal range: Late Cretaceous', '72.1-66 Ma[1]', '70-68 Ma'];
+            const result = handleClassification.handleTemporalRange(rowData);
+            expect(result).to.equal('Late Cretaceous, 72.1-66 Ma, 70-68 Ma');
+        });
+
+        it('should handle decimal Ma values', function () {
+            const rowData = ['125.0-100.5 Ma'];
+            const result = handleClassification.handleTemporalRange(rowData);
+            expect(result).to.equal('125.0-100.5 Ma');
+        });
+
+        it('should handle Middle temporal periods', function () {
+            const rowData = ['Middle Jurassic[1]', '174-164 Ma'];
+            const result = handleClassification.handleTemporalRange(rowData);
+            expect(result).to.equal('Middle Jurassic, 174-164 Ma');
+        });
+
+        it('should handle Upper and Lower temporal periods', function () {
+            const rowData = ['Upper Triassic', 'Lower Jurassic'];
+            const result = handleClassification.handleTemporalRange(rowData);
+            expect(result).to.equal('Upper Triassic, Lower Jurassic');
+        });
+
+        it('should clean up double commas', function () {
+            const rowData = ['Temporal range: Late Cretaceous,,', '66-0 Ma'];
+            const result = handleClassification.handleTemporalRange(rowData);
+            expect(result).to.equal('Late Cretaceous, 66-0 Ma');
+        });
+
+        it('should handle mixed temporal data with multiple references', function () {
+            const rowData = ['Temporal range: Late Cretaceous[1][2]', 'Early Cretaceous[3]', '100-66 Ma'];
+            const result = handleClassification.handleTemporalRange(rowData);
+            expect(result).to.equal('Late Cretaceous, Early Cretaceous, 100-66 Ma');
+        });
+
+        it('should handle empty rowData array', function () {
+            const rowData = [];
+            const result = handleClassification.handleTemporalRange(rowData);
+            expect(result).to.equal('');
+        });
+
+        it('should handle rowData with only non-matching elements', function () {
+            const rowData = ['Some random text', 'Another non-temporal data'];
+            const result = handleClassification.handleTemporalRange(rowData);
+            expect(result).to.equal('');
+        });
+
+        it('should handle single Ma value without range', function () {
+            const rowData = ['150 Ma'];
+            const result = handleClassification.handleTemporalRange(rowData);
+            expect(result).to.equal('150 Ma');
+        });
+
+        it('should handle Temporal range with extra whitespace', function () {
+            const rowData = ['Temporal range:    Late   Cretaceous   '];
+            const result = handleClassification.handleTemporalRange(rowData);
+            expect(result).to.equal('Late Cretaceous');
+        });
+
+        it('should handle trailing comma cleanup after final processing', function () {
+            const rowData = ['Late Cretaceous,'];
+            const result = handleClassification.handleTemporalRange(rowData);
+            expect(result).to.equal('Late Cretaceous');
+        });
+
+        it('should handle question mark cleanup', function () {
+            const rowData = ['Late Cretaceous?'];
+            const result = handleClassification.handleTemporalRange(rowData);
+            expect(result).to.equal('Late Cretaceous');
+        });
+
+        it('should handle complex mixed case with all cleanup rules', function () {
+            const rowData = ['Temporal range: Late Cretaceous?[1][2],,', 'Early Jurassic?[3],', '150-100 Ma?[4],'];
+            const result = handleClassification.handleTemporalRange(rowData);
+            expect(result).to.equal('Late Cretaceous, Early Jurassic, 150-100 Ma');
+        });
+
+        it('should handle case where Temporal range appears after other temporal data', function () {
+            const rowData = ['Late Cretaceous', 'Temporal range: Jurassic'];
+            const result = handleClassification.handleTemporalRange(rowData);
+            expect(result).to.equal('Jurassic');
+        });
+
+        it('should handle Ma pattern with spaces around numbers', function () {
+            const rowData = ['66 - 0 Ma'];
+            const result = handleClassification.handleTemporalRange(rowData);
+            expect(result).to.equal('66 - 0 Ma');
+        });
     });
 
     describe('handleRowData', function () {
@@ -447,13 +552,11 @@ describe('handleClassification', function () {
             const nextRow = parser.parse('<tr><td>Value</td></tr>');
             rows = [headerRow, nextRow];
             
-            // Mock the headerRow to have querySelectorAll return th elements
             headerRow.querySelectorAll = function(selector) {
                 if (selector === 'th') return [{ structuredText: 'Species:' }];
                 return [];
             };
             
-            // Mock the nextRow to have querySelectorAll return td elements
             nextRow.querySelectorAll = function(selector) {
                 if (selector === 'td') return [{ structuredText: 'Value' }];
                 return [];
