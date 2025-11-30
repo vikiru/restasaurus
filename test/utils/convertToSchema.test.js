@@ -17,6 +17,8 @@ describe('convertToSchema', function () {
     let createDataObjectStub;
 
     beforeEach(function () {
+        
+        
         DinosaurSourceStub = sinon.stub(DinosaurSource, 'DinosaurSource');
         ClassificationInfoStub = sinon.stub(ClassificationInfo, 'ClassificationInfo');
         DinosaurImageStub = sinon.stub(DinosaurImage, 'DinosaurImage');

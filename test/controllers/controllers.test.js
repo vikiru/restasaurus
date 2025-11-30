@@ -25,6 +25,10 @@ const {
 const dinosaurService = require('../../app/services/index');
 
 describe('Controller - Functionality Tests', function () {
+    beforeEach(function () {
+        
+    });
+
     describe('returnHome', function () {
         let jsonStub;
         let statusStub;
@@ -148,18 +152,11 @@ describe('Controller - Functionality Tests', function () {
         let dinosaurServiceStub;
         let loggerStub;
 
-        beforeEach(function () {
+        it('should return images on page 1', async function () {
             jsonStub = sinon.stub();
             statusStub = sinon.stub().returns({ json: jsonStub });
             dinosaurServiceStub = sinon.stub(dinosaurService, 'retrieveAllImages');
             loggerStub = sinon.stub(logger.logger, 'error');
-        });
-
-        afterEach(function () {
-            sinon.restore();
-        });
-
-        it('should return images on page 1', async function () {
             const req = { query: { page: '1' } };
             const res = {};
 
@@ -236,10 +233,11 @@ describe('Controller - Functionality Tests', function () {
         let loggerStub;
 
         beforeEach(function () {
+            
+            
             jsonStub = sinon.stub();
             statusStub = sinon.stub().returns({ json: jsonStub });
             dinosaurServiceStub = sinon.stub(dinosaurService, 'retrieveAllClades');
-            loggerStub = sinon.stub(logger.logger, 'error');
         });
 
         afterEach(function () {
@@ -292,6 +290,8 @@ describe('Controller - Functionality Tests', function () {
         it('should handle errors correctly', async function () {
             const req = {};
             const res = {};
+            
+            const loggerStub = sinon.stub(logger.logger, 'error');
 
             res.status = statusStub;
             dinosaurServiceStub.rejects(new Error('Test error'));
@@ -316,6 +316,8 @@ describe('Controller - Functionality Tests', function () {
         let loggerStub;
 
         beforeEach(function () {
+            
+            
             jsonStub = sinon.stub();
             statusStub = sinon.stub().returns({ json: jsonStub });
             dinosaurServiceStub = sinon.stub(dinosaurService, 'retrieveAllDiets');
@@ -408,6 +410,8 @@ describe('Controller - Functionality Tests', function () {
         let loggerStub;
 
         beforeEach(function () {
+            
+            
             jsonStub = sinon.stub();
             statusStub = sinon.stub().returns({ json: jsonStub });
             dinosaurServiceStub = sinon.stub(dinosaurService, 'retrieveAllLocomotions');
@@ -500,6 +504,8 @@ describe('Controller - Functionality Tests', function () {
         let loggerStub;
 
         beforeEach(function () {
+            
+            
             jsonStub = sinon.stub();
             statusStub = sinon.stub().returns({ json: jsonStub });
             dinosaurServiceStub = sinon.stub(dinosaurService, 'retrieveAllNames');
@@ -571,6 +577,8 @@ describe('Controller - Functionality Tests', function () {
         let loggerStub;
 
         beforeEach(function () {
+            
+            
             jsonStub = sinon.stub();
             statusStub = sinon.stub().returns({ json: jsonStub });
             dinosaurServiceStub = sinon.stub(dinosaurService, 'retrieveDinosaurByName');
@@ -640,6 +648,8 @@ describe('Controller - Functionality Tests', function () {
         let loggerStub;
 
         beforeEach(function () {
+            
+            
             jsonStub = sinon.stub();
             statusStub = sinon.stub().returns({ json: jsonStub });
             dinosaurServiceStub = sinon.stub(dinosaurService, 'retrieveDinosaurById');
@@ -711,6 +721,8 @@ describe('Controller - Functionality Tests', function () {
         let loggerStub;
 
         beforeEach(function () {
+            
+            
             jsonStub = sinon.stub();
             statusStub = sinon.stub().returns({ json: jsonStub });
             dinosaurServiceStub = sinon.stub(dinosaurService, 'retrieveDinosaursByDiet');
@@ -780,6 +792,8 @@ describe('Controller - Functionality Tests', function () {
         let loggerStub;
 
         beforeEach(function () {
+            
+            
             jsonStub = sinon.stub();
             statusStub = sinon.stub().returns({ json: jsonStub });
             dinosaurServiceStub = sinon.stub(dinosaurService, 'retrieveDinosaursByLocomotion');
@@ -851,6 +865,8 @@ describe('Controller - Functionality Tests', function () {
         let loggerStub;
 
         beforeEach(function () {
+            
+            
             jsonStub = sinon.stub();
             statusStub = sinon.stub().returns({ json: jsonStub });
             dinosaurServiceStub = sinon.stub(dinosaurService, 'retrieveImageById');
@@ -917,6 +933,8 @@ describe('Controller - Functionality Tests', function () {
         let loggerStub;
 
         beforeEach(function () {
+            
+            
             jsonStub = sinon.stub();
             statusStub = sinon.stub().returns({ json: jsonStub });
             dinosaurServiceStub = sinon.stub(dinosaurService, 'returnRandomDinosaurs');
@@ -1011,6 +1029,8 @@ describe('Controller - Functionality Tests', function () {
         let loggerStub;
 
         beforeEach(function () {
+            
+            
             jsonStub = sinon.stub();
             statusStub = sinon.stub().returns({ json: jsonStub });
             dinosaurServiceStub = sinon.stub(dinosaurService, 'returnRandomImages');
@@ -1096,6 +1116,8 @@ describe('Controller - Functionality Tests', function () {
         let loggerStub;
 
         beforeEach(function () {
+            
+            
             jsonStub = sinon.stub();
             statusStub = sinon.stub().returns({ json: jsonStub });
             dinosaurServiceStub = sinon.stub(dinosaurService, 'returnDinosaursByQuery');

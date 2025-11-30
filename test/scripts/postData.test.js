@@ -16,14 +16,15 @@ describe('postData', function () {
         let readJSONFileStub;
 
         beforeEach(function () {
+            const { logger } = require('../../app/config/logger');
+            sinon.stub(logger, 'info').resolves();
+            sinon.stub(logger, 'http').resolves();
+            sinon.stub(logger, 'error').resolves();
+            
             const { MongooseData } = require('../../app/models/MongooseData');
             mongoDB = require('../../app/data/mongoData');
-            logger = require('../../app/config/logger');
-            sinon.stub(logger.logger, 'info').resolves();
             sinon.stub(mongoDB, 'connect').resolves();
             sinon.stub(mongoDB, 'disconnect').resolves();
-            sinon.stub(console, 'log').resolves();
-            sinon.stub(process, 'hrtime').resolves();
 
             convertToSchemaStub = sinon.stub().resolves({});
             pushDinosaurToDBStub = sinon.stub().resolves({});

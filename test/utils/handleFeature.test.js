@@ -115,6 +115,8 @@ describe('handleFeature', function () {
         const handleFeature = require('../../app/utils/handleFeature');
         let data;
         beforeEach(function () {
+            
+            
             data = new MongooseData('Dino');
         });
 
@@ -184,6 +186,8 @@ describe('handleFeature', function () {
         const handleFeature = require('../../app/utils/handleFeature');
         let data;
         beforeEach(function () {
+            
+            
             data = new MongooseData('Dino');
         });
 

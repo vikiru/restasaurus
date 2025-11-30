@@ -2,11 +2,10 @@ const fs = require('fs');
 
 const { assert, expect } = require('chai');
 const parser = require('node-html-parser');
-const proxyquire = require('proxyquire');
 const sinon = require('sinon');
+const proxyquire = require('proxyquire');
 
 const { MongooseData } = require('../../app/models/MongooseData');
-const { processData } = require('../../app/scripts/retrieveData');
 
 describe('retrieveData', function () {
     let logger;
@@ -25,6 +24,7 @@ describe('retrieveData', function () {
         sinon.stub(logger.logger, 'info').resolves();
         sinon.stub(logger.logger, 'error').resolves();
         sinon.stub(logger.logger, 'http').resolves();
+        
         readJSONFileStub = sinon.stub();
         urlConstructorStub = sinon.stub().resolves();
         urlHandlerStub = sinon.stub().resolves();
@@ -160,15 +160,15 @@ describe('retrieveData', function () {
     });
 
     describe('processHTMLData', function () {
-        const handleClassification = require('../../app/utils/handleClassification');
-        const handleFeature = require('../../app/utils/handleFeature');
         let classificationStub;
         let missingFeatureStub;
         let featureStub;
 
         const dino = new MongooseData('Dino');
 
-        beforeEach(function () {
+        it('should process HTML data correctly', function () {
+            const handleClassification = require('../../app/utils/handleClassification');
+            const handleFeature = require('../../app/utils/handleFeature');
             classificationStub = sinon.stub(handleClassification, 'retrieveBoxData').returns(dino);
             featureStub = sinon.stub(handleFeature, 'retrieveDietAndLocomotionType').returns();
             missingFeatureStub = sinon.stub(handleFeature, 'findMissingFeatures').returns();
@@ -209,14 +209,14 @@ describe('retrieveData', function () {
         let locomotionTypeStub;
         let descriptionStub;
         let sourceStub;
-        const handleFeature = require('../../app/utils/handleFeature');
-        const handleSource = require('../../app/utils/handleSource');
 
         const pageData = { extract: '' };
         const htmlData = '';
         const mongooseData = new MongooseData('Dino');
 
-        beforeEach(function () {
+        it('should process page data correctly from pageData', function () {
+            const handleFeature = require('../../app/utils/handleFeature');
+            const handleSource = require('../../app/utils/handleSource');
             dietStub = sinon.stub(handleFeature, 'findDiet').returns('');
             locomotionTypeStub = sinon.stub(handleFeature, 'findLocomotionType').returns('');
             descriptionStub = sinon.stub(handleFeature, 'findDescription').returns('');
@@ -265,11 +265,11 @@ describe('retrieveData', function () {
         let htmlDataStub;
         let pageDataStub;
         let imageDataStub;
-        const handleFeature = require('../../app/utils/handleFeature');
-        const handleSource = require('../../app/utils/handleSource');
-        const handleImage = require('../../app/utils/handleImage');
 
-        beforeEach(function () {
+        it('should process data correctly', async function () {
+            const handleFeature = require('../../app/utils/handleFeature');
+            const handleSource = require('../../app/utils/handleSource');
+            const handleImage = require('../../app/utils/handleImage');
             dietStub = sinon.stub(handleFeature, 'findDiet').returns('');
             locomotionTypeStub = sinon.stub(handleFeature, 'findLocomotionType').returns('');
             descriptionStub = sinon.stub(handleFeature, 'findDescription').returns('');
@@ -342,6 +342,7 @@ describe('retrieveData', function () {
             retrievePageDataStub = sinon.stub();
             retrieveImageDataStub = sinon.stub();
             retrieveHTMLDataStub = sinon.stub();
+            processDataStub = sinon.stub();
 
             retrieveData = proxyquire('../../app/scripts/retrieveData', {
                 './constructDinoNames': {
@@ -361,6 +362,7 @@ describe('retrieveData', function () {
                 './retrieveData': {
                     retrieveImageData: retrieveImageDataStub,
                     retrieveHTMLData: retrieveHTMLDataStub,
+                    processData: processDataStub,
                 },
             });
         });
@@ -446,61 +448,49 @@ describe('retrieveData', function () {
             sinon.restore();
         });
 
-        it('should process all retrieved data', async function () {
-            processDataStub = sinon.stub();
-            writeDataStub = sinon.stub();
-            retrieveDataStub = sinon.stub();
-            readJSONFileStub = sinon.stub();
-            fetchStub = sinon.stub();
-
-            processDataStub.resolves({ classificationInfo: { domain: 'Value' } });
-            writeDataStub.resolves();
-            retrieveDataStub.resolves({ pageData, imageData, htmlData });
-
-            readJSONFileStub.withArgs('./pageData.json').resolves(pageData);
-            readJSONFileStub.withArgs('./imageData.json').resolves(imageData);
-            readJSONFileStub.withArgs('./htmlData.json').resolves(htmlData);
-
-            fetchStub.resolves({
-                query: {
-                    pages: {
-                        page1: { pageid: 1, title: 'Page 1' },
-                        page2: { pageid: 2, title: 'Page 2' },
-                    },
-                    rightsinfo: {
-                        rights: 'Some rights info',
-                    },
-                },
-                parse: {
-                    text: 'Some text',
-                },
-            });
-
-            retrieveData = proxyquire('../../app/scripts/retrieveData', {
-                './constructDinoNames': {
-                    readJSONFile: readJSONFileStub,
-                    delay: delayStub,
-                    fetchData: fetchStub,
-                    processData: processDataStub,
-                    writeData: writeDataStub,
-                    retrieveData: retrieveDataStub,
-                },
+        it('should call processAllData function', async function () {
+            delete require.cache[require.resolve('../../app/scripts/retrieveData')];
+            
+            const mockWriteData = sinon.stub().resolves();
+            const retrieveDataModule = proxyquire('../../app/scripts/retrieveData', {
                 '../utils/writeData': {
-                    writeData: writeDataStub,
+                    writeData: mockWriteData,
+                },
+                '../utils/handleImage': {
+                    processImageData: sinon.stub(),
+                },
+                '../utils/handleClassification': {
+                    retrieveBoxData: sinon.stub(),
                 },
                 '../utils/fetchData': {
-                    fetchData: sinon.stub().resolves(),
+                    fetchData: sinon.stub().resolves({ text: '<div>Mock HTML</div>' }),
                 },
-                './retrieveData': {
-                    retrieveImageData: sinon.stub().resolves(),
-                    retrieveHTMLData: sinon.stub().resolves(),
-                    retrieveData: retrieveDataStub,
-                    processData: processDataStub,
+                './constructDinoNames': {
+                    readJSONFile: sinon.stub().rejects(new Error('No file')),
+                    retrieveAndFilterDinoData: sinon.stub().resolves({ 
+                        data: [
+                            { 
+                                classificationInfo: { 
+                                    clade: ['Dinosauria', 'Theropoda'] 
+                                } 
+                            },
+                            { 
+                                classificationInfo: { 
+                                    clade: ['Pterosauria'] 
+                                } 
+                            }
+                        ], 
+                        filteredNames: ['T-Rex', 'Pterodactyl']
+                    }),
+                    constructDinoNames: sinon.stub().resolves([]),
                 },
+                retrieveImageData: sinon.stub().resolves([]),
+                retrieveHTMLData: sinon.stub().resolves([]),
             });
 
-            const result = await retrieveData.processAllData();
-            expect(result).to.be.an('array');
+            await retrieveDataModule.processAllData();
+            
+            expect(mockWriteData.called).to.be.true;
         });
     });
 });

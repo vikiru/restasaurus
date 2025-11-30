@@ -1,56 +1,58 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
-
-const { urlConstructor } = require('../../app/scripts/constructDinoNames');
+const proxyquire = require('proxyquire');
 
 describe('fetchData', function () {
     let fetchStub;
-    const urls = urlConstructor(['Stegosaurus']);
-    const url = urls[0];
+    let fetchData;
+    let urls;
     const expectedData = { key: 'value' };
 
     beforeEach(function () {
-        if (typeof global.fetch !== 'function') {
-            global.fetch = sinon.stub();
-        }
-        fetchStub = sinon.stub(global, 'fetch');
+        fetchStub = sinon.stub();
+        global.fetch = fetchStub;
+        const logger = require('../../app/config/logger');
+        sinon.stub(logger.logger, 'http').resolves();
+        sinon.stub(logger.logger, 'error').resolves();
+        const { urlConstructor } = require('../../app/scripts/constructDinoNames');
+        urls = urlConstructor(['Stegosaurus'], 'html');
+        fetchData = require('../../app/utils/fetchData').fetchData;
     });
 
     afterEach(function () {
-        fetchStub.restore();
+        sinon.restore();
     });
 
     it('should fetch data when provided a valid url', async function () {
-        fetchStub.withArgs(url).resolves({
+        fetchStub.withArgs(urls[0]).resolves({
             ok: true,
             json: () => Promise.resolve(expectedData),
         });
-        const { fetchData } = require('../../app/utils/fetchData');
 
-        const data = await fetchData(url);
+        const data = await fetchData(urls[0]);
         expect(data).to.deep.equal(expectedData);
     });
 
     it('should handle fetch errors', async function () {
         const fakeUrl = 'fake url';
         fetchStub.withArgs(fakeUrl).rejects(new Error('Fetch failed'));
-        const { fetchData } = require('../../app/utils/fetchData');
+        
         try {
-            const data = await fetchData(fakeUrl);
+            await fetchData(fakeUrl);
         } catch (err) {
             expect(err).to.be.an('error');
         }
     });
 
     it('should handle non-ok responses', async function () {
-        fetchStub.withArgs(url).resolves({
+        fetchStub.withArgs(urls[0]).resolves({
             ok: false,
             status: 404,
             json: () => Promise.resolve({}),
         });
-        const { fetchData } = require('../../app/utils/fetchData');
+        
         try {
-            const data = await fetchData(url);
+            await fetchData(urls[0]);
         } catch (err) {
             expect(err).to.be.an('error');
         }
