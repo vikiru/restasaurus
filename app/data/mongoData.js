@@ -17,7 +17,7 @@ async function connect() {
     logger.info('Successfully connected to the MongoDB database.');
     return mongoose.connection;
   } catch (error) {
-    logger.error("Failed to connect to MongoDB database:", error.message);
+    logger.error('Failed to connect to MongoDB database:', error.message);
     throw error;
   }
 }
