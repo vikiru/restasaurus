@@ -50,7 +50,7 @@
 >
 > By using this API, you agree to properly attribute the sources and comply with their respective licenses.
 >
-> Examples can be seen below in [Attribution Examples](#-attribution-examples)
+> Examples can be seen below in [Attribution Examples](#-attribution-examples).
 
 For a better understanding of the information provided by the API, please check out the [models](./app/models) directory. The schemas used within the MongoDB database include:
 

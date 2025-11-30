@@ -76,6 +76,30 @@ describe('handleClassification', function () {
             expect(data.classificationInfo.genusInfo).to.deep.equal([{ genusType: keyword, value }]);
         });
 
+        it('should assign value to kingdom if keyword is "kingdom"', function () {
+            keyword = 'kingdom';
+            handleClassification.assignClassificationInfo(data, keyword, value);
+            expect(data.classificationInfo.kingdom).to.equal(value);
+        });
+
+        it('should assign value to phylum if keyword is "phylum"', function () {
+            keyword = 'phylum';
+            handleClassification.assignClassificationInfo(data, keyword, value);
+            expect(data.classificationInfo.phylum).to.equal(value);
+        });
+
+        it('should assign value to familyInfo if keyword is "superfamily"', function () {
+            keyword = 'superfamily';
+            handleClassification.assignClassificationInfo(data, keyword, value);
+            expect(data.classificationInfo.familyInfo).to.deep.equal([{ familyType: keyword, value }]);
+        });
+
+        it('should assign value to familyInfo if keyword is "subfamily"', function () {
+            keyword = 'subfamily';
+            handleClassification.assignClassificationInfo(data, keyword, value);
+            expect(data.classificationInfo.familyInfo).to.deep.equal([{ familyType: keyword, value }]);
+        });
+
         it('should assign value to clade if keyword is "clade"', function () {
             keyword = 'clade';
             handleClassification.assignClassificationInfo(data, keyword, value);
@@ -167,6 +191,34 @@ describe('handleClassification', function () {
             expect(data.classificationInfo.speciesInfo).to.deep.equal([]);
         });
 
+        it('should handle species when value fails validation (empty string)', function () {
+            keyword = 'species';
+            value = '';
+            handleClassification.assignClassificationInfo(data, keyword, value);
+            expect(data.classificationInfo.speciesInfo).to.deep.equal([]);
+        });
+
+        it('should handle species when value contains "see text"', function () {
+            keyword = 'species';
+            value = 'See text';
+            handleClassification.assignClassificationInfo(data, keyword, value);
+            expect(data.classificationInfo.speciesInfo).to.deep.equal([]);
+        });
+
+        it('should handle species when value is null', function () {
+            keyword = 'species';
+            value = null;
+            handleClassification.assignClassificationInfo(data, keyword, value);
+            expect(data.classificationInfo.speciesInfo).to.deep.equal([]);
+        });
+
+        it('should handle species when value is undefined', function () {
+            keyword = 'species';
+            value = undefined;
+            handleClassification.assignClassificationInfo(data, keyword, value);
+            expect(data.classificationInfo.speciesInfo).to.deep.equal([]);
+        });
+
         it('should assign value to classificationInfo if keyword does not match any predefined keywords', function () {
             keyword = 'other';
             handleClassification.assignClassificationInfo(data, keyword, value);
@@ -227,6 +279,24 @@ describe('handleClassification', function () {
             const rowData = ['Temporal range: Late Cretaceous', '55-0 Ma'];
             const result = handleClassification.handleTemporalRange(rowData);
             expect(result).to.equal('Late Cretaceous, 55-0 Ma');
+        });
+
+        it('should handle Early/Late/Middle/Upper/Lower temporal patterns', function () {
+            const rowData = ['Early Cretaceous[1]', '66-0 Ma'];
+            const result = handleClassification.handleTemporalRange(rowData);
+            expect(result).to.equal('Early Cretaceous, 66-0 Ma');
+        });
+
+        it('should handle Early/Late/Middle/Upper/Lower temporal patterns when temporalRange is empty', function () {
+            const rowData = ['Late Jurassic[1]'];
+            const result = handleClassification.handleTemporalRange(rowData);
+            expect(result).to.equal('Late Jurassic');
+        });
+
+        it('should handle Early/Late/Middle/Upper/Lower temporal patterns when temporalRange is not empty', function () {
+            const rowData = ['Temporal range: Late Jurassic', 'Early Cretaceous[1]'];
+            const result = handleClassification.handleTemporalRange(rowData);
+            expect(result).to.equal('Late Jurassic, Early Cretaceous');
         });
     });
 
@@ -370,6 +440,27 @@ describe('handleClassification', function () {
             rows = [{ querySelectorAll: function () { return [{ structuredText: '' }]; } }];;
             handleClassification.handleOtherRows(rows, data);
             expect(data).to.deep.equal(data);
+        });
+
+        it('should handle header data with keywordRegex match and no td elements', function () {
+            const headerRow = parser.parse('<tr><th>Species:</th></tr>');
+            const nextRow = parser.parse('<tr><td>Value</td></tr>');
+            rows = [headerRow, nextRow];
+            
+            // Mock the headerRow to have querySelectorAll return th elements
+            headerRow.querySelectorAll = function(selector) {
+                if (selector === 'th') return [{ structuredText: 'Species:' }];
+                return [];
+            };
+            
+            // Mock the nextRow to have querySelectorAll return td elements
+            nextRow.querySelectorAll = function(selector) {
+                if (selector === 'td') return [{ structuredText: 'Value' }];
+                return [];
+            };
+            
+            handleClassification.handleOtherRows(rows, data);
+            expect(data.classificationInfo.speciesInfo).to.deep.equal([{ speciesType: 'Species', value: 'Value' }]);
         });
     });
 
