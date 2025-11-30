@@ -172,13 +172,20 @@ function handleTemporalRange(rowData) {
     const text = data.trim();
 
     if (text.includes('Temporal range')) {
-      return text.replace(/^Temporal range:\s*/, '').trim();
+      const cleaned = text
+        .replace(/^Temporal range:\s*/, '')
+        .replace(/\[\d+\]/g, '')
+        .replace(/,+/g, ',')
+        .replace(/\s+/g, ' ')
+        .trim();
+      return cleaned;
     }
 
     if (text.match(/\d+\.?\d*\s*Ma/)) {
       const cleaned = text
         .replace(/\[\d+\]/g, '')
-        .replace(/,\s*,/g, ',')
+        .replace(/,+/g, ',')
+        .replace(/\s+/g, ' ')
         .trim();
       return temporalRange === '' ? cleaned : `${temporalRange}, ${cleaned}`;
     }
@@ -186,7 +193,8 @@ function handleTemporalRange(rowData) {
     if (text.match(/^(Early|Late|Middle|Upper|Lower)/)) {
       const cleaned = text
         .replace(/\[\d+\]/g, '')
-        .replace(/,\s*,/g, ',')
+        .replace(/,+/g, ',')
+        .replace(/\s+/g, ' ')
         .trim();
       return temporalRange === '' ? cleaned : `${temporalRange}, ${cleaned}`;
     }
@@ -196,7 +204,8 @@ function handleTemporalRange(rowData) {
 
   return result
     .replace(/\[\d+\]/g, '')
-    .replace(/,\s*,/g, ',')
+    .replace(/,+/g, ',')
+    .replace(/\s+/g, ' ')
     .replace(/\s*,\s*$/, '')
     .replace(/\?/g, '');
 }
