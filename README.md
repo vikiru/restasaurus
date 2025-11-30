@@ -265,8 +265,9 @@ pnpm install
 
 ```text
 PORT=YOUR-PORT-HERE
-MONGODB_URI='YOUR-MONGODB-URI-HERE'
 NODE_ENV='development'
+# Replace with your username, password, cluster domain, and database name
+MONGODB_URI='mongodb+srv://<username>:<password>@<cluster-domain>/<database-name>?retryWrites=true&w=majority'
 ```
 
 ### Retrieving data from Wikipedia via its API
