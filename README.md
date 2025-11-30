@@ -99,7 +99,7 @@ The API provides all the information needed for proper attribution in its respon
 
 ### Example Wikipedia Article Attribution
 
-Here's an example of how to properly attribute a Wikipedia article:
+Given the following dinosaur source object from the API response, you should include all four required elements (title, author, source, license) when using data from the RESTasaurus API. The API response will contain all this information in the `source` object within each dinosaur, making it easy to construct proper attribution.
 
 ```json
 "source": {
@@ -118,8 +118,6 @@ Here's an example of how to properly attribute a Wikipedia article:
 }
 ```
 
-Given the above attribution structure, you should include all four required elements (title, author, source, license) when using data from the RESTasaurus API. The API response will contain all this information in the `source` object within each dinosaur, making it easy to construct proper attribution.
-
 For example, you should display the following information:
 
 - **Title**: Zephyrosaurus
@@ -129,7 +127,7 @@ For example, you should display the following information:
 
 ### Example Image Attribution
 
-For images, the attribution should include the image title, author, source URL, and license information from the `image` object within each dinosaur in the API response.
+Given the following image attribution structure from the API response, you should include all relevant elements (title, author, source, license) when using images from the RESTasaurus API. The API response will contain all this information in the `image` object, making it easy to construct proper attribution.
 
 ```json
 "image": {
@@ -145,14 +143,16 @@ For images, the attribution should include the image title, author, source URL, 
 }
 ```
 
-Given the above image attribution structure, you should include all relevant elements (title, author, source, license) when using images from the RESTasaurus API. The API response will contain all this information in the `image` object, making it easy to construct proper attribution.
-
 For example, you should display the following information:
 
 - **Title**: Zephyrosaurus in Copenhagen
 - **Author**: FunkMonk (https://commons.wikimedia.org/wiki/User:FunkMonk)
 - **Source**: https://commons.wikimedia.org/wiki/File:Zephyrosaurus_in_Copenhagen.jpg
 - **License**: Creative Commons Attribution-Share Alike 3.0 (https://creativecommons.org/licenses/by-sa/3.0)
+
+For more information regarding attribution best practices and compliance, please refer to the following resources:
+- [Reusing Wikipedia Content Guidelines](https://en.wikipedia.org/wiki/Wikipedia:Reusing_Wikipedia_content)
+- [Recommended Practices for Attribution on Wikipedia](https://wiki.creativecommons.org/wiki/Recommended_practices_for_attribution)
 
 ## 📍 API Endpoints
 
