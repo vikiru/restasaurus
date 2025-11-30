@@ -42,15 +42,15 @@
 
 > [!IMPORTANT]
 >
-> The data within the API is taken directly from **Wikipedia** via its API, as is. Please note that the information may have been modified since the last retrieval. All images and text belong to their respective authors, and attribution is provided accordingly for both.
+> The data within the API is taken directly from **Wikipedia** via its API, as is. Please note that the information may have been modified since the last retrieval. All images and text belong to their respective authors, and attribution is provided accordingly for both within the API responses.
 > 
 > All dinosaur text information sourced from Wikipedia articles are licensed under [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/), unless otherwise noted.
 > 
-> All dinosaur images are sourced from Wikimedia Commons and are licensed under various Creative Commons licenses, with attribution provided accordingly for each image.
+> All dinosaur images are sourced from Wikimedia Commons and are licensed under various licenses - each with their own specific license terms and are attributed accordingly.
 >
 > By using this API, you agree to properly attribute the sources and comply with their respective licenses.
 >
-> Examples can be seen below in []
+> Examples can be seen below in [Attribution Examples](#-attribution-examples)
 
 For a better understanding of the information provided by the API, please check out the [models](./app/models) directory. The schemas used within the MongoDB database include:
 
@@ -91,7 +91,7 @@ When using data from the RESTasaurus API, please ensure that the following four 
 1. **Title**: Include the title of the Wikipedia article or image
 2. **Author**: Include the author information for the Wikipedia article or image. For Wikipedia articles, this would be "Wikipedia contributors" and for images, include the author name(s) and author URL, if available.
 3. **Source**: Include the source URL where the data was retrieved from (e.g., the Wikipedia page URL or image source URL)
-4. **License**: Include a link to the license under which the data is distributed (e.g., Creative Commons, GNU Free Documentation License, etc.)
+4. **License**: Include a link to the license under which the data is distributed (e.g., Creative Commons)
 
 The above attribution elements should be included in a clear and prominent manner when using data from the RESTasaurus API. 
 
