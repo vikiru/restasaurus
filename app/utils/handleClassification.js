@@ -17,11 +17,9 @@ function assignClassificationInfo(data, keyword, value) {
         orderType: keyword,
         value,
       }),
-    domain: () =>
-      data.classificationInfo.orderInfo.push({
-        orderType: keyword,
-        value,
-      }),
+    domain: () => {
+      data.classificationInfo.domain = value;
+    },
     kingdom: () => {
       data.classificationInfo.kingdom = value;
     },

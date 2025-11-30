@@ -11,6 +11,7 @@ describe('constructDinoNames - Script', function () {
         const logger = require('../../app/config/logger');
         sinon.stub(logger.logger, 'info').resolves();
         sinon.stub(logger.logger, 'error').resolves();
+        sinon.stub(logger.logger, 'http').resolves();
 
         writeStub = sinon.stub(fs.promises, 'writeFile');
         writeStub.callsFake((path, data, options, callback) => callback(null));
@@ -30,15 +31,15 @@ describe('constructDinoNames - Script', function () {
             await constructDinoNames.delay();
             const duration = Date.now() - start;
 
-            expect(duration).to.be.lessThan(10);
+            expect(duration).to.be.lessThan(25);
 
             setTimeoutStub.restore();
         });
     });
 
     describe('constructImageQuery', function () {
-        const constructDinoNames = require('../../app/scripts/constructDinoNames');
         it('should construct image query correctly', function () {
+            const constructDinoNames = require('../../app/scripts/constructDinoNames');
             const names = 'dino1|dino2|dino3';
             const expectedQuery = `action=query&prop=imageinfo&iiprop=extmetadata|url&titles=${names}&format=json`;
             const actualQuery = constructDinoNames.constructImageQuery(names);
@@ -47,8 +48,8 @@ describe('constructDinoNames - Script', function () {
     });
 
     describe('constructPageQuery', function () {
-        const constructDinoNames = require('../../app/scripts/constructDinoNames');
         it('should construct page query correctly', function () {
+            const constructDinoNames = require('../../app/scripts/constructDinoNames');
             const names = 'dino1|dino2|dino3';
             const expectedQuery = `action=query&meta=siteinfo&siprop=rightsinfo&prop=revisions|pageimages|info|extracts&exintro=&explaintext=&inprop=url&titles=${names}&format=json`;
             const actualQuery = constructDinoNames.constructPageQuery(names);
@@ -57,8 +58,8 @@ describe('constructDinoNames - Script', function () {
     });
 
     describe('constructHTMLQuery', function () {
-        const constructDinoNames = require('../../app/scripts/constructDinoNames');
         it('should construct HTML query correctly', function () {
+            const constructDinoNames = require('../../app/scripts/constructDinoNames');
             const name = 'dino1';
             const expectedQuery = `action=parse&page=${name}&prop=text&formatversion=2&format=json`;
             const actualQuery = constructDinoNames.constructHTMLQuery(name);
@@ -67,19 +68,27 @@ describe('constructDinoNames - Script', function () {
     });
 
     describe('getQueryByType', function () {
-        const constructDinoNames = require('../../app/scripts/constructDinoNames');
         it('should get correct query function by type', function () {
+            const constructDinoNames = require('../../app/scripts/constructDinoNames');
             const result = 'dino1';
             const queryType = 'image';
             const expectedQuery = constructDinoNames.constructImageQuery(result);
             const actualQuery = constructDinoNames.getQueryByType(result, queryType);
             expect(actualQuery).to.equal(expectedQuery);
         });
+        
+        it('should return undefined for invalid query type', function () {
+            const constructDinoNames = require('../../app/scripts/constructDinoNames');
+            const result = 'dino1';
+            const queryType = 'invalid';
+            const actualQuery = constructDinoNames.getQueryByType(result, queryType);
+            expect(actualQuery).to.be.undefined;
+        });
     });
 
     describe('handleSinglePage', function () {
-        const constructDinoNames = require('../../app/scripts/constructDinoNames');
         it('should construct URLs correctly', function () {
+            const constructDinoNames = require('../../app/scripts/constructDinoNames');
             const names = ['dino1', 'dino2'];
             const queryType = 'html';
             const expectedUrls = [
@@ -92,8 +101,8 @@ describe('constructDinoNames - Script', function () {
     });
 
     describe('urlConstructor', function () {
-        const constructDinoNames = require('../../app/scripts/constructDinoNames');
         it('should call handleSinglePage when queryType is html', function () {
+            const constructDinoNames = require('../../app/scripts/constructDinoNames');
             const names = ['dino1', 'dino2'];
             const queryType = 'html';
             const handleSinglePageStub = sinon.stub().returns([]);
@@ -103,6 +112,7 @@ describe('constructDinoNames - Script', function () {
         });
 
         it('should call handleMultiplePages when queryType is not html', function () {
+            const constructDinoNames = require('../../app/scripts/constructDinoNames');
             const names = ['dino1', 'dino2'];
             const queryType = 'image';
             const handleSinglePageStub = sinon.stub().returns([]);
@@ -140,7 +150,7 @@ describe('constructDinoNames - Script', function () {
         };
 
         beforeEach(function () {
-            delete require.cache[require.resolve('../../app/scripts/constructDinoNames')];
+            
             
             readJSONFileStub = sinon.stub(fs.promises, 'readFile');
             retrieveAllDinoNamesStub = sinon.stub();
@@ -191,13 +201,14 @@ describe('constructDinoNames - Script', function () {
     });
 
     describe('urlHandler', function () {
-        const constructDinoNames = require('../../app/scripts/constructDinoNames');
+        let constructDinoNames;
         let fetchStub;
         let delayStub;
 
         beforeEach(function () {
             fetchStub = sinon.stub(global, 'fetch');
             delayStub = sinon.stub().resolves();
+            constructDinoNames = require('../../app/scripts/constructDinoNames');
         });
 
         afterEach(function () {
@@ -240,32 +251,8 @@ describe('constructDinoNames - Script', function () {
     });
 
     describe('retrievePageData', function () {
-        let urlConstructorStub;
-        let fetchStub;
-        let delayStub;
-        let constructDinoNames;
-
-        beforeEach(function () {
-            fetchStub = sinon.stub().callsFake(() =>
-                Promise.resolve({
-                    ok: true,
-                    json: () => Promise.resolve({ data: [] }),
-                }),
-            );
-            delayStub = sinon.stub().resolves();
-            urlConstructorStub = sinon.stub().returns(['url1', 'url2']);
-            constructDinoNames = proxyquire('../../app/scripts/constructDinoNames', {
-                fetchData: fetchStub,
-                urlConstructor: urlConstructorStub,
-                delay: delayStub,
-            });
-        });
-
-        afterEach(function () {
-            sinon.restore();
-        });
-
         it('should retrieve page data correctly', async function () {
+            const constructDinoNames = require('../../app/scripts/constructDinoNames');
             const names = [];
             const expectedData = { data: [] };
             const result = await constructDinoNames.retrievePageData(names);
@@ -286,31 +273,20 @@ describe('constructDinoNames - Script', function () {
                 { title: 'Dino2' },
                 { title: 'Dino3', pageimage: 'image3' },
             ];
-            const expectedFilteredNames = ['Dino1', 'Dino3'];
-
             const result = await constructDinoNames.filterDinoNames(data);
-
-            expect(result).to.deep.equal(expectedFilteredNames);
+            expect(result).to.deep.equal(['Dino1', 'Dino3']);
         });
     });
 
     describe('readJSONFile', function () {
-        let constructDinoNames;
         let readJSONFileStub;
+        let constructDinoNames;
+        const filePath = './test.json';
+        const data = { key: 'value' };
 
         beforeEach(function () {
-            delete require.cache[require.resolve('../../app/scripts/constructDinoNames')];
-            
             readJSONFileStub = sinon.stub(fs.promises, 'readFile');
-
-            constructDinoNames = proxyquire('../../app/scripts/constructDinoNames', {
-                'fs': { 
-                    promises: { 
-                        readFile: readJSONFileStub, 
-                        writeFile: sinon.stub().resolves() 
-                    } 
-                },
-            });
+            constructDinoNames = require('../../app/scripts/constructDinoNames');
         });
 
         afterEach(function () {

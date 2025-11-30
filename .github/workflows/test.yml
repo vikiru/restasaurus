@@ -38,8 +38,6 @@ jobs:
         run: HUSKY=0 pnpm install --frozen-lockfile
 
       - name: Run tests
-        env:
-          MONGODB_URI: mongodb://localhost:27017/restasaurus
         run: pnpm test
 
       - name: Update test coverage badges in README

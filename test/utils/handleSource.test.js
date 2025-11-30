@@ -96,12 +96,13 @@ describe('handleSource', function () {
         let createCitationStub;
 
         beforeEach(function () {
+            
+            
             data = { source: {} };
             dinosaurName = 'Dino';
             pageData = {};
             licenseInfo = {};
             getWikipediaURLStub = sinon.stub(handleSource, 'getWikipediaURL');
-            getLastRevisionStub = sinon.stub(handleSource, 'getLastRevision');
             getRevisionHistoryURLStub = sinon.stub(handleSource, 'getRevisionHistoryURL');
             getLicenseStub = sinon.stub(handleSource, 'getLicense');
             getLicenseURLStub = sinon.stub(handleSource, 'getLicenseURL');

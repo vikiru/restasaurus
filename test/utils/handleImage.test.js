@@ -89,6 +89,8 @@ describe('handleImage', function () {
         let authorInfo;
 
         beforeEach(function () {
+            
+            
             data = { image: {} };
         });
 
@@ -133,6 +135,8 @@ describe('handleImage', function () {
         let getDateCreatedStub;
 
         beforeEach(function () {
+            
+            
             data = new MongooseData('Dino');
             getImageTitleStub = sinon.stub(handleImage, 'getImageTitle');
             getImageDescriptionStub = sinon.stub(handleImage, 'getImageDescription');

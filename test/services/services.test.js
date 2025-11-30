@@ -10,6 +10,10 @@ const services = require('../../app/services/index');
 const { convertToSchema } = require('../../app/utils/convertToSchema');
 
 describe('Services - Functionality Tests', function () {
+    beforeEach(function () {
+        
+    });
+
     describe('pushDinosaurToDB', function () {
         let DinosaurStub;
         let ClassificationInfoStub;
@@ -135,7 +139,7 @@ describe('Services - Functionality Tests', function () {
         let DinosaurStub;
         const fakeData = [
             { clade: 'Theropoda', count: 1 },
-            { clade: 'Sauropodamorpha', count: 2 },
+            { clade: 'Ornithischia', count: 1 },
         ];
 
         beforeEach(function () {

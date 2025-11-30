@@ -11,7 +11,8 @@ describe('handleClassification', function () {
     let mongooseConnectStub;
 
     beforeEach(function () {
-        process.env.MONGODB_URI = 'mongodb://localhost:27017/restasaurus';
+        
+        
         dotenvStub = sinon.stub(require('dotenv'), 'config');
         mongooseConnectStub = sinon.stub(require('mongoose'), 'connect');
     });
@@ -101,6 +102,12 @@ describe('handleClassification', function () {
             keyword = 'phylum';
             handleClassification.assignClassificationInfo(data, keyword, value);
             expect(data.classificationInfo.phylum).to.equal(value);
+        });
+
+        it('should assign value to domain if keyword is "domain"', function () {
+            keyword = 'domain';
+            handleClassification.assignClassificationInfo(data, keyword, value);
+            expect(data.classificationInfo.domain).to.equal(value);
         });
 
         it('should assign value to familyInfo if keyword is "superfamily"', function () {
@@ -410,6 +417,8 @@ describe('handleClassification', function () {
         let data;
 
         beforeEach(function () {
+            
+            
             rowData = [{ structuredText: 'Clade:' }, { structuredText: 'Value' }];
             data = new MongooseData('Dino');
         });
@@ -442,6 +451,8 @@ describe('handleClassification', function () {
         let data;
 
         beforeEach(function () {
+            
+            
             headerData = [{ structuredText: 'Species' }];
             rows = [{ querySelectorAll: function () { return [{ structuredText: '†Value\n' }]; } }];
             data = new MongooseData('Dino');
@@ -496,6 +507,8 @@ describe('handleClassification', function () {
         let data;
 
         beforeEach(function () {
+            
+            
             data = new MongooseData('Dino');
         });
 
@@ -516,6 +529,8 @@ describe('handleClassification', function () {
         let data;
 
         beforeEach(function () {
+            
+            
             data = new MongooseData('Dino');
         });
 
@@ -572,6 +587,8 @@ describe('handleClassification', function () {
         let data;
 
         beforeEach(function () {
+            
+            
             data = new MongooseData('Dino');
         });
 

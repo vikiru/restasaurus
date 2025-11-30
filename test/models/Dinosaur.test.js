@@ -12,6 +12,8 @@ describe('DinosaurSchema', function () {
         let findStub;
 
         beforeEach(function () {
+            
+            
             const query = {
                 skip: sinon.stub().returnsThis(),
                 limit: sinon.stub().returnsThis(),
@@ -215,6 +217,8 @@ describe('DinosaurSchema', function () {
         let aggregateStub;
 
         beforeEach(function () {
+            
+            
             aggregateStub = sinon.stub(mongoose.Model, 'aggregate');
             aggregateStub.returns(Promise.resolve(fakeDino.image));
         });
