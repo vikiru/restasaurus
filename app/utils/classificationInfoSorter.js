@@ -6,9 +6,9 @@
  * @returns {Array} The sorted array of information.
  */
 function sortInfo(infoArray, sortOrder) {
-    return infoArray.sort((a, b) => {
-        return sortOrder.indexOf(a.type) - sortOrder.indexOf(b.type);
-    });
+  return infoArray.sort((a, b) => {
+    return sortOrder.indexOf(a.type) - sortOrder.indexOf(b.type);
+  });
 }
 
 /**
@@ -17,7 +17,14 @@ function sortInfo(infoArray, sortOrder) {
  * @returns {Array} The sorting order for classes.
  */
 function getClassSorter() {
-    return ['Superclass', 'Class', 'Subclass', 'Infraclass', 'Subterclass', 'Parvclass'];
+  return [
+    'Superclass',
+    'Class',
+    'Subclass',
+    'Infraclass',
+    'Subterclass',
+    'Parvclass',
+  ];
 }
 
 /**
@@ -26,7 +33,16 @@ function getClassSorter() {
  * @returns {Array} The sorting order for orders.
  */
 function getOrderSorter() {
-    return ['Magnorder', 'Superorder', 'Grandorder', 'Mirorder', 'Order', 'Suborder', 'Infraorder', 'Parvorder'];
+  return [
+    'Magnorder',
+    'Superorder',
+    'Grandorder',
+    'Mirorder',
+    'Order',
+    'Suborder',
+    'Infraorder',
+    'Parvorder',
+  ];
 }
 
 /**
@@ -35,12 +51,12 @@ function getOrderSorter() {
  * @returns {Array} The sorting order for families.
  */
 function getFamilySorter() {
-    return ['Family', 'Subfamily'];
+  return ['Family', 'Subfamily'];
 }
 
 module.exports = {
-    sortInfo,
-    getClassSorter,
-    getFamilySorter,
-    getOrderSorter,
+  sortInfo,
+  getClassSorter,
+  getFamilySorter,
+  getOrderSorter,
 };

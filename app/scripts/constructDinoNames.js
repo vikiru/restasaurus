@@ -1,5 +1,5 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require('node:fs');
+const path = require('node:path');
 
 const { logger } = require('../config/logger');
 const { fetchData } = require('../utils/fetchData');
@@ -13,9 +13,9 @@ const { writeData } = require('../utils/writeData');
  * @returns A Promise object.
  */
 function delay() {
-    return new Promise((resolve) => {
-        setTimeout(resolve, REQUEST_DELAY);
-    });
+  return new Promise(resolve => {
+    setTimeout(resolve, REQUEST_DELAY);
+  });
 }
 
 /**
@@ -26,7 +26,7 @@ function delay() {
  * @returns A URL string that can be used to query image information from the Wikipedia API.
  */
 function constructImageQuery(names) {
-    return `action=query&prop=imageinfo&iiprop=extmetadata|url&titles=${names}&format=json`;
+  return `action=query&prop=imageinfo&iiprop=extmetadata|url&titles=${names}&format=json`;
 }
 
 /**
@@ -36,7 +36,7 @@ function constructImageQuery(names) {
  * @returns A string that represents a query for a group of pages.
  */
 function constructPageQuery(names) {
-    return `action=query&meta=siteinfo&siprop=rightsinfo&prop=revisions|pageimages|info|extracts&exintro=&explaintext=&inprop=url&titles=${names}&format=json`;
+  return `action=query&meta=siteinfo&siprop=rightsinfo&prop=revisions|pageimages|info|extracts&exintro=&explaintext=&inprop=url&titles=${names}&format=json`;
 }
 
 /**
@@ -46,7 +46,7 @@ function constructPageQuery(names) {
  * @returns A string that represents an HTML query.
  */
 function constructHTMLQuery(name) {
-    return `action=parse&page=${name}&prop=text&formatversion=2&format=json`;
+  return `action=parse&page=${name}&prop=text&formatversion=2&format=json`;
 }
 
 /**
@@ -59,15 +59,15 @@ function constructHTMLQuery(name) {
  *   `queryType` parameter.
  */
 function getQueryByType(result, queryType) {
-    const queryFunctions = {
-        dino: constructPageQuery,
-        image: constructImageQuery,
-        html: constructHTMLQuery,
-    };
-    const queryFunction = queryFunctions[queryType];
-    if (queryFunction) {
-        return queryFunction(result);
-    }
+  const queryFunctions = {
+    dino: constructPageQuery,
+    image: constructImageQuery,
+    html: constructHTMLQuery,
+  };
+  const queryFunction = queryFunctions[queryType];
+  if (queryFunction) {
+    return queryFunction(result);
+  }
 }
 
 /**
@@ -80,17 +80,17 @@ function getQueryByType(result, queryType) {
  * @returns The function `handleMultiplePages` returns an array of URLs.
  */
 function handleMultiplePages(names, queryType) {
-    const baseUrl = 'https://en.wikipedia.org/w/api.php?';
-    const groupSize = 50;
-    const urls = [];
-    for (let i = 0; i < names.length; i += groupSize) {
-        const group = names.slice(i, i + groupSize);
-        const result = group.join('|');
-        const query = getQueryByType(result, queryType);
-        const url = `${baseUrl}${query}`;
-        urls.push(url);
-    }
-    return urls;
+  const baseUrl = 'https://en.wikipedia.org/w/api.php?';
+  const groupSize = 50;
+  const urls = [];
+  for (let i = 0; i < names.length; i += groupSize) {
+    const group = names.slice(i, i + groupSize);
+    const result = group.join('|');
+    const query = getQueryByType(result, queryType);
+    const url = `${baseUrl}${query}`;
+    urls.push(url);
+  }
+  return urls;
 }
 
 /**
@@ -103,15 +103,15 @@ function handleMultiplePages(names, queryType) {
  * @returns An array of URLs.
  */
 function handleSinglePage(names, queryType) {
-    const baseUrl = 'https://en.wikipedia.org/w/api.php?';
-    const urls = [];
-    for (let i = 0; i < names.length; i++) {
-        const result = names[i];
-        const query = getQueryByType(result, queryType);
-        const url = `${baseUrl}${query}`;
-        urls.push(url);
-    }
-    return urls;
+  const baseUrl = 'https://en.wikipedia.org/w/api.php?';
+  const urls = [];
+  for (let i = 0; i < names.length; i++) {
+    const result = names[i];
+    const query = getQueryByType(result, queryType);
+    const url = `${baseUrl}${query}`;
+    urls.push(url);
+  }
+  return urls;
 }
 
 /**
@@ -123,13 +123,13 @@ function handleSinglePage(names, queryType) {
  * @returns An array of URLs.
  */
 function urlConstructor(names, queryType) {
-    let urls;
-    if (queryType === 'html') {
-        urls = handleSinglePage(names, queryType);
-    } else {
-        urls = handleMultiplePages(names, queryType);
-    }
-    return urls;
+  let urls;
+  if (queryType === 'html') {
+    urls = handleSinglePage(names, queryType);
+  } else {
+    urls = handleMultiplePages(names, queryType);
+  }
+  return urls;
 }
 
 /**
@@ -140,10 +140,10 @@ function urlConstructor(names, queryType) {
  * @returns A promise that resolves to the parsed JSON data from the file.
  */
 async function readJSONFile(filePath) {
-    const scriptsDir = path.resolve(__dirname, '../scripts');
-    const resolvedPath = path.resolve(scriptsDir, filePath);
-    const data = await fs.promises.readFile(resolvedPath, 'utf8');
-    return JSON.parse(data);
+  const scriptsDir = path.resolve(__dirname, '../scripts');
+  const resolvedPath = path.resolve(scriptsDir, filePath);
+  const data = await fs.promises.readFile(resolvedPath, 'utf8');
+  return JSON.parse(data);
 }
 
 /**
@@ -153,16 +153,18 @@ async function readJSONFile(filePath) {
  * @returns The function `constructDinoNames` returns a promise that resolves to the `names` variable.
  */
 async function constructDinoNames() {
-    let names;
-    try {
-        names = await readJSONFile('./allDinoNames.json');
-        logger.info('Successfully read all dino names from JSON file.');
-        return names;
-    } catch (err) {
-        logger.error(`Read file failed: ${err.message}\nProceeding to retrieve name data from Wikipedia API.`);
-        names = await retrieveAllDinoNames();
-        return names;
-    }
+  let names;
+  try {
+    names = await readJSONFile('./allDinoNames.json');
+    logger.info('Successfully read all dino names from JSON file.');
+    return names;
+  } catch (err) {
+    logger.error(
+      `Read file failed: ${err.message}\nProceeding to retrieve name data from Wikipedia API.`
+    );
+    names = await retrieveAllDinoNames();
+    return names;
+  }
 }
 
 /**
@@ -174,27 +176,27 @@ async function constructDinoNames() {
  * @returns An object with a property called "data" which contains the fetched data from the URLs.
  */
 async function urlHandler(urls, requestDelay) {
-    const data = [];
-    const total = urls.length;
-    for (const url of urls) {
-        const index = urls.indexOf(url) + 1;
-        logger.info(`Fetching data from URL (${index} of ${total}): ${url}`);
-        const urlResult = await fetchData(url);
-        if (urlResult && 'query' in urlResult && 'pages' in urlResult.query) {
-            const pageData = Object.values(urlResult.query.pages);
-            const rightsInfo = urlResult.query.rightsinfo;
-            for (const page of pageData) {
-                page.rightsInfo = rightsInfo;
-            }
-            data.push(pageData);
-        } else if (urlResult && 'parse' in urlResult && 'text' in urlResult.parse) {
-            const pageHTML = urlResult.parse.text;
-            data.push(pageHTML);
-        }
-        await requestDelay();
+  const data = [];
+  const total = urls.length;
+  for (const url of urls) {
+    const index = urls.indexOf(url) + 1;
+    logger.info(`Fetching data from URL (${index} of ${total}): ${url}`);
+    const urlResult = await fetchData(url);
+    if (urlResult && 'query' in urlResult && 'pages' in urlResult.query) {
+      const pageData = Object.values(urlResult.query.pages);
+      const rightsInfo = urlResult.query.rightsinfo;
+      for (const page of pageData) {
+        page.rightsInfo = rightsInfo;
+      }
+      data.push(pageData);
+    } else if (urlResult && 'parse' in urlResult && 'text' in urlResult.parse) {
+      const pageHTML = urlResult.parse.text;
+      data.push(pageHTML);
     }
-    const result = { data: data.flat() };
-    return result;
+    await requestDelay();
+  }
+  const result = { data: data.flat() };
+  return result;
 }
 
 /**
@@ -204,9 +206,9 @@ async function urlHandler(urls, requestDelay) {
  * @returns The data retrieved from the URLs.
  */
 async function retrievePageData(names) {
-    const urls = urlConstructor(names, 'dino');
-    const { data } = await urlHandler(urls, delay);
-    return data;
+  const urls = urlConstructor(names, 'dino');
+  const { data } = await urlHandler(urls, delay);
+  return data;
 }
 
 /**
@@ -218,16 +220,15 @@ async function retrievePageData(names) {
  * @returns An array of filtered dinosaur names.
  */
 async function filterDinoNames(data) {
-    logger.info('Filtering retrieved dinosaur data.');
-    const filteredData = data.filter((dinoData) => 'pageimage' in dinoData);
-    const filteredNames = [];
-    filteredData.forEach((dinoData) => filteredNames.push(dinoData.title));
-    logger.info(
-        'Successfully finished filtering dinosaur data. Proceeding to save filtered data and names to JSON files.',
-    );
-    await writeData(filteredData, 'pageData.json');
-    await writeData(filteredNames, 'filteredNames.json');
-    return filteredNames;
+  logger.info('Filtering retrieved dinosaur data.');
+  const filteredData = data.filter(dinoData => 'pageimage' in dinoData);
+  const filteredNames = filteredData.map(dinoData => dinoData.title);
+  logger.info(
+    'Successfully finished filtering dinosaur data. Proceeding to save filtered data and names to JSON files.'
+  );
+  await writeData(filteredData, 'pageData.json');
+  await writeData(filteredNames, 'filteredNames.json');
+  return filteredNames;
 }
 
 /**
@@ -237,36 +238,42 @@ async function filterDinoNames(data) {
  * @returns An object containing two properties: "data" and "filteredNames".
  */
 async function retrieveAndFilterDinoData() {
-    const dinoData = {};
-    try {
-        logger.info('Attempting to read page data and filtered names from JSON file.');
-        dinoData.data = await readJSONFile('./pageData.json');
-        dinoData.filteredNames = await readJSONFile('./filteredNames.json');
-        logger.info('Successfully read page data and filtered names from JSON file.');
-        return dinoData;
-    } catch (error) {
-        logger.error(`Read file failed: ${error.message}\nProceeding to retrieve data from Wikipedia API.`);
-        const names = await constructDinoNames();
-        logger.info('Retrieving page data for all dinosaurs from Wikipedia API');
-        dinoData.data = await retrievePageData(names);
-        dinoData.filteredNames = await filterDinoNames(dinoData.data);
-        return dinoData;
-    }
+  const dinoData = {};
+  try {
+    logger.info(
+      'Attempting to read page data and filtered names from JSON file.'
+    );
+    dinoData.data = await readJSONFile('./pageData.json');
+    dinoData.filteredNames = await readJSONFile('./filteredNames.json');
+    logger.info(
+      'Successfully read page data and filtered names from JSON file.'
+    );
+    return dinoData;
+  } catch (error) {
+    logger.error(
+      `Read file failed: ${error.message}\nProceeding to retrieve data from Wikipedia API.`
+    );
+    const names = await constructDinoNames();
+    logger.info('Retrieving page data for all dinosaurs from Wikipedia API');
+    dinoData.data = await retrievePageData(names);
+    dinoData.filteredNames = await filterDinoNames(dinoData.data);
+    return dinoData;
+  }
 }
 
 module.exports = {
-    delay,
-    constructDinoNames,
-    constructImageQuery,
-    constructHTMLQuery,
-    constructPageQuery,
-    handleSinglePage,
-    handleMultiplePages,
-    urlConstructor,
-    urlHandler,
-    getQueryByType,
-    retrievePageData,
-    retrieveAndFilterDinoData,
-    filterDinoNames,
-    readJSONFile,
+  delay,
+  constructDinoNames,
+  constructImageQuery,
+  constructHTMLQuery,
+  constructPageQuery,
+  handleSinglePage,
+  handleMultiplePages,
+  urlConstructor,
+  urlHandler,
+  getQueryByType,
+  retrievePageData,
+  retrieveAndFilterDinoData,
+  filterDinoNames,
+  readJSONFile,
 };

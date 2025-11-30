@@ -4,17 +4,23 @@ const { logger } = require('../config/logger');
 const { MongooseData } = require('../models/MongooseData');
 const { retrieveBoxData } = require('../utils/handleClassification');
 const {
-    findDiet,
-    findLocomotionType,
-    retrieveDietAndLocomotionType,
-    findMissingFeatures,
-    findDescription,
+  findDiet,
+  findLocomotionType,
+  retrieveDietAndLocomotionType,
+  findMissingFeatures,
+  findDescription,
 } = require('../utils/handleFeature');
 const { processImageData } = require('../utils/handleImage');
 const { handleSourceInformation } = require('../utils/handleSource');
 const { writeData } = require('../utils/writeData');
 
-const { urlConstructor, urlHandler, retrieveAndFilterDinoData, readJSONFile, delay } = require('./constructDinoNames');
+const {
+  urlConstructor,
+  urlHandler,
+  retrieveAndFilterDinoData,
+  readJSONFile,
+  delay,
+} = require('./constructDinoNames');
 
 /**
  * The function `retrieveImageData` attempts to retrieve image data from a JSON file, and if that fails, it retrieves
@@ -26,29 +32,31 @@ const { urlConstructor, urlHandler, retrieveAndFilterDinoData, readJSONFile, del
  *   the Wikipedia API.
  */
 async function retrieveImageData(names) {
-    try {
-        logger.info('Attempting to retrieve image data from JSON file.');
-        const data = await readJSONFile('./imageData.json');
-        logger.info('Successfully retrieved image data from JSON file');
-        return data;
-    } catch (error) {
-        logger.error(`Read file failed: ${error.message}. Proceeding to retrieve image data from Wikipedia API.`);
-        const urls = urlConstructor(names, 'image');
-        logger.info('Starting to retrieve image data from Wikipedia API.');
-        const startTime = process.hrtime();
+  try {
+    logger.info('Attempting to retrieve image data from JSON file.');
+    const data = await readJSONFile('./imageData.json');
+    logger.info('Successfully retrieved image data from JSON file');
+    return data;
+  } catch (error) {
+    logger.error(
+      `Read file failed: ${error.message}. Proceeding to retrieve image data from Wikipedia API.`
+    );
+    const urls = urlConstructor(names, 'image');
+    logger.info('Starting to retrieve image data from Wikipedia API.');
+    const startTime = process.hrtime();
 
-        const { data } = await urlHandler(urls, delay);
-        const endTime = process.hrtime(startTime);
-        const timeInSeconds = endTime[0] + endTime[1] / 1e9;
-        const formattedSeconds = timeInSeconds.toFixed(2);
+    const { data } = await urlHandler(urls, delay);
+    const endTime = process.hrtime(startTime);
+    const timeInSeconds = endTime[0] + endTime[1] / 1e9;
+    const formattedSeconds = timeInSeconds.toFixed(2);
 
-        logger.info(
-            `Successfully retrieved all image data from Wikipedia API. Total time taken is ${formattedSeconds} seconds. Data for ${data.length} images was retrieved.`,
-        );
-        logger.info('Proceeding to save image data to file');
-        await writeData(data, 'imageData.json');
-        return data;
-    }
+    logger.info(
+      `Successfully retrieved all image data from Wikipedia API. Total time taken is ${formattedSeconds} seconds. Data for ${data.length} images was retrieved.`
+    );
+    logger.info('Proceeding to save image data to file');
+    await writeData(data, 'imageData.json');
+    return data;
+  }
 }
 
 /**
@@ -61,29 +69,29 @@ async function retrieveImageData(names) {
  *   API.
  */
 async function retrieveHTMLData(names) {
-    try {
-        logger.info('Attempting to retrieve HTML data from JSON file.');
-        const data = await readJSONFile('./htmlData.json');
-        logger.info('Successfully retrieved html data from JSON file');
-        return data;
-    } catch (error) {
-        const urls = urlConstructor(names, 'html');
+  try {
+    logger.info('Attempting to retrieve HTML data from JSON file.');
+    const data = await readJSONFile('./htmlData.json');
+    logger.info('Successfully retrieved html data from JSON file');
+    return data;
+  } catch (error) {
+    const urls = urlConstructor(names, 'html');
 
-        logger.info('Starting to retrieve HTML data from Wikipedia API.');
-        const startTime = process.hrtime();
+    logger.info('Starting to retrieve HTML data from Wikipedia API.');
+    const startTime = process.hrtime();
 
-        const { data } = await urlHandler(urls, delay);
-        const endTime = process.hrtime(startTime);
-        const timeInSeconds = endTime[0] + endTime[1] / 1e9;
-        const formattedSeconds = timeInSeconds.toFixed(2);
+    const { data } = await urlHandler(urls, delay);
+    const endTime = process.hrtime(startTime);
+    const timeInSeconds = endTime[0] + endTime[1] / 1e9;
+    const formattedSeconds = timeInSeconds.toFixed(2);
 
-        logger.info(
-            `Successfully retrieved all HTML data from Wikipedia API. Total time taken is ${formattedSeconds} seconds. Data for ${data.length} dinosaurs was retrieved.`,
-        );
-        logger.info('Proceeding to save HTML data to file');
-        await writeData(data, 'htmlData.json');
-        return data;
-    }
+    logger.info(
+      `Successfully retrieved all HTML data from Wikipedia API. Total time taken is ${formattedSeconds} seconds. Data for ${data.length} dinosaurs was retrieved.`
+    );
+    logger.info('Proceeding to save HTML data to file');
+    await writeData(data, 'htmlData.json');
+    return data;
+  }
 }
 
 /**
@@ -97,8 +105,8 @@ async function retrieveHTMLData(names) {
  * @returns The updated mongooseData.
  */
 function processHTMLData(htmlData, mongooseData) {
-    retrieveBoxData(htmlData, mongooseData);
-    retrieveDietAndLocomotionType(htmlData, mongooseData);
+  retrieveBoxData(htmlData, mongooseData);
+  retrieveDietAndLocomotionType(htmlData, mongooseData);
 }
 
 /**
@@ -113,15 +121,21 @@ function processHTMLData(htmlData, mongooseData) {
  *   "locomotionType", "name", and "source".
  */
 function processPageData(pageData, htmlData, mongooseData) {
-    if ('extract' in pageData) {
-        mongooseData.description = pageData.extract.split('\n')[0];
-        mongooseData.diet = findDiet(pageData);
-        mongooseData.locomotionType = findLocomotionType(pageData);
-    } else {
-        mongooseData.description = findDescription(htmlData, mongooseData.name) || '';
-    }
-    findMissingFeatures(mongooseData);
-    mongooseData.source = handleSourceInformation(mongooseData, mongooseData.name, pageData, pageData.rightsInfo);
+  if ('extract' in pageData) {
+    mongooseData.description = pageData.extract.split('\n')[0];
+    mongooseData.diet = findDiet(pageData);
+    mongooseData.locomotionType = findLocomotionType(pageData);
+  } else {
+    mongooseData.description =
+      findDescription(htmlData, mongooseData.name) || '';
+  }
+  findMissingFeatures(mongooseData);
+  mongooseData.source = handleSourceInformation(
+    mongooseData,
+    mongooseData.name,
+    pageData,
+    pageData.rightsInfo
+  );
 }
 
 /**
@@ -137,14 +151,14 @@ function processPageData(pageData, htmlData, mongooseData) {
  * @returns The `mongooseData` object.
  */
 async function processData(pageData, imageData, htmlData) {
-    const mongooseData = new MongooseData(pageData.title);
-    if (htmlData !== undefined) {
-        const parsedHTML = parser.parse(htmlData);
-        processHTMLData(parsedHTML, mongooseData);
-        processPageData(pageData, parsedHTML, mongooseData);
-    }
-    processImageData(imageData, mongooseData);
-    return mongooseData;
+  const mongooseData = new MongooseData(pageData.title);
+  if (htmlData !== undefined) {
+    const parsedHTML = parser.parse(htmlData);
+    processHTMLData(parsedHTML, mongooseData);
+    processPageData(pageData, parsedHTML, mongooseData);
+  }
+  processImageData(imageData, mongooseData);
+  return mongooseData;
 }
 
 /**
@@ -155,33 +169,37 @@ async function processData(pageData, imageData, htmlData) {
  *   `pageData`, `htmlData`, and `imageData`.
  */
 async function retrieveData() {
-    const result = {
-        pageData: [],
-        htmlData: [],
-        imageData: [],
-    };
-    try {
-        logger.info('Attempting to read page, image and html data from JSON files.');
-        result.pageData = await readJSONFile('./pageData.json');
-        result.imageData = await readJSONFile('./imageData.json');
-        result.htmlData = await readJSONFile('./htmlData.json');
-        logger.info('Successfully read data from JSON files.');
-        return result;
-    } catch (error) {
-        logger.error(`Read file failed: ${error.message}\nProceeding to retrieve data from Wikipedia API.`);
-        const { data, filteredNames } = await retrieveAndFilterDinoData();
-        const imageNames = [];
-        for (const dataElement of data) {
-            if ('pageimage' in dataElement) {
-                const fileName = `File:${dataElement.pageimage.replace('&', '%26')}`;
-                imageNames.push(fileName);
-            }
-        }
-        result.pageData = data;
-        result.imageData = await retrieveImageData(imageNames);
-        result.htmlData = await retrieveHTMLData(filteredNames);
-        return result;
+  const result = {
+    pageData: [],
+    htmlData: [],
+    imageData: [],
+  };
+  try {
+    logger.info(
+      'Attempting to read page, image and html data from JSON files.'
+    );
+    result.pageData = await readJSONFile('./pageData.json');
+    result.imageData = await readJSONFile('./imageData.json');
+    result.htmlData = await readJSONFile('./htmlData.json');
+    logger.info('Successfully read data from JSON files.');
+    return result;
+  } catch (error) {
+    logger.error(
+      `Read file failed: ${error.message}\nProceeding to retrieve data from Wikipedia API.`
+    );
+    const { data, filteredNames } = await retrieveAndFilterDinoData();
+    const imageNames = [];
+    for (const dataElement of data) {
+      if ('pageimage' in dataElement) {
+        const fileName = `File:${dataElement.pageimage.replace('&', '%26')}`;
+        imageNames.push(fileName);
+      }
     }
+    result.pageData = data;
+    result.imageData = await retrieveImageData(imageNames);
+    result.htmlData = await retrieveHTMLData(filteredNames);
+    return result;
+  }
 }
 
 /**
@@ -189,44 +207,50 @@ async function retrieveData() {
  * the processed data to a file, and logs the total time taken for the entire process.
  */
 async function processAllData() {
-    const totalTimeStart = process.hrtime();
-    const { pageData, imageData, htmlData } = await retrieveData();
+  const totalTimeStart = process.hrtime();
+  const { pageData, imageData, htmlData } = await retrieveData();
 
-    logger.info('Starting to process all retrieved data. This may take some time, please wait.');
-    const startTime = process.hrtime();
+  logger.info(
+    'Starting to process all retrieved data. This may take some time, please wait.'
+  );
+  const startTime = process.hrtime();
 
-    const promises = pageData.map((data, index) => processData(data, imageData[index], htmlData[index]));
-    const result = await Promise.all(promises);
+  const promises = pageData.map((data, index) =>
+    processData(data, imageData[index], htmlData[index])
+  );
+  const result = await Promise.all(promises);
 
-    const endTime = process.hrtime(startTime);
-    const timeInSeconds = endTime[0] + endTime[1] / 1e9;
-    const formattedSeconds = timeInSeconds.toFixed(2);
+  const endTime = process.hrtime(startTime);
+  const timeInSeconds = endTime[0] + endTime[1] / 1e9;
+  const formattedSeconds = timeInSeconds.toFixed(2);
 
-    logger.info(
-        `Finished processing all dinosaur data in ${formattedSeconds} seconds. ${result.length} dinosaurs were processed.`,
-    );
-    logger.info('Proceeding to save data to file.');
-    const filteredData = result.filter((dino) => dino.classificationInfo.clade.includes('Dinosauria'));
-    await writeData(filteredData, 'dinosaurData.json');
+  logger.info(
+    `Finished processing all dinosaur data in ${formattedSeconds} seconds. ${result.length} dinosaurs were processed.`
+  );
+  logger.info('Proceeding to save data to file.');
+  const filteredData = result.filter(dino =>
+    dino.classificationInfo.clade.includes('Dinosauria')
+  );
+  await writeData(filteredData, 'dinosaurData.json');
 
-    const totalTimeEnd = process.hrtime(totalTimeStart);
-    const totalTimeSeconds = totalTimeEnd[0] + totalTimeEnd[1] / 1e9;
-    const formattedTotalSeconds = totalTimeSeconds.toFixed(2);
-    logger.info(
-        `Total time to retrieve all data from Wikipedia API and save to file: ${formattedTotalSeconds} seconds.`,
-    );
+  const totalTimeEnd = process.hrtime(totalTimeStart);
+  const totalTimeSeconds = totalTimeEnd[0] + totalTimeEnd[1] / 1e9;
+  const formattedTotalSeconds = totalTimeSeconds.toFixed(2);
+  logger.info(
+    `Total time to retrieve all data from Wikipedia API and save to file: ${formattedTotalSeconds} seconds.`
+  );
 
-    return result;
+  return result;
 }
 
 processAllData();
 
 module.exports = {
-    retrieveHTMLData,
-    retrieveImageData,
-    processPageData,
-    processHTMLData,
-    retrieveData,
-    processData,
-    processAllData,
+  retrieveHTMLData,
+  retrieveImageData,
+  processPageData,
+  processHTMLData,
+  retrieveData,
+  processData,
+  processAllData,
 };

@@ -10,6 +10,9 @@ describe('fetchData', function () {
     const expectedData = { key: 'value' };
 
     beforeEach(function () {
+        if (typeof global.fetch !== 'function') {
+            global.fetch = sinon.stub();
+        }
         fetchStub = sinon.stub(global, 'fetch');
     });
 

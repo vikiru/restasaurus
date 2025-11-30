@@ -1,5 +1,5 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require('node:fs');
+const path = require('node:path');
 
 const { logger } = require('../config/logger');
 
@@ -13,15 +13,15 @@ const { logger } = require('../config/logger');
  * @returns {Promise<void>} A promise that resolves when the file has been successfully written.
  */
 async function writeData(data, filename) {
-    const filePath = path.resolve(__dirname, `../scripts/${filename}`);
-    try {
-        await fs.promises.writeFile(filePath, JSON.stringify(data, null, 2));
-        logger.info('Successfully saved data to file.');
-    } catch (err) {
-        logger.error(`Writing to file, ${filename} failed: ${err.message}`);
-    }
+  const filePath = path.resolve(__dirname, `../scripts/${filename}`);
+  try {
+    await fs.promises.writeFile(filePath, JSON.stringify(data, null, 2));
+    logger.info('Successfully saved data to file.');
+  } catch (err) {
+    logger.error(`Writing to file, ${filename} failed: ${err.message}`);
+  }
 }
 
 module.exports = {
-    writeData,
+  writeData,
 };

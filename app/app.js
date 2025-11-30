@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('node:path');
 
 const express = require('express');
 
@@ -24,12 +24,16 @@ app.use(middlewares.validator);
 app.use(middlewares.compression());
 app.use(middlewares.morgan);
 
-app.listen(config.port, () => logger.info(`restasaurus started on port: http://localhost:${config.port}/api/v1.`));
+app.listen(config.port, () =>
+  logger.info(
+    `restasaurus started on port: http://localhost:${config.port}/api/v1.`
+  )
+);
 
 app.set('trust proxy', 1);
 app.use('/api/v1', routes);
 
 module.exports = {
-    app,
-    mongoConnection,
+  app,
+  mongoConnection,
 };

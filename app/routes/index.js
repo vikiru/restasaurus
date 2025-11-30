@@ -1,21 +1,21 @@
 const express = require('express');
 
 const {
-    returnHome,
-    retrieveAllDinosaurs,
-    retrieveAllImages,
-    retrieveAllNames,
-    retrieveAllDiets,
-    retrieveAllClades,
-    retrieveAllLocomotions,
-    retrieveDinoById,
-    retrieveDinoByName,
-    retrieveDinoByDiet,
-    retrieveDinoByLocomotion,
-    retrieveImageById,
-    retrieveRandomDinosaurs,
-    retrieveRandomImages,
-    retrieveDinosaursByQuery,
+  returnHome,
+  retrieveAllDinosaurs,
+  retrieveAllImages,
+  retrieveAllNames,
+  retrieveAllDiets,
+  retrieveAllClades,
+  retrieveAllLocomotions,
+  retrieveDinoById,
+  retrieveDinoByName,
+  retrieveDinoByDiet,
+  retrieveDinoByLocomotion,
+  retrieveImageById,
+  retrieveRandomDinosaurs,
+  retrieveRandomImages,
+  retrieveDinosaursByQuery,
 } = require('../controllers/controller');
 
 const router = express.Router();

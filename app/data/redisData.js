@@ -9,16 +9,16 @@ const { logger } = require('../config/logger');
  * @throws Will throw an error if the connection fails.
  */
 async function connect() {
-    try {
-        const redis = createClient();
-        await redis.connect();
-        logger.info('Successfully connected to Redis');
-        return redis;
-    } catch (error) {
-        logger.error(error);
-    }
+  try {
+    const redis = createClient();
+    await redis.connect();
+    logger.info('Successfully connected to Redis');
+    return redis;
+  } catch (error) {
+    logger.error(error);
+  }
 }
 
 module.exports = {
-    connect,
+  connect,
 };

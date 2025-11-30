@@ -8,19 +8,21 @@ const { logger } = require('../config/logger');
  * @throws Will throw an error if the fetch operation fails or if the response status is not OK.
  */
 async function fetchData(url) {
-    try {
-        const response = await fetch(url, { headers: { 'Accept-Encoding': 'gzip' } });
-        if (!response.ok) {
-            throw new Error(`HTTP error, status: ${response.status}`);
-        }
-        const data = await response.json();
-        logger.http(`Successfully fetched data from ${url}`);
-        return data;
-    } catch (error) {
-        logger.error(`Fetch failed: ${error.message}`);
+  try {
+    const response = await fetch(url, {
+      headers: { 'Accept-Encoding': 'gzip' },
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error, status: ${response.status}`);
     }
+    const data = await response.json();
+    logger.http(`Successfully fetched data from ${url}`);
+    return data;
+  } catch (error) {
+    logger.error(`Fetch failed: ${error.message}`);
+  }
 }
 
 module.exports = {
-    fetchData,
+  fetchData,
 };

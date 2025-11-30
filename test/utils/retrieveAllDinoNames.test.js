@@ -18,6 +18,9 @@ describe('retrieveAllDinoNames', function () {
         logger = require('../../app/config/logger');
         sinon.stub(logger.logger, 'info').resolves();
         sinon.stub(logger.logger, 'error').resolves();
+        if (typeof global.fetch !== 'function') {
+            global.fetch = sinon.stub();
+        }
         fetchStub = sinon.stub(global, 'fetch');
         writeStub = sinon.stub(fs.promises, 'writeFile');
         writeStub.callsFake((path, data, options, callback) => callback(null));

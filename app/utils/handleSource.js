@@ -5,7 +5,7 @@
  * @returns {string} The Wikipedia URL.
  */
 function getWikipediaURL(pageData) {
-    return pageData.fullurl || '';
+  return pageData.fullurl || '';
 }
 
 /**
@@ -15,10 +15,10 @@ function getWikipediaURL(pageData) {
  * @returns {string} The last revision.
  */
 function getLastRevision(pageData) {
-    if (pageData.revisions && pageData.revisions[0]) {
-        return pageData.revisions[0].timestamp || '';
-    }
-    return '';
+  if (pageData.revisions?.[0]) {
+    return pageData.revisions[0].timestamp || '';
+  }
+  return '';
 }
 
 /**
@@ -28,7 +28,7 @@ function getLastRevision(pageData) {
  * @returns {string} The revision history URL.
  */
 function getRevisionHistoryURL(dinosaurName) {
-    return `https://en.wikipedia.org/w/index.php?title=${dinosaurName}&action=history`;
+  return `https://en.wikipedia.org/w/index.php?title=${dinosaurName}&action=history`;
 }
 
 /**
@@ -38,7 +38,7 @@ function getRevisionHistoryURL(dinosaurName) {
  * @returns {string} The license.
  */
 function getLicense(licenseInfo) {
-    return licenseInfo && licenseInfo.text ? licenseInfo.text : '';
+  return licenseInfo?.text ? licenseInfo.text : '';
 }
 
 /**
@@ -48,7 +48,7 @@ function getLicense(licenseInfo) {
  * @returns {string} The license URL.
  */
 function getLicenseURL(licenseInfo) {
-    return licenseInfo && licenseInfo.url ? licenseInfo.url : '';
+  return licenseInfo?.url ? licenseInfo.url : '';
 }
 
 /**
@@ -59,10 +59,10 @@ function getLicenseURL(licenseInfo) {
  * @returns {string} The permalink.
  */
 function getPermalink(dinosaurName, pageData) {
-    if (dinosaurName && pageData.revisions && pageData.revisions[0]) {
-        return `https://en.wikipedia.org/w/index.php?title=${dinosaurName}&oldid=${pageData.revisions[0].revid}`;
-    }
-    return '';
+  if (dinosaurName && pageData.revisions && pageData.revisions[0]) {
+    return `https://en.wikipedia.org/w/index.php?title=${dinosaurName}&oldid=${pageData.revisions[0].revid}`;
+  }
+  return '';
 }
 
 /**
@@ -72,11 +72,11 @@ function getPermalink(dinosaurName, pageData) {
  * @returns {string} The formatted date string.
  */
 function formatDate(dateString) {
-    return new Date(dateString).toLocaleDateString('en-GB', {
-        day: 'numeric',
-        month: 'short',
-        year: 'numeric',
-    });
+  return new Date(dateString).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
 }
 
 /**
@@ -86,11 +86,11 @@ function formatDate(dateString) {
  * @returns {string} The created citation.
  */
 function createCitation(sourceData) {
-    const formattedRevision = formatDate(sourceData.lastRevision);
-    const formattedAccessed = formatDate(sourceData.dateAccessed);
+  const formattedRevision = formatDate(sourceData.lastRevision);
+  const formattedAccessed = formatDate(sourceData.dateAccessed);
 
-    const citation = `${sourceData.author}. "${sourceData.pageTitle}." ${sourceData.source}. ${sourceData.publisher}, ${formattedRevision}. Web. ${formattedAccessed}.`;
-    return citation;
+  const citation = `${sourceData.author}. "${sourceData.pageTitle}." ${sourceData.source}. ${sourceData.publisher}, ${formattedRevision}. Web. ${formattedAccessed}.`;
+  return citation;
 }
 
 /**
@@ -104,25 +104,25 @@ function createCitation(sourceData) {
  * @returns {object} The source information of the data.
  */
 function handleSourceInformation(data, dinosaurName, pageData, licenseInfo) {
-    data.source.pageTitle = dinosaurName;
-    data.source.wikipediaURL = getWikipediaURL(pageData);
-    data.source.lastRevision = getLastRevision(pageData);
-    data.source.revisionHistoryURL = getRevisionHistoryURL(dinosaurName);
-    data.source.dateAccessed = new Date().toISOString();
-    data.source.license = getLicense(licenseInfo);
-    data.source.licenseURL = getLicenseURL(licenseInfo);
-    data.source.permalink = getPermalink(dinosaurName, pageData);
-    data.source.citation = createCitation(data.source);
-    return data.source;
+  data.source.pageTitle = dinosaurName;
+  data.source.wikipediaURL = getWikipediaURL(pageData);
+  data.source.lastRevision = getLastRevision(pageData);
+  data.source.revisionHistoryURL = getRevisionHistoryURL(dinosaurName);
+  data.source.dateAccessed = new Date().toISOString();
+  data.source.license = getLicense(licenseInfo);
+  data.source.licenseURL = getLicenseURL(licenseInfo);
+  data.source.permalink = getPermalink(dinosaurName, pageData);
+  data.source.citation = createCitation(data.source);
+  return data.source;
 }
 
 module.exports = {
-    handleSourceInformation,
-    createCitation,
-    getWikipediaURL,
-    getLastRevision,
-    getRevisionHistoryURL,
-    getLicense,
-    getLicenseURL,
-    getPermalink,
+  handleSourceInformation,
+  createCitation,
+  getWikipediaURL,
+  getLastRevision,
+  getRevisionHistoryURL,
+  getLicense,
+  getLicenseURL,
+  getPermalink,
 };
