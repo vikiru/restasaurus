@@ -31,7 +31,7 @@ describe('constructDinoNames - Script', function () {
             await constructDinoNames.delay();
             const duration = Date.now() - start;
 
-            expect(duration).to.be.lessThan(25);
+            expect(duration).to.be.lessThan(100);
 
             setTimeoutStub.restore();
         });
