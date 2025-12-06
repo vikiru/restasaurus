@@ -1,5 +1,6 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
+const proxyquire = require('proxyquire');
 
 const { ClassificationInfo } = require('../../app/models/ClassificationInfo');
 const { Dinosaur } = require('../../app/models/Dinosaur');
@@ -23,11 +24,11 @@ describe('Services - Functionality Tests', function () {
         const mongooseData = new MongooseData('Stegosaurus');
 
         beforeEach(function () {
-            DinosaurStub = sinon.stub(Dinosaur, 'create');
-            ClassificationInfoStub = sinon.stub(ClassificationInfo, 'create').callsFake(() => {});
-            DinosaurSourceStub = sinon.stub(DinosaurSource, 'create').callsFake(() => {});
-            DinosaurImageStub = sinon.stub(DinosaurImage, 'create').callsFake(() => {});
-            pushSpy = sinon.spy(services, 'pushDinosaurToDB');
+            DinosaurStub = sinon.stub(Dinosaur, 'create').resolves({});
+            ClassificationInfoStub = sinon.stub(ClassificationInfo, 'create').resolves({});
+            DinosaurSourceStub = sinon.stub(DinosaurSource, 'create').resolves({});
+            DinosaurImageStub = sinon.stub(DinosaurImage, 'create').resolves({});
+            pushSpy = sinon.stub(services, 'pushDinosaurToDB').resolves();
         });
 
         afterEach(function () {
@@ -42,6 +43,83 @@ describe('Services - Functionality Tests', function () {
             const data = await convertToSchema(mongooseData);
             await services.pushDinosaurToDB(data);
             expect(pushSpy.calledOnce).to.be.true;
+        });
+
+        it('should cover pushDinosaurToDB success logging', async function () {
+            delete require.cache[require.resolve('../../app/services/index')];
+            
+            const mockLoggerInfo = sinon.stub();
+            const mockLoggerError = sinon.stub();
+            
+            const servicesModule = proxyquire('../../app/services/index', {
+                '../models/Dinosaur': {
+                    create: DinosaurStub,
+                },
+                '../models/ClassificationInfo': {
+                    create: ClassificationInfoStub,
+                },
+                '../models/DinosaurSource': {
+                    create: DinosaurSourceStub,
+                },
+                '../models/DinosaurImage': {
+                    create: DinosaurImageStub,
+                },
+                '../config/logger': {
+                    logger: {
+                        info: mockLoggerInfo,
+                        error: mockLoggerError,
+                    },
+                },
+            });
+
+            const data = await convertToSchema(mongooseData);
+            
+            await servicesModule.pushDinosaurToDB(data);
+            
+            expect(mockLoggerInfo.called).to.be.true;
+            expect(mockLoggerInfo.firstCall.args[0]).to.include('Successfully saved dinosaur');
+        });
+
+        it('should cover pushDinosaurToDB error logging', async function () {
+            delete require.cache[require.resolve('../../app/services/index')];
+            
+            const mockLoggerInfo = sinon.stub();
+            const mockLoggerError = sinon.stub();
+            
+            DinosaurStub.rejects(new Error('Database error'));
+            
+            const servicesModule = proxyquire('../../app/services/index', {
+                '../models/Dinosaur': {
+                    create: DinosaurStub,
+                },
+                '../models/ClassificationInfo': {
+                    create: ClassificationInfoStub,
+                },
+                '../models/DinosaurSource': {
+                    create: DinosaurSourceStub,
+                },
+                '../models/DinosaurImage': {
+                    create: DinosaurImageStub,
+                },
+                '../config/logger': {
+                    logger: {
+                        info: mockLoggerInfo,
+                        error: mockLoggerError,
+                    },
+                },
+            });
+
+            const data = {
+                dinosaur: { name: 'Test Dinosaur' },
+                classificationInfo: {},
+                source: {},
+                image: {}
+            };
+            
+            await servicesModule.pushDinosaurToDB(data);
+            
+            expect(mockLoggerError.called).to.be.true;
+            expect(mockLoggerError.firstCall.args[0]).to.equal('Database error');
         });
 
         it('should not save undefined to database', async function () {

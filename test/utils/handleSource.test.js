@@ -103,11 +103,12 @@ describe('handleSource', function () {
             pageData = {};
             licenseInfo = {};
             getWikipediaURLStub = sinon.stub(handleSource, 'getWikipediaURL');
+            getLastRevisionStub = sinon.stub(handleSource, 'getLastRevision');
             getRevisionHistoryURLStub = sinon.stub(handleSource, 'getRevisionHistoryURL');
             getLicenseStub = sinon.stub(handleSource, 'getLicense');
             getLicenseURLStub = sinon.stub(handleSource, 'getLicenseURL');
             getPermalinkStub = sinon.stub(handleSource, 'getPermalink');
-            createCitationStub = sinon.stub(handleSource, 'createCitation');
+            createCitationStub = sinon.stub(handleSource, 'createCitation').returns('Test citation');
         });
 
         afterEach(function () {

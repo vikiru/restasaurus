@@ -162,50 +162,82 @@ function getRows(infoBox) {
 /**
  * Returns the temporal range value for a given Dinosaur.
  *
- * @param {Array} rowData - An array of data elements from a row.
+ * @param {Array} temporalRange - A string containing the era of the dinosaur from the first row of the info box.
  * @returns {string} The temporal range value.
  */
-function handleTemporalRange(rowData) {
-  const result = rowData.reduce((temporalRange, data) => {
-    const text = data.trim();
-
-    if (text.includes('Temporal range')) {
-      const cleaned = text
-        .replace(/^Temporal range:\s*/, '')
-        .replace(/\[\d+\]/g, '')
-        .replace(/,+/g, ',')
-        .replace(/\s+/g, ' ')
-        .trim();
-      return cleaned;
-    }
-
-    if (text.match(/\d+\.?\d*\s*Ma/)) {
-      const cleaned = text
-        .replace(/\[\d+\]/g, '')
-        .replace(/,+/g, ',')
-        .replace(/\s+/g, ' ')
-        .trim();
-      return temporalRange === '' ? cleaned : `${temporalRange}, ${cleaned}`;
-    }
-
-    if (text.match(/^(Early|Late|Middle|Upper|Lower)/)) {
-      const cleaned = text
-        .replace(/\[\d+\]/g, '')
-        .replace(/,+/g, ',')
-        .replace(/\s+/g, ' ')
-        .trim();
-      return temporalRange === '' ? cleaned : `${temporalRange}, ${cleaned}`;
-    }
-
-    return temporalRange;
-  }, '');
-
-  return result
-    .replace(/\[\d+\]/g, '')
+function handleTemporalRange(temporalRange) {
+  // Pattern to match the geological period string
+const geoPeriodPattern = /\s*PreꞒ[\s\S]*?↓?\s*(?=\n|$)/g;
+  return temporalRange
+    // Remove "Temporal range:" prefix
+    .replace(/^Temporal range:\s*/, '')
+    // Remove geological period navigation strings (handles multi-line cases)
+    .replace(geoPeriodPattern, '')
+    // Remove bracketed references
+    .replace(/\s*\[\d+\]*/g, '')
+    // Remove question marks
+    .replace(/\?+/g, '')
+    // Remove quotes
+    .replace(/['"]/g, '')
+    // Fix malformed quotes around periods
+    .replace(/['"]([^'"]+)['"]/g, '$1')
+    // Normalize en-dashes and em-dashes to hyphens
+    .replace(/[–—]/g, '-')
+    // Fix spaces around hyphens in ranges
+    .replace(/\s*-\s*/g, '-')
+    // Fix missing spaces after commas
+    .replace(/,([^\s])/g, ', $1')
+    // Fix extra spaces before commas
+    .replace(/\s+,/g, ',')
+    // Fix multiple consecutive commas
     .replace(/,+/g, ',')
+    // Fix spaces after commas in numerical contexts
+    .replace(/(\d+),\s*(\d+)/g, '$1-$2')
+    // Fix missing space after comma in letter combinations
+    .replace(/([a-zA-Z]),([a-zA-Z])/g, '$1, $2')
+    // Fix malformed hyphens between letters
+    .replace(/([a-zA-Z])\s*-\s*([a-zA-Z])/g, '$1-$2')
+    // Fix decimal numbers with commas
+    .replace(/(\d+\.\d+),\s*(\d+)/g, '$1-$2')
+    // Fix specific patterns like "122.0-, 118.9"
+    .replace(/(\d+\.\d+)-,\s*(\d+)/g, '$1-$2')
+    // Fix patterns without spaces around comma in numbers
+    .replace(/(\d+),(\d+)/g, '$1-$2')
+    // Fix missing space between period names and numbers
+    .replace(/([a-zA-Z-]+)(\d+\.\d+)/g, '$1 $2')
+    // Fix missing space between period names and whole numbers
+    .replace(/([a-zA-Z-]+)(\d+)/g, '$1 $2')
+    // Add comma after period names before numbers (simpler pattern)
+    .replace(/([A-Z][a-zA-Z-]+)\s+(\d+(?:\.\d+)?(?:\s*-\s*\d+(?:\.\d+)?)?\s*Ma)/g, '$1, $2')
+    // Clean up extra spaces (run this earlier to help other patterns)
     .replace(/\s+/g, ' ')
-    .replace(/\s*,\s*$/, '')
-    .replace(/\?/g, '');
+    // Fix spacing in decimal numbers (remove any spaces between integer and decimal parts)
+    .replace(/(\d+)\s+(\.\d+)/g, '$1$2')
+    // Fix specific decimal spacing issues (like "167. 5")
+    .replace(/(\d+\.)\s+(\d+)/g, '$1$2')
+    // Fix colons to commas in temporal ranges
+    .replace(/:\s*/g, ', ')
+    // Fix "Temporal range" text removal (after colon replacement)
+    .replace(/Temporal range\s*,\s*/g, '')
+    // Fix "to" patterns (convert "to" to dash only when not followed by comma)
+    .replace(/(\d+(?:\.\d+)?)\s+to\s+(\d+(?:\.\d+)?)(?!\s*,)/g, '$1-$2')
+    // Fix "to" followed by comma and number (remove comma and convert to dash)
+    .replace(/to,\s*(\d+(?:\.\d+)?)/g, '-$1')
+    // Fix comma-dash patterns between periods (including leading dashes)
+    .replace(/,\s*-/g, '-')
+    // Add comma before tilde when missing
+    .replace(/([a-zA-Z-]+)\s+~([\d.]+-?[\d.]*)/g, '$1, ~$2')
+    .replace(/([a-zA-Z-]+)~([\d.]+-?[\d.]*)/g, '$1, ~$2')
+    // Fix spaces around hyphens in numerical ranges (after other fixes)
+    .replace(/(\d+(?:\.\d+)?)\s*-\s*(\d+(?:\.\d+)?)/g, '$1-$2')
+    // Remove leading/trailing spaces
+    .trim()
+    // Ensure space after comma if missing
+    .replace(/,([^ ])/g, ', $1')
+    // Ensure space before opening parentheses
+    .replace(/([a-zA-Z])\(/g, '$1 (')
+    // Remove trailing commas
+    .replace(/,\s*$/g, '');
 }
 
 /**
@@ -274,7 +306,7 @@ function handleFirstRow(firstRow, data) {
   const firstRowData = firstRow.structuredText.split('\n');
   data.name = firstRowData[0].trim();
 
-  const temporalRangeData = firstRowData.slice(1);
+  const temporalRangeData = firstRowData.slice(1).join('');
   data.temporalrange = handleTemporalRange(temporalRangeData);
 }
 
