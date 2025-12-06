@@ -11,8 +11,6 @@ describe('handleClassification', function () {
     let mongooseConnectStub;
 
     beforeEach(function () {
-        
-        
         dotenvStub = sinon.stub(require('dotenv'), 'config');
         mongooseConnectStub = sinon.stub(require('mongoose'), 'connect');
     });
@@ -280,135 +278,189 @@ describe('handleClassification', function () {
 
     describe('handleTemporalRange', function () {
         it('should handle "Temporal range" data', function () {
-            const rowData = ['Temporal range: 66-0 Ma'];
-            const result = handleClassification.handleTemporalRange(rowData);
+            const temporalRange = 'Temporal range: 66-0 Ma';
+            const result = handleClassification.handleTemporalRange(temporalRange);
             expect(result).to.equal('66-0 Ma');
         });
 
-        it('should handle "Ma" data', function () {
-            const rowData = ['66-0 Ma'];
-            const result = handleClassification.handleTemporalRange(rowData);
+        it('should handle pure Ma data', function () {
+            const temporalRange = '66-0 Ma';
+            const result = handleClassification.handleTemporalRange(temporalRange);
             expect(result).to.equal('66-0 Ma');
         });
 
-        it('should handle data without "Temporal range" or "Ma"', function () {
-            const rowData = ['Some other data'];
-            const result = handleClassification.handleTemporalRange(rowData);
-            expect(result).to.equal('');
+        it('should handle empty/non-matching data', function () {
+            const temporalRange = 'Some other data';
+            const result = handleClassification.handleTemporalRange(temporalRange);
+            expect(result).to.equal('Some other data');
         });
 
-        it('should handle data with "Ma" and without "Temporal range" when temporalRange is not empty', function () {
-            const rowData = ['Temporal range: Late Cretaceous', '55-0 Ma'];
-            const result = handleClassification.handleTemporalRange(rowData);
-            expect(result).to.equal('Late Cretaceous, 55-0 Ma');
-        });
-
-        it('should handle Early/Late/Middle/Upper/Lower temporal patterns', function () {
-            const rowData = ['Early Cretaceous[1]', '66-0 Ma'];
-            const result = handleClassification.handleTemporalRange(rowData);
-            expect(result).to.equal('Early Cretaceous, 66-0 Ma');
-        });
-
-        it('should handle Early/Late/Middle/Upper/Lower temporal patterns when temporalRange is empty', function () {
-            const rowData = ['Late Jurassic[1]'];
-            const result = handleClassification.handleTemporalRange(rowData);
-            expect(result).to.equal('Late Jurassic');
-        });
-
-        it('should handle Early/Late/Middle/Upper/Lower temporal patterns when temporalRange is not empty', function () {
-            const rowData = ['Temporal range: Late Jurassic', 'Early Cretaceous[1]'];
-            const result = handleClassification.handleTemporalRange(rowData);
-            expect(result).to.equal('Late Jurassic, Early Cretaceous');
-        });
-
-        it('should handle multiple Ma values with references', function () {
-            const rowData = ['Temporal range: Late Cretaceous', '72.1-66 Ma[1]', '70-68 Ma'];
-            const result = handleClassification.handleTemporalRange(rowData);
-            expect(result).to.equal('Late Cretaceous, 72.1-66 Ma, 70-68 Ma');
-        });
-
-        it('should handle decimal Ma values', function () {
-            const rowData = ['125.0-100.5 Ma'];
-            const result = handleClassification.handleTemporalRange(rowData);
-            expect(result).to.equal('125.0-100.5 Ma');
-        });
-
-        it('should handle Middle temporal periods', function () {
-            const rowData = ['Middle Jurassic[1]', '174-164 Ma'];
-            const result = handleClassification.handleTemporalRange(rowData);
-            expect(result).to.equal('Middle Jurassic, 174-164 Ma');
-        });
-
-        it('should handle Upper and Lower temporal periods', function () {
-            const rowData = ['Upper Triassic', 'Lower Jurassic'];
-            const result = handleClassification.handleTemporalRange(rowData);
-            expect(result).to.equal('Upper Triassic, Lower Jurassic');
-        });
-
-        it('should clean up double commas', function () {
-            const rowData = ['Temporal range: Late Cretaceous,,', '66-0 Ma'];
-            const result = handleClassification.handleTemporalRange(rowData);
+        it('should combine temporal periods with Ma data', function () {
+            const temporalRange = 'Late Cretaceous, 66-0 Ma';
+            const result = handleClassification.handleTemporalRange(temporalRange);
             expect(result).to.equal('Late Cretaceous, 66-0 Ma');
         });
 
-        it('should handle mixed temporal data with multiple references', function () {
-            const rowData = ['Temporal range: Late Cretaceous[1][2]', 'Early Cretaceous[3]', '100-66 Ma'];
-            const result = handleClassification.handleTemporalRange(rowData);
-            expect(result).to.equal('Late Cretaceous, Early Cretaceous, 100-66 Ma');
+        it('should handle Early/Late/Middle patterns', function () {
+            const temporalRange = 'Early Cretaceous[1], 66-0 Ma';
+            const result = handleClassification.handleTemporalRange(temporalRange);
+            expect(result).to.equal('Early Cretaceous, 66-0 Ma');
         });
 
-        it('should handle empty rowData array', function () {
-            const rowData = [];
-            const result = handleClassification.handleTemporalRange(rowData);
-            expect(result).to.equal('');
+        it('should handle geological periods', function () {
+            const temporalRange = '150 Ma, Maastrichtian';
+            const result = handleClassification.handleTemporalRange(temporalRange);
+            expect(result).to.equal('150 Ma, Maastrichtian');
         });
 
-        it('should handle rowData with only non-matching elements', function () {
-            const rowData = ['Some random text', 'Another non-temporal data'];
-            const result = handleClassification.handleTemporalRange(rowData);
-            expect(result).to.equal('');
-        });
-
-        it('should handle single Ma value without range', function () {
-            const rowData = ['150 Ma'];
-            const result = handleClassification.handleTemporalRange(rowData);
-            expect(result).to.equal('150 Ma');
-        });
-
-        it('should handle Temporal range with extra whitespace', function () {
-            const rowData = ['Temporal range:    Late   Cretaceous   '];
-            const result = handleClassification.handleTemporalRange(rowData);
-            expect(result).to.equal('Late Cretaceous');
-        });
-
-        it('should handle trailing comma cleanup after final processing', function () {
-            const rowData = ['Late Cretaceous,'];
-            const result = handleClassification.handleTemporalRange(rowData);
-            expect(result).to.equal('Late Cretaceous');
-        });
-
-        it('should handle question mark cleanup', function () {
-            const rowData = ['Late Cretaceous?'];
-            const result = handleClassification.handleTemporalRange(rowData);
-            expect(result).to.equal('Late Cretaceous');
-        });
-
-        it('should handle complex mixed case with all cleanup rules', function () {
-            const rowData = ['Temporal range: Late Cretaceous?[1][2],,', 'Early Jurassic?[3],', '150-100 Ma?[4],'];
-            const result = handleClassification.handleTemporalRange(rowData);
+        it('should clean references and punctuation', function () {
+            const temporalRange = 'Late Cretaceous?[1][2],,, Early Jurassic?[3],, 150-100 Ma?[4],,';
+            const result = handleClassification.handleTemporalRange(temporalRange);
             expect(result).to.equal('Late Cretaceous, Early Jurassic, 150-100 Ma');
         });
 
-        it('should handle case where Temporal range appears after other temporal data', function () {
-            const rowData = ['Late Cretaceous', 'Temporal range: Jurassic'];
-            const result = handleClassification.handleTemporalRange(rowData);
-            expect(result).to.equal('Jurassic');
+        it('should handle Ma pattern with spaces around numbers', function () {
+            const temporalRange = '66 - 0 Ma';
+            const result = handleClassification.handleTemporalRange(temporalRange);
+            expect(result).to.equal('66-0 Ma');
         });
 
-        it('should handle Ma pattern with spaces around numbers', function () {
-            const rowData = ['66 - 0 Ma'];
-            const result = handleClassification.handleTemporalRange(rowData);
-            expect(result).to.equal('66 - 0 Ma');
+        it('should handle tilde prefixes', function () {
+            const temporalRange = 'Late Cretaceous ~70-66 Ma';
+            const result = handleClassification.handleTemporalRange(temporalRange);
+            expect(result).to.equal('Late Cretaceous, ~70-66 Ma');
+        });
+
+        it('should fix spacing in decimal numbers', function () {
+            const temporalRange = 'Middle Jurassic (Bathonian), 167.   5-164.5 Ma';
+            const result = handleClassification.handleTemporalRange(temporalRange);
+            expect(result).to.equal('Middle Jurassic (Bathonian), 167.5-164.5 Ma');
+        });
+
+        it('should handle multiple temporal elements', function () {
+            const temporalRange = 'Temporal range: Late Cretaceous, Early Jurassic, 150-100 Ma';
+            const result = handleClassification.handleTemporalRange(temporalRange);
+            expect(result).to.equal('Late Cretaceous, Early Jurassic, 150-100 Ma');
+        });
+
+        it('should handle empty array', function () {
+            const temporalRange = '';
+            const result = handleClassification.handleTemporalRange(temporalRange);
+            expect(result).to.equal('');
+        });
+
+        it('should prioritize Temporal range over other data', function () {
+            const temporalRange = 'Late Cretaceous, Temporal range: Jurassic';
+            const result = handleClassification.handleTemporalRange(temporalRange);
+            expect(result).to.equal('Late Cretaceous, Jurassic');
+        });
+
+        it('should handle geological period with empty temporal range', function () {
+            const temporalRange = 'Cretaceous';
+            const result = handleClassification.handleTemporalRange(temporalRange);
+            expect(result).to.equal('Cretaceous');
+        });
+
+        it('should fix colons in temporal ranges', function () {
+            const temporalRange = 'Late Cretaceous: Santonian-Campanian';
+            const result = handleClassification.handleTemporalRange(temporalRange);
+            expect(result).to.equal('Late Cretaceous, Santonian-Campanian');
+        });
+
+        it('should fix malformed comma-dash patterns', function () {
+            const temporalRange = 'Late Jurassic,-Early Cretaceous, 154-140 Ma';
+            const result = handleClassification.handleTemporalRange(temporalRange);
+            expect(result).to.equal('Late Jurassic-Early Cretaceous, 154-140 Ma');
+        });
+
+        it('should handle complex temporal expressions with to and Oxfordian', function () {
+            const temporalRange = 'Late Jurassic, ~161.2 to, 158.7 Ma-Oxfordian';
+            const result = handleClassification.handleTemporalRange(temporalRange);
+            expect(result).to.equal('Late Jurassic, ~161.2-158.7 Ma-Oxfordian');
+        });
+
+        it('should fix missing spaces in compound periods', function () {
+            const temporalRange = 'Middle-Late Jurassic167-157 Ma';
+            const result = handleClassification.handleTemporalRange(temporalRange);
+            expect(result).to.equal('Middle-Late Jurassic, 167-157 Ma');
+        });
+
+        it('should fix extra spaces in compound terms', function () {
+            const temporalRange = 'Aptian - Albian 115-105 Ma';
+            const result = handleClassification.handleTemporalRange(temporalRange);
+            expect(result).to.equal('Aptian-Albian, 115-105 Ma');
+        });
+
+        it('should fix malformed quotes', function () {
+            const temporalRange = '\'mid\'-Cretaceous, Albian-Cenomanian';
+            const result = handleClassification.handleTemporalRange(temporalRange);
+            expect(result).to.equal('mid-Cretaceous, Albian-Cenomanian');
+        });
+
+        it('should fix spacing in decimal numbers with multiple spaces', function () {
+            const temporalRange = 'Middle Jurassic (Bathonian), 167.   5-164.5 Ma';
+            const result = handleClassification.handleTemporalRange(temporalRange);
+            expect(result).to.equal('Middle Jurassic (Bathonian), 167.5-164.5 Ma');
+        });
+
+        it('should fix extra spaces around dashes in compound terms', function () {
+            const temporalRange = 'Aptian - Albian 115-105 Ma';
+            const result = handleClassification.handleTemporalRange(temporalRange);
+            expect(result).to.equal('Aptian-Albian, 115-105 Ma');
+        });
+
+        it('should fix malformed comma-dash patterns with spaces', function () {
+            const temporalRange = 'Late Jurassic, - Early Cretaceous 154-140 Ma';
+            const result = handleClassification.handleTemporalRange(temporalRange);
+            expect(result).to.equal('Late Jurassic-Early Cretaceous, 154-140 Ma');
+        });
+
+        it('should fix missing space after comma', function () {
+            const temporalRange = 'Late Cretaceous,96-91 Ma';
+            const result = handleClassification.handleTemporalRange(temporalRange);
+            expect(result).to.equal('Late Cretaceous, 96-91 Ma');
+        });
+
+        it('should fix malformed comma patterns with text', function () {
+            const temporalRange = 'Early Cretaceous, ~124 to, 113 Ma-Aptian';
+            const result = handleClassification.handleTemporalRange(temporalRange);
+            expect(result).to.equal('Early Cretaceous, ~124-113 Ma-Aptian');
+        });
+
+        it('should fix malformed comma patterns with parentheses', function () {
+            const temporalRange = 'Late Jurassic, ~160.2 Ma';
+            const result = handleClassification.handleTemporalRange(temporalRange);
+            expect(result).to.equal('Late Jurassic, ~160.2 Ma');
+        });
+
+        it('should fix missing space before tilde', function () {
+            const temporalRange = 'Middle Toarcian~178.07 Ma';
+            const result = handleClassification.handleTemporalRange(temporalRange);
+            expect(result).to.equal('Middle Toarcian, ~178.07 Ma');
+        });
+
+        it('should fix missing comma before numbers in compound periods', function () {
+            const temporalRange = 'Middle-Late Jurassic167-157 Ma';
+            const result = handleClassification.handleTemporalRange(temporalRange);
+            expect(result).to.equal('Middle-Late Jurassic, 167-157 Ma');
+        });
+
+        it('should fix missing comma before numbers in multi-word periods', function () {
+            const temporalRange = 'Early Cretaceous 122.0-118.9 Ma';
+            const result = handleClassification.handleTemporalRange(temporalRange);
+            expect(result).to.equal('Early Cretaceous, 122.0-118.9 Ma');
+        });
+
+        it('should fix missing comma before numbers in simple ranges', function () {
+            const temporalRange = 'Early Cretaceous 130-125 Ma';
+            const result = handleClassification.handleTemporalRange(temporalRange);
+            expect(result).to.equal('Early Cretaceous, 130-125 Ma');
+        });
+
+        it('should preserve en-dashes in geological ranges', function () {
+            const temporalRange = 'Temporal range: Albian-Cenomanian';
+            const result = handleClassification.handleTemporalRange(temporalRange);
+            expect(result).to.equal('Albian-Cenomanian');
         });
     });
 
@@ -587,8 +639,6 @@ describe('handleClassification', function () {
         let data;
 
         beforeEach(function () {
-            
-            
             data = new MongooseData('Dino');
         });
 
