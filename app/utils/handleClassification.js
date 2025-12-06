@@ -223,6 +223,8 @@ const geoPeriodPattern = /\s*PreꞒ[\s\S]*?↓?\s*(?=\n|$)/g;
     .replace(/(\d+(?:\.\d+)?)\s+to\s+(\d+(?:\.\d+)?)(?!\s*,)/g, '$1-$2')
     // Fix "to" followed by comma and number (remove comma and convert to dash)
     .replace(/to,\s*(\d+(?:\.\d+)?)/g, '-$1')
+    // Fix "to" between period names (convert to dash)
+    .replace(/([a-zA-Z-]+)\s+to\s+([a-zA-Z-]+)/g, '$1-$2')
     // Fix comma-dash patterns between periods (including leading dashes)
     .replace(/,\s*-/g, '-')
     // Add comma before tilde when missing
