@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@mongodb-js/zstd':
-        specifier: ^1.2.2
-        version: 1.2.2
+        specifier: ^2.0.1
+        version: 2.0.1
       body-parser:
         specifier: ^1.20.3
         version: 1.20.3
@@ -37,19 +37,19 @@ importers:
         version: 7.2.0
       mongodb:
         specifier: ^6.21.0
-        version: 6.21.0(@mongodb-js/zstd@1.2.2)(snappy@7.3.3)
+        version: 6.21.0(@mongodb-js/zstd@2.0.1)(snappy@7.3.3)
       mongoose:
         specifier: ^8.20.1
-        version: 8.20.1(@mongodb-js/zstd@1.2.2)(snappy@7.3.3)
+        version: 8.20.1(@mongodb-js/zstd@2.0.1)(snappy@7.3.3)
       mongoose-autopopulate:
         specifier: ^1.2.1
-        version: 1.2.1(mongoose@8.20.1(@mongodb-js/zstd@1.2.2)(snappy@7.3.3))
+        version: 1.2.1(mongoose@8.20.1(@mongodb-js/zstd@2.0.1)(snappy@7.3.3))
       mongoose-hidden:
         specifier: ^1.9.1
         version: 1.9.1
       mongoose-sequence:
         specifier: ^6.0.1
-        version: 6.0.1(mongoose@8.20.1(@mongodb-js/zstd@1.2.2)(snappy@7.3.3))
+        version: 6.0.1(mongoose@8.20.1(@mongodb-js/zstd@2.0.1)(snappy@7.3.3))
       morgan:
         specifier: ^1.10.1
         version: 1.10.1
@@ -375,59 +375,9 @@ packages:
   '@mongodb-js/saslprep@1.3.2':
     resolution: {integrity: sha512-QgA5AySqB27cGTXBFmnpifAi7HxoGUeezwo6p9dI03MuDB6Pp33zgclqVb6oVK3j6I9Vesg0+oojW2XxB59SGg==}
 
-  '@mongodb-js/zstd-darwin-arm64@1.2.2':
-    resolution: {integrity: sha512-hjQgub8fhn3itewwRSCSe3sl8rmnbZOFwuBHOZj4j4xu1Hde7xs+ACkfeEvvmNjUuxAzvc1MnDjHX2UwUlA7qA==}
-    engines: {node: '>= 10'}
-    cpu: [arm64]
-    os: [darwin]
-    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
-
-  '@mongodb-js/zstd-darwin-x64@1.2.2':
-    resolution: {integrity: sha512-gHSxcWgAdED/bDKyOqLhiwC0VYlhkhSyQuR0Fqcrl1CMpWSJAfu0jxhaEvM4Ncs6yH0+BPVwTp8xtHW2iJ5DuQ==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
-    os: [darwin]
-    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
-
-  '@mongodb-js/zstd-linux-arm64-gnu@1.2.2':
-    resolution: {integrity: sha512-DJVSC5IU/GlY9lY4qpKML/655OstZvueN/WZeuO8hyYJ5115x/usUM1pHpp7dbZWyUUhTlRIU4peR62Tk1H3lQ==}
-    engines: {node: '>= 10'}
-    cpu: [arm64]
-    os: [linux]
-    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
-
-  '@mongodb-js/zstd-linux-arm64-musl@1.2.2':
-    resolution: {integrity: sha512-rxTmMF2NGLLijnw+MZCs0ixiE+NylpDYvUUkJemqjyHstlmYG0Ku6i3+SzViB6L0kkktwYSRpaI4y7OG+SFt3w==}
-    engines: {node: '>= 10'}
-    cpu: [arm64]
-    os: [linux]
-    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
-
-  '@mongodb-js/zstd-linux-x64-gnu@1.2.2':
-    resolution: {integrity: sha512-ctz/XY6aX2THxkTjAygOYbyFp2/UYbqZIF3sB1F5Cjcbus9wfD3vPbaDegqRjQhlHBvKia3IjqJDUiC+aZxmww==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
-    os: [linux]
-    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
-
-  '@mongodb-js/zstd-linux-x64-musl@1.2.2':
-    resolution: {integrity: sha512-EqD271yPIRBGbkMtBJSVTLlUrukTsmi7qt1G3dh+Z9RWVXn5MXnlnEn4znfBXoaVqlniUNZhmzDEaATNIktJpw==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
-    os: [linux]
-    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
-
-  '@mongodb-js/zstd-win32-x64-msvc@1.2.2':
-    resolution: {integrity: sha512-h3O9NGOrGtfQ7g+rFqs5Hn+GSmgF2ik+xg0/1crNUXWthcBsxcCK5woawHfDcJxWkaiijJe5PVo6/fo8Jm7qCg==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
-    os: [win32]
-    deprecated: This package is no longer maintained.  Please use @mongodb-js/zstd@2.x instead.
-
-  '@mongodb-js/zstd@1.2.2':
-    resolution: {integrity: sha512-NRXiFhk2Nl8UMuIZ4pviKkGVZY/e5P37Opam1u0OtgXjEE0kO1HLapA9heTcZ1PUomArnKS426XbiRFr5iaWvw==}
-    engines: {node: '>= 10'}
-    deprecated: 1.x versions of this package are deprecated, please use 2.x instead
+  '@mongodb-js/zstd@2.0.1':
+    resolution: {integrity: sha512-hbQKltFj0hMrhe+Udh9gjkzswIJJVOo55vEHgfHbb6wjPpo4Oc3kng2bao/XnzLPCdd5Q1PXbWTC91LYPQrCtA==}
+    engines: {node: '>= 16.20.1'}
 
   '@napi-rs/snappy-android-arm-eabi@7.3.3':
     resolution: {integrity: sha512-d4vUFFzNBvazGfB/KU8MnEax6itTIgRWXodPdZDnWKHy9HwVBndpCiedQDcSNHcZNYV36rx034rpn7SAuTL2NA==}
@@ -849,6 +799,9 @@ packages:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
     engines: {node: '>=8'}
 
+  bl@4.1.0:
+    resolution: {integrity: sha512-1W07cM9gS6DcLperZfFSj+bWLtaPGSOHWhPiGzXmvVJbRLdG82sH/Kn8EtW1VqWVA54AKf2h5k5BbnIbwF3h6w==}
+
   body-parser@1.20.3:
     resolution: {integrity: sha512-7rAxByjUMqQ3/bHJy7D6OGXvx/MMc4IqBn/X0fcM1QUcAItpZrBEYhWGem+tzXH90c+G01ypMcYJBO9Y30203g==}
     engines: {node: '>= 0.8', npm: 1.2.8000 || >= 1.4.16}
@@ -880,6 +833,9 @@ packages:
   bson@6.10.4:
     resolution: {integrity: sha512-WIsKqkSC0ABoBJuT1LEX+2HEvNmNKKgnTAyd0fL8qzK4SH2i9NXg+t08YtdZp/V9IZ33cxe3iV4yM0qg8lMQng==}
     engines: {node: '>=16.20.1'}
+
+  buffer@5.7.1:
+    resolution: {integrity: sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ==}
 
   buffer@6.0.3:
     resolution: {integrity: sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==}
@@ -953,6 +909,9 @@ packages:
   chokidar@3.6.0:
     resolution: {integrity: sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==}
     engines: {node: '>= 8.10.0'}
+
+  chownr@1.1.4:
+    resolution: {integrity: sha512-jJ0bqzaylmJtVnNgzTeSOs8DPavpbYgEr/b0YL8/2GO3xJEhInFmhKMUnEJQjZumK7KXGFhUy89PrsJWlakBVg==}
 
   clean-stack@2.2.0:
     resolution: {integrity: sha512-4diC9HaTE+KRAMWhDhrGOECgWZxoevMc5TlkObMqNSsVU62PYzXZ/SMTjzyGAFF1YusgxGcSWTEXBhp0CPwQ1A==}
@@ -1181,6 +1140,10 @@ packages:
     resolution: {integrity: sha512-9iE1PgSik9HeIIw2JO94IidnE3eBoQrFJ3w7sFuzSX4DpmZ3v5sZpUiV5Swcf6mQEF+Y0ru8Neo+p+nyh2J+hQ==}
     engines: {node: '>=10'}
 
+  decompress-response@6.0.0:
+    resolution: {integrity: sha512-aW35yZM6Bb/4oJlZncMH2LCoZtJXTRxES17vE3hoRiowU2kWHaJKFkSBDnDR+cm9J+9QhXmREyIfv0pji9ejCQ==}
+    engines: {node: '>=10'}
+
   deep-eql@4.1.4:
     resolution: {integrity: sha512-SUwdGfqdKOwxCPeVYjwSyRpJ7Z+fhpwIAtmCUdZIWZ/YP5R9WAsyuSgpLVDi9bjWoN2LXHNss/dk3urXtdQxGg==}
     engines: {node: '>=6'}
@@ -1216,6 +1179,10 @@ packages:
   destroy@1.2.0:
     resolution: {integrity: sha512-2sJGJTaXIIaR1w4iJSNoN0hnMY7Gpc/n8D4qSCJw8QqFWXf7cuAgnEHxBpweaVcPevC2l3KpjYCx3NypQQgaJg==}
     engines: {node: '>= 0.8', npm: 1.2.8000 || >= 1.4.16}
+
+  detect-libc@2.1.2:
+    resolution: {integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==}
+    engines: {node: '>=8'}
 
   dezalgo@1.0.4:
     resolution: {integrity: sha512-rXSP0bf+5n0Qonsb+SVVfNfIsimO4HEtmnIpPHY8Q1UCzKlQrDMfdobr8nJOOsRgWCyMRqeSBQzmWUMq7zvVig==}
@@ -1281,6 +1248,9 @@ packages:
   encodeurl@2.0.0:
     resolution: {integrity: sha512-Q0n9HRi4m6JuGIV1eFlmvJB7ZEVxu93IrMyiMsGC0lrMJMWzRgx6WGquyfQgZVb31vhGgXnfmPNNXmxnOkRBrg==}
     engines: {node: '>= 0.8'}
+
+  end-of-stream@1.4.5:
+    resolution: {integrity: sha512-ooEGc6HP26xXq/N+GCGOT0JKCLDGrq2bQUZrQ7gyrJiZANJ/8YDTxTpQBXGMn+WbIQXNVpyWymm7KYVICQnyOg==}
 
   entities@4.5.0:
     resolution: {integrity: sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==}
@@ -1371,6 +1341,10 @@ packages:
   execa@9.6.1:
     resolution: {integrity: sha512-9Be3ZoN4LmYR90tUoVu2te2BsbzHfhJyfEiAVfz7N5/zv+jduIfLrV2xdQXOHbaD6KgpGdO9PRPM1Y4Q9QkPkA==}
     engines: {node: ^18.19.0 || >=20.5.0}
+
+  expand-template@2.0.3:
+    resolution: {integrity: sha512-XYfuKMvj4O35f/pOXLObndIRvyQ+/+6AhODh+OKWj9S9498pHHn/IMszH+gt0fBCRWMNfk1ZSp5x3AifmnI2vg==}
+    engines: {node: '>=6'}
 
   express-rate-limit@7.5.1:
     resolution: {integrity: sha512-7iN8iPMDzOMHPUYllBEsQdWVB6fPDMPqwjBaFrgr4Jgr/+okjvzAy+UHlYYL/Vs0OsOrMkwS6PJDkFlJwoxUnw==}
@@ -1494,6 +1468,9 @@ packages:
   fromentries@1.3.2:
     resolution: {integrity: sha512-cHEpEQHUg0f8XdtZCc2ZAhrHzKzT0MrFUTcvx+hfxYu7rGMDc5SKoXFh+n4YigxsHXRzc6OrCshdR1bWH6HHyg==}
 
+  fs-constants@1.0.0:
+    resolution: {integrity: sha512-y6OAwoSIf7FyjMIv94u+b5rdheZEjzR63GTyZJm5qh4Bi+2YgwLCcI/fPFZkL5PSixOt6ZNKm+w+Hfp/Bciwow==}
+
   fs-extra@11.3.2:
     resolution: {integrity: sha512-Xr9F6z6up6Ws+NjzMCZc6WXg2YFRlrLP9NQDO3VQrWrfiojdhS56TzueT88ze0uBdCTwEIhQ3ptnmKeWGFAe0A==}
     engines: {node: '>=14.14'}
@@ -1571,6 +1548,9 @@ packages:
     resolution: {integrity: sha512-ICsMM1Wk8xSGMowkOmPrzo2Fgmfo4bMHLNX6ytHjajRJUqvHOw/TFapQ+QG75c3X/tTDDhOSRPGC52dDbNM8FQ==}
     engines: {node: '>=16'}
     hasBin: true
+
+  github-from-package@0.0.0:
+    resolution: {integrity: sha512-SyHy3T1v2NUXn29OsWdxmK6RwHD+vkj3v8en8AOBZ1wBQ/hCAQ5bAQTD02kW4W9tUp/3Qh6J8r9EvntiyCmOOw==}
 
   glob-parent@5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
@@ -2117,6 +2097,10 @@ packages:
     resolution: {integrity: sha512-vqiC06CuhBTUdZH+RYl8sFrL096vA45Ok5ISO6sE/Mr1jRbGH4Csnhi8f3wKVl7x8mO4Au7Ir9D3Oyv1VYMFJw==}
     engines: {node: '>=12'}
 
+  mimic-response@3.1.0:
+    resolution: {integrity: sha512-z0yWI+4FDrrweS8Zmt4Ej5HdJmky15+L2e6Wgn3+iK5fWzb6T3fhNFq2+MeTRb064c6Wr4N/wv0DzQTjNzHNGQ==}
+    engines: {node: '>=10'}
+
   minimatch@3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
 
@@ -2126,6 +2110,9 @@ packages:
 
   minimist@1.2.8:
     resolution: {integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==}
+
+  mkdirp-classic@0.5.3:
+    resolution: {integrity: sha512-gKLcREMhtuZRwRAfqP3RFW+TK4JqApVBtOIftVgjuABpAtpxhPGaDcfvbhNvD0B8iD1oUr/txX35NjcaY6Ns/A==}
 
   mocha@10.8.2:
     resolution: {integrity: sha512-VZlYo/WE8t1tstuRmqgeyBgCbJc/lEdopaa+axcKzTBJ+UIdlAB9XnmvTCAH4pwR4ElNInaedhEBmZD8iCSVEg==}
@@ -2234,6 +2221,9 @@ packages:
   mz@2.7.0:
     resolution: {integrity: sha512-z81GNO7nnYMEhrGh9LeymoE4+Yr0Wn5McHIZMK5cfQCl+NDX08sCZgUc9/6MHni9IWuFLm1Z3HTCXu2z9fN62Q==}
 
+  napi-build-utils@2.0.0:
+    resolution: {integrity: sha512-GEbrYkbfF7MoNaoh2iGG84Mnf/WZfB0GdGEsM8wz7Expx/LlWf5U8t9nvJKXSp3qr5IsEbK04cBGhol/KwOsWA==}
+
   negotiator@0.6.3:
     resolution: {integrity: sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==}
     engines: {node: '>= 0.6'}
@@ -2253,6 +2243,13 @@ packages:
 
   nise@5.1.9:
     resolution: {integrity: sha512-qOnoujW4SV6e40dYxJOb3uvuoPHtmLzIk4TFo+j0jPJoC+5Z9xja5qH5JZobEPsa8+YYphMrOSwnrshEhG2qww==}
+
+  node-abi@3.85.0:
+    resolution: {integrity: sha512-zsFhmbkAzwhTft6nd3VxcG0cvJsT70rL+BIGHWVq5fi6MwGrHwzqKaxXE+Hl2GmnGItnDKPPkO5/LQqjVkIdFg==}
+    engines: {node: '>=10'}
+
+  node-addon-api@4.3.0:
+    resolution: {integrity: sha512-73sE9+3UaLYYFmDsFZnqCInzPyh3MqIwZO9cw58yIqAZhONrrabrYyYe3TuIqtIiOuTXVhsGau8hcrhhwSsDIQ==}
 
   node-emoji@2.2.0:
     resolution: {integrity: sha512-Z3lTE9pLaJF47NyMhd4ww1yFTAP8YhYI8SleJiHzM46Fgpm5cnNzSl9XfzFNqbaz+VlJrIj3fXQ4DeN1Rjm6cw==}
@@ -2608,6 +2605,11 @@ packages:
     resolution: {integrity: sha512-HRDzbaKjC+AOWVXxAU/x54COGeIv9eb+6CkDSQoNTt4XyWoIJvuPsXizxu/Fr23EiekbtZwmh1IcIG/l/a10GQ==}
     engines: {node: '>=8'}
 
+  prebuild-install@7.1.3:
+    resolution: {integrity: sha512-8Mf2cbV7x1cXPUILADGI3wuhfqWvtiLA1iclTDbFRZkgRQS0NqsPZphna9V+HyTEadheuPmjaJMsbzKQFOzLug==}
+    engines: {node: '>=10'}
+    hasBin: true
+
   pretty-ms@9.3.0:
     resolution: {integrity: sha512-gjVS5hOP+M3wMm5nmNOucbIrqudzs9v/57bWRHQWLYklXqoXKrVfYW2W9+glfGsqtPgpiz5WwyEEB+ksXIx3gQ==}
     engines: {node: '>=18'}
@@ -2635,6 +2637,9 @@ packages:
 
   pstree.remy@1.1.8:
     resolution: {integrity: sha512-77DZwxQmxKnu3aR542U+X8FypNzbfJ+C5XQDk3uWjWxn6151aIMGthWYRXTqT1E5oJvg+ljaa2OJi+VfvCOQ8w==}
+
+  pump@3.0.3:
+    resolution: {integrity: sha512-todwxLMY7/heScKmntwQG8CXVkWUOdYxIvY2s0VWAAMh/nd8SoYiRaKjlr7+iCs984f2P8zvrfWcDDYVb73NfA==}
 
   punycode@2.3.1:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
@@ -2849,6 +2854,12 @@ packages:
     resolution: {integrity: sha512-iuh+gPf28RkltuJC7W5MRi6XAjTDCAPC/prJUpQoG4vIP3MJZ+GTydVnodXA7pwvTKb2cA0m9OFZW/cdWy/I/w==}
     engines: {node: '>=6'}
 
+  simple-concat@1.0.1:
+    resolution: {integrity: sha512-cSFtAPtRhljv69IK0hTVZQ+OfE9nePi/rtJmw5UjHeVyVroEqJXP1sFztKUy1qU+xvz3u/sfYJLa947b7nAN2Q==}
+
+  simple-get@4.0.1:
+    resolution: {integrity: sha512-brv7p5WgH0jmQJr1ZDDfKDOSeWWg+OVypG99A/5vYGPqJ6pxiaHLy8nxtFjBA7oMa01ebA9gfh1uMCFqOuXxvA==}
+
   simple-update-notifier@2.0.0:
     resolution: {integrity: sha512-a2B9Y0KlNXl9u/vsW6sTIu9vGEpfKu2wRV6l1H3XEas/0gUIzGzBoP/IouTcUQbm9JWZLH3COxyn03TYlFax6w==}
     engines: {node: '>=10'}
@@ -2997,6 +3008,13 @@ packages:
     resolution: {integrity: sha512-yEFYrVhod+hdNyx7g5Bnkkb0G6si8HJurOoOEgC8B/O0uXLHlaey/65KRv6cuWBNhBgHKAROVpc7QyYqE5gFng==}
     engines: {node: '>=20'}
 
+  tar-fs@2.1.4:
+    resolution: {integrity: sha512-mDAjwmZdh7LTT6pNleZ05Yt65HC3E+NiQzl672vQG38jIrehtJk/J3mNwIg+vShQPcLF/LV7CMnDW6vjj6sfYQ==}
+
+  tar-stream@2.2.0:
+    resolution: {integrity: sha512-ujeqbceABgwMZxEJnk2HDY2DlnUZ+9oEcb1KzTVfYHio0UE6dG71n60d8D2I4qNvleWrrXpmjpt7vZeF1LnMZQ==}
+    engines: {node: '>=6'}
+
   temp-dir@3.0.0:
     resolution: {integrity: sha512-nHc6S/bwIilKHNRgK/3jlhDoIHcp45YgyiwcAk46Tr0LfEqGBVpmiAyuiuxeVE44m3mXnEeVhaipLOEWmH+Njw==}
     engines: {node: '>=14.16'}
@@ -3071,6 +3089,9 @@ packages:
 
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
+
+  tunnel-agent@0.6.0:
+    resolution: {integrity: sha512-McnNiV1l8RYeY8tBgEpuodCC1mLUdbSN+CYBL7kJsJNInOP8UjDDEwdk6Mw60vdLLrr5NHKZhMAOSrR2NZuQ+w==}
 
   tunnel@0.0.6:
     resolution: {integrity: sha512-1h/Lnq9yajKY2PEbBadPXj3VxsDDu844OnaAo52UVmIzIvwwtBPIuNvkjuzBlTWpfJyUbG3ez0KSBibQkj4ojg==}
@@ -3643,36 +3664,10 @@ snapshots:
     dependencies:
       sparse-bitfield: 3.0.3
 
-  '@mongodb-js/zstd-darwin-arm64@1.2.2':
-    optional: true
-
-  '@mongodb-js/zstd-darwin-x64@1.2.2':
-    optional: true
-
-  '@mongodb-js/zstd-linux-arm64-gnu@1.2.2':
-    optional: true
-
-  '@mongodb-js/zstd-linux-arm64-musl@1.2.2':
-    optional: true
-
-  '@mongodb-js/zstd-linux-x64-gnu@1.2.2':
-    optional: true
-
-  '@mongodb-js/zstd-linux-x64-musl@1.2.2':
-    optional: true
-
-  '@mongodb-js/zstd-win32-x64-msvc@1.2.2':
-    optional: true
-
-  '@mongodb-js/zstd@1.2.2':
-    optionalDependencies:
-      '@mongodb-js/zstd-darwin-arm64': 1.2.2
-      '@mongodb-js/zstd-darwin-x64': 1.2.2
-      '@mongodb-js/zstd-linux-arm64-gnu': 1.2.2
-      '@mongodb-js/zstd-linux-arm64-musl': 1.2.2
-      '@mongodb-js/zstd-linux-x64-gnu': 1.2.2
-      '@mongodb-js/zstd-linux-x64-musl': 1.2.2
-      '@mongodb-js/zstd-win32-x64-msvc': 1.2.2
+  '@mongodb-js/zstd@2.0.1':
+    dependencies:
+      node-addon-api: 4.3.0
+      prebuild-install: 7.1.3
 
   '@napi-rs/snappy-android-arm-eabi@7.3.3':
     optional: true
@@ -4090,6 +4085,12 @@ snapshots:
 
   binary-extensions@2.3.0: {}
 
+  bl@4.1.0:
+    dependencies:
+      buffer: 5.7.1
+      inherits: 2.0.4
+      readable-stream: 3.6.2
+
   body-parser@1.20.3:
     dependencies:
       bytes: 3.1.2
@@ -4135,6 +4136,11 @@ snapshots:
       update-browserslist-db: 1.1.4(browserslist@4.28.0)
 
   bson@6.10.4: {}
+
+  buffer@5.7.1:
+    dependencies:
+      base64-js: 1.5.1
+      ieee754: 1.2.1
 
   buffer@6.0.3:
     dependencies:
@@ -4227,6 +4233,8 @@ snapshots:
       readdirp: 3.6.0
     optionalDependencies:
       fsevents: 2.3.3
+
+  chownr@1.1.4: {}
 
   clean-stack@2.2.0: {}
 
@@ -4469,6 +4477,10 @@ snapshots:
 
   decamelize@4.0.0: {}
 
+  decompress-response@6.0.0:
+    dependencies:
+      mimic-response: 3.1.0
+
   deep-eql@4.1.4:
     dependencies:
       type-detect: 4.1.0
@@ -4493,6 +4505,8 @@ snapshots:
   depd@2.0.0: {}
 
   destroy@1.2.0: {}
+
+  detect-libc@2.1.2: {}
 
   dezalgo@1.0.4:
     dependencies:
@@ -4554,6 +4568,10 @@ snapshots:
   encodeurl@1.0.2: {}
 
   encodeurl@2.0.0: {}
+
+  end-of-stream@1.4.5:
+    dependencies:
+      once: 1.4.0
 
   entities@4.5.0: {}
 
@@ -4645,6 +4663,8 @@ snapshots:
       signal-exit: 4.1.0
       strip-final-newline: 4.0.0
       yoctocolors: 2.1.2
+
+  expand-template@2.0.3: {}
 
   express-rate-limit@7.5.1(express@4.21.2):
     dependencies:
@@ -4808,6 +4828,8 @@ snapshots:
 
   fromentries@1.3.2: {}
 
+  fs-constants@1.0.0: {}
+
   fs-extra@11.3.2:
     dependencies:
       graceful-fs: 4.2.11
@@ -4880,6 +4902,8 @@ snapshots:
       dargs: 8.1.0
       meow: 12.1.1
       split2: 4.2.0
+
+  github-from-package@0.0.0: {}
 
   glob-parent@5.1.2:
     dependencies:
@@ -5344,6 +5368,8 @@ snapshots:
 
   mimic-fn@4.0.0: {}
 
+  mimic-response@3.1.0: {}
+
   minimatch@3.1.2:
     dependencies:
       brace-expansion: 1.1.12
@@ -5353,6 +5379,8 @@ snapshots:
       brace-expansion: 2.0.2
 
   minimist@1.2.8: {}
+
+  mkdirp-classic@0.5.3: {}
 
   mocha@10.8.2:
     dependencies:
@@ -5384,43 +5412,43 @@ snapshots:
       '@types/whatwg-url': 11.0.5
       whatwg-url: 14.2.0
 
-  mongodb@6.20.0(@mongodb-js/zstd@1.2.2)(snappy@7.3.3):
+  mongodb@6.20.0(@mongodb-js/zstd@2.0.1)(snappy@7.3.3):
     dependencies:
       '@mongodb-js/saslprep': 1.3.2
       bson: 6.10.4
       mongodb-connection-string-url: 3.0.2
     optionalDependencies:
-      '@mongodb-js/zstd': 1.2.2
+      '@mongodb-js/zstd': 2.0.1
       snappy: 7.3.3
 
-  mongodb@6.21.0(@mongodb-js/zstd@1.2.2)(snappy@7.3.3):
+  mongodb@6.21.0(@mongodb-js/zstd@2.0.1)(snappy@7.3.3):
     dependencies:
       '@mongodb-js/saslprep': 1.3.2
       bson: 6.10.4
       mongodb-connection-string-url: 3.0.2
     optionalDependencies:
-      '@mongodb-js/zstd': 1.2.2
+      '@mongodb-js/zstd': 2.0.1
       snappy: 7.3.3
 
-  mongoose-autopopulate@1.2.1(mongoose@8.20.1(@mongodb-js/zstd@1.2.2)(snappy@7.3.3)):
+  mongoose-autopopulate@1.2.1(mongoose@8.20.1(@mongodb-js/zstd@2.0.1)(snappy@7.3.3)):
     dependencies:
-      mongoose: 8.20.1(@mongodb-js/zstd@1.2.2)(snappy@7.3.3)
+      mongoose: 8.20.1(@mongodb-js/zstd@2.0.1)(snappy@7.3.3)
 
   mongoose-hidden@1.9.1:
     dependencies:
       mpath: 0.8.4
 
-  mongoose-sequence@6.0.1(mongoose@8.20.1(@mongodb-js/zstd@1.2.2)(snappy@7.3.3)):
+  mongoose-sequence@6.0.1(mongoose@8.20.1(@mongodb-js/zstd@2.0.1)(snappy@7.3.3)):
     dependencies:
       async: 3.2.6
       lodash: 4.17.21
-      mongoose: 8.20.1(@mongodb-js/zstd@1.2.2)(snappy@7.3.3)
+      mongoose: 8.20.1(@mongodb-js/zstd@2.0.1)(snappy@7.3.3)
 
-  mongoose@8.20.1(@mongodb-js/zstd@1.2.2)(snappy@7.3.3):
+  mongoose@8.20.1(@mongodb-js/zstd@2.0.1)(snappy@7.3.3):
     dependencies:
       bson: 6.10.4
       kareem: 2.6.3
-      mongodb: 6.20.0(@mongodb-js/zstd@1.2.2)(snappy@7.3.3)
+      mongodb: 6.20.0(@mongodb-js/zstd@2.0.1)(snappy@7.3.3)
       mpath: 0.9.0
       mquery: 5.0.0
       ms: 2.1.3
@@ -5465,6 +5493,8 @@ snapshots:
       object-assign: 4.1.1
       thenify-all: 1.6.0
 
+  napi-build-utils@2.0.0: {}
+
   negotiator@0.6.3: {}
 
   negotiator@0.6.4: {}
@@ -5482,6 +5512,12 @@ snapshots:
       '@sinonjs/text-encoding': 0.7.3
       just-extend: 6.2.0
       path-to-regexp: 6.3.0
+
+  node-abi@3.85.0:
+    dependencies:
+      semver: 7.7.3
+
+  node-addon-api@4.3.0: {}
 
   node-emoji@2.2.0:
     dependencies:
@@ -5770,6 +5806,21 @@ snapshots:
     dependencies:
       find-up: 4.1.0
 
+  prebuild-install@7.1.3:
+    dependencies:
+      detect-libc: 2.1.2
+      expand-template: 2.0.3
+      github-from-package: 0.0.0
+      minimist: 1.2.8
+      mkdirp-classic: 0.5.3
+      napi-build-utils: 2.0.0
+      node-abi: 3.85.0
+      pump: 3.0.3
+      rc: 1.2.8
+      simple-get: 4.0.1
+      tar-fs: 2.1.4
+      tunnel-agent: 0.6.0
+
   pretty-ms@9.3.0:
     dependencies:
       parse-ms: 4.0.0
@@ -5796,6 +5847,11 @@ snapshots:
       resolve: 1.22.11
 
   pstree.remy@1.1.8: {}
+
+  pump@3.0.3:
+    dependencies:
+      end-of-stream: 1.4.5
+      once: 1.4.0
 
   punycode@2.3.1: {}
 
@@ -6076,6 +6132,14 @@ snapshots:
       figures: 2.0.0
       pkg-conf: 2.1.0
 
+  simple-concat@1.0.1: {}
+
+  simple-get@4.0.1:
+    dependencies:
+      decompress-response: 6.0.0
+      once: 1.4.0
+      simple-concat: 1.0.1
+
   simple-update-notifier@2.0.0:
     dependencies:
       semver: 7.7.3
@@ -6251,6 +6315,21 @@ snapshots:
 
   tagged-tag@1.0.0: {}
 
+  tar-fs@2.1.4:
+    dependencies:
+      chownr: 1.1.4
+      mkdirp-classic: 0.5.3
+      pump: 3.0.3
+      tar-stream: 2.2.0
+
+  tar-stream@2.2.0:
+    dependencies:
+      bl: 4.1.0
+      end-of-stream: 1.4.5
+      fs-constants: 1.0.0
+      inherits: 2.0.4
+      readable-stream: 3.6.2
+
   temp-dir@3.0.0: {}
 
   tempy@3.1.0:
@@ -6319,6 +6398,10 @@ snapshots:
 
   tslib@2.8.1:
     optional: true
+
+  tunnel-agent@0.6.0:
+    dependencies:
+      safe-buffer: 5.2.1
 
   tunnel@0.0.6: {}
 
