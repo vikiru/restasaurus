@@ -1,0 +1,944 @@
+openapi: 3.1.0
+
+info:
+  title: OpenAPI Specification
+  description: "A dinosaur REST API built using Express, MongoDB and Mongoose with comprehensive information about almost 1200 dinosaurs."
+  license:
+    name: MIT
+    url: "https://choosealicense.com/licenses/mit/"
+  version: 1.0.1
+
+externalDocs:
+  description: Read more about the API
+  url: "http://vikiru.github.io/restasaurus/"
+
+servers:
+  - url: "http://localhost:3000/api/v1"
+  - url: "https://restasaurus.onrender.com/api/v1"
+
+tags:
+  - name: general
+    description: >
+      Endpoints providing general information about the API and dinosaur metadata, 
+      such as lists of all unique values for clades, diets, locomotion types, and dinosaur names.
+
+  - name: dinosaur
+    description: >
+      Endpoints to retrieve detailed dinosaur information. Includes fetching all dinosaurs, 
+      a specific dinosaur by ID or name, filtering by diet or locomotion, retrieving random dinosaurs,
+      or searching dinosaurs with multiple query parameters.
+
+  - name: image
+    description: >
+      Endpoints to retrieve dinosaur images. Includes fetching all images, a specific image by ID,
+      or a set of random images with proper attribution and metadata.
+
+paths:
+  /:
+    get:
+      tags:
+        - general
+      summary: Retrieve the main API endpoint
+      description: Returns API version, endpoints, rate limit, and a disclaimer.
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  apiVersion:
+                    type: string
+                    example: "v1"
+                  apiEndpoints:
+                    type: object
+                    additionalProperties:
+                      type: string
+                    example:
+                      home: "/api/v1"
+                      getAllClades: "/api/v1/clades"
+                      getAllDiets: "/api/v1/diets"
+                      getAllLocomotions: "/api/v1/locomotions"
+                      getAllNames: "/api/v1/names"
+                      getAllDinos: "/api/v1/dinosaurs"
+                      getDinoById: "/api/v1/dinosaurs/:id"
+                      getDinoByName: "/api/v1/dinosaurs/name/:name"
+                      getDinosByDiet: "/api/v1/dinosaurs/diet/:diet"
+                      getDinosByLocomotion: "/api/v1/dinosaurs/locomotion/:locomotion"
+                      getRandomDinos: "/api/v1/dinosaurs/random/:count"
+                      getDinosaurByQuery: "/api/v1/search"
+                      getAllImages: "/api/v1/images"
+                      getImageById: "/api/v1/images/:id"
+                      getRandomImages: "/api/v1/images/random/:count"
+                  rateLimit:
+                    type: string
+                    example: "20 requests per hour"
+                  disclaimer:
+                    type: string
+                    example: >
+                      The information within the API is taken directly from Wikipedia, as is
+                      and may have been modified since the last time it was retrieved. All
+                      images and text belong to their respective authors and attribution is
+                      provided accordingly.
+
+  /clades:
+    get:
+      tags:
+        - general
+      summary: Retrieve all dinosaur clades
+      description: Retrieves all dinosaur clades.
+      responses:
+        "200":
+          description: A list of dinosaur clades with counts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    clade:
+                      type: string
+                      description: Clade name
+                      example: "Dinosauria"
+                    count:
+                      type: integer
+                      description: Number of dinosaurs in this clade
+                      example: 850
+        "404":
+          description: No clades found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Sorry, there was an error retrieving all dinosaur clades"
+        "500":
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Sorry, an unexpected error occurred while retrieving all dinosaur clades"
+
+  /diets:
+    get:
+      tags:
+        - general
+      summary: Retrieve all dinosaur diets
+      description: Retrieves all dinosaur diets.
+      responses:
+        "200":
+          description: A list of dinosaur diets with counts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    diet:
+                      type: string
+                      enum: ["carnivore", "herbivore", "omnivore", "piscivore"]
+                      description: Diet type
+                      example: "carnivore"
+                    count:
+                      type: integer
+                      description: Number of dinosaurs with this diet
+                      example: 320
+        "404":
+          description: No diets found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Sorry, there was an error retrieving all dinosaur diets"
+        "500":
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Sorry, an unexpected error occurred while retrieving all dinosaur diets"
+
+  /locomotions:
+    get:
+      tags:
+        - general
+      summary: Retrieve all dinosaur locomotions
+      description: Retrieves all dinosaur locomotions.
+      responses:
+        "200":
+          description: A list of dinosaur locomotions with counts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    locomotionType:
+                      type: string
+                      enum:
+                        [
+                          "biped",
+                          "facultative biped",
+                          "gliding",
+                          "quadruped",
+                          "swimming",
+                        ]
+                      description: Locomotion type
+                      example: "biped"
+                    count:
+                      type: integer
+                      description: Number of dinosaurs with this locomotion
+                      example: 450
+        "404":
+          description: No locomotions found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Sorry, there was an error retrieving all dinosaur locomotions"
+        "500":
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Sorry, an unexpected error occurred while retrieving all dinosaur locomotions"
+
+  /names:
+    get:
+      tags:
+        - general
+      summary: Retrieve all dinosaur names
+      description: Retrieves all dinosaur names.
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 1188
+                  data:
+                    type: array
+                    items:
+                      type: string
+                    example: ["Zephyrosaurus", "Tyrannosaurus", "Velociraptor"]
+        "404":
+          description: No dinosaur names found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Sorry, there was an error retrieving all dinosaur names"
+        "500":
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Sorry, an unexpected error occurred while retrieving all dinosaur names"
+
+  /dinosaurs:
+    get:
+      tags:
+        - dinosaur
+      summary: Retrieve all dinosaurs
+      description: Retrieves all dinosaurs. Accepts a page query parameter for pagination.
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  prevPage:
+                    type: string
+                    description: URL to previous page, empty string if first page
+                    example: "/api/v1/dinosaurs?page=1"
+                  currentPage:
+                    type: integer
+                    description: Current page number
+                    example: 2
+                  nextPage:
+                    type: string
+                    description: URL to next page, empty string if last page
+                    example: "/api/v1/dinosaurs?page=3"
+                  count:
+                    type: integer
+                    description: Number of items on current page
+                    example: 50
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Dinosaur"
+        "404":
+          description: No dinosaurs found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Sorry, there was an error retrieving all dinosaurs"
+        "500":
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Sorry, an unexpected error occurred while retrieving all dinosaurs"
+
+  /dinosaurs/{id}:
+    get:
+      tags:
+        - dinosaur
+      summary: Retrieve a dinosaur by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            description: ID of the dinosaur to retrieve (treated as string, 1-1188)
+            example: "1118"
+      responses:
+        "200":
+          description: Dinosaur found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dinosaur"
+        "404":
+          description: Dinosaur not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Sorry, there doesnt seem to be a dinosaur matching that id."
+        "500":
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Sorry, an unexpected error occured while retrieving a dinosaur matching the specified id."
+
+  /dinosaurs/name/{name}:
+    get:
+      tags:
+        - dinosaur
+      summary: Retrieve a dinosaur by name
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Dinosaur found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dinosaur"
+        "404":
+          description: Dinosaur not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Sorry, there doesnt seem to be a dinosaur matching that name."
+        "500":
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Sorry, an unexpected error occured trying to find a dinosaur matching that name."
+
+  /dinosaurs/diet/{diet}:
+    get:
+      tags:
+        - dinosaur
+      summary: Retrieve dinosaurs by diet
+      parameters:
+        - name: diet
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Dinosaurs found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Dinosaur"
+        "404":
+          description: No dinosaurs matching diet
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Sorry, there doesn't seem to be any dinosaurs matching that diet."
+        "500":
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Sorry, an unexpected error occured while retrieving all dinosaurs matching that diet."
+
+  /dinosaurs/locomotion/{locomotion}:
+    get:
+      tags:
+        - dinosaur
+      summary: Retrieve dinosaurs by locomotion
+      parameters:
+        - name: locomotion
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Dinosaurs found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Dinosaur"
+        "404":
+          description: No dinosaurs matching locomotion
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Sorry, there doesn't seem to be any dinosaurs matching that locomotion type."
+        "500":
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Sorry, an unexpected error occured while retrieving all dinosaurs matching that diet."
+
+  /dinosaurs/random/{count}:
+    get:
+      tags:
+        - dinosaur
+      summary: Retrieve a random number of dinosaurs
+      parameters:
+        - name: count
+          in: path
+          required: true
+          description: Number of random dinosaurs to retrieve (1–10)
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 10
+      responses:
+        "200":
+          description: Random dinosaurs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Dinosaur"
+        "500":
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Sorry, an unexpected error occurred while trying to retrieve a random number of dinosaurs."
+
+  /dinosaurs/search:
+    get:
+      tags:
+        - dinosaur
+      summary: Retrieve dinosaurs by query
+      parameters:
+        - name: clade
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+            description: |
+              Can be a single string or comma-separated string. 
+              Examples: "Dinosauria" or "Dinosauria,Ornithischia"
+        - name: diet
+          in: query
+          schema:
+            type: string
+            enum: ["carnivore", "herbivore", "omnivore", "piscivore"]
+        - name: locomotion
+          in: query
+          schema:
+            type: string
+            enum:
+              ["biped", "facultative biped", "gliding", "quadruped", "swimming"]
+      responses:
+        "200":
+          description: Dinosaurs found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Dinosaur"
+        "404":
+          description: No dinosaurs matching query
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Sorry, there doesnt seem to be any dinosaurs matching that query."
+        "500":
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Sorry, an unexpected error occured while performing that query."
+
+  /images:
+    get:
+      tags:
+        - image
+      summary: Retrieve all dinosaur images
+      description: Accepts page query for pagination.
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  prevPage:
+                    type: string
+                    description: URL to previous page, empty string if first page
+                    example: "/api/v1/images?page=1"
+                  currentPage:
+                    type: integer
+                    description: Current page number
+                    example: 2
+                  nextPage:
+                    type: string
+                    description: URL to next page, empty string if last page
+                    example: "/api/v1/images?page=3"
+                  count:
+                    type: integer
+                    description: Number of items on current page
+                    example: 50
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/DinosaurImage"
+        "404":
+          description: No images found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Sorry, there was an error retrieving all dinosaur images"
+        "500":
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Sorry, an unexpected error occurred while retrieving all dinosaur images"
+
+  /images/{id}:
+    get:
+      tags:
+        - image
+      summary: Retrieve a dinosaur image by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            description: ID of the dinosaur image to retrieve (treated as string, 1-1188)
+            example: "1118"
+      responses:
+        "200":
+          description: Image found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DinosaurImage"
+        "404":
+          description: Image not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Sorry, there doesnt seem to be a dinosaur image matching that id."
+        "500":
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Sorry, an unexpected occurred while trying to recieve an image matching that id."
+
+  /images/random/{count}:
+    get:
+      tags:
+        - image
+      summary: Retrieve a random number of dinosaur images
+      parameters:
+        - name: count
+          in: path
+          required: true
+          description: Number of random images to retrieve (1–10)
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 10
+      responses:
+        "200":
+          description: Random images
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/DinosaurImage"
+        "500":
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Sorry, an unexpected error occurred while trying to retrieve a random number of dinosaur images."
+
+components:
+  schemas:
+    Dinosaur:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1118
+        name:
+          type: string
+          example: "Zephyrosaurus"
+        temporalRange:
+          type: string
+          example: "Early Cretaceous, ~113 Ma"
+        diet:
+          type: string
+          example: "herbivore"
+        locomotionType:
+          type: string
+          example: "biped"
+        description:
+          type: string
+          example: >
+            Zephyrosaurus (meaning "westward wind lizard") is a genus of orodromine ornithischian dinosaur.
+        classificationInfo:
+          $ref: "#/components/schemas/ClassificationInfo"
+        image:
+          $ref: "#/components/schemas/DinosaurImage"
+        source:
+          $ref: "#/components/schemas/DinosaurSource"
+      required:
+        - id
+        - name
+        - classificationInfo
+        - image
+        - source
+
+    ClassificationInfo:
+      type: object
+      properties:
+        domain:
+          type: string
+          example: "Eukaryota"
+        kingdom:
+          type: string
+          example: "Animalia"
+        phylum:
+          type: string
+          example: "Chordata"
+        clade:
+          type: array
+          items:
+            type: string
+          example: ["Dinosauria", "Ornithischia"]
+        classInfo:
+          type: array
+          items:
+            type: object
+            properties:
+              classType:
+                type: string
+              value:
+                type: string
+          example:
+            - classType: "Class"
+              value: "Reptilia"
+        orderInfo:
+          type: array
+          items:
+            type: object
+            properties:
+              orderType:
+                type: string
+              value:
+                type: string
+          example:
+            - orderType: "Order"
+              value: "Ornithischia"
+        familyInfo:
+          type: array
+          items:
+            type: object
+            properties:
+              familyType:
+                type: string
+              value:
+                type: string
+          example:
+            - familyType: "Family"
+              value: "Thescelosauridae"
+            - familyType: "Subfamily"
+              value: "Orodrominae"
+        tribeInfo:
+          type: array
+          items:
+            type: object
+            properties:
+              tribeType:
+                type: string
+              value:
+                type: string
+          example:
+            - tribeType: "Tribe"
+              value: "Thescelosaurini"
+        genusInfo:
+          type: array
+          items:
+            type: object
+            properties:
+              genusType:
+                type: string
+              value:
+                type: string
+          example:
+            - genusType: "Genus"
+              value: "Zephyrosaurus"
+        speciesInfo:
+          type: array
+          items:
+            type: object
+            properties:
+              speciesType:
+                type: string
+              value:
+                type: string
+          example:
+            - speciesType: "Species"
+              value: "Zephyrosaurus schaffi"
+
+    DinosaurImage:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "Zephyrosaurus in Copenhagen"
+        description:
+          type: string
+          example: "Zephyrosaurus skeleton, Natural History Museum of Denmark, Copenhagen."
+        author:
+          type: string
+          example: "FunkMonk"
+        authorURL:
+          type: string
+          example: "https://commons.wikimedia.org/wiki/User:FunkMonk"
+        imageURL:
+          type: string
+          example: "https://commons.wikimedia.org/wiki/File:Zephyrosaurus_in_Copenhagen.jpg"
+        license:
+          type: string
+          example: "Creative Commons Attribution-Share Alike 3.0"
+        licenseURL:
+          type: string
+          example: "https://creativecommons.org/licenses/by-sa/3.0"
+        dateCreated:
+          type: string
+          example: "2021-10-01T07:58:48.000Z"
+        dateAccessed:
+          type: string
+          example: "2024-01-30T14:27:20.683Z"
+
+    DinosaurSource:
+      type: object
+      properties:
+        pageTitle:
+          type: string
+          example: "Zephyrosaurus"
+        author:
+          type: string
+          example: "Wikipedia contributors"
+        wikipediaURL:
+          type: string
+          example: "https://en.wikipedia.org/wiki/Zephyrosaurus"
+        license:
+          type: string
+          example: "Creative Commons Attribution-Share Alike 4.0"
+        licenseURL:
+          type: string
+          example: "https://creativecommons.org/licenses/by-sa/4.0/deed.en"
+        permalink:
+          type: string
+          example: "https://en.wikipedia.org/w/index.php?title=Zephyrosaurus&oldid=1187326953"
+        revisionHistoryURL:
+          type: string
+          example: "https://en.wikipedia.org/w/index.php?title=Zephyrosaurus&action=history"
+        lastRevision:
+          type: string
+          example: "2023-11-28T15:28:47Z"
+        dateAccessed:
+          type: string
+          example: "2024-01-30T14:27:20.682Z"
+        source:
+          type: string
+          example: "Wikipedia, The Free Encyclopedia"
+        publisher:
+          type: string
+          example: "Wikimedia Foundation"
+        citation:
+          type: string
+          example: 'Wikipedia contributors. "Zephyrosaurus." Wikipedia, The Free Encyclopedia. Wikimedia Foundation, 28 Nov 2023. Web. 30 Jan 2024.'
