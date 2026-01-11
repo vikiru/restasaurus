@@ -1,9 +1,8 @@
 ---
-id: acknowledgments
 title: ✨ Acknowledgments
+description: A list of acknowledgments for the tools and resources used in the RESTasaurus project.
 ---
 
-## ✨ Acknowledgments
 
 -   [Docusaurus](https://docusaurus.io/)
 -   [Redocusaurus](https://github.com/rohit-gohri/redocusaurus)

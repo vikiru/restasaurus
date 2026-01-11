@@ -1,5 +1,6 @@
 ---
 title: Clades
+description: Retrieve all dinosaur clades from the RESTasaurus API.
 ---
 
 ## API Endpoint and Description
@@ -14,4 +15,4 @@ No parameters are required for this endpoint.
 
 ## Demo
 
-![Demo](../../public/endpoints/clades.gif)
+![Demo](../../../../public/endpoints/clades.gif)

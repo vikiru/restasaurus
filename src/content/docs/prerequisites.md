@@ -1,9 +1,8 @@
 ---
-id: prerequisites
 title: 📝 Prerequisites
+description: List of required dependencies and software needed to run the RESTasaurus project.
 ---
 
-## 📝 Prerequisites
 
 Ensure that the following dependencies are installed onto your machine by following the [Setup Instructions](/setup).
 

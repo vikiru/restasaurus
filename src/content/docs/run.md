@@ -1,8 +1,8 @@
 ---
 title: 🚀 Run
+description: Instructions on how to run the RESTasaurus API server in different environments.
 ---
 
-## 🚀 Run
 
 The API can be started via one of the following commands:
 

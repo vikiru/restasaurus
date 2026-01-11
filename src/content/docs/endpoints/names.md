@@ -1,5 +1,6 @@
 ---
 title: Names
+description: Retrieve all dinosaur names from the RESTasaurus API.
 ---
 
 ## API Endpoint and Description
@@ -14,4 +15,4 @@ No parameters are required for this endpoint.
 
 ## Demo
 
-![Demo](../../public/endpoints/names.gif)
+![Demo](../../../../public/endpoints/names.gif)

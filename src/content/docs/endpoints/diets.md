@@ -1,5 +1,6 @@
 ---
 title: Diets
+description: Retrieve all dinosaur diet types from the RESTasaurus API.
 ---
 
 ## API Endpoint and Description
@@ -14,4 +15,4 @@ No parameters are required for this endpoint.
 
 ## Demo
 
-![Demo](../../public/endpoints/diets.gif)
+![Demo](../../../../public/endpoints/diets.gif)

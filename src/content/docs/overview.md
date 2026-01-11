@@ -1,5 +1,6 @@
 ---
 title: Endpoint Overview
+description: Complete overview of all available REST API endpoints in the RESTasaurus project.
 ---
 
 ## 📖 Table of Contents

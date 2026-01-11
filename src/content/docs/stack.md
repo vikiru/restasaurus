@@ -1,9 +1,8 @@
 ---
-id: stack
 title: 🛠️ Tech Stack
+description: Complete overview of the technology stack used in the RESTasaurus project.
 ---
 
-## 🛠️ Tech Stack
 
 Backend:
 

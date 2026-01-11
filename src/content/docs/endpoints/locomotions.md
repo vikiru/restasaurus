@@ -1,5 +1,6 @@
 ---
 title: Locomotions
+description: Retrieve all dinosaur locomotion types from the RESTasaurus API.
 ---
 
 ## API Endpoint and Description
@@ -14,4 +15,4 @@ No parameters are required for this endpoint.
 
 ## Demo
 
-![Demo](../../public/endpoints/locomotions.gif)
+![Demo](../../../../public/endpoints/locomotions.gif)

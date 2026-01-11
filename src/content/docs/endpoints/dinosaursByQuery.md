@@ -1,5 +1,6 @@
 ---
 title: Dinosaurs by Query
+description: Search for dinosaurs using flexible query parameters with the RESTasaurus API.
 ---
 
 ## API Endpoints and Description
@@ -32,4 +33,4 @@ Example `locomotion` include: `biped`, `quadruped`, `facultative biped`, `glidin
 
 ## Demo
 
-![Demo](../../public/endpoints/dinosaurByQuery.gif)
+![Demo](../../../../public/endpoints/dinosaurByQuery.gif)

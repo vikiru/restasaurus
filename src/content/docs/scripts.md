@@ -1,8 +1,8 @@
 ---
 title: 📜 Available Scripts
+description: Complete list of all available npm scripts for the RESTasaurus project.
 ---
 
-## 📜 Available Scripts
 
 1. Start the API in `production` env, without nodemon.
 

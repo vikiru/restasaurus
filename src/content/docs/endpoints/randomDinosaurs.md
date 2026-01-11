@@ -1,5 +1,6 @@
 ---
 title: Random Dinosaurs
+description: Retrieve random dinosaurs from the RESTasaurus API.
 ---
 
 ## API Endpoints and Description
@@ -15,4 +16,4 @@ Returns a random number of dinosaurs. Minimum of 1 and maximum of 10.
 
 ## Demo
 
-![Demo](../../public/endpoints/randomDinosaurs.gif)
+![Demo](../../../../public/endpoints/randomDinosaurs.gif)

@@ -1,5 +1,6 @@
 ---
 title: Home
+description: API home endpoint that returns basic information about the RESTasaurus API.
 ---
 
 ## API Endpoint and Description
@@ -14,4 +15,4 @@ No parameters are required for this endpoint.
 
 ## Demo
 
-![Demo](../../public/endpoints/home.gif)
+![Demo](../../../../public/endpoints/home.gif)

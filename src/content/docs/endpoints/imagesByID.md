@@ -1,5 +1,6 @@
 ---
 title: Image by ID
+description: Retrieve a specific dinosaur image by its unique ID using the RESTasaurus API.
 ---
 
 ## API Endpoint and Description
@@ -14,4 +15,4 @@ Returns a dinosaur image matching a specific id, returns an error if not found.
 
 ## Demo
 
-![Demo](../../public/endpoints/imagesByID.gif)
+![Demo](../../../../public/endpoints/imagesByID.gif)

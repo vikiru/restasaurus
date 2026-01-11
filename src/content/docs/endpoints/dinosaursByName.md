@@ -1,5 +1,6 @@
 ---
 title: Dinosaurs by Name
+description: Search for dinosaurs by their name using the RESTasaurus API.
 ---
 
 ## API Endpoints and Description
@@ -14,4 +15,4 @@ Returns a dinosaur matching a specific name, returns an error if not found.
 
 ## Demo
 
-![Demo](../../public/endpoints/dinosaursByName.gif)
+![Demo](../../../../public/endpoints/dinosaursByName.gif)

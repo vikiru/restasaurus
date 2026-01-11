@@ -1,5 +1,6 @@
 ---
 title: Random Images
+description: Retrieve random dinosaur images from the RESTasaurus API.
 ---
 
 ## API Endpoint and Description
@@ -14,4 +15,4 @@ Returns a random number of dinosaur images. Minimum of 1 and maximum of 10.
 
 ## Demo
 
-![Demo](../../public/endpoints/randomImages.gif)
+![Demo](../../../../public/endpoints/randomImages.gif)

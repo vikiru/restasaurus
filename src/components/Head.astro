@@ -1,0 +1,170 @@
+---
+import { getEntry } from "astro:content";
+import { documentationConfig } from "../../docs.config.ts";
+import {
+	personId,
+	softwareId,
+	homepageId,
+	personLd,
+	softwareLd,
+	homepageLd,
+	webAppLd,
+} from "../../schemas.ts";
+import type { TechArticle, Graph } from "schema-dts";
+
+const {
+	site: { siteUrl, base, title: siteTitle, documentationUrl },
+	assets: { logoFileName, themeColor },
+	project: { keywords, name: projectName },
+	author: { name: authorName },
+} = documentationConfig;
+
+const logoPath = `${documentationUrl}/${logoFileName}`;
+const keywordsString = keywords.join(", ");
+
+const pathname = Astro.url.pathname;
+const canonical = `${siteUrl}${pathname.endsWith("/") ? pathname.slice(0, -1) : pathname}`;
+
+const normalizedPath = pathname.endsWith("/")
+	? pathname.slice(0, -1)
+	: pathname;
+const entryId =
+	normalizedPath === base ? "index" : normalizedPath.replace(`${base}/`, "");
+
+let entry = await getEntry("docs", entryId);
+let is404 = entry === undefined;
+
+const isHome = normalizedPath === base;
+
+const title = is404 ? "404 | Page Not Found" : entry?.data.title;
+const description = is404
+	? "The page you are looking for does not exist."
+	: entry?.data.description;
+const pageId = is404
+	? `${canonical}#404`
+	: isHome
+		? homepageId
+		: `${canonical}#page`;
+
+let graphData: any[] = [personLd, softwareLd, webAppLd];
+
+if (is404) {
+	// Handle 404
+	graphData.push({
+		"@type": "WebPage",
+		"@id": pageId,
+		url: canonical,
+		name: title,
+		description: description,
+	});
+} else if (!isHome && !is404) {
+	// Handle normal doc page
+	const pageLd: TechArticle = {
+		"@type": "TechArticle",
+		"@id": pageId,
+		headline: title,
+		description: description,
+		author: { "@id": personId },
+		inLanguage: "en",
+		mainEntityOfPage: canonical,
+		url: canonical,
+		image: `${logoPath}`,
+		publisher: { "@id": personId },
+		about: { "@id": softwareId },
+		isPartOf: { "@id": homepageId },
+	};
+	graphData.push(pageLd);
+} else {
+	// Handle home page
+	graphData.push(homepageLd);
+}
+
+const graphLd: Graph = {
+	"@context": "https://schema.org",
+	"@graph": graphData,
+};
+---
+
+<!-- Security Headers -->
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+
+<!-- SEO Meta Tags -->
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="canonical" href={canonical} />
+<meta name="author" content={authorName} />
+<meta name="theme-color" content={themeColor} />
+<meta name="keywords" content={keywordsString} />
+
+<!-- Favicons -->
+<link
+	rel="icon"
+	type="image/x-icon"
+	href={`${documentationUrl}/favicon-light.ico`}
+/>
+<link
+	rel="icon"
+	type="image/png"
+	sizes="32x32"
+	href={`${documentationUrl}/favicon-32x32-light.png`}
+/>
+<link
+	rel="icon"
+	type="image/png"
+	sizes="16x16"
+	href={`${documentationUrl}/favicon-16x16-light.png`}
+/>
+<link
+	rel="apple-touch-icon"
+	sizes="180x180"
+	href={`${documentationUrl}/apple-touch-icon-light.png`}
+/>
+<link rel="manifest" href={`${documentationUrl}/manifest.json`} />
+
+<link
+	rel="icon"
+	type="image/png"
+	sizes="32x32"
+	media="(prefers-color-scheme: dark)"
+	href={`${documentationUrl}/favicon-32x32-dark.png`}
+/>
+<link
+	rel="icon"
+	type="image/png"
+	sizes="16x16"
+	media="(prefers-color-scheme: dark)"
+	href={`${documentationUrl}/favicon-16x16-dark.png`}
+/>
+<link
+	rel="apple-touch-icon"
+	sizes="180x180"
+	media="(prefers-color-scheme: dark)"
+	href={`${documentationUrl}/apple-touch-icon-dark.png`}
+/>
+<link
+	rel="icon"
+	type="image/x-icon"
+	media="(prefers-color-scheme: dark)"
+	href={`${documentationUrl}/favicon-dark.ico`}
+/>
+
+<!-- Open Graph / Facebook -->
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content={is404 ? "website" : "article"} />
+<meta property="og:url" content={canonical} />
+<meta property="og:locale" content="en" />
+<meta property="og:site_name" content={siteTitle} />
+<meta property="og:image" content={`${logoPath}`} />
+<meta property="og:image:alt" content={`${projectName} logo`} />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={`${logoPath}`} />
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json" set:html={JSON.stringify(graphLd)} />

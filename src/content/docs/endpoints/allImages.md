@@ -1,5 +1,6 @@
 ---
 title: All Images
+description: Retrieve all dinosaur images from the API with pagination support.
 ---
 
 ## API Endpoint and Description
@@ -14,4 +15,4 @@ Returns all dinosaur images within the API, 50 dinosaurs per page.
 
 ## Demo
 
-![Demo](../../public/endpoints/allImages.gif)
+![Demo](../../../../public/endpoints/allImages.gif)

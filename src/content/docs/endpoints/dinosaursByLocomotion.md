@@ -1,5 +1,6 @@
 ---
 title: Dinosaurs by Locomotion
+description: Search for dinosaurs by their locomotion type using the RESTasaurus API.
 ---
 
 ## API Endpoints and Description
@@ -16,4 +17,4 @@ Examples include: `biped`, `quadruped`, `facultative biped`, `gliding`, `swimmin
 
 ## Demo
 
-![Demo](../../public/endpoints/dinosaursByLocomotion.gif)
+![Demo](../../../../public/endpoints/dinosaursByLocomotion.gif)

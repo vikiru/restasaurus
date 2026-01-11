@@ -1,6 +1,7 @@
 ---
 title: 🧩 Model Overview
-slug: /models
+slug: /models/overview
+description: Detailed overview of all data models used in the RESTasaurus project including Dinosaur, ClassificationInfo, DinosaurImage, and DinosaurSource.
 ---
 
 ## 📖 Table of Contents

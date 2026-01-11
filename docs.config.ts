@@ -1,14 +1,15 @@
-import type { DocumentationConfig } from './src/types/Config';
+import type { DocumentationConfig } from '@/types/Config';
 
 export const documentationConfig: DocumentationConfig = {
   site: {
-    title: 'Parseum Documentation',
+    title: 'RESTasaurus Documentation',
     description:
-      'Documentation for Parseum - A markdown to HTML parser and editor built using Peggy.js, React, TailwindCSS and DaisyUI.',
-    projectDescription: 'A markdown to HTML parser and editor built using Peggy.js, React, TailwindCSS and DaisyUI.',
+      'Documentation for RESTasaurus - A dinosaur REST API built using Express, MongoDB and Mongoose with comprehensive data for almost 1200 dinosaurs.',
+    projectDescription:
+      'A dinosaur REST API built using Express, MongoDB and Mongoose with comprehensive data for almost 1200 dinosaurs.',
     siteUrl: 'https://vikiru.github.io',
-    base: '/parseum',
-    documentationUrl: 'https://vikiru.github.io/parseum',
+    base: '/restasaurus',
+    documentationUrl: 'https://vikiru.github.io/restasaurus',
     websiteLastModified: new Date(),
   },
   author: {
@@ -25,14 +26,14 @@ export const documentationConfig: DocumentationConfig = {
     universityUrl: 'https://carleton.ca/',
   },
   project: {
-    name: 'Parseum',
-    githubRepo: 'https://github.com/vikiru/parseum',
-    liveDemoUrl: 'https://parseum.surge.sh',
-    version: '1.0.0',
-    startDate: '2024-02-01',
-    endDate: '2024-03-31',
+    name: 'RESTasaurus',
+    githubRepo: 'https://github.com/vikiru/restasaurus',
+    liveDemoUrl: 'https://restasaurus.onrender.com/api/v1',
+    version: '1.0.1',
+    startDate: '2024-01-07',
+    endDate: '2024-02-01',
     programmingLanguage: 'JavaScript',
-    keywords: ['markdown', 'html', 'parser', 'editor', 'peggy.js', 'react', 'tailwindcss', 'daisyui'],
+    keywords: ['restasaurus', 'rest', 'api', 'mongodb', 'mongoose', 'express', 'dinosaurs'],
     license: 'https://opensource.org/licenses/MIT',
   },
   assets: {

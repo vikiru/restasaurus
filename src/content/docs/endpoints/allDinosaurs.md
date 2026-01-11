@@ -1,5 +1,6 @@
 ---
 title: All Dinosaurs
+description: Retrieve all dinosaurs from the API with pagination support, returning 50 dinosaurs per page.
 ---
 
 ## API Endpoint and Description
@@ -14,4 +15,4 @@ Returns all dinosaurs within the API, 50 dinosaurs per page.
 
 ## Demo
 
-![Demo](../../public/endpoints/allDinosaurs.gif)
+![Demo](../../../../public/endpoints/allDinosaurs.gif)

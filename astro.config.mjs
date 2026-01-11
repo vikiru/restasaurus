@@ -7,30 +7,22 @@ import { documentationConfig } from './docs.config';
 
 const {
   site: { title, base, siteUrl, projectDescription, documentationUrl, websiteLastModified },
-  assets: { faviconFileName, logoFileName },
+  assets: { faviconFileName },
   project: { githubRepo, liveDemoUrl },
 } = documentationConfig;
 
-/** @type {import('astro/config').Config} */
 export default defineConfig({
   base: `${base}/`,
   site: siteUrl,
   output: 'static',
   trailingSlash: 'never',
-  vite: {
-    resolve: {
-      alias: {
-        '@': '/src',
-      },
-    },
-  },
   integrations: [
     starlight({
       title,
       tagline: projectDescription,
       favicon: faviconFileName,
       logo: {
-        src: `./public/${logoFileName}`,
+        src: './public/logo.png',
         replacesTitle: true,
       },
       social: [
@@ -41,7 +33,7 @@ export default defineConfig({
         },
         {
           icon: 'external',
-          label: 'Live Demo',
+          label: 'Live API',
           href: liveDemoUrl,
         },
       ],
@@ -53,44 +45,28 @@ export default defineConfig({
         {
           label: 'Getting Started',
           items: [
-            { label: 'Prerequisites', slug: 'getting-started/prerequisites' },
-            { label: 'Setup', slug: 'getting-started/setup' },
-            { label: 'Test', slug: 'getting-started/test' },
-            { label: 'Features', slug: 'getting-started/features' },
+            { label: 'Home', link: '/' },
+            { label: 'Prerequisites', link: '/prerequisites' },
+            { label: 'Setup', link: '/setup' },
+            { label: 'Model Overview', link: '/models' },
           ],
+        },
+        {
+          label: 'API Endpoints',
+          autogenerate: { directory: 'endpoints' },
         },
         {
           label: 'Development',
           items: [
-            { label: 'Stack', slug: 'development/stack' },
-            { label: 'Scripts', slug: 'development/scripts' },
-          ],
-        },
-        {
-          label: 'Syntax',
-          items: [
-            { label: 'Syntax Overview', slug: 'syntax' },
-            {
-              label: 'Basic Syntax',
-              autogenerate: { directory: 'syntax/basic' },
-            },
-            {
-              label: 'Formatting Syntax',
-              autogenerate: { directory: 'syntax/formatting' },
-            },
-            {
-              label: 'Extended Syntax',
-              autogenerate: { directory: 'syntax/extended' },
-            },
-            {
-              label: 'Excluded Syntax',
-              autogenerate: { directory: 'syntax/excluded' },
-            },
+            { label: 'Tech Stack', link: '/stack' },
+            { label: 'Running the API', link: '/run' },
+            { label: 'Testing the API', link: '/test' },
+            { label: 'Available Scripts', link: '/scripts' },
           ],
         },
         {
           label: 'Conclusion',
-          items: [{ label: 'Acknowledgments', slug: 'conclusion/acknowledgments' }],
+          items: [{ label: 'Acknowledgments', link: '/acknowledgments' }],
         },
       ],
       components: {

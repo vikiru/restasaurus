@@ -1,5 +1,6 @@
 ---
 title: Dinosaurs by Diet
+description: Search for dinosaurs by their diet type using the RESTasaurus API.
 ---
 
 ## API Endpoints and Description
@@ -16,4 +17,4 @@ Examples include: `herbivore`, `carnivore`, `omnivore`, `piscivore`, etc.
 
 ## Demo
 
-![Demo](../../public/endpoints/dinosaursByDiet.gif)
+![Demo](../../../../public/endpoints/dinosaursByDiet.gif)
