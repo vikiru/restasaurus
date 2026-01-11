@@ -1,17 +1,37 @@
 {
-  "name": "",
+  "name": "restasaurus-docs",
+  "author": "Visakan Kirubakaran",
+  "license": "MIT",
   "type": "module",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "deploy": "gh-pages -d dist --dotfiles --nojekyll",
+    "astro": "astro",
+    "lint": "biome lint",
+    "format": "biome check --write",
+    "postinstall": "lefthook install"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.6.1",
     "@astrojs/starlight": "^0.37.2",
-    "astro": "^5.6.1",
-    "sharp": "^0.34.2"
+    "astro": "^5.16.8",
+    "schema-dts": "^1.1.5",
+    "sharp": "^0.34.5",
+    "starlight-links-validator": "^0.19.2",
+    "starlight-theme-rapide": "^0.5.2"
+  },
+  "devDependencies": {
+    "@astrojs/ts-plugin": "^1.10.6",
+    "@biomejs/biome": "^2.3.11",
+    "@commitlint/cli": "^20.3.1",
+    "@commitlint/config-conventional": "^20.3.1",
+    "@playform/compress": "^0.2.1",
+    "@typescript/native-preview": "7.0.0-dev.20260102.1",
+    "gh-pages": "^6.3.0",
+    "lefthook": "^2.0.13"
   }
 }
