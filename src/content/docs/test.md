@@ -1,5 +1,6 @@
 ---
-title: 🔍 Testing
+title: Testing
+slug: development/test
 description: Testing information and code coverage for the RESTasaurus project.
 ---
 

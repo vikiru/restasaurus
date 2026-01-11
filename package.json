@@ -22,6 +22,7 @@
     "schema-dts": "^1.1.5",
     "sharp": "^0.34.5",
     "starlight-links-validator": "^0.19.2",
+    "starlight-openapi": "^0.21.1",
     "starlight-theme-rapide": "^0.5.2"
   },
   "devDependencies": {

@@ -1,5 +1,6 @@
 ---
-title: 📜 Available Scripts
+title: Available Scripts
+slug: development/scripts
 description: Complete list of all available npm scripts for the RESTasaurus project.
 ---
 

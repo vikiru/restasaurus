@@ -13,6 +13,24 @@ Returns all dinosaur names that exist within the API.
 
 No parameters are required for this endpoint.
 
+## Response Structure
+
+```json
+{
+  "count": 1188,
+  "data": [
+    "Zephyrosaurus",
+    "Tyrannosaurus", 
+    "Velociraptor",
+    "Stegosaurus"
+  ]
+}
+```
+
 ## Demo
 
 ![Demo](../../../../public/endpoints/names.gif)
+
+## Related
+
+- [OpenAPI Specification for Route](/api/restasaurus#tag/general-metadata/get-/names)

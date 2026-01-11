@@ -2,6 +2,7 @@ import sitemap from '@astrojs/sitemap';
 import starlight from '@astrojs/starlight';
 import { defineConfig } from 'astro/config';
 import starlightLinksValidatorPlugin from 'starlight-links-validator';
+import starlightOpenAPI, { openAPISidebarGroups } from 'starlight-openapi';
 import starlightThemeRapidePlugin from 'starlight-theme-rapide';
 import { documentationConfig } from './docs.config';
 
@@ -45,10 +46,11 @@ export default defineConfig({
         {
           label: 'Getting Started',
           items: [
-            { label: 'Home', link: '/' },
-            { label: 'Prerequisites', link: '/prerequisites' },
-            { label: 'Setup', link: '/setup' },
-            { label: 'Model Overview', link: '/models' },
+            { label: 'Home', slug: '/' },
+            { label: 'Prerequisites', slug: 'prerequisites' },
+            { label: 'Setup', slug: 'setup' },
+            { label: 'Model Overview', slug: 'models/overview' },
+            { label: 'Terms of Use', slug: 'terms' },
           ],
         },
         {
@@ -58,16 +60,17 @@ export default defineConfig({
         {
           label: 'Development',
           items: [
-            { label: 'Tech Stack', link: '/stack' },
-            { label: 'Running the API', link: '/run' },
-            { label: 'Testing the API', link: '/test' },
-            { label: 'Available Scripts', link: '/scripts' },
+            { label: 'Tech Stack', slug: 'development/stack' },
+            { label: 'Running the API', slug: 'development/run' },
+            { label: 'Testing the API', slug: 'development/test' },
+            { label: 'Available Scripts', slug: 'development/scripts' },
           ],
         },
         {
           label: 'Conclusion',
-          items: [{ label: 'Acknowledgments', link: '/acknowledgments' }],
+          items: [{ label: 'Acknowledgments', slug: 'acknowledgments' }],
         },
+        ...openAPISidebarGroups,
       ],
       components: {
         Head: './src/components/Head.astro',
@@ -79,6 +82,13 @@ export default defineConfig({
           errorOnRelativeLinks: false,
         }),
         starlightThemeRapidePlugin(),
+        starlightOpenAPI([
+          {
+            base: 'api/restasaurus',
+            schema: 'openapi.yaml',
+            sidebar: { label: 'OpenAPI Specification' },
+          },
+        ]),
       ],
     }),
     sitemap({

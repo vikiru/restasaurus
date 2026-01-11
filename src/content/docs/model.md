@@ -1,18 +1,18 @@
 ---
-title: 🧩 Model Overview
-slug: /models/overview
+title: Model Overview
+slug: models/overview
 description: Detailed overview of all data models used in the RESTasaurus project including Dinosaur, ClassificationInfo, DinosaurImage, and DinosaurSource.
 ---
 
-## 📖 Table of Contents
+## Table of Contents
 
--   [📖 Table of Contents](#-table-of-contents)
--   [🦖 Dinosaur Model](#-dinosaur-model)
--   [🔍 ClassificationInfo Model](#-classificationinfo-model)
--   [📸 DinosaurImage Model](#-dinosaurimage-model)
--   [📚 DinosaurSource Model](#-dinosaursource-model)
+-   [Table of Contents](#-table-of-contents)
+-   [Dinosaur Model](#-dinosaur-model)
+-   [ClassificationInfo Model](#-classificationinfo-model)
+-   [DinosaurImage Model](#-dinosaurimage-model)
+-   [DinosaurSource Model](#-dinosaursource-model)
 
-## 🦖 Dinosaur Model
+## Dinosaur Model
 
 [**Dinosaur**](https://github.com/vikiru/restasaurus/blob/main/app/models/Dinosaur.js): This is the main model which represents a dinosaur, including its unique properties such as name, temporal range, diet, locomotion type, and a description. Additionally, it also contains references to the sub-models below, which are populated with their relevant values when handling API requests.
 
@@ -34,7 +34,7 @@ requests, these fields are populated with the relevant sub-documents which can b
 }
 ```
 
-## 🔍 ClassificationInfo Model
+## ClassificationInfo Model
 
 [ClassificationInfo](https://github.com/vikiru/restasaurus/blob/main/app/models/ClassificationInfo.js/): This model contains the classification information of a dinosaur, including details like its family, order, and genus.
 
@@ -72,7 +72,7 @@ An example of a ClassificationInfo model is shown below.
 }
 ```
 
-## 📸 DinosaurImage Model
+## DinosaurImage Model
 
 [**DinosaurImage**](https://github.com/vikiru/restasaurus/blob/main/app/models/DinosaurImage.js): This model is used to store the image data related to a dinosaur, including the image source and attribution details.
 
@@ -92,7 +92,7 @@ An example of a DinosaurImage model is shown below.
 },
 ```
 
-## 📚 DinosaurSource Model
+## DinosaurSource Model
 
 [**DinosaurSource**](https://github.com/vikiru/restasaurus/blob/main/app/models/DinosaurSource.js): This model represents the source of the dinosaur data, which is the Wikipedia article for that particular dinosaur. This includes information such as the title, author, last revision date, revision history url, and more.
 
@@ -114,3 +114,5 @@ An example of a DinosaurSource model is shown below.
     "citation": "Wikipedia contributors. \"Zephyrosaurus.\" Wikipedia, The Free Encyclopedia. Wikimedia Foundation, 28 Nov 2023. Web. 30 Jan 2024."
 }
 ```
+
+All models are fully populated with comprehensive metadata and are accessible through the REST API endpoints. For detailed API specifications and response examples, see the [OpenAPI Specification](restasaurus/api/restasaurus).

@@ -3,7 +3,7 @@ title: Dinosaurs by Query
 description: Search for dinosaurs using flexible query parameters with the RESTasaurus API.
 ---
 
-## API Endpoints and Description
+## API Endpoint and Description
 
 `GET {baseUrl}/api/v1/search?clade={clade}&diet={diet}&locomotion={locomotion}`
 
@@ -11,26 +11,41 @@ Returns all dinosaurs matching a specific query.
 
 ## Parameters
 
-All parameters are optional, however, if no parameters are passed to the API then an error message will be returned as a response.
+| Parameter | Type | Required | Description | Example |
+|-----------|------|----------|-------------|---------|
+| `clade` | array | No | The clades dinosaurs belong to (comma-separated or array) | `"Dinosauria,Ornithischia"` |
+| `diet` | string | No | The diet type of dinosaurs to retrieve | `"herbivore"` |
+| `locomotion` | string | No | The locomotion type of dinosaurs to retrieve | `"biped"` |
 
--   `clade`: The group that the dinosaur belongs to within its classification. This can be passed in various ways:
+**Valid Values**:
+- `diet`: `carnivore`, `herbivore`, `omnivore`, `piscivore`
+- `locomotion`: `biped`, `facultative biped`, `gliding`, `quadruped`, `swimming`
 
-    1. `GET {baseUrl}/api/v1/search?clade=clade1,clade2`
-    2. `GET {baseUrl}/api/v1/search?clade=clade1&clade=clade2`
+## Response Structure
 
-    **NOTE**: The result will contain dinosaurs that belong to **any** of the clades passed via this endpoint. Some of these clades
-    may conflict with diet and locomotion if they are provided as well (i.e. passing `Theropoda` as a clade, with `herbivore` as a diet wont work as `Theropoda` consists of carnivores.)
-
--   `diet`: The diet of the dinosaurs you wish to retrieve.
-
--   `locomotion`: The locomotion of the dinosaurs you wish to retrieve.
-
-Example `clade` include: `Therapoda`, `Sauropodamorpha`, `Ornithischia`, `Thyreophora`, etc.
-
-Example `diet` include: `herbivore`, `carnivore`, `omnivore`, `piscivore`, etc.
-
-Example `locomotion` include: `biped`, `quadruped`, `facultative biped`, `gliding`, `swimming`, etc.
+```json
+{
+  "count": 25,
+  "data": [
+    {
+      "id": 1118,
+      "name": "Zephyrosaurus",
+      "temporalRange": "Early Cretaceous, ~113 Ma",
+      "diet": "herbivore",
+      "locomotionType": "biped",
+      "description": "...",
+      "classificationInfo": {...},
+      "image": {...},
+      "source": {...}
+    }
+  ]
+}
+```
 
 ## Demo
 
 ![Demo](../../../../public/endpoints/dinosaurByQuery.gif)
+
+## Related
+
+- [OpenAPI Specification for Route](/api/restasaurus#tag/dinosaur-information/get-/dinosaurs/search)

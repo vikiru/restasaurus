@@ -1,5 +1,6 @@
 ---
-title: 🚀 Run
+title: Run
+slug: development/run
 description: Instructions on how to run the RESTasaurus API server in different environments.
 ---
 

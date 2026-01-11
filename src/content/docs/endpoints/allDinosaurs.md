@@ -11,8 +11,26 @@ Returns all dinosaurs within the API, 50 dinosaurs per page.
 
 ## Parameters
 
--   `page`: The page number to retrieve, 50 dinosaurs are displayed per page.
+| Parameter | Type | Required | Default | Description | Example |
+|-----------|------|----------|---------|-------------|---------|
+| `page` | integer | No | 1 | Page number to retrieve (50 items per page) | `2` |
+
+## Response Structure
+
+```json
+{
+  "prevPage": "/api/v1/dinosaurs?page=1",
+  "currentPage": 2,
+  "nextPage": "/api/v1/dinosaurs?page=3",
+  "count": 50,
+  "data": [...]
+}
+```
 
 ## Demo
 
 ![Demo](../../../../public/endpoints/allDinosaurs.gif)
+
+## Related
+
+- [OpenAPI Specification for Route](/api/restasaurus#tag/dinosaur-information/get-/dinosaurs)

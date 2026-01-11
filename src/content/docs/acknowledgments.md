@@ -1,5 +1,5 @@
 ---
-title: ✨ Acknowledgments
+title: Acknowledgments
 description: A list of acknowledgments for the tools and resources used in the RESTasaurus project.
 ---
 

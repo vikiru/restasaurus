@@ -1,5 +1,5 @@
 ---
-title: ⚡ Setup
+title: Setup
 description: Complete setup instructions for the RESTasaurus project including environment configuration and data retrieval.
 ---
 
@@ -68,4 +68,4 @@ There should be 5 collections:
 4. `dinosaurs`: This is the main collection which contains all of the Dinosaur documents.
 5. `dinosaursources`: This collection contains all of the DinosaurSource documents.
 
-After completing these steps, the API should be ready for launch, with all endpoints fully operational. 🎉
+After completing these steps, the API should be ready for launch, with all endpoints fully operational.

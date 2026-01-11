@@ -7,12 +7,30 @@ description: Retrieve all dinosaur images from the API with pagination support.
 
 `GET {baseUrl}/api/v1/images?page={page}`
 
-Returns all dinosaur images within the API, 50 dinosaurs per page.
+Returns all dinosaur images within the API, 50 dinosaur images per page.
 
 ## Parameters
 
--   `page`: The page number to retrieve, 50 dinosaur images are displayed per page.
+| Parameter | Type | Required | Default | Description | Example |
+|-----------|------|----------|---------|-------------|---------|
+| `page` | integer | No | 1 | Page number to retrieve (50 items per page) | `2` |
+
+## Response Structure
+
+```json
+{
+  "prevPage": "/api/v1/images?page=1",
+  "currentPage": 2,
+  "nextPage": "/api/v1/images?page=3",
+  "count": 50,
+  "data": [...]
+}
+```
 
 ## Demo
 
 ![Demo](../../../../public/endpoints/allImages.gif)
+
+## Related
+
+- [OpenAPI Specification for Route](/api/restasaurus#tag/image-information/get-/images)

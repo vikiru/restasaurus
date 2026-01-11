@@ -13,6 +13,33 @@ Returns all dinosaur diets that exist within the API.
 
 No parameters are required for this endpoint.
 
+## Response Structure
+
+```json
+[
+  {
+    "diet": "carnivore",
+    "count": 320
+  },
+  {
+    "diet": "herbivore",
+    "count": 650
+  },
+  {
+    "diet": "omnivore", 
+    "count": 150
+  },
+  {
+    "diet": "piscivore",
+    "count": 68
+  }
+]
+```
+
 ## Demo
 
 ![Demo](../../../../public/endpoints/diets.gif)
+
+## Related
+
+- [OpenAPI Specification for Route](/api/restasaurus#tag/general-metadata/get-/diets)

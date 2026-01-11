@@ -1,5 +1,6 @@
 ---
-title: 🛠️ Tech Stack
+title: Tech Stack
+slug: development/stack
 description: Complete overview of the technology stack used in the RESTasaurus project.
 ---
 

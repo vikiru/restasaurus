@@ -1,5 +1,5 @@
 ---
-title: 📝 Prerequisites
+title: Prerequisites
 description: List of required dependencies and software needed to run the RESTasaurus project.
 ---
 
