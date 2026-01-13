@@ -1,11 +1,14 @@
 ---
 title: Names
+slug: dino-names
 description: Retrieve all dinosaur names from the RESTasaurus API.
 ---
 
 ## API Endpoint and Description
 
-`GET {baseUrl}/api/v1/names`
+```
+GET {baseUrl}/api/v1/names`
+```
 
 Returns all dinosaur names that exist within the API.
 
@@ -29,8 +32,8 @@ No parameters are required for this endpoint.
 
 ## Demo
 
-![Demo](../../../../public/endpoints/names.gif)
+![Demo](/restasaurus/endpoints/names.gif)
 
 ## Related
 
-- [OpenAPI Specification for Route](/api/restasaurus#tag/general-metadata/get-/names)
+- [OpenAPI Specification for Route](/restasaurus/api/operations/get-all-names)

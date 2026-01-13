@@ -1,11 +1,14 @@
 ---
 title: Dinosaurs by Name
+slug: dinos-by-name
 description: Search for dinosaurs by their name using the RESTasaurus API.
 ---
 
 ## API Endpoint and Description
 
-`GET {baseUrl}/api/v1/dinosaurs/name/{name}`
+```
+GET {baseUrl}/api/v1/dinosaurs/name/{name}`
+```
 
 Returns a dinosaur matching a specific name, returns an error if not found.
 
@@ -33,8 +36,8 @@ Returns a dinosaur matching a specific name, returns an error if not found.
 
 ## Demo
 
-![Demo](../../../../public/endpoints/dinosaursByName.gif)
+![Demo](/restasaurus/endpoints/dinosaursByName.gif)
 
 ## Related
 
-- [OpenAPI Specification for Route](/api/restasaurus#tag/dinosaur-information/get-/dinosaurs/name/{name})
+- [OpenAPI Specification for Route](/restasaurus/api/operations/get-dinosaur-by-name)

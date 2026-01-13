@@ -1,11 +1,14 @@
 ---
 title: Clades
+slug: clades
 description: Retrieve all dinosaur clades from the RESTasaurus API.
 ---
 
 ## API Endpoint and Description
 
-`GET {baseUrl}/api/v1/clades`
+```
+GET {baseUrl}/api/v1/clades`
+```
 
 Returns all dinosaur clades that exist within the API.
 
@@ -30,8 +33,8 @@ No parameters are required for this endpoint.
 
 ## Demo
 
-![Demo](../../../../public/endpoints/clades.gif)
+![Demo](/restasaurus/endpoints/clades.gif)
 
 ## Related
 
-- [OpenAPI Specification for Route](/api/restasaurus#tag/general-metadata/get-/clades)
+- [OpenAPI Specification for Route](/restasaurus/api/operations/get-all-clades)

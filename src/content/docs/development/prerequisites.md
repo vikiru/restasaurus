@@ -1,10 +1,11 @@
 ---
 title: Prerequisites
+slug: development/prerequisites
 description: List of required dependencies and software needed to run the RESTasaurus project.
 ---
 
 
-Ensure that the following dependencies are installed onto your machine by following the [Setup Instructions](/setup).
+Ensure that the following dependencies are installed onto your machine by following the [Setup Instructions](/restasaurus/development/setup).
 
 -   [Node.js](https://nodejs.org/en/download)
 -   [Express](https://expressjs.com/en/starter/installing.html)

@@ -1,11 +1,14 @@
 ---
 title: All Dinosaurs
+slug: all-dinosaurs
 description: Retrieve all dinosaurs from the API with pagination support, returning 50 dinosaurs per page.
 ---
 
 ## API Endpoint and Description
 
-`GET {baseUrl}/api/v1/dinosaurs?page={page}`
+```
+GET {baseUrl}/api/v1/dinosaurs?page={page}`
+```
 
 Returns all dinosaurs within the API, 50 dinosaurs per page.
 
@@ -29,8 +32,9 @@ Returns all dinosaurs within the API, 50 dinosaurs per page.
 
 ## Demo
 
-![Demo](../../../../public/endpoints/allDinosaurs.gif)
+![Demo](/restasaurus/endpoints/allDinosaurs.gif)
+
 
 ## Related
 
-- [OpenAPI Specification for Route](/api/restasaurus#tag/dinosaur-information/get-/dinosaurs)
+- [OpenAPI Specification for Route](/restasaurus/api/operations/get-all-dinosaurs)

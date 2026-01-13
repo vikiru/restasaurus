@@ -1,11 +1,14 @@
 ---
 title: Locomotions
+slug: locomotions
 description: Retrieve all dinosaur locomotion types from the RESTasaurus API.
 ---
 
 ## API Endpoint and Description
 
-`GET {baseUrl}/api/v1/locomotions`
+```
+GET {baseUrl}/api/v1/locomotions`
+```
 
 Returns all dinosaur locomotions that exist within the API.
 
@@ -42,8 +45,8 @@ No parameters are required for this endpoint.
 
 ## Demo
 
-![Demo](../../../../public/endpoints/locomotions.gif)
+![Demo](/restasaurus/endpoints/locomotions.gif)
 
 ## Related
 
-- [OpenAPI Specification for Route](/api/restasaurus#tag/general-metadata/get-/locomotions)
+- [OpenAPI Specification for Route](/restasaurus/api/operations/get-all-locomotions)

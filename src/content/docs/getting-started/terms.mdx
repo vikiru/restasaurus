@@ -1,0 +1,147 @@
+---
+title: Terms of Use
+slug: getting-started/terms
+description: Terms of use and attribution requirements for the RESTasaurus API.
+---
+
+import { Aside, TabItem, Tabs } from '@astrojs/starlight/components';
+
+## Data Source & Licensing
+
+<Aside type="note">
+
+**Important**: The data within the API is taken directly from **Wikipedia** via its API, as is.
+
+- Information may have been modified since last retrieval
+- All images and text belong to their respective authors
+- Attribution is provided accordingly for both within API responses
+- All dinosaur text information is licensed under [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/), unless otherwise noted
+- All dinosaur images are licensed under various Creative Commons licenses
+
+By using this API, you agree to properly attribute the sources and comply with their respective licenses.
+
+</Aside>
+
+---
+
+## Attribution Requirements
+
+When using data from the RESTasaurus API, include these **four required elements**:
+
+| Element | Description | Where to Find in Response |
+|---------|-------------|--------------------------|
+| **Title** | Wikipedia article or image title | `source.pageTitle` or `image.title` |
+| **Author** | "Wikipedia contributors" or image author | `source.author` or `image.author` |
+| **Source** | Wikipedia page URL or image URL | `source.wikipediaURL` or `image.imageURL` |
+| **License** | Link to Creative Commons license | `source.license` or `image.license` |
+
+The API provides all attribution information in its responses within the `source` and `image` objects.
+
+---
+
+## Wikipedia Attribution
+
+### Structure
+
+Use these fields from the `source` object in your attribution:
+
+<Tabs>
+  <TabItem label="Fields">
+    ```json
+    {
+      "pageTitle": "Zephyrosaurus",
+      "author": "Wikipedia contributors",
+      "wikipediaURL": "https://en.wikipedia.org/wiki/Zephyrosaurus",
+      "license": "Creative Commons Attribution-Share Alike 4.0",
+      "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0/deed.en",
+      "permalink": "https://en.wikipedia.org/w/index.php?title=Zephyrosaurus&oldid=1187326953",
+      "revisionHistoryURL": "https://en.wikipedia.org/w/index.php?title=Zephyrosaurus&action=history",
+      "lastRevision": "2023-11-28T15:28:47Z",
+      "dateAccessed": "2024-01-30T14:27:20.682Z",
+      "source": "Wikipedia, The Free Encyclopedia",
+      "publisher": "Wikimedia Foundation",
+      "citation": "Wikipedia contributors. \"Zephyrosaurus.\" Wikipedia, The Free Encyclopedia. Wikimedia Foundation, 28 Nov 2023. Web. 30 Jan 2024."
+    }
+    ```
+  </TabItem>
+  <TabItem label="Example">
+    Display this information in your app:
+
+    - **Title**: Zephyrosaurus
+    - **Author**: Wikipedia contributors
+    - **Source**: https://en.wikipedia.org/wiki/Zephyrosaurus
+    - **License**: [Creative Commons Attribution-Share Alike 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.en)
+  </TabItem>
+</Tabs>
+
+### Recommended Citation Format
+
+```text
+Wikipedia contributors. "Zephyrosaurus." Wikipedia, The Free Encyclopedia.
+Wikimedia Foundation, 28 Nov 2023. Web. 30 Jan 2024.
+```
+
+<Aside type="tip">
+
+The `citation` field in the API response provides a pre-formatted citation you can use directly.
+
+</Aside>
+
+---
+
+## Image Attribution
+
+### Structure
+
+Use these fields from the `image` object in your attribution:
+
+<Tabs>
+  <TabItem label="Fields">
+    ```json
+    {
+      "title": "Zephyrosaurus in Copenhagen",
+      "description": "Zephyrosaurus skeleton, Natural History Museum of Denmark, Copenhagen.",
+      "author": "FunkMonk",
+      "authorURL": "https://commons.wikimedia.org/wiki/User:FunkMonk",
+      "imageURL": "https://commons.wikimedia.org/wiki/File:Zephyrosaurus_in_Copenhagen.jpg",
+      "license": "Creative Commons Attribution-Share Alike 3.0",
+      "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+      "dateCreated": "2021-10-01T07:58:48.000Z",
+      "dateAccessed": "2024-01-30T14:27:20.683Z"
+    }
+    ```
+  </TabItem>
+  <TabItem label="Example">
+    Display this information in your app:
+
+    - **Title**: Zephyrosaurus in Copenhagen
+    - **Author**: [FunkMonk](https://commons.wikimedia.org/wiki/User:FunkMonk)
+    - **Source**: https://commons.wikimedia.org/wiki/File:Zephyrosaurus_in_Copenhagen.jpg
+    - **License**: [Creative Commons Attribution-Share Alike 3.0](https://creativecommons.org/licenses/by-sa/3.0)
+  </TabItem>
+</Tabs>
+
+<Aside type="tip">
+
+Always include the `authorURL` if available - this links directly to the original contributor's profile.
+
+</Aside>
+
+---
+
+## Additional Resources
+
+For more information on attribution best practices and licensing compliance:
+
+- [Wikipedia: Reusing Content Guidelines](https://en.wikipedia.org/wiki/Wikipedia:Reusing_Wikipedia_content)
+- [Creative Commons: Recommended Attribution Practices](https://wiki.creativecommons.org/wiki/Recommended_practices_for_attribution)
+- [Wikipedia: Citing Wikipedia Articles](https://en.wikipedia.org/wiki/Wikipedia:Citing_Wikipedia)
+
+---
+
+## Data Model References
+
+For complete attribution data structures, see:
+
+- [DinosaurSource Model](https://github.com/vikiru/restasaurus/blob/main/app/models/DinosaurSource.js)
+- [DinosaurImage Model](https://github.com/vikiru/restasaurus/blob/main/app/models/DinosaurImage.js)

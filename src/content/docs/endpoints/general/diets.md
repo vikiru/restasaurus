@@ -1,11 +1,14 @@
 ---
 title: Diets
+slug: diets
 description: Retrieve all dinosaur diet types from the RESTasaurus API.
 ---
 
 ## API Endpoint and Description
 
-`GET {baseUrl}/api/v1/diets`
+```
+GET {baseUrl}/api/v1/diets`
+```
 
 Returns all dinosaur diets that exist within the API.
 
@@ -38,8 +41,8 @@ No parameters are required for this endpoint.
 
 ## Demo
 
-![Demo](../../../../public/endpoints/diets.gif)
+![Demo](/restasaurus/endpoints/diets.gif)
 
 ## Related
 
-- [OpenAPI Specification for Route](/api/restasaurus#tag/general-metadata/get-/diets)
+- [OpenAPI Specification for Route](/restasaurus/api/operations/get-all-diets)

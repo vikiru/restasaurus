@@ -1,11 +1,14 @@
 ---
 title: Dinosaurs by ID
+slug: dino-by-id
 description: Search for dinosaurs by their unique ID using the RESTasaurus API.
 ---
 
 ## API Endpoints and Description
 
-`GET {baseUrl}/api/v1/dinosaurs/{id}`
+```
+GET {baseUrl}/api/v1/dinosaurs/{id}`
+```
 
 Returns a dinosaur matching a specific id, returns an error if not found.
 
@@ -31,8 +34,8 @@ Returns a dinosaur matching a specific id, returns an error if not found.
 
 ## Demo
 
-![Demo](../../../../public/endpoints/dinosaursByID.gif)
+![Demo](/restasaurus/endpoints/dinosaursByID.gif)
 
 ## Related
 
-- [OpenAPI Specification for Route](/api/restasaurus#tag/dinosaur-information/get-/dinosaurs/{id})
+- [OpenAPI Specification for Route](/restasaurus/api/operations/get-dinosaur-by-id)

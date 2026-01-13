@@ -1,11 +1,14 @@
 ---
 title: All Images
+slug: all-images
 description: Retrieve all dinosaur images from the API with pagination support.
 ---
 
 ## API Endpoint and Description
 
-`GET {baseUrl}/api/v1/images?page={page}`
+```
+GET {baseUrl}/api/v1/images?page={page}`
+```
 
 Returns all dinosaur images within the API, 50 dinosaur images per page.
 
@@ -29,8 +32,8 @@ Returns all dinosaur images within the API, 50 dinosaur images per page.
 
 ## Demo
 
-![Demo](../../../../public/endpoints/allImages.gif)
+![Demo](/restasaurus/endpoints/allImages.gif)
 
 ## Related
 
-- [OpenAPI Specification for Route](/api/restasaurus#tag/image-information/get-/images)
+- [OpenAPI Specification for Route](/restasaurus/api/operations/get-all-images)

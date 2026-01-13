@@ -1,5 +1,6 @@
 ---
 title: Setup
+slug: development/setup
 description: Complete setup instructions for the RESTasaurus project including environment configuration and data retrieval.
 ---
 

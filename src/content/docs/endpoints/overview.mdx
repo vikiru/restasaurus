@@ -1,0 +1,87 @@
+---
+title: Endpoint Overview
+description: Complete overview of all available endpoints in the RESTasaurus API.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+## API Constraints
+
+<Aside type="note">
+
+The RESTasaurus API operates under the following constraints:
+
+- **Request method**: GET requests only
+- **Response format**: JSON
+- **Rate limit**: 20 requests per hour
+- **Data size**: 1,188 dinosaurs with comprehensive metadata and images
+
+</Aside>
+
+---
+
+## Table of Contents
+
+-   [General Endpoints](#general-endpoints)
+-   [Dinosaur Endpoints](#dinosaur-endpoints)
+-   [Image Endpoints](#image-endpoints)
+-   [OpenAPI Specification](#openapi-specification)
+
+---
+
+## General Endpoints
+
+| Endpoint | Description | Response Format |
+|----------|-------------|----------------|
+| [Get main API endpoint](/restasaurus/endpoints/home) | Returns API version, endpoints, rate limit, and disclaimer | Object with metadata |
+| [Get all dinosaur clades](/restasaurus/endpoints/clades) | Returns all dinosaur clades with counts | Array of `{clade, count}` objects |
+| [Get all dinosaur diets](/restasaurus/endpoints/diets) | Returns all dinosaur diets with counts | Array of `{diet, count}` objects |
+| [Get all dinosaur locomotions](/restasaurus/endpoints/locomotions) | Returns all dinosaur locomotions with counts | Array of `{locomotionType, count}` objects |
+| [Get all dinosaur names](/restasaurus/endpoints/names) | Returns all 1,188 dinosaur names alphabetically | Object with `{count, data}` |
+
+---
+
+## Dinosaur Endpoints
+
+| Endpoint | Description | Query Parameters |
+|----------|-------------|------------------|
+| [Get all dinosaurs](/restasaurus/endpoints/allDinosaurs) | Returns all dinosaurs with pagination (50 per page) | `page` (1-24) |
+| [Get a dinosaur by ID](/restasaurus/endpoints/dinosaursByID) | Returns a dinosaur by ID (1-1188) | Path parameter: `id` |
+| [Get a dinosaur by name](/endpoints/dinosaursByName) | Returns a dinosaur by name (case-insensitive) | Path parameter: `name` |
+| [Get dinosaurs by diet](/endpoints/dinosaursByDiet) | Returns dinosaurs filtered by diet type | Path parameter: `diet` |
+| [Get dinosaurs by locomotion](/endpoints/dinosaursByLocomotion) | Returns dinosaurs filtered by locomotion type | Path parameter: `locomotion` |
+| [Get random dinosaurs](/endpoints/randomDinosaurs) | Returns 1-10 random dinosaurs | Path parameter: `count` |
+| [Get dinosaurs by query](/endpoints/dinosaursByQuery) | Search by clade, diet, and/or locomotion | Query params: `clade`, `diet`, `locomotion` |
+
+### Valid Filter Values
+
+| Parameter | Valid Values |
+|-----------|---------------|
+| **Diet** | `carnivore`, `herbivore`, `omnivore`, `piscivore` |
+| **Locomotion** | `biped`, `facultative biped`, `gliding`, `quadruped`, `swimming` |
+| **Clade** | Use `/clades` endpoint to discover available values |
+
+---
+
+## Image Endpoints
+
+| Endpoint | Description | Query Parameters |
+|----------|-------------|------------------|
+| [Get all dinosaur images](/endpoints/allImages) | Returns all dinosaur images with pagination (50 per page) | `page` (1-24) |
+| [Get an image by ID](/endpoints/imagesByID) | Returns a dinosaur image by ID (1-1188) | Path parameter: `id` |
+| [Get random images](/endpoints/randomImages) | Returns 1-10 random dinosaur images | Path parameter: `count` |
+
+---
+
+## OpenAPI Specification
+
+For complete API documentation including:
+
+- Full request/response schemas
+- Status code details
+- Parameter validation rules
+- Additional examples
+
+Please see the [OpenAPI Specification](/restasaurus/api).
+
+Each endpoint documentation page also includes a direct link to its specific OpenAPI specification section.

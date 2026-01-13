@@ -24,11 +24,11 @@ Testing:
 
 Documentation:
 
--   Docs are built using [Docusaurus](https://docusaurus.io/)
-    -   OpenAPI Specification converted to `.md` using: [Redocusaurus](https://github.com/rohit-gohri/redocusaurus)
-    -   Search functionality provided by: [docusaurus-lunr-search](https://github.com/praveenn77/docusaurus-lunr-search)
-    -   Analytics using [Google Analytics](https://marketingplatform.google.com/about/analytics/)
--   Documentation site hosted via [GitHub Pages](https://pages.github.com/)
+-   Docs are built using [Starlight](https://starlight.astro.build/) by [Astro](https://astro.build/)
+    -   Link validation: [starlight-links-validator](https://github.com/HiDeoo/starlight-links-validator)
+    -   Theme: [starlight-theme-rapide](https://github.com/HiDeoo/starlight-theme-rapide)
+    -   OpenAPI integration: [starlight-openapi](https://github.com/HiDeoo/starlight-openapi)
+-   Documentation site hosted via [GitHub Pages](https://docs.github.com/en/pages)
 
 REST API
 

@@ -1,11 +1,14 @@
 ---
 title: Home
-description: API home endpoint that returns basic information about the RESTasaurus API.
+slug: api-home
+description: API home endpoint that returns basic information about RESTasaurus API.
 ---
 
 ## API Endpoint and Description
 
-`GET {baseUrl}/api/v1`
+```
+GET {baseUrl}/api/v1`
+```
 
 Returns the home endpoint of the API.
 
@@ -36,8 +39,8 @@ No parameters are required for this endpoint.
 
 ## Demo
 
-![Demo](../../../../public/endpoints/home.gif)
+![Demo](/restasaurus/endpoints/home.gif)
 
 ## Related
 
-- [OpenAPI Specification for Route](/api/restasaurus#tag/general-metadata/get-/)
+- [OpenAPI Specification for Route](/restasaurus/api/operations/get-api-info)

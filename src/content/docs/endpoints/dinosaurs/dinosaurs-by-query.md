@@ -1,11 +1,14 @@
 ---
 title: Dinosaurs by Query
+slug: dinos-by-query
 description: Search for dinosaurs using flexible query parameters with the RESTasaurus API.
 ---
 
 ## API Endpoint and Description
 
-`GET {baseUrl}/api/v1/search?clade={clade}&diet={diet}&locomotion={locomotion}`
+```
+GET {baseUrl}/api/v1/search?clade={clade}&diet={diet}&locomotion={locomotion}`
+```
 
 Returns all dinosaurs matching a specific query.
 
@@ -44,8 +47,8 @@ Returns all dinosaurs matching a specific query.
 
 ## Demo
 
-![Demo](../../../../public/endpoints/dinosaurByQuery.gif)
+![Demo](/restasaurus/endpoints/dinosaurByQuery.gif)
 
 ## Related
 
-- [OpenAPI Specification for Route](/api/restasaurus#tag/dinosaur-information/get-/dinosaurs/search)
+- [OpenAPI Specification for Route](/restasaurus/api/operations/search-dinosaurs)

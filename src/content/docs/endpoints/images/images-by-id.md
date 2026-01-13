@@ -1,11 +1,14 @@
 ---
 title: Image by ID
+slug: image-by-id
 description: Retrieve a specific dinosaur image by its unique ID using the RESTasaurus API.
 ---
 
 ## API Endpoint and Description
 
-`GET {baseUrl}/api/v1/images/{id}`
+```
+GET {baseUrl}/api/v1/images/{id}`
+```
 
 Returns a dinosaur image matching a specific id, returns an error if not found.
 
@@ -33,8 +36,8 @@ Returns a dinosaur image matching a specific id, returns an error if not found.
 
 ## Demo
 
-![Demo](../../../../public/endpoints/imagesByID.gif)
+![Demo](/restasaurus/endpoints/imagesByID.gif)
 
 ## Related
 
-- [OpenAPI Specification for Route](/api/restasaurus#tag/image-information/get-/images/{id})
+- [OpenAPI Specification for Route](/restasaurus/api/operations/get-image-by-id)

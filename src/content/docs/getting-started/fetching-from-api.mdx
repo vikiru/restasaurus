@@ -1,0 +1,116 @@
+---
+title: Fetching from the API
+slug: getting-started/fetching-from-api
+description: Learn how to make requests to the RESTasaurus API using various languages and tools.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+## Making Requests
+
+The RESTasaurus API can be accessed using various tools and programming languages. Below are examples for common use cases.
+
+## Base URL
+
+```
+https://restasaurus.onrender.com/api/v1
+```
+
+## Examples
+
+### cURL
+
+```bash
+# Get all dinosaurs (first page)
+curl https://restasaurus.onrender.com/api/v1/dinosaurs?page=1
+
+# Get dinosaur by name
+curl https://restasaurus.onrender.com/api/v1/dinosaurs?name=Tyrannosaurus
+
+# Get dinosaurs by diet
+curl https://restasaurus.onrender.com/api/v1/dinosaurs?diet=Carnivore
+```
+
+### JavaScript
+
+```javascript
+// Using fetch
+async function fetchDinosaurs() {
+  try {
+    const response = await fetch(
+      'https://restasaurus.onrender.com/api/v1/dinosaurs?page=1'
+    );
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch dinosaurs with status: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    console.log('Successfully fetched dinosaurs');
+    return data;
+  } catch (error) {
+    console.error('Failed to fetch dinosaurs:', error);
+    throw error;
+  }
+}
+```
+
+```javascript
+// Using axios
+import axios from 'axios';
+
+async function fetchDinosaurs() {
+  try {
+    const response = await axios.get(
+      'https://restasaurus.onrender.com/api/v1/dinosaurs?page=1'
+    );
+    console.log('Successfully fetched dinosaurs');
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch dinosaurs:', error.message);
+    throw error;
+  }
+}
+```
+
+### Python
+
+```python
+import requests
+
+# Using requests
+  def fetch_dinosaurs():
+      try:
+          response = requests.get('https://restasaurus.onrender.com/api/v1/dinosaurs?page=1')
+          response.raise_for_status()
+          print('Successfully fetched dinosaurs')
+          return response.json()
+      except requests.exceptions.RequestException as error:
+          print(f'Failed to fetch dinosaurs: {error}')
+          raise
+```
+
+## Important Note About Response Time
+
+<Aside type="caution">
+
+The RESTasaurus API is deployed on Render's free tier, which spins down when the service is idle. When making your first request after a period of inactivity, **the initial response may take between 30-45 seconds** while the service starts up. Subsequent requests will be much faster.
+
+</Aside>
+
+## Warming Up the API
+
+If you need to ensure the API is responsive before making requests, you can "warm it up" by pinging the `/dinosaurs?page=1` endpoint:
+
+```bash
+# Warm up the API and ensure it is running before making other requests
+curl https://restasaurus.onrender.com/api/v1/dinosaurs?page=1
+```
+
+This will trigger the service to wake up, ensuring subsequent requests are faster.
+
+## Next Steps
+
+- Explore the [API Endpoints](api/endpoints) documentation to learn about all available endpoints
+- Check out the [OpenAPI Specification](api) for detailed API documentation
+- Review the [Model Overview](models/overview) to understand the data structure

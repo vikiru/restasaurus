@@ -1,11 +1,14 @@
 ---
 title: Random Dinosaurs
+slug: random-dinos
 description: Retrieve random dinosaurs from the RESTasaurus API.
 ---
 
 ## API Endpoints and Description
 
-`GET {baseUrl}/api/v1/dinosaurs/random/{count}`
+```
+GET {baseUrl}/api/v1/dinosaurs/random/{count}`
+```
 
 Returns a random number of dinosaurs. Minimum of 1 and maximum of 10.
 
@@ -36,8 +39,8 @@ Returns a random number of dinosaurs. Minimum of 1 and maximum of 10.
 
 ## Demo
 
-![Demo](../../../../public/endpoints/randomDinosaurs.gif)
+![Demo](/restasaurus/endpoints/randomDinosaurs.gif)
 
 ## Related
 
-- [OpenAPI Specification for Route](/api/restasaurus#tag/dinosaur-information/get-/dinosaurs/random/{count})
+- [OpenAPI Specification for Route](/restasaurus/api/operations/get-random-dinosaurs)

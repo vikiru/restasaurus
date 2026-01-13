@@ -1,11 +1,14 @@
 ---
 title: Dinosaurs by Locomotion
+slug: dinos-by-locomotion
 description: Search for dinosaurs by their locomotion type using the RESTasaurus API.
 ---
 
 ## API Endpoint and Description
 
-`GET {baseUrl}/api/v1/dinosaurs/locomotion/{locomotion}`
+```
+GET {baseUrl}/api/v1/dinosaurs/locomotion/{locomotion}`
+```
 
 Returns all dinosaurs matching a specific locomotion type.
 
@@ -40,8 +43,8 @@ Returns all dinosaurs matching a specific locomotion type.
 
 ## Demo
 
-![Demo](../../../../public/endpoints/dinosaursByLocomotion.gif)
+![Demo](/restasaurus/endpoints/dinosaursByLocomotion.gif)
 
 ## Related
 
-- [OpenAPI Specification for Route](/api/restasaurus#tag/dinosaur-information/get-/dinosaurs/locomotion/{locomotion})
+- [OpenAPI Specification for Route](/restasaurus/api/operations/get-dinosaurs-by-locomotion)

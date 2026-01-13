@@ -1,11 +1,14 @@
 ---
 title: Dinosaurs by Diet
+slug: dinos-by-diet
 description: Search for dinosaurs by their diet type using the RESTasaurus API.
 ---
 
 ## API Endpoint and Description
 
-`GET {baseUrl}/api/v1/dinosaurs/diet/{diet}`
+```
+GET {baseUrl}/api/v1/dinosaurs/diet/{diet}`
+```
 
 Returns all dinosaurs matching a specific diet.
 
@@ -40,8 +43,8 @@ Returns all dinosaurs matching a specific diet.
 
 ## Demo
 
-![Demo](../../../../public/endpoints/dinosaursByDiet.gif)
+![Demo](/restasaurus/endpoints/dinosaursByDiet.gif)
 
 ## Related
 
-- [OpenAPI Specification for Route](/api/restasaurus#tag/dinosaur-information/get-/dinosaurs/diet/{diet})
+- [OpenAPI Specification for Route](/restasaurus/api/operations/get-dinosaurs-by-diet)

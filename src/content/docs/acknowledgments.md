@@ -1,9 +1,15 @@
 ---
 title: Acknowledgments
+slug: conclusion/acknowledgments
 description: A list of acknowledgments for the tools and resources used in the RESTasaurus project.
 ---
 
 
+-   [Starlight](https://starlight.astro.build/)
+-   [Astro](https://astro.build/)
+-   [starlight-links-validator](https://github.com/HiDeoo/starlight-links-validator)
+-   [starlight-theme-rapide](https://github.com/HiDeoo/starlight-theme-rapide)
+-   [starlight-openapi](https://github.com/HiDeoo/starlight-openapi)
 -   [Docusaurus](https://docusaurus.io/)
 -   [Redocusaurus](https://github.com/rohit-gohri/redocusaurus)
 -   [GitHub Pages](https://pages.github.com/)

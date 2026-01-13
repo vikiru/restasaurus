@@ -1,0 +1,285 @@
+---
+title: Taxonomy Guide
+slug: getting-started/taxonomy
+description: Complete guide to the biological classification system used in RESTasaurus for dinosaur taxonomy data.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+## Classification System Overview
+
+The RESTasaurus API uses a hierarchical biological classification system to organize dinosaur taxonomy. Each dinosaur's classification follows the standard Linnaean taxonomy system with the following hierarchy levels:
+
+```
+Domain → Kingdom → Phylum → Clade → Class → Order → Family → Tribe → Genus → Species
+```
+
+<Aside type="note">
+
+The classification data structure follows a flexible schema where each level can have multiple entries. For example, a dinosaur may belong to multiple clades or have multiple family types listed.
+
+</Aside>
+
+## Classification Order
+
+The API follows this order when displaying classification information:
+
+| Level | Key | Label |
+|--------|------|--------|
+| **Domain** | `domain` | Highest taxonomic rank (e.g., Eukaryota) |
+| **Kingdom** | `kingdom` | Taxonomic kingdom (e.g., Animalia) |
+| **Superphylum** | `superphylum` | Phylum division above main phylum |
+| **Phylum** | `phylum` | Major taxonomic group (e.g., Chordata) |
+| **Clade** | `clade` | Evolutionary group (e.g., Dinosauria, Saurischia) |
+| **Class** | `classInfo` | Class classification (e.g., Reptilia) |
+| **Order** | `orderInfo` | Taxonomic order (e.g., Saurischia) |
+| **Family** | `familyInfo` | Family classification (e.g., Tyrannosauridae) |
+| **Tribe** | `tribeInfo` | Tribe classification (e.g., Tyrannosaurini) |
+| **Genus** | `genusInfo` | Genus name (e.g., Tyrannosaurus) |
+| **Species** | `speciesInfo` | Species name (e.g., Tyrannosaurus rex) |
+
+<Aside type="note">
+
+The classification system supports multiple sub-types at each level. Each sub-type follows the hierarchical order shown above, from most specific to least specific.
+
+</Aside>
+
+## Class Sub-Types
+
+The `classInfo` field supports these classification types in order:
+
+| Type | Description |
+|------|-------------|
+| **Superclass** | Taxonomic rank above class (e.g., Diapsida) |
+| **Class** | The class itself (e.g., Reptilia) |
+| **Subclass** | Rank below class (e.g., Diapsida) |
+| **Infraclass** | Subdivisions of class (e.g., Archosauromorpha) |
+| **Subterclass** | Further subdivisions (e.g., Pterosauria) |
+| **Parvclass** | Minor class group (e.g., Pterosauromorpha) |
+
+**Order**: Superclass → Class → Subclass → Infraclass → Subterclass → Parvclass
+
+## Order Sub-Types
+
+The `orderInfo` field supports these classification types in order:
+
+| Type | Description |
+|------|-------------|
+| **Magnorder** | Large group of orders (e.g., Saurischia) |
+| **Superorder** | Group of related orders (e.g., Theropoda) |
+| **Grandorder** | Major taxonomic rank (e.g., Coelurosauria) |
+| **Mirorder** | Mirrored or related orders (e.g., Neotheropoda) |
+| **Order** | The order itself (e.g., Saurischia) |
+| **Suborder** | Rank below order (e.g., Theropoda) |
+| **Infraorder** | Subdivision of suborder (e.g., Tyrannosaurida) |
+| **Parvorder** | Minor order group (e.g., Tyrannosauroidea) |
+
+**Order**: Magnorder → Superorder → Grandorder → Mirorder → Order → Suborder → Infraorder → Parvorder
+
+## Family Sub-Types
+
+The `familyInfo` field supports these classification types:
+
+| Type | Description |
+|------|-------------|
+| **Family** | The family itself (e.g., Tyrannosauridae) |
+| **Subfamily** | Rank below family (e.g., Tyrannosaurinae) |
+
+**Family**: Family → Subfamily
+
+## Tribe & Genus
+
+The `tribeInfo` field supports these classification types:
+
+| Type | Description |
+|------|-------------|
+| **Tribe** | The tribe itself (e.g., Tyrannosaurini) |
+| **Subtribe** | Rank below tribe (e.g., Alioraminini) |
+
+**Tribe**: Tribe → Subtribe
+
+The `genusInfo` field represents the genus classification:
+
+| Type | Description |
+|------|-------------|
+| **Genus** | The genus name (e.g., Tyrannosaurus) |
+
+## Data Structure Example
+
+Here's how a dinosaur's classification is structured in the API:
+
+```json
+{
+  "classificationInfo": {
+    "domain": "Eukaryota",
+    "kingdom": "Animalia",
+    "superphylum": "Bilateria",
+    "phylum": "Chordata",
+    "clade": [
+      "Dinosauria",
+      "Saurischia",
+      "Theropoda"
+    ],
+    "classInfo": [
+      {
+        "classType": "Class",
+        "value": "Reptilia"
+      }
+    ],
+    "orderInfo": [
+      {
+        "orderType": "Order",
+        "value": "Saurischia"
+      }
+    ],
+    "familyInfo": [
+      {
+        "familyType": "Family",
+        "value": "Tyrannosauridae"
+      },
+      {
+        "familyType": "Subfamily",
+        "value": "Tyrannosaurinae"
+      }
+    ],
+    "tribeInfo": [],
+    "genusInfo": [
+      {
+        "genusType": "Genus",
+        "value": "Tyrannosaurus"
+      }
+    ],
+    "speciesInfo": []
+  }
+}
+```
+
+## Common Clades
+
+Dinosaurs in the API are organized into several major clades. Click on a clade to learn more about it on Wikipedia:
+
+| Clade | Description | Learn More |
+|--------|-------------|-------------|
+| **Dinosauria** | The dinosaur group including all descendants of the most recent common ancestor of modern birds and Triceratops | [Wikipedia: Dinosauria](https://en.wikipedia.org/wiki/Dinosauria) |
+| **Saurischia** | "Lizard-hipped" dinosaurs, the dominant group during most of the Mesozoic Era | [Wikipedia: Saurischia](https://en.wikipedia.org/wiki/Saurischia) |
+| **Theropoda** | "Beast-footed" carnivorous dinosaurs including birds | [Wikipedia: Theropoda](https://en.wikipedia.org/wiki/Theropoda) |
+| **Ornithischia** | "Bird-hipped" herbivorous/omnivorous dinosaurs | [Wikipedia: Ornithischia](https://en.wikipedia.org/wiki/Ornithischia) |
+| **Sauropodomorpha** | Long-necked, herbivorous sauropods | [Wikipedia: Sauropodomorpha](https://en.wikipedia.org/wiki/Sauropodomorpha) |
+| **Therizinosauria** | Segnosaurians with large claws | [Wikipedia: Therizinosauria](https://en.wikipedia.org/wiki/Therizinosauria) |
+
+## Common Orders
+
+| Order | Description | Learn More |
+|--------|-------------|-------------|
+| **Saurischia** | The main dinosaur order including all saurischians | [Wikipedia: Saurischia](https://en.wikipedia.org/wiki/Saurischia) |
+| **Ornithischia** | Bird-hipped dinosaurs | [Wikipedia: Ornithischia](https://en.wikipedia.org/wiki/Ornithischia) |
+| **Theropoda** | Carnivorous bipedal dinosaurs | [Wikipedia: Theropoda](https://en.wikipedia.org/wiki/Theropoda) |
+| **Sauropoda** | Long-necked herbivores | [Wikipedia: Sauropoda](https://en.wikipedia.org/wiki/Sauropoda) |
+
+<Aside type="note">
+
+**Order**: The main rank grouping families and containing multiple orders for broader classification.
+
+</Aside>
+
+## Taxonomy Terms
+
+Each classification level has specific Wikipedia articles explaining the taxonomic concepts in detail:
+
+### Domain & Kingdom
+
+| Term | Description | Learn More |
+|------|-------------|------------|
+| **Domain** | Highest taxonomic rank (e.g., Eukaryota) - organisms with membrane-bound nuclei | [Wikipedia: Domain (biology)](https://en.wikipedia.org/wiki/Domain_(biology)) |
+| **Kingdom** | Second highest rank (e.g., Animalia) - animals with certain shared characteristics | [Wikipedia: Kingdom (biology)](https://en.wikipedia.org/wiki/Kingdom_(biology)) |
+
+### Phylum & Superphylum
+
+| Term | Description | Learn More |
+|------|-------------|------------|
+| **Superphylum** | Taxonomic rank above phylum | [Wikipedia: Phylum](https://en.wikipedia.org/wiki/Phylum) |
+| **Phylum** | Major taxonomic group (e.g., Chordata) | [Wikipedia: Chordata](https://en.wikipedia.org/wiki/Chordata) |
+
+### Clade
+
+| Term | Description | Learn More |
+|------|-------------|------------|
+| **Clade** | Evolutionary group of organisms (e.g., Dinosauria, Saurischia) | [Wikipedia: Clade](https://en.wikipedia.org/wiki/Clade) |
+
+### Superclass
+
+| Term | Description | Learn More |
+|------|-------------|------------|
+| **Superclass** | Taxonomic rank above class (e.g., Diapsida) | [Wikipedia: Superclass](https://en.wikipedia.org/wiki/Superclass) |
+
+### Class Sub-Types
+
+| Term | Description | Learn More |
+|------|-------------|------------|
+| **Subclass** | Rank below class (e.g., Diapsida) | [Wikipedia: Subclass](https://en.wikipedia.org/wiki/Subclass) |
+| **Infraclass** | Subdivisions of class (e.g., Archosauromorpha) | [Wikipedia: Infraclass](https://en.wikipedia.org/wiki/Infraclass) |
+| **Subterclass** | Further subdivisions (e.g., Pterosauria) | [Wikipedia: Subterclass](https://en.wikipedia.org/wiki/Subterclass) |
+| **Parvclass** | Minor class group (e.g., Pterosauromorpha) | [Wikipedia: Parvclass](https://en.wikipedia.org/wiki/Parvclass) |
+
+### Order Sub-Types
+
+| Term | Description | Learn More |
+|------|-------------|------------|
+| **Magnorder** | Large group of orders (e.g., Saurischia) | [Wikipedia: Magnorder](https://en.wikipedia.org/wiki/Magnorder) |
+| **Superorder** | Group of related orders (e.g., Theropoda) | [Wikipedia: Superorder](https://en.wikipedia.org/wiki/Superorder) |
+| **Grandorder** | Major taxonomic rank (e.g., Coelurosauria) | [Wikipedia: Grandorder](https://en.wikipedia.org/wiki/Grandorder) |
+| **Mirorder** | Mirrored or related orders (e.g., Neotheropoda) | [Wikipedia: Mirorder](https://en.wikipedia.org/wiki/Mirorder) |
+| **Suborder** | Rank below order (e.g., Theropoda) | [Wikipedia: Suborder](https://en.wikipedia.org/wiki/Suborder) |
+| **Infraorder** | Subdivision of suborder (e.g., Tyrannosauridae) | [Wikipedia: Infraorder](https://en.wikipedia.org/wiki/Infraorder) |
+| **Parvorder** | Minor order group (e.g., Tyrannosauroidea) | [Wikipedia: Parvorder](https://en.wikipedia.org/wiki/Parvorder) |
+
+### Family & Tribe Sub-Types
+
+| Term | Description | Learn More |
+|------|-------------|------------|
+| **Subfamily** | Rank below family (e.g., Tyrannosaurinae) | [Wikipedia: Subfamily](https://en.wikipedia.org/wiki/Subfamily) |
+| **Subtribe** | Rank below tribe (e.g., Alioraminini) | [Wikipedia: Subtribe](https://en.wikipedia.org/wiki/Subtribe) |
+
+### Genus
+
+| Term | Description | Learn More |
+|------|-------------|------------|
+| **Genus** | Taxonomic rank between family and species (e.g., Tyrannosaurus) | [Wikipedia: Genus](https://en.wikipedia.org/wiki/Genus) |
+
+## Common Diets
+
+| Diet Type | Description | Learn More |
+|------------|-------------|------------|
+| **Carnivore** | Meat-eating dinosaurs (e.g., Tyrannosaurus, Velociraptor) | [Wikipedia: Carnivore](https://en.wikipedia.org/wiki/Carnivore) |
+| **Herbivore** | Plant-eating dinosaurs (e.g., Triceratops, Stegosaurus) | [Wikipedia: Herbivore](https://en.wikipedia.org/wiki/Herbivore) |
+| **Omnivore** | Both plants and animals (e.g., Oviraptor) | [Wikipedia: Omnivore](https://en.wikipedia.org/wiki/Omnivore) |
+| **Piscivore** | Fish-eating dinosaurs (e.g., Baryonyx) | [Wikipedia: Piscivore](https://en.wikipedia.org/wiki/Piscivore) |
+
+## Common Locomotion Types
+
+| Locomotion | Description | Learn More |
+|------------|-------------|------------|
+| **Biped** | Two-legged (most theropods) | [Wikipedia: Bipedalism](https://en.wikipedia.org/wiki/Bipedalism) |
+| **Quadruped** | Four-legged (most sauropods) | [Wikipedia: Quadrupedalism](https://en.wikipedia.org/wiki/Quadrupedalism) |
+| **Facultative biped** | Can walk on two or four legs (some hadrosaurs) | [Wikipedia: Facultative bipedalism](https://en.wikipedia.org/wiki/Facultative_bipedalism) |
+| **Swimming** | Aquatic dinosaurs (e.g., Spinosaurus) | [Wikipedia: Aquatic locomotion](https://en.wikipedia.org/wiki/Aquatic_locomotion) |
+| **Gliding** | Flying/gliding dinosaurs (e.g., Yi) | [Wikipedia: Gliding flight](https://en.wikipedia.org/wiki/Gliding_flight) |
+
+
+
+## Learn More
+
+### External Resources
+
+For detailed information about specific classification levels and dinosaur taxonomy, visit:
+
+- [Wikipedia: Dinosaur](https://en.wikipedia.org/wiki/Dinosaur) - Comprehensive dinosaur encyclopedia
+- [Wikipedia: Dinosaur Classification](https://en.wikipedia.org/wiki/Dinosaur_classification) - Detailed classification systems
+- [Wikipedia: Linnaean Taxonomy](https://en.wikipedia.org/wiki/Linnaean_taxonomy) - The classification system developed by Carl Linnaeus
+- [Wikipedia: Taxonomy (biology)](https://en.wikipedia.org/wiki/Taxonomy_(biology)) - Biological classification principles
+- [Wikipedia: Taxonomic Rank](https://en.wikipedia.org/wiki/Taxonomic_rank) - Taxonomic hierarchy and ranks
+- [Wikipedia: Clade](https://en.wikipedia.org/wiki/Clade) - Evolutionary grouping concepts
+
+### Documentation
+
+- [Model Overview](/models/overview) - See how classification is structured in the data models
