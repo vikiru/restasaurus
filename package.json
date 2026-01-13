@@ -13,12 +13,13 @@
     "astro": "astro",
     "lint": "biome lint",
     "format": "biome check --write",
-    "postinstall": "lefthook install"
+    "postinstall": "lefthook install",
+    "generate-openapi": "openapi-typescript openapi.yaml -o src/types/api.d.ts"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.6.1",
     "@astrojs/starlight": "^0.37.2",
-    "astro": "^5.16.8",
+    "astro": "^5.16.9",
     "schema-dts": "^1.1.5",
     "sharp": "^0.34.5",
     "starlight-links-validator": "^0.19.2",
@@ -31,8 +32,13 @@
     "@commitlint/cli": "^20.3.1",
     "@commitlint/config-conventional": "^20.3.1",
     "@playform/compress": "^0.2.1",
+    "@types/js-yaml": "^4.0.9",
     "@typescript/native-preview": "7.0.0-dev.20260102.1",
     "gh-pages": "^6.3.0",
-    "lefthook": "^2.0.13"
+    "js-yaml": "^4.1.1",
+    "lefthook": "^2.0.14",
+    "openapi-types": "^12.1.3",
+    "openapi-typescript": "^7.10.1",
+    "tsx": "^4.21.0"
   }
 }
