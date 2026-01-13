@@ -1,6 +1,5 @@
 ---
 title: Image by ID
-slug: image-by-id
 description: Retrieve a specific dinosaur image by its unique ID using the RESTasaurus API.
 ---
 

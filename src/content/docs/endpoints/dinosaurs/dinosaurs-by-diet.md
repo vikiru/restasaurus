@@ -1,6 +1,5 @@
 ---
 title: Dinosaurs by Diet
-slug: dinos-by-diet
 description: Search for dinosaurs by their diet type using the RESTasaurus API.
 ---
 

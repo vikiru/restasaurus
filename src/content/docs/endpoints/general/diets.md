@@ -1,6 +1,5 @@
 ---
 title: Diets
-slug: diets
 description: Retrieve all dinosaur diet types from the RESTasaurus API.
 ---
 

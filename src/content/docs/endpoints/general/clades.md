@@ -1,6 +1,5 @@
 ---
 title: Clades
-slug: clades
 description: Retrieve all dinosaur clades from the RESTasaurus API.
 ---
 

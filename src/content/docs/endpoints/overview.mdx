@@ -33,11 +33,11 @@ The RESTasaurus API operates under the following constraints:
 
 | Endpoint | Description | Response Format |
 |----------|-------------|----------------|
-| [Get main API endpoint](/restasaurus/endpoints/home) | Returns API version, endpoints, rate limit, and disclaimer | Object with metadata |
-| [Get all dinosaur clades](/restasaurus/endpoints/clades) | Returns all dinosaur clades with counts | Array of `{clade, count}` objects |
-| [Get all dinosaur diets](/restasaurus/endpoints/diets) | Returns all dinosaur diets with counts | Array of `{diet, count}` objects |
-| [Get all dinosaur locomotions](/restasaurus/endpoints/locomotions) | Returns all dinosaur locomotions with counts | Array of `{locomotionType, count}` objects |
-| [Get all dinosaur names](/restasaurus/endpoints/names) | Returns all 1,188 dinosaur names alphabetically | Object with `{count, data}` |
+| [Get main API endpoint](/restasaurus/endpoints/general/home) | Returns API version, endpoints, rate limit, and disclaimer | Object with metadata |
+| [Get all dinosaur clades](/restasaurus/endpoints/general/clades) | Returns all dinosaur clades with counts | Array of `{clade, count}` objects |
+| [Get all dinosaur diets](/restasaurus/endpoints/general/diets) | Returns all dinosaur diets with counts | Array of `{diet, count}` objects |
+| [Get all dinosaur locomotions](/restasaurus/endpoints/general/locomotions) | Returns all dinosaur locomotions with counts | Array of `{locomotionType, count}` objects |
+| [Get all dinosaur names](/restasaurus/endpoints/general/names) | Returns all 1,188 dinosaur names alphabetically | Object with `{count, data}` |
 
 ---
 
@@ -45,13 +45,13 @@ The RESTasaurus API operates under the following constraints:
 
 | Endpoint | Description | Query Parameters |
 |----------|-------------|------------------|
-| [Get all dinosaurs](/restasaurus/endpoints/allDinosaurs) | Returns all dinosaurs with pagination (50 per page) | `page` (1-24) |
-| [Get a dinosaur by ID](/restasaurus/endpoints/dinosaursByID) | Returns a dinosaur by ID (1-1188) | Path parameter: `id` |
-| [Get a dinosaur by name](/endpoints/dinosaursByName) | Returns a dinosaur by name (case-insensitive) | Path parameter: `name` |
-| [Get dinosaurs by diet](/endpoints/dinosaursByDiet) | Returns dinosaurs filtered by diet type | Path parameter: `diet` |
-| [Get dinosaurs by locomotion](/endpoints/dinosaursByLocomotion) | Returns dinosaurs filtered by locomotion type | Path parameter: `locomotion` |
-| [Get random dinosaurs](/endpoints/randomDinosaurs) | Returns 1-10 random dinosaurs | Path parameter: `count` |
-| [Get dinosaurs by query](/endpoints/dinosaursByQuery) | Search by clade, diet, and/or locomotion | Query params: `clade`, `diet`, `locomotion` |
+| [Get all dinosaurs](/restasaurus/endpoints/dinosaurs/all-dinosaurs) | Returns all dinosaurs with pagination (50 per page) | `page` (1-24) |
+| [Get a dinosaur by ID](/restasaurus/endpoints/dinosaurs/dinosaurs-by-id) | Returns a dinosaur by ID (1-1188) | Path parameter: `id` |
+| [Get a dinosaur by name](/restasaurus/endpoints/dinosaurs/dinosaurs-by-name) | Returns a dinosaur by name (case-insensitive) | Path parameter: `name` |
+| [Get dinosaurs by diet](/restasaurus/endpoints/dinosaurs/dinosaurs-by-diet) | Returns dinosaurs filtered by diet type | Path parameter: `diet` |
+| [Get dinosaurs by locomotion](/restasaurus/endpoints/dinosaurs/dinosaurs-by-locomotion) | Returns dinosaurs filtered by locomotion type | Path parameter: `locomotion` |
+| [Get random dinosaurs](/restasaurus/endpoints/dinosaurs/random-dinosaurs) | Returns 1-10 random dinosaurs | Path parameter: `count` |
+| [Get dinosaurs by query](/restasaurus/endpoints/dinosaurs/dinosaurs-by-query) | Search by clade, diet, and/or locomotion | Query params: `clade`, `diet`, `locomotion` |
 
 ### Valid Filter Values
 
@@ -67,9 +67,9 @@ The RESTasaurus API operates under the following constraints:
 
 | Endpoint | Description | Query Parameters |
 |----------|-------------|------------------|
-| [Get all dinosaur images](/endpoints/allImages) | Returns all dinosaur images with pagination (50 per page) | `page` (1-24) |
-| [Get an image by ID](/endpoints/imagesByID) | Returns a dinosaur image by ID (1-1188) | Path parameter: `id` |
-| [Get random images](/endpoints/randomImages) | Returns 1-10 random dinosaur images | Path parameter: `count` |
+| [Get all dinosaur images](/restasaurus/endpoints/images/all-images) | Returns all dinosaur images with pagination (50 per page) | `page` (1-24) |
+| [Get an image by ID](/restasaurus/endpoints/images/images-by-id) | Returns a dinosaur image by ID (1-1188) | Path parameter: `id` |
+| [Get random images](/restasaurus/endpoints/images/random-images) | Returns 1-10 random dinosaur images | Path parameter: `count` |
 
 ---
 

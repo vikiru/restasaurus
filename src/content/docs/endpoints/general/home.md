@@ -1,6 +1,5 @@
 ---
 title: Home
-slug: api-home
 description: API home endpoint that returns basic information about RESTasaurus API.
 ---
 

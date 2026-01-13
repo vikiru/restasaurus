@@ -1,6 +1,5 @@
 ---
 title: All Images
-slug: all-images
 description: Retrieve all dinosaur images from the API with pagination support.
 ---
 

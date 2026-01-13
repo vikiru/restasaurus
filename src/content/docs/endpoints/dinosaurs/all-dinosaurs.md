@@ -1,6 +1,5 @@
 ---
 title: All Dinosaurs
-slug: all-dinosaurs
 description: Retrieve all dinosaurs from the API with pagination support, returning 50 dinosaurs per page.
 ---
 

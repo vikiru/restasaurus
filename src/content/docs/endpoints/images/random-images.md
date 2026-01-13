@@ -1,6 +1,5 @@
 ---
 title: Random Images
-slug: random-images
 description: Retrieve random dinosaur images from the RESTasaurus API.
 ---
 

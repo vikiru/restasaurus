@@ -1,6 +1,5 @@
 ---
 title: Dinosaurs by Locomotion
-slug: dinos-by-locomotion
 description: Search for dinosaurs by their locomotion type using the RESTasaurus API.
 ---
 

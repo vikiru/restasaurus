@@ -1,6 +1,5 @@
 ---
 title: Names
-slug: dino-names
 description: Retrieve all dinosaur names from the RESTasaurus API.
 ---
 

@@ -6,7 +6,7 @@ hero:
   tagline: A RESTful API delivering comprehensive data on almost 1200 dinosaurs.
   actions:
     - text: Get Started
-      link: /models/overview
+      link: /restasaurus/getting-started/models/overview
       icon: right-arrow
     - text: View on GitHub
       link: https://github.com/vikiru/restasaurus
@@ -29,16 +29,17 @@ The data within the API is taken directly from **Wikipedia** via its API. Please
 
 </Aside>
 
-For a better understanding of the information provided by the API, the [ClassificationInfo](/taxonomy) model contains hierarchical taxonomy data following the standard biological classification system. Each dinosaur's classification includes domain, kingdom, phylum, clade, class, order, family, tribe, genus, and species information.
+For a better understanding of the information provided by the API, the [ClassificationInfo](/restasaurus/getting-started/taxonomy) model contains hierarchical taxonomy data following the standard biological classification system. Each dinosaur's classification includes domain, kingdom, phylum, clade, class, order, family, tribe, genus, and species information.
 
 **Key Models**:
 
 -   [**Dinosaur**](https://github.com/vikiru/restasaurus/blob/main/app/models/Dinosaur.js): The main model representing a dinosaur with properties like name, temporal range, diet, locomotion type, and description. Contains references to sub-models.
--   [**ClassificationInfo**](https://github.com/vikiru/restasaurus/blob/main/app/models/ClassificationInfo.js): Contains hierarchical classification information including family, order, genus, and taxonomic details. See [Taxonomy Guide](/taxonomy) for more details.
+-   [**ClassificationInfo**](https://github.com/vikiru/restasaurus/blob/main/app/models/ClassificationInfo.js): Contains hierarchical classification information including family, order, genus, and taxonomic details. 
+See [Taxonomy Guide](/restasaurus/getting-started/taxonomy) for more details.
 -   [**DinosaurImage**](https://github.com/vikiru/restasaurus/blob/main/app/models/DinosaurImage.js): Stores image data with source and attribution details.
 -   [**DinosaurSource**](https://github.com/vikiru/restasaurus/blob/main/app/models/DinosaurSource.js): Represents the Wikipedia article source for each dinosaur with metadata and revision history.
 
-To see the complete model structure and examples, please visit the [Model Overview](/models/overview) page.
+To see the complete model structure and examples, please visit the [Model Overview](/restasaurus/getting-started/models/overview) page.
 
 ## License
 

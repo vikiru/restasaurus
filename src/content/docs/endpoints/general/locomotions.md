@@ -1,6 +1,5 @@
 ---
 title: Locomotions
-slug: locomotions
 description: Retrieve all dinosaur locomotion types from the RESTasaurus API.
 ---
 

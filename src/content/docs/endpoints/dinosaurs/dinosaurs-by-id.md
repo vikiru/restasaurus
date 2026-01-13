@@ -1,6 +1,5 @@
 ---
 title: Dinosaurs by ID
-slug: dino-by-id
 description: Search for dinosaurs by their unique ID using the RESTasaurus API.
 ---
 

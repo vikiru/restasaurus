@@ -1,6 +1,5 @@
 ---
 title: Dinosaurs by Query
-slug: dinos-by-query
 description: Search for dinosaurs using flexible query parameters with the RESTasaurus API.
 ---
 

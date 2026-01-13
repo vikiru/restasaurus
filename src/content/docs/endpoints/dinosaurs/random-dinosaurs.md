@@ -1,6 +1,5 @@
 ---
 title: Random Dinosaurs
-slug: random-dinos
 description: Retrieve random dinosaurs from the RESTasaurus API.
 ---
 

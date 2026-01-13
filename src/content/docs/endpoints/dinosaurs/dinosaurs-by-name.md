@@ -1,6 +1,5 @@
 ---
 title: Dinosaurs by Name
-slug: dinos-by-name
 description: Search for dinosaurs by their name using the RESTasaurus API.
 ---
 
