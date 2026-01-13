@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://vikiru.github.io/restasaurus/sitemap-index.xml
