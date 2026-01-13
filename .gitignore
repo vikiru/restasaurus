@@ -1,5 +1,6 @@
 todos.md
-.vscode/
+.vscode
+.astro
 .docusaurus
 build/
 app/scripts/*.json
@@ -7,6 +8,12 @@ app/scripts/*.json
 # Logs
 logs
 *.log
+
+# Test files (prevent Biome formatting)
+test/
+coverage/
+tests/
+spec/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

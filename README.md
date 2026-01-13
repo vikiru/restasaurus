@@ -48,14 +48,14 @@
 > 
 > All dinosaur images are sourced from Wikimedia Commons and are licensed under various licenses - each with their own specific license terms and are attributed accordingly.
 >
-> By using this API, you agree to properly attribute the sources and comply with their respective licenses.
+> By using this API, you agree to properly attribute the sources and comply with their respective licenses. Please see the [Terms of Use](https://vikiru.github.io/restasaurus/getting-started/terms/).
 >
 > Examples can be seen below in [Attribution Examples](#-attribution-examples).
 
 For a better understanding of the information provided by the API, please check out the [models](./app/models) directory. The schemas used within the MongoDB database include:
 
 > - [**Dinosaur**](https://github.com/vikiru/restasaurus/blob/main/app/models/Dinosaur.js): This is the main model which represents a dinosaur, including its unique properties such as name, temporal range, diet, locomotion type, and a description. Additionally, it also contains references to the sub-models below, which are populated with their relevant values when handling API requests.
-> - [**ClassificationInfo**](./app/models/ClassificationInfo.js): This model contains the classification information of a dinosaur, including details like its family, order, and genus.
+> - [**ClassificationInfo**](./app/models/ClassificationInfo.js): This model contains the classification information of a dinosaur, including details like its family, order, and genus. Read more about the taxonomy represented by this model [here](https://vikiru.github.io/restasaurus/getting-started/taxonomy/).
 > - [**DinosaurImage**](https://github.com/vikiru/restasaurus/blob/main/app/models/DinosaurImage.js): This model is used to store the image data related to a dinosaur, including the image source and attribution details.
 > - [**DinosaurSource**](https://github.com/vikiru/restasaurus/blob/main/app/models/DinosaurSource.js): This model represents the source of the dinosaur data, which is the Wikipedia article for that particular dinosaur. This includes information such as the title, author, last revision date, revision history url, and more.
 
@@ -212,11 +212,11 @@ Testing:
 
 Documentation:
 
-- Docs are built using [Docusaurus](https://docusaurus.io/)
-    - OpenAPI Specification converted to `.md` using: [Redocusaurus](https://github.com/rohit-gohri/redocusaurus)
-    - Search functionality provided by: [docusaurus-lunr-search](https://github.com/praveenn77/docusaurus-lunr-search)
-    - Analytics using [Google Analytics](https://marketingplatform.google.com/about/analytics/)
-- Documentation site hosted via [GitHub Pages](https://pages.github.com/)
+-   Docs are built using [Starlight](https://starlight.astro.build/) by [Astro](https://astro.build/)
+    -   Link validation: [starlight-links-validator](https://github.com/HiDeoo/starlight-links-validator)
+    -   Theme: [starlight-theme-rapide](https://github.com/HiDeoo/starlight-theme-rapide)
+    -   OpenAPI integration: [starlight-openapi](https://github.com/HiDeoo/starlight-openapi)
+-   Documentation site hosted via [GitHub Pages](https://docs.github.com/en/pages)
 
 REST API
 
@@ -393,30 +393,34 @@ pnpm postData
 pnpm make-badges
 ```
 
-9. Prepare Git Hooks via [Husky](https://typicode.github.io/husky/).
+9. Prepare Git Hooks via [Lefthook](https://github.com/evilmartians/lefthook).
 
 ```bash
-pnpm prepare
+pnpm postinstall
 ```
 
 ## ✨ Acknowledgments
 
-- [Docusaurus](https://docusaurus.io/)
-- [Redocusaurus](https://github.com/rohit-gohri/redocusaurus)
-- [GitHub Pages](https://pages.github.com/)
-- [Swagger Editor](https://swagger.io/tools/swagger-editor/)
-- [Swagger Documentation](https://swagger.io/specification/)
-- [Chai Documentation](https://www.chaijs.com/)
-- [Express Documentation](https://expressjs.com/en/4x/api.html)
-- [Mocha Documentation](https://mochajs.org/)
-- [MongoDB Documentation](https://www.mongodb.com/docs/)
-- [Mongoose Documentation](https://mongoosejs.com/docs/)
-- [Sinon Documentation](https://sinonjs.org/releases/latest/)
-- [Shields Badges](https://github.com/badges/shields)
-- [regex101](https://regex101.com/)
-- [Favicon Generator](https://favicon.io/favicon-generator/)
-- [node-html-parser](https://github.com/taoqf/node-html-parser)
-- [Semantic Release](https://github.com/semantic-release/semantic-release)
+-   [Starlight](https://starlight.astro.build/)
+-   [Astro](https://astro.build/)
+-   [starlight-links-validator](https://github.com/HiDeoo/starlight-links-validator)
+-   [starlight-theme-rapide](https://github.com/HiDeoo/starlight-theme-rapide)
+-   [starlight-openapi](https://github.com/HiDeoo/starlight-openapi)
+-   [Docusaurus](https://docusaurus.io/)
+-   [Redocusaurus](https://github.com/rohit-gohri/redocusaurus)
+-   [GitHub Pages](https://pages.github.com/)
+-   [Swagger Editor](https://swagger.io/tools/swagger-editor/)
+-   [Swagger Documentation](https://swagger.io/specification/)
+-   [Chai Documentation](https://www.chaijs.com/)
+-   [Express Documentation](https://expressjs.com/en/4x/api.html)
+-   [Mocha Documentation](https://mochajs.org/)
+-   [MongoDB Documentation](https://www.mongodb.com/docs/)
+-   [Mongoose Documentation](https://mongoosejs.com/docs/)
+-   [Sinon Documentation](https://github.com/sinonjs/sinon)
+-   [Shields Badges](https://github.com/badges/shields)
+-   [regex101](https://regex101.com/)
+-   [Favicon Generator](https://favicon.io/favicon-generator/)
+-   [node-html-parser](https://github.com/taoqf/node-html-parser)
 
 Additionally, this API would not be possible without the dinosaur information and image information retrieved from all of the [Wikipedia](https://en.wikipedia.org/wiki/Main_Page) articles accessed through the [Wikipedia API](https://www.mediawiki.org/wiki/Special:MyLanguage/API:Main_page). All images and text provided by this API belong to their respective authors.
 
