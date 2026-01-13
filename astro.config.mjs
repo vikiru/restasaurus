@@ -6,6 +6,11 @@ import starlightOpenAPI, { openAPISidebarGroups } from 'starlight-openapi';
 import starlightThemeRapidePlugin from 'starlight-theme-rapide';
 import { documentationConfig } from './docs.config';
 
+// DONE: Add a doc page to fetch from the api (curl, typescript, python, etc) - mention ping api
+// TODO: Update Head.astro logic 404s atm and also update anything else I missed.
+// TODO: Update tech stack, acknowledgements to include astrojs/starlight
+// TODO: Update main branch - remove husky, add semantic-release/linstaged, update the openapi.yaml etc
+
 const {
   site: { title, base, siteUrl, projectDescription, documentationUrl, websiteLastModified },
   assets: { faviconFileName },
@@ -17,11 +22,14 @@ export default defineConfig({
   site: siteUrl,
   output: 'static',
   trailingSlash: 'never',
+  vite: {
+    assetsInclude: ['openapi.yaml'],
+  },
   integrations: [
     starlight({
       title,
       tagline: projectDescription,
-      favicon: faviconFileName,
+      favicon: documentationConfig.assets.faviconFileName,
       logo: {
         src: './public/logo.png',
         replacesTitle: true,
@@ -47,19 +55,17 @@ export default defineConfig({
           label: 'Getting Started',
           items: [
             { label: 'Home', slug: '/' },
-            { label: 'Prerequisites', slug: 'prerequisites' },
-            { label: 'Setup', slug: 'setup' },
-            { label: 'Model Overview', slug: 'models/overview' },
-            { label: 'Terms of Use', slug: 'terms' },
+            { label: 'Model Overview', slug: 'getting-started/models/overview' },
+            { label: 'Taxonomy Guide', slug: 'getting-started/taxonomy' },
+            { label: 'Terms of Use', slug: 'getting-started/terms' },
+            { label: 'Fetching from the API', slug: 'getting-started/fetching-from-api' },
           ],
-        },
-        {
-          label: 'API Endpoints',
-          autogenerate: { directory: 'endpoints' },
         },
         {
           label: 'Development',
           items: [
+            { label: 'Prerequisites', slug: 'development/prerequisites' },
+            { label: 'Setup', slug: 'development/setup' },
             { label: 'Tech Stack', slug: 'development/stack' },
             { label: 'Running the API', slug: 'development/run' },
             { label: 'Testing the API', slug: 'development/test' },
@@ -67,8 +73,26 @@ export default defineConfig({
           ],
         },
         {
+          label: 'Endpoint Overview',
+          items: [
+            { label: 'Overview', slug: 'endpoints/overview' },
+            {
+              label: 'General Endpoints',
+              autogenerate: { directory: 'endpoints/general' },
+            },
+            {
+              label: 'Dinosaur Endpoints',
+              autogenerate: { directory: 'endpoints/dinosaurs' },
+            },
+            {
+              label: 'Image Endpoints',
+              autogenerate: { directory: 'endpoints/images' },
+            },
+          ],
+        },
+        {
           label: 'Conclusion',
-          items: [{ label: 'Acknowledgments', slug: 'acknowledgments' }],
+          items: [{ label: 'Acknowledgments', slug: 'conclusion/acknowledgments' }],
         },
         ...openAPISidebarGroups,
       ],
@@ -84,7 +108,7 @@ export default defineConfig({
         starlightThemeRapidePlugin(),
         starlightOpenAPI([
           {
-            base: 'api/restasaurus',
+            base: 'api',
             schema: 'openapi.yaml',
             sidebar: { label: 'OpenAPI Specification' },
           },

@@ -1,4 +1,4 @@
-import type { Person, SoftwareSourceCode, WebApplication, WebSite } from "schema-dts";
+import type { Person, SoftwareSourceCode, WebSite, WebAPI, APIReference } from "schema-dts";
 import { documentationConfig } from "./docs.config";
 
 const {
@@ -33,7 +33,8 @@ const {
 const personId = `${portfolioWebsite}/#person`;
 const softwareId = `${githubRepo}/#software`;
 const homepageId = `${siteUrl}${base}/#homepage`;
-const webAppId = `${liveDemoUrl}/#web-app`;
+const apiId = `${liveDemoUrl}/#api`;
+const rootApiRefId = `${documentationUrl}/api/#reference`;
 
 const personLd: Person = {
   "@type": "Person",
@@ -68,8 +69,8 @@ const softwareLd: SoftwareSourceCode = {
   dateCreated: new Date(startDate).toISOString(),
   dateModified: new Date(endDate).toISOString(),
   codeRepository: githubRepo,
-  runtimePlatform: ["Node.js", "Web", "Browser"],
-  targetProduct: { "@id": webAppId },
+  runtimePlatform: ["Node.js"],
+  targetProduct: { "@id": apiId },
 };
 
 const homepageLd: WebSite = {
@@ -90,21 +91,35 @@ const homepageLd: WebSite = {
   mainEntityOfPage: `${documentationUrl}/`,
 };
 
-const webAppLd: WebApplication = {
-  "@type": "WebApplication",
-  "@id": webAppId,
-  name: projectName,
+const webApiLd: WebAPI = {
+  "@type": "WebAPI",
+  "@id": apiId,
+  name: `${projectName} API`,
   description: projectDescription,
   url: liveDemoUrl,
-  applicationCategory: "DeveloperApplication",
-  operatingSystem: "Web",
-  browserRequirements: "Requires JavaScript and a modern web browser",
-  softwareVersion: version,
-  copyrightHolder: { "@id": personId },
-  copyrightNotice: "Copyright 2024 Visakan Kirubakaran. All rights reserved.",
-  copyrightYear: 2024,
-  mainEntity: { "@id": softwareId },
-  mainEntityOfPage: liveDemoUrl,
+  documentation: documentationUrl,
+  provider: { "@id": personId },
+  termsOfService: `${documentationUrl}/terms`,  
 };
 
-export { personId, softwareId, homepageId, webAppId, personLd, softwareLd, homepageLd, webAppLd };
+const rootApiRefLd: APIReference = {
+  "@type": "APIReference",
+  "@id": rootApiRefId,
+  name: `${projectName} API Reference`,
+  description: `Reference documentation generated from the OpenAPI specification for the ${projectName} API.`,
+  about: { "@id": apiId },
+  mainEntity: { "@id": apiId },
+  url: `${documentationUrl}/api`,
+  isPartOf: { "@id": homepageId },
+  programmingModel: "REST",
+  targetPlatform: "Node.js",
+  proficiencyLevel: "Beginner",
+  isBasedOn: `${documentationUrl}/openapi.yaml`,
+  author: { "@id": personId },
+  publisher: { "@id": personId },
+  inLanguage: "en",
+};
+
+
+
+export { personId, softwareId, homepageId, apiId, rootApiRefId, personLd, softwareLd, homepageLd, webApiLd, rootApiRefLd };

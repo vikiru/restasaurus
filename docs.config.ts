@@ -39,5 +39,6 @@ export const documentationConfig: DocumentationConfig = {
   assets: {
     themeColor: '#000',
     logoFileName: 'logo.png',
+    faviconFileName: 'favicon.ico',
   },
 };
