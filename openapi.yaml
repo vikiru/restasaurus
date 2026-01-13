@@ -1,7 +1,7 @@
 openapi: 3.1.0
 
 info:
-  title: OpenAPI Specification
+  title: RESTasaurus API
   description: "A dinosaur REST API built using Express, MongoDB and Mongoose with comprehensive information about almost 1200 dinosaurs."
   license:
     name: MIT
@@ -19,12 +19,12 @@ servers:
 tags:
   - name: general
     description: >
-      Endpoints providing general information about the API and dinosaur metadata, 
+      Endpoints providing general information about the API and dinosaur metadata,
       such as lists of all unique values for clades, diets, locomotion types, and dinosaur names.
 
   - name: dinosaur
     description: >
-      Endpoints to retrieve detailed dinosaur information. Includes fetching all dinosaurs, 
+      Endpoints to retrieve detailed dinosaur information. Includes fetching all dinosaurs,
       a specific dinosaur by ID or name, filtering by diet or locomotion, retrieving random dinosaurs,
       or searching dinosaurs with multiple query parameters.
 
@@ -36,6 +36,7 @@ tags:
 paths:
   /:
     get:
+      operationId: get-api-info
       tags:
         - general
       summary: Retrieve the main API endpoint
@@ -84,6 +85,7 @@ paths:
 
   /clades:
     get:
+      operationId: get-all-clades
       tags:
         - general
       summary: Retrieve all dinosaur clades
@@ -94,18 +96,25 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    clade:
-                      type: string
-                      description: Clade name
-                      example: "Dinosauria"
-                    count:
-                      type: integer
-                      description: Number of dinosaurs in this clade
-                      example: 850
+                type: object
+                properties:
+                  uniqueClades:
+                    type: integer
+                    description: Number of unique clade types
+                    example: 12
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        clade:
+                          type: string
+                          description: Clade name
+                          example: "Dinosauria"
+                        count:
+                          type: integer
+                          description: Number of dinosaurs in this clade
+                          example: 850
         "404":
           description: No clades found
           content:
@@ -129,6 +138,7 @@ paths:
 
   /diets:
     get:
+      operationId: get-all-diets
       tags:
         - general
       summary: Retrieve all dinosaur diets
@@ -139,19 +149,26 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    diet:
-                      type: string
-                      enum: ["carnivore", "herbivore", "omnivore", "piscivore"]
-                      description: Diet type
-                      example: "carnivore"
-                    count:
-                      type: integer
-                      description: Number of dinosaurs with this diet
-                      example: 320
+                type: object
+                properties:
+                  uniqueDiets:
+                    type: integer
+                    description: Number of unique diet types
+                    example: 4
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        diet:
+                          type: string
+                          enum: ["carnivore", "herbivore", "omnivore", "piscivore"]
+                          description: Diet type
+                          example: "carnivore"
+                        count:
+                          type: integer
+                          description: Number of dinosaurs with this diet
+                          example: 320
         "404":
           description: No diets found
           content:
@@ -175,6 +192,7 @@ paths:
 
   /locomotions:
     get:
+      operationId: get-all-locomotions
       tags:
         - general
       summary: Retrieve all dinosaur locomotions
@@ -185,26 +203,33 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    locomotionType:
-                      type: string
-                      enum:
-                        [
-                          "biped",
-                          "facultative biped",
-                          "gliding",
-                          "quadruped",
-                          "swimming",
-                        ]
-                      description: Locomotion type
-                      example: "biped"
-                    count:
-                      type: integer
-                      description: Number of dinosaurs with this locomotion
-                      example: 450
+                type: object
+                properties:
+                  uniqueLocomotions:
+                    type: integer
+                    description: Number of unique locomotion types
+                    example: 5
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        locomotionType:
+                          type: string
+                          enum:
+                            [
+                              "biped",
+                              "facultative biped",
+                              "gliding",
+                              "quadruped",
+                              "swimming",
+                            ]
+                          description: Locomotion type
+                          example: "biped"
+                        count:
+                          type: integer
+                          description: Number of dinosaurs with this locomotion
+                          example: 450
         "404":
           description: No locomotions found
           content:
@@ -228,6 +253,7 @@ paths:
 
   /names:
     get:
+      operationId: get-all-names
       tags:
         - general
       summary: Retrieve all dinosaur names
@@ -271,16 +297,20 @@ paths:
 
   /dinosaurs:
     get:
+      operationId: get-all-dinosaurs
       tags:
         - dinosaur
       summary: Retrieve all dinosaurs
-      description: Retrieves all dinosaurs. Accepts a page query parameter for pagination.
+      description: Retrieves all dinosaurs with pagination.
       parameters:
         - name: page
           in: query
           schema:
             type: integer
             default: 1
+            minimum: 1
+            maximum: 24
+          description: Page number to retrieve (50 items per page)
       responses:
         "200":
           description: Successful operation
@@ -332,6 +362,7 @@ paths:
 
   /dinosaurs/{id}:
     get:
+      operationId: get-dinosaur-by-id
       tags:
         - dinosaur
       summary: Retrieve a dinosaur by ID
@@ -359,7 +390,7 @@ paths:
                 properties:
                   error:
                     type: string
-                    example: "Sorry, there doesnt seem to be a dinosaur matching that id."
+                    example: "Sorry, there doesn't seem to be a dinosaur matching that id."
         "500":
           description: Unexpected error
           content:
@@ -369,19 +400,22 @@ paths:
                 properties:
                   error:
                     type: string
-                    example: "Sorry, an unexpected error occured while retrieving a dinosaur matching the specified id."
+                    example: "Sorry, an unexpected error occurred while retrieving a dinosaur matching the specified id."
 
   /dinosaurs/name/{name}:
     get:
+      operationId: get-dinosaur-by-name
       tags:
         - dinosaur
-      summary: Retrieve a dinosaur by name
+      summary: Retrieve dinosaur by name
+      description: Retrieves a specific dinosaur by its name. Name matching is case-insensitive.
       parameters:
         - name: name
           in: path
           required: true
           schema:
             type: string
+          example: "Tyrannosaurus"
       responses:
         "200":
           description: Dinosaur found
@@ -398,7 +432,7 @@ paths:
                 properties:
                   error:
                     type: string
-                    example: "Sorry, there doesnt seem to be a dinosaur matching that name."
+                    example: "Sorry, there doesn't seem to be a dinosaur matching that name."
         "500":
           description: Unexpected error
           content:
@@ -408,19 +442,23 @@ paths:
                 properties:
                   error:
                     type: string
-                    example: "Sorry, an unexpected error occured trying to find a dinosaur matching that name."
+                    example: "Sorry, an unexpected error occurred trying to find a dinosaur matching that name."
 
   /dinosaurs/diet/{diet}:
     get:
+      operationId: get-dinosaurs-by-diet
       tags:
         - dinosaur
       summary: Retrieve dinosaurs by diet
+      description: Retrieves dinosaurs filtered by diet type. Diet matching is case-insensitive.
       parameters:
         - name: diet
           in: path
           required: true
           schema:
             type: string
+            enum: ["carnivore", "herbivore", "omnivore", "piscivore"]
+          example: "herbivore"
       responses:
         "200":
           description: Dinosaurs found
@@ -454,19 +492,23 @@ paths:
                 properties:
                   error:
                     type: string
-                    example: "Sorry, an unexpected error occured while retrieving all dinosaurs matching that diet."
+                    example: "Sorry, an unexpected error occurred while retrieving all dinosaurs matching that diet."
 
   /dinosaurs/locomotion/{locomotion}:
     get:
+      operationId: get-dinosaurs-by-locomotion
       tags:
         - dinosaur
       summary: Retrieve dinosaurs by locomotion
+      description: Retrieves all dinosaurs matching a specific locomotion type. Locomotion matching is case-insensitive.
       parameters:
         - name: locomotion
           in: path
           required: true
           schema:
             type: string
+            enum: ["biped", "facultative biped", "gliding", "quadruped", "swimming"]
+          example: "biped"
       responses:
         "200":
           description: Dinosaurs found
@@ -500,10 +542,11 @@ paths:
                 properties:
                   error:
                     type: string
-                    example: "Sorry, an unexpected error occured while retrieving all dinosaurs matching that diet."
+                    example: "Sorry, an unexpected error occurred while retrieving all dinosaurs matching that locomotion."
 
   /dinosaurs/random/{count}:
     get:
+      operationId: get-random-dinosaurs
       tags:
         - dinosaur
       summary: Retrieve a random number of dinosaurs
@@ -511,7 +554,7 @@ paths:
         - name: count
           in: path
           required: true
-          description: Number of random dinosaurs to retrieve (1–10)
+          description: Number of random dinosaurs to retrieve (1-10)
           schema:
             type: integer
             minimum: 1
@@ -541,35 +584,45 @@ paths:
                     type: string
                     example: "Sorry, an unexpected error occurred while trying to retrieve a random number of dinosaurs."
 
-  /dinosaurs/search:
+  /search:
     get:
+      operationId: search-dinosaurs
       tags:
         - dinosaur
-      summary: Retrieve dinosaurs by query
+      summary: Search dinosaurs by clade, diet, and locomotion
+      description: >
+        Retrieves dinosaurs matching the provided query parameters.
+        Matching is case-insensitive. Multiple clades may be provided
+        as a comma-separated list.
       parameters:
-        - name: clade
-          in: query
+        - in: query
+          name: clade
+          description: >
+            One or more clades. Can be provided as a comma-separated list
+            (e.g. Dinosauria,Ornithischia).
           schema:
             type: array
             items:
               type: string
-            description: |
-              Can be a single string or comma-separated string. 
-              Examples: "Dinosauria" or "Dinosauria,Ornithischia"
-        - name: diet
-          in: query
+          style: form
+          explode: false
+          example:
+            - Dinosauria
+        - in: query
+          name: diet
           schema:
             type: string
             enum: ["carnivore", "herbivore", "omnivore", "piscivore"]
-        - name: locomotion
-          in: query
+          example: herbivore
+        - in: query
+          name: locomotion
           schema:
             type: string
-            enum:
-              ["biped", "facultative biped", "gliding", "quadruped", "swimming"]
+            enum: ["biped", "facultative biped", "gliding", "quadruped", "swimming"]
+          example: quadruped
       responses:
         "200":
-          description: Dinosaurs found
+          description: Dinosaurs matching the query
           content:
             application/json:
               schema:
@@ -582,7 +635,7 @@ paths:
                     items:
                       $ref: "#/components/schemas/Dinosaur"
         "404":
-          description: No dinosaurs matching query
+          description: No dinosaurs matched the query
           content:
             application/json:
               schema:
@@ -590,9 +643,9 @@ paths:
                 properties:
                   error:
                     type: string
-                    example: "Sorry, there doesnt seem to be any dinosaurs matching that query."
+                    example: "Sorry, there doesn't seem to be any dinosaurs matching that query."
         "500":
-          description: Unexpected error
+          description: Server error
           content:
             application/json:
               schema:
@@ -600,10 +653,10 @@ paths:
                 properties:
                   error:
                     type: string
-                    example: "Sorry, an unexpected error occured while performing that query."
-
+                    example: "Sorry, an unexpected error occurred while performing that query."
   /images:
     get:
+      operationId: get-all-images
       tags:
         - image
       summary: Retrieve all dinosaur images
@@ -614,6 +667,8 @@ paths:
           schema:
             type: integer
             default: 1
+            minimum: 1
+            maximum: 24
       responses:
         "200":
           description: Successful operation
@@ -665,6 +720,7 @@ paths:
 
   /images/{id}:
     get:
+      operationId: get-image-by-id
       tags:
         - image
       summary: Retrieve a dinosaur image by ID
@@ -692,7 +748,7 @@ paths:
                 properties:
                   error:
                     type: string
-                    example: "Sorry, there doesnt seem to be a dinosaur image matching that id."
+                    example: "Sorry, there doesn't seem to be a dinosaur image matching that id."
         "500":
           description: Unexpected error
           content:
@@ -702,10 +758,11 @@ paths:
                 properties:
                   error:
                     type: string
-                    example: "Sorry, an unexpected occurred while trying to recieve an image matching that id."
+                    example: "Sorry, an unexpected error occurred while trying to receive an image matching that id."
 
   /images/random/{count}:
     get:
+      operationId: get-random-images
       tags:
         - image
       summary: Retrieve a random number of dinosaur images
@@ -713,7 +770,7 @@ paths:
         - name: count
           in: path
           required: true
-          description: Number of random images to retrieve (1–10)
+          description: Number of random images to retrieve (1-10)
           schema:
             type: integer
             minimum: 1
@@ -886,21 +943,26 @@ components:
           example: "FunkMonk"
         authorURL:
           type: string
+          format: uri
           example: "https://commons.wikimedia.org/wiki/User:FunkMonk"
         imageURL:
           type: string
+          format: uri
           example: "https://commons.wikimedia.org/wiki/File:Zephyrosaurus_in_Copenhagen.jpg"
         license:
           type: string
           example: "Creative Commons Attribution-Share Alike 3.0"
         licenseURL:
           type: string
+          format: uri
           example: "https://creativecommons.org/licenses/by-sa/3.0"
         dateCreated:
           type: string
+          format: date-time
           example: "2021-10-01T07:58:48.000Z"
         dateAccessed:
           type: string
+          format: date-time
           example: "2024-01-30T14:27:20.683Z"
 
     DinosaurSource:
@@ -914,24 +976,30 @@ components:
           example: "Wikipedia contributors"
         wikipediaURL:
           type: string
+          format: uri
           example: "https://en.wikipedia.org/wiki/Zephyrosaurus"
         license:
           type: string
           example: "Creative Commons Attribution-Share Alike 4.0"
         licenseURL:
           type: string
+          format: uri
           example: "https://creativecommons.org/licenses/by-sa/4.0/deed.en"
         permalink:
           type: string
+          format: uri
           example: "https://en.wikipedia.org/w/index.php?title=Zephyrosaurus&oldid=1187326953"
         revisionHistoryURL:
           type: string
+          format: uri
           example: "https://en.wikipedia.org/w/index.php?title=Zephyrosaurus&action=history"
         lastRevision:
           type: string
+          format: date-time
           example: "2023-11-28T15:28:47Z"
         dateAccessed:
           type: string
+          format: date-time
           example: "2024-01-30T14:27:20.682Z"
         source:
           type: string
