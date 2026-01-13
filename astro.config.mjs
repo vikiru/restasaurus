@@ -6,11 +6,6 @@ import starlightOpenAPI, { openAPISidebarGroups } from 'starlight-openapi';
 import starlightThemeRapidePlugin from 'starlight-theme-rapide';
 import { documentationConfig } from './docs.config';
 
-// DONE: Add a doc page to fetch from the api (curl, typescript, python, etc) - mention ping api
-// TODO: Update Head.astro logic 404s atm and also update anything else I missed.
-// TODO: Update tech stack, acknowledgements to include astrojs/starlight
-// TODO: Update main branch - remove husky, add semantic-release/linstaged, update the openapi.yaml etc
-
 const {
   site: { title, base, siteUrl, projectDescription, documentationUrl, websiteLastModified },
   assets: { faviconFileName },
@@ -104,8 +99,6 @@ export default defineConfig({
       plugins: [
         starlightLinksValidatorPlugin({
           errorOnRelativeLinks: false,
-          errorOnLocalLinks: false,
-          errorOnInvalidHashes: false,
           exclude: ['/restasaurus/api/**/*', '/restasaurus/api'],
         }),
         starlightThemeRapidePlugin(),
