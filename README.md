@@ -231,6 +231,7 @@ CI:
 Dev Tools:
 
 - [Biome](https://biomejs.dev/)
+- [Knip](https://github.com/webpro-nl/knip)
 - [WakaTime](https://wakatime.com/)
 - [MongoDB Compass](https://www.mongodb.com/products/tools/compass)
 - [Postman](https://www.postman.com/)
@@ -397,6 +398,12 @@ pnpm make-badges
 
 ```bash
 pnpm postinstall
+```
+
+10. Check for unused code and dependencies with [Knip](https://github.com/webpro-nl/knip).
+
+```bash
+pnpm unused
 ```
 
 ## ✨ Acknowledgments
