@@ -28,7 +28,8 @@
 		"retrieveData": "node ./app/scripts/constructDinoNames.js && node ./app/scripts/retrieveData.js",
 		"postData": "node ./app/scripts/postData.js",
 		"make-badges": "istanbul-badges-readme",
-		"postinstall": "lefthook install"
+		"postinstall": "lefthook install",
+		"unused": "knip"
 	},
 	"dependencies": {
 		"@mongodb-js/zstd": "^7.0.0",
@@ -63,6 +64,7 @@
 		"esm": "^3.2.25",
 		"husky": "^9.1.7",
 		"istanbul-badges-readme": "^1.9.0",
+		"knip": "^5.80.2",
 		"lefthook": "^2.0.15",
 		"mocha": "^11.7.5",
 		"nodemon": "^3.1.11",
@@ -74,18 +76,6 @@
 		"tsx": "^4.21.0",
 		"typescript": "^5.9.3",
 		"vitest": "^4.0.17"
-	},
-	"release": {
-		"branches": [
-			"main"
-		],
-		"plugins": [
-			"@semantic-release/commit-analyzer",
-			"@semantic-release/release-notes-generator",
-			"@semantic-release/npm",
-			"@semantic-release/git",
-			"@semantic-release/github"
-		]
 	},
 	"ignorePatterns": [
 		"./node_modules/**",
