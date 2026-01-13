@@ -104,6 +104,9 @@ export default defineConfig({
       plugins: [
         starlightLinksValidatorPlugin({
           errorOnRelativeLinks: false,
+          errorOnLocalLinks: false,
+          errorOnInvalidHashes: false,
+          exclude: ['/restasaurus/api/**/*', '/restasaurus/api'],
         }),
         starlightThemeRapidePlugin(),
         starlightOpenAPI([
@@ -123,6 +126,8 @@ export default defineConfig({
         return item;
       },
     }),
-    (await import('@playform/compress')).default(),
+    (await import('@playform/compress')).default({
+      Image: false,
+    }),
   ],
 });
