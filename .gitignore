@@ -1,7 +1,7 @@
 todos.md
 
 # Dependencies
-node_modules/
+node_modules
 .pnpm-store/
 
 # Build outputs
@@ -114,3 +114,13 @@ temp/
 *.njsproj
 *.sln
 *.sw?
+
+.agent
+.claude
+.crush
+.cursor
+.gemini
+.kilocode
+.opencode
+.qwen
+openspec
