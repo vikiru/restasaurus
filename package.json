@@ -34,8 +34,8 @@
 	},
 	"dependencies": {
 		"@mongodb-js/zstd": "^7.0.0",
-		"body-parser": "^1.20.5",
-		"compression": "^1.8.1",
+		"body-parser": "^1.20.9",
+		"compression": "^1.8.2",
 		"cors": "^2.8.6",
 		"dotenv": "^16.6.1",
 		"express": "^4.22.3",
@@ -43,11 +43,11 @@
 		"express-validator": "^7.3.2",
 		"helmet": "^7.2.0",
 		"mongodb": "^7.7.0",
-		"mongoose": "^8.23.1",
+		"mongoose": "^8.24.5",
 		"mongoose-autopopulate": "^1.2.1",
 		"mongoose-hidden": "^1.9.1",
 		"mongoose-sequence": "^6.0.1",
-		"morgan": "^1.10.1",
+		"morgan": "^1.12.1",
 		"node-html-parser": "^6.1.13",
 		"redis": "^4.7.1",
 		"serve-favicon": "^2.5.1",
@@ -76,7 +76,7 @@
 		"sinon": "^21.1.2",
 		"tsx": "^4.23.15",
 		"typescript": "^5.9.3",
-		"vitest": "^4.1.5"
+		"vitest": "^4.1.12"
 	},
 	"ignorePatterns": [
 		"./node_modules/**",
